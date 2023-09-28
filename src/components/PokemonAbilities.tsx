@@ -1,6 +1,14 @@
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
+import { url } from "../interfaces/pokemon";
 
-export default function PokemonAbilities() {
-  const { id } = useParams();
-  return <div>PokemonAbilities for {id}</div>;
+type PokemonAbilitiesProps = {
+  pokemon: url;
+};
+
+export default function PokemonAbilities({ pokemon }: PokemonAbilitiesProps) {
+  return (
+    <div>
+      <h5>Abilites for {pokemon.name}</h5>
+    </div>
+  );
 }
