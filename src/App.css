@@ -26,3 +26,27 @@
     height: calc(100vh - 80px);
 }
 
+.pokemons_container{
+    /* can you make a grid of the items that has four columns */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5%;
+    padding: 20px;
+    justify-items: center;
+    align-items: center;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+@media screen and (max-width: 960px){
+    .pokemons_container{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media screen and (max-width: 500px){
+    .pokemons_container{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+    
+
