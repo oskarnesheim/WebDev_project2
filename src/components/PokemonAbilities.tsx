@@ -1,8 +1,8 @@
 // import { useParams } from "react-router-dom";
-import { url } from "../interfaces/pokemon";
+import { IPokemon } from "../interfaces/pokemon";
 
 type PokemonAbilitiesProps = {
-  pokemon: url;
+  pokemon: IPokemon;
 };
 
 export default function PokemonAbilities({ pokemon }: PokemonAbilitiesProps) {

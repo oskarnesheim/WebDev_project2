@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { IPokemon } from "../interfaces/pokemon";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -8,13 +7,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 type PokemonCardProps = {
-  pokemon: IPokemon;
+  name: string;
 };
 
-export default function PokemonCard({ pokemon }: PokemonCardProps) {
+export default function PokemonCard({ name: pokemon }: PokemonCardProps) {
   const navigate = useNavigate();
   return (
-    <div onClick={() => navigate(pokemon.name)}>
+    <div onClick={() => navigate(pokemon)}>
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           sx={{ height: 140 }}
@@ -23,7 +22,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {pokemon.name}
+            {pokemon}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Lizards are a widespread group of squamate reptiles, with over 6,000

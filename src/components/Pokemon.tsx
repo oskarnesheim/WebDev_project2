@@ -1,35 +1,52 @@
-import { NavLink, Outlet, Route, Routes, useParams } from "react-router-dom";
-import { allPokemons } from "../../public/mockData";
+import { NavLink, Outlet, useParams } from "react-router-dom";
 import PokemonAbilities from "./PokemonAbilities";
 import PokemonStats from "./PokemonStats";
+import { useQuery } from "@tanstack/react-query";
+import { IPokemon } from "../interfaces/pokemon";
+import { useState } from "react";
+
+enum PokemonTabs {
+  STATS = "stats",
+  ABILITIES = "abilities",
+}
 
 export default function Pokemon() {
   const { id } = useParams();
-  const info = allPokemons.find((p) => p.name === id);
+  const [tab, setTab] = useState<PokemonTabs>(PokemonTabs.STATS);
+
+  const { data, error, isLoading } = useQuery<IPokemon, Error>(
+    [id, "pokemon"],
+    () => {
+      const res = fetch(`pokemon_data/${id}.json`)
+        .then((res) => res.json())
+        .then((res) => res as IPokemon);
+      return res;
+    }
+  );
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div>
       <h1>
-        {id} - {info?.id}
+        {data.name} - {data.id}
       </h1>
-      <div>
-        <h5>{info?.habitat.name}</h5>
-        <h5>{info?.name}</h5>
-        <h5>{info?.shape.name}</h5>
-      </div>
       <NavLink to={".."}>Go back</NavLink>
       <div>
-        <NavLink to={"stats"}>Stats</NavLink>
-        <NavLink to={"abilities"}>Abilities</NavLink>
-        <Routes>
-          <Route
-            path={"abilities"}
-            element={<PokemonAbilities pokemon={info!} />}
-          />
-          <Route path={"stats"} element={<PokemonStats pokemon={info!} />} />
-        </Routes>
-        <Outlet />
+        <button onClick={() => setTab(PokemonTabs.STATS)}>Stats</button>
+        <button onClick={() => setTab(PokemonTabs.ABILITIES)}>Abilities</button>
       </div>
+      <div>
+        {tab === PokemonTabs.STATS && <PokemonStats pokemon={data} />}
+        {tab === PokemonTabs.ABILITIES && <PokemonAbilities pokemon={data} />}
+      </div>
+      <Outlet />
     </div>
   );
 }

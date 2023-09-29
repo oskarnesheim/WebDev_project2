@@ -9,8 +9,8 @@ function App() {
       <Navbar />
       <div className="content_container">
         <Outlet />
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 }
