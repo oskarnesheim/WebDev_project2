@@ -4,6 +4,7 @@ import PokemonStats from "./PokemonStats";
 import { useQuery } from "@tanstack/react-query";
 import { IPokemon } from "../interfaces/pokemon";
 import { useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 
 enum PokemonTabs {
   STATS = "stats",
@@ -25,7 +26,11 @@ export default function Pokemon() {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   }
 
   if (error) {
