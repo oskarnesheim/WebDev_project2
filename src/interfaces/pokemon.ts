@@ -156,7 +156,11 @@ export interface IPokemon{
             };
         }[];
     }[];
-    species: {
+    species:{
+        name: string;
+        url: string;
+    };
+    sprites: {
         back_default: string;
         back_female: string;
         back_shiny: string;
@@ -210,4 +214,9 @@ export interface IPokemon{
             };
         }[];
     }[];
+}
+
+export interface IPokemonNames_Url{
+    name: string;
+    url: string;
 }

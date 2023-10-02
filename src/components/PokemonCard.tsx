@@ -5,35 +5,52 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { useQuery } from "@tanstack/react-query";
+import { IPokemon } from "../interfaces/pokemon";
 
 type PokemonCardProps = {
   name: string;
 };
 
-export default function PokemonCard({ name: pokemon }: PokemonCardProps) {
+export default function PokemonCard({ name }: PokemonCardProps) {
   const navigate = useNavigate();
+  const { data, error, isLoading } = useQuery<IPokemon, Error>(
+    [name, "_pokemon"],
+    () => {
+      const res = fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`)
+        .then((res) => res.json())
+        .then((res) => res as IPokemon);
+      return res;
+    }
+  );
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
-    <div onClick={() => navigate(pokemon)}>
-      <Card sx={{ maxWidth: 345 }}>
-        <CardMedia
-          sx={{ height: 140 }}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {pokemon}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
-    </div>
+    <Card key={data.id} onClick={() => navigate(name)} sx={{ maxWidth: 345 }}>
+      <CardMedia
+        sx={{ height: 140 }}
+        image={data.sprites.front_default}
+        title="green iguana"
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {data.base_experience}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">Share</Button>
+        <Button size="small">Learn More</Button>
+      </CardActions>
+    </Card>
   );
 }

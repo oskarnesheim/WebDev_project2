@@ -23,6 +23,8 @@ export default function Home() {
   const [sortBy, setSortBy] = useState<string>(SortBy.NONE);
   const [pokemonList, setPokemonList] = useState<string[]>(names);
 
+  // const [currentFilter, setCurrentFilter] = useState<string[]>([]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setDelayedSearch(search);
