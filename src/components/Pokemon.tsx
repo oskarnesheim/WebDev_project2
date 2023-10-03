@@ -21,9 +21,42 @@ export default function Pokemon() {
       const res = fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
         .then((res) => res.json())
         .then((res) => res as IPokemon);
+
       return res;
     }
   );
+
+  const [isMember, setIsMember] = useState<boolean>(false);
+
+  function getTeam() {
+    const team = JSON.parse(localStorage.getItem("team") || "");
+    return team;
+  }
+
+  function setTeam(team: string) {
+    localStorage.setItem("team", JSON.stringify(team));
+  }
+
+  function clickFunction(name: string) {
+    let team = getTeam();
+    const listTeam = team.split(",");
+    if (listTeam.length >= 6) {
+      alert("Your team is full");
+      return;
+    }
+    if (listTeam.includes(name)) {
+      alert("You already have this pokemon in your team");
+      return;
+    }
+    if (team === "") {
+      team = name;
+      setIsMember(true);
+    } else team += "," + name;
+    {
+      setTeam(team);
+      setIsMember(true);
+    }
+  }
 
   if (isLoading) {
     return (
@@ -51,6 +84,19 @@ export default function Pokemon() {
         {tab === PokemonTabs.STATS && <PokemonStats pokemon={data} />}
         {tab === PokemonTabs.ABILITIES && <PokemonAbilities pokemon={data} />}
       </div>
+      {getTeam().split(",").includes(data.name) || isMember ? (
+        <button disabled>Pokemon is in your team</button>
+      ) : (
+        <button
+          onClick={() => {
+            {
+              clickFunction(data.name);
+            }
+          }}
+        >
+          Add Pokemon to team
+        </button>
+      )}
       <Outlet />
     </div>
   );
