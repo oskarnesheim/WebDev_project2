@@ -92,7 +92,7 @@ export default function Home() {
       <div className="pokemons_container">
         {pokemonList
           .filter((pokemon) =>
-            !delayedSearch ? true : pokemon === delayedSearch
+            !delayedSearch ? true : pokemon.includes(delayedSearch)
           )
           .map((pokemon) => {
             return <PokemonCard key={pokemon} name={pokemon} />;
