@@ -41,35 +41,6 @@ export default function Home() {
       case SortBy.Z_A:
         sortedList.sort().reverse();
         break;
-
-      // case SortBy.ATTACK_INCREASING:
-      //   sortedList.sort((a, b) => {
-      //     const pokemonA = names.find((name) => name === a);
-      //     const pokemonB = names.find((name) => name === b);
-      //     return pokemonA.attack - pokemonB.attack;
-      //   });
-      //   break;
-      // case SortBy.ATTACK_DECREASING:
-      //   sortedList.sort((a, b) => {
-      //     const pokemonA = names.find((name) => name === a);
-      //     const pokemonB = names.find((name) => name === b);
-      //     return pokemonB.attack - pokemonA.attack;
-      //   });
-      //   break;
-      // case SortBy.AGE_INCREASING:
-      //   sortedList.sort((a, b) => {
-      //     const pokemonA = names.find((name) => name === a);
-      //     const pokemonB = names.find((name) => name === b);
-      //     return pokemonA.age - pokemonB.age;
-      //   });
-      //   break;
-      // case SortBy.AGE_DECREASING:
-      //   sortedList.sort((a, b) => {
-      //     const pokemonA = names.find((name) => name === a);
-      //     const pokemonB = names.find((name) => name === b);
-      //     return pokemonB.age - pokemonA.age;
-      //   });
-      //   break;
       case SortBy.NONE:
         sortedList.sort(() => Math.random() - 0.5);
         break;

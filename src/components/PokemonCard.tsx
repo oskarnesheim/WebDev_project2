@@ -44,7 +44,7 @@ export default function PokemonCard({ name }: PokemonCardProps) {
           {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {data.base_experience}
+          Base stat: {data.stats[0].base_stat}
         </Typography>
       </CardContent>
       <CardActions>
