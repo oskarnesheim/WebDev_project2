@@ -24,15 +24,19 @@ export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
         >
           <MenuItem value={SortBy.A_Z}>A-Z</MenuItem>
           <MenuItem value={SortBy.Z_A}>Z-A</MenuItem>
-          <MenuItem value={SortBy.ATTACK_INCREASING}>
-            Attack increasing
+          <MenuItem value={SortBy.BASE_EXPERIENCE_INCREASING}>
+            Base experience increasing
           </MenuItem>
-          <MenuItem value={SortBy.ATTACK_DECREASING}>
-            Attack decreasing
+          <MenuItem value={SortBy.BASE_EXPERIENCE_DECREASING}>
+            Base experience decreasing
           </MenuItem>
-          <MenuItem value={SortBy.AGE_INCREASING}>Age increasing</MenuItem>
-          <MenuItem value={SortBy.AGE_DECREASING}>Age decreasing</MenuItem>
-          <MenuItem value={SortBy.NONE}>None</MenuItem>
+          <MenuItem value={SortBy.WEIGHT_INCREASING}>
+            Weight increasing
+          </MenuItem>
+          <MenuItem value={SortBy.WEIGHT_DECREASING}>
+            Weight decreasing
+          </MenuItem>
+          <MenuItem value={SortBy.NONE}>Random</MenuItem>
         </Select>
       </FormControl>
     </Box>

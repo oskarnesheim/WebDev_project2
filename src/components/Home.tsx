@@ -1,20 +1,20 @@
-import PokemonCard from "./PokemonCard";
 import { pokemons } from "../../public/test.ts";
 import { useEffect, useState } from "react";
 import Searchbar from "./Searchbar.tsx";
 import FilterBox from "./FilterBox.tsx";
 import SortingBox from "./SortingBox.tsx";
 import { IPokemon_simple } from "../interfaces/pokemon.ts";
+import PokemonCard from "./PokemonCard.tsx";
 
 //! Forslag til hva vi kan sorteve på
 // eslint-disable-next-line react-refresh/only-export-components
 export enum SortBy {
   A_Z = "A-Z",
   Z_A = "Z-A",
-  ATTACK_INCREASING = "Attack increasing",
-  ATTACK_DECREASING = "Attack decreasing",
-  AGE_INCREASING = "Age increasing",
-  AGE_DECREASING = "Age decreasing",
+  BASE_EXPERIENCE_INCREASING = "Base experience increasing",
+  BASE_EXPERIENCE_DECREASING = "Base experience decreasing",
+  WEIGHT_INCREASING = "Weight increasing",
+  WEIGHT_DECREASING = "Weight decreasing",
   NONE = "None",
 }
 
@@ -39,6 +39,18 @@ export default function Home() {
       case SortBy.A_Z:
         sortedList.sort();
         break;
+      case SortBy.BASE_EXPERIENCE_INCREASING:
+        sortedList.sort((a, b) => a.base_experience - b.base_experience);
+        break;
+      case SortBy.BASE_EXPERIENCE_DECREASING:
+        sortedList.sort((a, b) => b.base_experience - a.base_experience);
+        break;
+      case SortBy.WEIGHT_INCREASING:
+        sortedList.sort((a, b) => a.weight - b.weight);
+        break;
+      case SortBy.WEIGHT_DECREASING:
+        sortedList.sort((a, b) => b.weight - a.weight);
+        break;
       case SortBy.Z_A:
         sortedList.sort().reverse();
         break;
@@ -62,22 +74,13 @@ export default function Home() {
         </div>
       </div>
       <div className="pokemons_container">
-        {pokemonList.map((pokemon) => {
-          return (
-            <div key={pokemon.id}>
-              name={pokemon.name}
-              <p>id = {pokemon.id}</p>
-              <p>height = {pokemon.height}</p>
-            </div>
-          );
-        })}
-        {/* {pokemonList
+        {pokemonList
           .filter((pokemon) =>
             !delayedSearch ? true : pokemon.name.includes(delayedSearch)
           )
           .map((pokemon) => {
             return <PokemonCard key={pokemon.id} name={pokemon.name} />;
-          })}{" "} */}
+          })}{" "}
       </div>
     </div>
   );
