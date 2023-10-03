@@ -18,7 +18,7 @@ export default function Pokemon() {
   const { data, error, isLoading } = useQuery<IPokemon, Error>(
     [id, "pokemon"],
     () => {
-      const res = fetch(`pokemon_data/${id}.json`)
+      const res = fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
         .then((res) => res.json())
         .then((res) => res as IPokemon);
       return res;
