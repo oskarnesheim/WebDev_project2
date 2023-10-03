@@ -1,9 +1,10 @@
 import PokemonCard from "./PokemonCard";
-import { names } from "../../public/20_names.ts";
+import { pokemons } from "../../public/test.ts";
 import { useEffect, useState } from "react";
 import Searchbar from "./Searchbar.tsx";
 import FilterBox from "./FilterBox.tsx";
 import SortingBox from "./SortingBox.tsx";
+import { IPokemon_simple } from "../interfaces/pokemon.ts";
 
 //! Forslag til hva vi kan sorteve på
 // eslint-disable-next-line react-refresh/only-export-components
@@ -21,7 +22,7 @@ export default function Home() {
   const [search, setSearch] = useState<string>("");
   const [delayedSearch, setDelayedSearch] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>(SortBy.NONE);
-  const [pokemonList, setPokemonList] = useState<string[]>(names);
+  const [pokemonList, setPokemonList] = useState<IPokemon_simple[]>(pokemons);
 
   // const [currentFilter, setCurrentFilter] = useState<string[]>([]);
 
@@ -63,10 +64,10 @@ export default function Home() {
       <div className="pokemons_container">
         {pokemonList
           .filter((pokemon) =>
-            !delayedSearch ? true : pokemon.includes(delayedSearch)
+            !delayedSearch ? true : pokemon.name.includes(delayedSearch)
           )
           .map((pokemon) => {
-            return <PokemonCard key={pokemon} name={pokemon} />;
+            return <PokemonCard key={pokemon.id} name={pokemon.name} />;
           })}
       </div>
     </div>

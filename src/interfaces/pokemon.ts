@@ -98,6 +98,14 @@ export interface IPokemon_species{
     }[];
 }
 
+export interface IPokemon_simple{
+    id: number;
+    name: string;
+    height: number;
+    base_experience: number;
+    weight: number;
+}
+
 export interface IPokemon{
     id: number;
     name: string;

@@ -16,7 +16,7 @@ export default function Pokemon() {
   const [tab, setTab] = useState<PokemonTabs>(PokemonTabs.STATS);
 
   const { data, error, isLoading } = useQuery<IPokemon, Error>(
-    [id, "pokemon"],
+    [id, "_pokemon"],
     () => {
       const res = fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
         .then((res) => res.json())
