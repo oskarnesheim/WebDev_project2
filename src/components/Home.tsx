@@ -30,7 +30,7 @@ export default function Home() {
     const sortedList = [...pokemonList];
     switch (sortBy) {
       case SortBy.A_Z:
-        sortedList.sort();
+        sortedList.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case SortBy.BASE_EXPERIENCE_INCREASING:
         sortedList.sort((a, b) => a.base_experience - b.base_experience);
@@ -45,7 +45,7 @@ export default function Home() {
         sortedList.sort((a, b) => b.weight - a.weight);
         break;
       case SortBy.Z_A:
-        sortedList.sort().reverse();
+        sortedList.sort((a, b) => a.name.localeCompare(b.name)).reverse();
         break;
       case SortBy.NONE:
         sortedList.sort(() => Math.random() - 0.5);
