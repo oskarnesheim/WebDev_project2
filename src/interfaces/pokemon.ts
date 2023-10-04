@@ -104,7 +104,14 @@ export interface IPokemon_simple{
     height: number;
     base_experience: number;
     weight: number;
-}
+    types:{
+        slot: number;
+        type: {
+            name: string;
+            url: string;
+        };
+    }[];
+    }
 
 export interface IPokemon{
     id: number;
