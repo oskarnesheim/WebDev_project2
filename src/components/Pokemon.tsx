@@ -14,6 +14,8 @@ enum PokemonTabs {
 export default function Pokemon() {
   const { id } = useParams();
   const [tab, setTab] = useState<PokemonTabs>(PokemonTabs.STATS);
+  const [team, setWindowTeam] = useState<string>("");
+  const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
 
   const { data, error, isLoading } = useQuery<IPokemon, Error>(
     [id, "pokemon"],
@@ -26,36 +28,86 @@ export default function Pokemon() {
     }
   );
 
-  const [isMember, setIsMember] = useState<boolean>(false);
-
   function getTeam() {
-    const team = JSON.parse(localStorage.getItem("team") || "");
-    return team;
-  }
-
-  function setTeam(team: string) {
-    localStorage.setItem("team", JSON.stringify(team));
-  }
-
-  function clickFunction(name: string) {
-    let team = getTeam();
-    const listTeam = team.split(",");
-    if (listTeam.length >= 6) {
-      alert("Your team is full");
-      return;
+    if (teamIsLoaded) {
+      return team;
     }
-    if (listTeam.includes(name)) {
-      alert("You already have this pokemon in your team");
+    const teamJSON = localStorage.getItem("team");
+    if (teamJSON) {
+      try {
+        const team = JSON.parse(teamJSON);
+        console.log("Loader team fra localstore: " + team);
+        setTeamState(team);
+        setTeamIsLoaded(true);
+        return team;
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+        return "error"; // Handle the error appropriately
+      }
+    } else {
+      return ""; // Handle the case when "team" is not found in localStorage
+    }
+  }
+
+  function checkTeam(name: string): boolean {
+    if (getTeam() === "error") {
+      return true;
+    }
+    const team = getTeam();
+    if (team !== "") {
+      const listTeam = team.split(",");
+      if (listTeam.includes(name)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function addToTeam(name: string) {
+    if (!verifyTeam(name)) {
       return;
     }
     if (team === "") {
-      team = name;
-      setIsMember(true);
-    } else team += "," + name;
-    {
-      setTeam(team);
-      setIsMember(true);
+      setTeamState(name);
+    } else {
+      setTeamState(team + "," + name);
     }
+  }
+
+  function setTeamState(newTeam: string) {
+    localStorage.setItem("team", JSON.stringify(newTeam));
+    setWindowTeam(newTeam);
+  }
+
+  function removefromTeam(name: string) {
+    const currTeam = team;
+    if (currTeam === "") {
+      return;
+    }
+    const listTeam = currTeam.split(",");
+    const index = listTeam.indexOf(name);
+    if (index > -1) {
+      listTeam.splice(index, 1);
+    }
+    setTeamState(listTeam.join(","));
+    localStorage.setItem("team", JSON.stringify(listTeam.join(",")));
+  }
+
+  function verifyTeam(name: string) {
+    if (team === "") {
+      return true;
+    }
+    const listTeam = team.split(",");
+    if (listTeam.includes(name)) {
+      alert("You already have this pokemon in your team");
+      return false;
+    }
+    if (listTeam.length >= 6) {
+      alert("Your team is full");
+      return false;
+    }
+
+    return true;
   }
 
   if (isLoading) {
@@ -84,19 +136,16 @@ export default function Pokemon() {
         {tab === PokemonTabs.STATS && <PokemonStats pokemon={data} />}
         {tab === PokemonTabs.ABILITIES && <PokemonAbilities pokemon={data} />}
       </div>
-      {getTeam().split(",").includes(data.name) || isMember ? (
-        <button disabled>Pokemon is in your team</button>
-      ) : (
-        <button
-          onClick={() => {
-            {
-              clickFunction(data.name);
-            }
-          }}
-        >
-          Add Pokemon to team
-        </button>
-      )}
+      <button
+        disabled={checkTeam(data.name)}
+        onClick={() => addToTeam(data.name)}
+      >
+        {checkTeam(data.name) ? "Already in team" : "Add to team"}
+      </button>
+      <p>{checkTeam(data.name)}</p>
+      <button onClick={() => removefromTeam(data.name)}>
+        remove from team
+      </button>
       <Outlet />
     </div>
   );

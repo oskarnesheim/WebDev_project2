@@ -21,9 +21,8 @@
 
 .selected-Info {
   margin: 10px;
-  height: 250px;
-  width: 350px;
-  background-color: aqua;
+  width: fit-content;
+  height: 500px;
   text-align: center;
 }
 

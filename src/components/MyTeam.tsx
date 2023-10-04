@@ -1,23 +1,54 @@
 import { useState } from "react";
 import "./MyTeam.css";
-// AiOutlineArrowLeft
-// AiOutlineArrowRight
+import PokemonCard from "./PokemonCard";
+import { AiOutlineArrowRight } from "react-icons/ai";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 export default function MyTeam() {
-  function getTeam() {
-    return JSON.parse(localStorage.getItem("team") || "");
-  }
-
-  function setTeam(team: string) {
-    localStorage.setItem("team", JSON.stringify(team));
-  }
-
-  const [team, setTeamState] = useState<string[]>(getTeam().split(","));
+  const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
+  const [team, setTeamState] = useState<string[]>([]);
 
   const [selectedPokemon, setSelectedPokemon] = useState<[string, number]>([
     "",
     0,
   ]); // [name,index]
+
+  const history = useNavigate();
+
+  const redirectToPokemon = () => {
+    history("/" + selectedPokemon[0]);
+  };
+
+  function getTeam() {
+    if (teamIsLoaded) {
+      return team;
+    }
+    const teamJSON = localStorage.getItem("team");
+    if (teamJSON) {
+      try {
+        const team = JSON.parse(teamJSON);
+        console.log("Loader team fra localstore: " + team);
+        if (team === "") {
+          setTeamIsLoaded(true);
+          return "";
+        }
+        setTeamIsLoaded(true);
+        setTeamState(team.split(","));
+        return team;
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+        return "error"; // Handle the error appropriately
+      }
+    } else {
+      return ""; // Handle the case when "team" is not found in localStorage
+    }
+  }
+
+  function setTeam(team: string) {
+    localStorage.setItem("team", JSON.stringify(team));
+    setTeamState(team.split(","));
+  }
 
   function editTeamMEmber(index: number) {
     setSelectedPokemon([team[index], index]);
@@ -47,16 +78,14 @@ export default function MyTeam() {
     if (pokeName === "") return;
     return (
       <div className="selected-Info">
-        <h3>Here is {selectedPokemon[0]}</h3>
-        <p>*IMAGE*</p>
-        <span>
-          <h4>Stats</h4>
-          <p>HP: Unknown</p>
-          <p>Speed: Unknown</p>
-        </span>
+        <div onClick={redirectToPokemon}>
+          {" "}
+          // this is a quick fix xd
+          <PokemonCard key={selectedPokemon[0]} name={selectedPokemon[0]} />
+        </div>
         <div className="container">
           <button onClick={() => moveBy("left")} className="box">
-            LEFT
+            <AiOutlineArrowLeft />
           </button>
           <button
             className="box"
@@ -65,7 +94,7 @@ export default function MyTeam() {
             DELETE
           </button>
           <button onClick={() => moveBy("right")} className="box">
-            RIGHT
+            <AiOutlineArrowRight />
           </button>
         </div>
       </div>
@@ -85,14 +114,11 @@ export default function MyTeam() {
     ));
   }
 
-  function contentProvider() {
-    return (
-      <div className="my-team">
-        <h1>My Pokémon Team</h1>
-        <div className="team-grid">{teamlist()}</div>
-        {selectedInfo()}
-      </div>
-    );
-  }
-  return <>{contentProvider()}</>;
+  return (
+    <div className="my-team">
+      <h1>My Pokémon Team</h1>
+      <div className="team-grid">{teamlist()}</div>
+      {selectedInfo()}
+    </div>
+  );
 }
