@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-type FilterBoxProps = {
-  currentFilter: string[];
-  setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
-};
+// type FilterBoxProps = {
+//   currentFilter: string[];
+//   setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
+// };
 
 export default function FilterBox() {
   const [showFilterBox, setShowFilterBox] = useState<boolean>(false);
