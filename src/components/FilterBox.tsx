@@ -4,10 +4,10 @@ import FormControlLabel from "@mui/material/FormControlLabel/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup/FormGroup";
 import { useState } from "react";
 
-type FilterBoxProps = {
-  currentFilter: string[];
-  setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
-};
+// type FilterBoxProps = {
+//   currentFilter: string[];
+//   setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
+// };
 
 export default function FilterBox({
   currentFilter,
