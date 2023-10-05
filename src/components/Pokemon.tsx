@@ -79,20 +79,6 @@ export default function Pokemon() {
     setWindowTeam(newTeam);
   }
 
-  function removefromTeam(name: string) {
-    const currTeam = team;
-    if (currTeam === "") {
-      return;
-    }
-    const listTeam = currTeam.split(",");
-    const index = listTeam.indexOf(name);
-    if (index > -1) {
-      listTeam.splice(index, 1);
-    }
-    setTeamState(listTeam.join(","));
-    localStorage.setItem("team", JSON.stringify(listTeam.join(",")));
-  }
-
   function verifyTeam(name: string) {
     if (team === "") {
       return true;
@@ -141,10 +127,6 @@ export default function Pokemon() {
         onClick={() => addToTeam(data.name)}
       >
         {checkTeam(data.name) ? "Already in team" : "Add to team"}
-      </button>
-      <p>{checkTeam(data.name)}</p>
-      <button onClick={() => removefromTeam(data.name)}>
-        remove from team
       </button>
       <Outlet />
     </div>

@@ -80,7 +80,6 @@ export default function MyTeam() {
       <div className="selected-Info">
         <div onClick={redirectToPokemon}>
           {" "}
-          // this is a quick fix xd
           <PokemonCard key={selectedPokemon[0]} name={selectedPokemon[0]} />
         </div>
         <div className="container">
