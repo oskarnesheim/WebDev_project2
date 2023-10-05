@@ -28,10 +28,10 @@ stages:
 node-setup:
   stage: setup
   script:
-    - npm ci
-  artifacts:
-    paths:
-      - node_modules
+    - npm install
+  #artifacts:
+   # paths:
+    #  - node_modules
 
 build:       # This job runs in the build stage, which runs first.
   stage: build
