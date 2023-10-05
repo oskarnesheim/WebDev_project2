@@ -41,10 +41,18 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
   return (
     <>
       <CssBaseline />
-      <Box alignContent={"center"} color={"blue"}>
-        <TableContainer>
-          <Typography variant="h5">Stats for {pokemon.name}</Typography>
-          <Table sx={{ maxWidth: 500 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          margin: "auto",
+        }}
+      >
+        <TableContainer sx={{ maxWidth: 500, backgroundColor: "red" }}>
+          <Typography variant="h5" textAlign={"center"}>
+            Stats for {pokemon.name}
+          </Typography>
+          <Table sx={{ alignItems: "center" }}>
             <TableHead>
               <TableRow>
                 <TableCell align="right">Stat</TableCell>

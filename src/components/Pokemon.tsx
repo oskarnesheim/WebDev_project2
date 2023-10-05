@@ -1,10 +1,11 @@
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import PokemonAbilities from "./PokemonAbilities";
 import PokemonStats from "./PokemonStats";
 import { useQuery } from "@tanstack/react-query";
 import { IPokemon } from "../interfaces/pokemon";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
+import { Box, Button, Link, Typography } from "@mui/material";
 
 enum PokemonTabs {
   STATS = "stats",
@@ -39,20 +40,26 @@ export default function Pokemon() {
   }
 
   return (
-    <div>
-      <h1>
-        {data.name} - {data.id}
-      </h1>
-      <NavLink to={".."}>Go back</NavLink>
-      <div>
-        <button onClick={() => setTab(PokemonTabs.STATS)}>Stats</button>
-        <button onClick={() => setTab(PokemonTabs.ABILITIES)}>Abilities</button>
-      </div>
-      <div>
+    <>
+      <Typography variant="h3" textAlign={"center"}>
+        {data.name} - #{data.id}
+      </Typography>
+
+      <Box
+        sx={{
+          dispaly: "flex",
+          justifyContent: "center",
+          alignItem: "center",
+          border: "1px solid black",
+        }}
+      >
+        <Link href="/">Go back</Link>
+        <Button onClick={() => setTab(PokemonTabs.STATS)}>Stats</Button>
+        <Button onClick={() => setTab(PokemonTabs.ABILITIES)}>Abilities</Button>
         {tab === PokemonTabs.STATS && <PokemonStats pokemon={data} />}
         {tab === PokemonTabs.ABILITIES && <PokemonAbilities pokemon={data} />}
-      </div>
+      </Box>
       <Outlet />
-    </div>
+    </>
   );
 }
