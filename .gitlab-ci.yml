@@ -29,6 +29,7 @@ node-setup:
   stage: setup
   script:
     - npm install
+    - npm ci
   #artifacts:
    # paths:
     #  - node_modules
