@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Pokemon from "./components/Pokemon.tsx";
 import Home from "./components/Home.tsx";
+import MyTeam from "./components/MyTeam.tsx";
 
 const queryClient = new QueryClient();
 export const router = createBrowserRouter(
@@ -20,7 +21,10 @@ export const router = createBrowserRouter(
           path: "",
           element: <Home />,
         },
-
+        {
+          path: "myteam",
+          element: <MyTeam />,
+        },
         {
           path: ":id/*",
           element: <Pokemon />,
