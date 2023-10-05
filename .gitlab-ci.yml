@@ -32,6 +32,7 @@ node-setup:
   artifacts:
     paths:
       - node_modules
+      - pnpm-lock.yaml
 
 build:       # This job runs in the build stage, which runs first.
   stage: build
