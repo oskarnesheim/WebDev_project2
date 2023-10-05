@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./MyTeam.css";
 import PokemonCard from "./PokemonCard";
 import { useNavigate } from "react-router-dom";
+import TeamMember from "./TeamMember";
 
 export default function MyTeam() {
   const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
@@ -106,7 +107,7 @@ export default function MyTeam() {
         className="team-grid-child"
         key={count}
       >
-        {pokemon} (count: {count} )
+        <TeamMember name={pokemon} />
       </div>
     ));
   }
@@ -115,7 +116,9 @@ export default function MyTeam() {
     <div className="my-team">
       <h1>My Pokémon Team</h1>
       <div className="team-grid">{teamlist()}</div>
-      {selectedInfo()}
+      <div>
+        {selectedInfo()}
+      </div>
     </div>
   );
 }

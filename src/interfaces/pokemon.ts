@@ -176,6 +176,7 @@ export interface IPokemon{
         url: string;
     };
     sprites: {
+        versions: any;
         back_default: string|null;
         back_female: string|null;
         back_shiny: string|null;
