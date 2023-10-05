@@ -30,14 +30,14 @@ node-setup:
   script:
    # - npm install
     - npm ci
-  #artifacts:
-   # paths:
-    #  - node_modules
 
 build:       # This job runs in the build stage, which runs first.
   stage: build
   script:
     - npm run build
+  artifacts:
+    paths:
+      - node_modules
 
 
 test:   # This job runs in the test stage.
