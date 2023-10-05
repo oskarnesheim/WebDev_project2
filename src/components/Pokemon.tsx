@@ -26,7 +26,7 @@ export default function Pokemon() {
         .then((res) => res as IPokemon);
 
       return res;
-    }
+    },
   );
 
   function getTeam() {

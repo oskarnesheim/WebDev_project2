@@ -22,7 +22,7 @@ export default function PokemonCard({ name }: PokemonCardProps) {
         .then((res) => res.json())
         .then((res) => res as IPokemon);
       return res;
-    }
+    },
   );
 
   if (isLoading) {
