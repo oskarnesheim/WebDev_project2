@@ -17,7 +17,8 @@ export default function PokemonCard({ name }: PokemonCardProps) {
   const { data, error, isLoading } = useQuery<IPokemon, Error>(
     [name, "_pokemon"],
     () => {
-      const res = fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`)
+      // const res = fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`)
+      const res = fetch(`pokemon_data/${name}.json/`)
         .then((res) => res.json())
         .then((res) => res as IPokemon);
       return res;
@@ -36,7 +37,7 @@ export default function PokemonCard({ name }: PokemonCardProps) {
     <Card key={data.id} onClick={() => navigate(name)} sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image={data.sprites.front_default}
+        image={"/public/pikachu.png"}
         title="green iguana"
       />
       <CardContent>
@@ -44,7 +45,8 @@ export default function PokemonCard({ name }: PokemonCardProps) {
           {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Base stat: {data.stats[0].base_stat}
+          Weight: {data.weight}
+          Height: {data.height}
         </Typography>
       </CardContent>
       <CardActions>
