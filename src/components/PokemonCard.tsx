@@ -13,15 +13,11 @@ type PokemonCardProps = {
 
 export default function PokemonCard({ name }: PokemonCardProps) {
   const navigate = useNavigate();
-  const onLine = true;
-  const address = onLine
-    ? `https://pokeapi.co/api/v2/pokemon/${name}/`
-    : `pokemon_data/${name}.json/`;
 
   const { data, error, isLoading } = useQuery<IPokemon, Error>(
     [name, "_pokemon"],
     () => {
-      const res = fetch(address)
+      const res = fetch(`pokemon_data/${name}.json/`)
         .then((res) => res.json())
         .then((res) => res as IPokemon);
       return res;
@@ -40,13 +36,7 @@ export default function PokemonCard({ name }: PokemonCardProps) {
     <Card key={data.id} onClick={() => navigate(name)} sx={{ maxWidth: 345 }}>
       <img
         style={{ height: 140 }}
-        src={
-          onLine
-            ? data.sprites.front_default
-              ? data.sprites.front_default
-              : "/public/pikachu.png"
-            : "/public/pikachu.png"
-        }
+        src={data.sprites.front_default}
         alt="Cool picture of a pokemon"
       />
       <CardContent>
