@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
@@ -39,10 +38,16 @@ export default function PokemonCard({ name }: PokemonCardProps) {
 
   return (
     <Card key={data.id} onClick={() => navigate(name)} sx={{ maxWidth: 345 }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image={onLine ? data.sprites.front_default : "/public/pikachu.png"}
-        title="green iguana"
+      <img
+        style={{ height: 140 }}
+        src={
+          onLine
+            ? data.sprites.front_default
+              ? data.sprites.front_default
+              : "/public/pikachu.png"
+            : "/public/pikachu.png"
+        }
+        alt="Cool picture of a pokemon"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
