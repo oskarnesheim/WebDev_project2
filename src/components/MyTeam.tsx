@@ -1,8 +1,6 @@
 import { useState } from "react";
 import "./MyTeam.css";
 import PokemonCard from "./PokemonCard";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 export default function MyTeam() {
@@ -84,7 +82,7 @@ export default function MyTeam() {
         </div>
         <div className="container">
           <button onClick={() => moveBy("left")} className="box">
-            <AiOutlineArrowLeft />
+            {/* <AiOutlineArrowLeft /> */}
           </button>
           <button
             className="box"
@@ -93,7 +91,7 @@ export default function MyTeam() {
             DELETE
           </button>
           <button onClick={() => moveBy("right")} className="box">
-            <AiOutlineArrowRight />
+            {/* <AiOutlineArrowRight /> */}
           </button>
         </div>
       </div>
