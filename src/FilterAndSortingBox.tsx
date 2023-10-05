@@ -1,4 +1,4 @@
-import { Button, Modal } from "@mui/material";
+import { Box, Button, Modal } from "@mui/material";
 import React from "react";
 import FilterBox from "./components/FilterBox";
 import SortingBox from "./components/SortingBox";
@@ -8,6 +8,19 @@ type FilterAndSortingBoxProps = {
   setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
   updateSort: React.Dispatch<React.SetStateAction<string>>;
   sortBy: string;
+};
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "#002c58",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  text: "white",
 };
 
 export default function FilterAndSortingBox({
@@ -29,13 +42,16 @@ export default function FilterAndSortingBox({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div>
-          <SortingBox sortBy={sortBy} updateSort={updateSort} />
+        <Box sx={style}>
           <FilterBox
             currentFilter={currentFilter}
             setCurrentFilter={setCurrentFilter}
           />
-        </div>
+          <br />
+          <br />
+          <br />
+          <SortingBox sortBy={sortBy} updateSort={updateSort} />
+        </Box>
       </Modal>
     </div>
   );
