@@ -32,6 +32,6 @@ lint:
 prettier:
   stage: lint
   script:
-    - npm install --global prettier
+    # - npm install --global prettier
     - prettier --check "**/*.{js,jsx,ts,tsx,json,md}"
 
