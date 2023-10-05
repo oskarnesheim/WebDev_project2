@@ -8,7 +8,7 @@ type FilterBoxProps = {
   currentFilter: string[];
   setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
 };
-export const style = {
+const style = {
   position: "absolute",
   top: "40%",
   left: "50%",

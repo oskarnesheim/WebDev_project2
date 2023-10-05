@@ -6,7 +6,7 @@ import Select from "@mui/material/Select";
 import { SortBy } from "./Home";
 import React from "react";
 
-export const style = {
+const style = {
   position: "absolute",
   top: "60%",
   left: "50%",
