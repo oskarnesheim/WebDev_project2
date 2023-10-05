@@ -231,7 +231,7 @@ export interface IPokemon{
     }[];
 }
 
-export interface IPokemonNames_Url{
-    name: string;
-    url: string;
+export interface IPokemonNames_Url {
+  name: string;
+  url: string;
 }
