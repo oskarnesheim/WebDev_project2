@@ -99,7 +99,7 @@ export default function MyTeam() {
   }
 
   function teamlist() {
-    if (getTeam() === "") return <p>Team is empty 🙁</p>;
+    if (getTeam() == "") return <p>Team is empty 🙁</p>;
     return team.map((pokemon: string, count: number) => (
       <div
         onClick={() => editTeamMEmber(count)}
