@@ -13,13 +13,16 @@ enum PokemonTabs {
 
 export default function Pokemon() {
   const { id } = useParams();
+  const onLine = true;
+  const address = onLine
+    ? `https://pokeapi.co/api/v2/pokemon/${id}/`
+    : `pokemon_data/${id}.json/`;
   const [tab, setTab] = useState<PokemonTabs>(PokemonTabs.STATS);
 
   const { data, error, isLoading } = useQuery<IPokemon, Error>(
     [id, "_pokemon"],
     () => {
-      // const res = fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
-      const res = fetch(`pokemon_data/${id}.json/`)
+      const res = fetch(address)
         .then((res) => res.json())
         .then((res) => res as IPokemon);
       return res;
@@ -44,6 +47,16 @@ export default function Pokemon() {
         {data.name} - {data.id}
       </h1>
       <NavLink to={".."}>Go back</NavLink>
+      <img
+        src={
+          onLine
+            ? data.sprites.front_default
+              ? data.sprites.front_default
+              : "/public/pikachu.png"
+            : "/public/pikachu.png"
+        }
+        alt="Cool picture of a pokemon"
+      />
       <div>
         <button onClick={() => setTab(PokemonTabs.STATS)}>Stats</button>
         <button onClick={() => setTab(PokemonTabs.ABILITIES)}>Abilities</button>

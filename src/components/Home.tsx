@@ -1,10 +1,9 @@
 import { pokemons } from "../../public/test2.ts";
 import { useEffect, useState } from "react";
 import Searchbar from "./Searchbar.tsx";
-import FilterBox from "./FilterBox.tsx";
-import SortingBox from "./SortingBox.tsx";
 import { IPokemon_simple } from "../interfaces/pokemon.ts";
 import PokemonCard from "./PokemonCard.tsx";
+import FilterAndSortingBox from "../FilterAndSortingBox.tsx";
 
 //! Forslag til hva vi kan sorteve på
 // eslint-disable-next-line react-refresh/only-export-components
@@ -58,12 +57,10 @@ export default function Home() {
   }, [sortBy]);
 
   useEffect(() => {
-    // console.log(currentFilter);
     const filters = currentFilter.map((filter) => filter.toLocaleLowerCase());
     if (currentFilter.length > 0) {
       const newLlist: IPokemon_simple[] = [];
       pokemons.forEach((pokemon) => {
-        console.log(pokemon.types.map((type) => type.type.name));
         const types = pokemon.types.map((type) => type.type.name);
         types.forEach((type) => {
           if (filters.includes(type.toLocaleLowerCase())) {
@@ -71,7 +68,6 @@ export default function Home() {
           }
         });
       });
-      console.log(newLlist + "newlist");
       setPokemonList(newLlist);
     }
     if (currentFilter.length === 0) {
@@ -83,11 +79,12 @@ export default function Home() {
       <div className="search_container">
         <Searchbar updateSearch={setDelayedSearch} />
         <div className="filter_sort_container">
-          <FilterBox
+          <FilterAndSortingBox
             currentFilter={currentFilter}
             setCurrentFilter={setCurrentFilter}
+            sortBy={sortBy}
+            updateSort={setSortBy}
           />
-          <SortingBox sortBy={sortBy} updateSort={setSortBy} />
         </div>
       </div>
       <div className="pokemons_container">

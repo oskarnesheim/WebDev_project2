@@ -67,6 +67,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    width: 20%;
 }
 
 .filter_container{
@@ -75,9 +76,9 @@
     align-items: center;
 }
 
-.filter_list{
+#filter_list{
   display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 }
     
 

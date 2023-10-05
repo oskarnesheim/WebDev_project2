@@ -4,7 +4,20 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { SortBy } from "./Home";
+import React from "react";
 
+export const style = {
+  position: "absolute",
+  top: "60%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "#002c58",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  color: "white",
+};
 type sortingBoxProps = {
   updateSort: React.Dispatch<React.SetStateAction<string>>;
   sortBy: string;
@@ -12,12 +25,13 @@ type sortingBoxProps = {
 
 export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box sx={style}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Sort by</InputLabel>
+        <InputLabel style={{ color: "white" }}>Sort by</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
+          style={{ color: "white" }}
           value={sortBy}
           label="Age"
           onChange={(e) => updateSort(e.target.value)}
