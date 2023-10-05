@@ -44,7 +44,7 @@ export default function FilterBox({
                   onChange={() => {
                     if (currentFilter.includes(filter[0])) {
                       setCurrentFilter(
-                        currentFilter.filter((type) => type !== filter[0])
+                        currentFilter.filter((type) => type !== filter[0]),
                       );
                     } else {
                       setCurrentFilter([...currentFilter, filter[0]]);
