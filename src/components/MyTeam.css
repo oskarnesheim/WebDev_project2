@@ -1,41 +1,78 @@
 .my-team {
-  display: block;
+  display: flex; /* Make the parent a flex container */
+  justify-content: center;
+  flex-direction: row;
+}
+
+.team-grid {
+  background: radial-gradient(
+    circle,
+    rgba(17, 48, 88, 1) 8%,
+    rgba(17, 48, 88, 1) 55%,
+    rgba(14, 152, 248, 1) 100%
+  );
+  min-width: 680px;
+  min-height: 520px;
+  display: grid;
+  place-items: center;
+  border: 10px solid black;
+  border-radius: 4%;
+  column-gap: 20px;
+  row-gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .team-grid-child {
   width: fit-content;
   height: fit-content;
   z-index: 1;
-  /* border: 1px solid black;
-  padding: 10px;
-  margin: 5px;
-  text-align: center;
-  font-size: 20px; */
-}
-
-.team-grid {
-  width: 200px;
-  display: grid;
-  column-gap: 20px;
-  row-gap: 20px;
-  grid-template-columns: repeat(2, 1fr);
+  /* flex: 0 0 auto; */
 }
 
 .selected-Info {
-  margin: 10px;
-  width: fit-content;
-  height: 500px;
-  text-align: center;
+  margin-left: 50px;
+  margin-top: 60px;
+  width: 20%;
+  background-color: black;
+  border-radius: 4%;
+  height: 520px;
+  display: flex; /* Make the parent a flex container */
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 20px;
 }
-
-/* 
-.container {
-  text-align: center; 
-} */
 
 .box {
   display: inline-block;
   width: 100px; /* Adjust the width as needed */
-  box-sizing: border-box; /* Optional: Include padding and borders in the width */
-  border: 1px solid #ccc; /* Optional: Add a border for clarity */
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.card-container {
+  z-index: -1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.horizontal-arrows {
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }

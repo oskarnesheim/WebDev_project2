@@ -1,16 +1,37 @@
 import { useQuery } from "@tanstack/react-query";
 import { IPokemon } from "../interfaces/pokemon";
-import { Card, CardMedia } from "@mui/material";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Button from "@mui/material/Button";
+import image from "/public/mockSpriteIcon.png";
 import Typography from "@mui/material/Typography";
+// import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import { Box, createTheme } from "@mui/material";
 
 type PokemonCardProps = {
   name: string;
+  selected: boolean;
 };
 
-export default function PokemonCard({ name }: PokemonCardProps) {
+const customFontStyle = {
+  fontFamily: "pokemonfont", // Use the font-family name you defined
+};
+
+export default function PokemonCard({ name, selected }: PokemonCardProps) {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#0B4C8D", // blue
+        light: "#ffffff", // white
+        dark: "#0E98F8", // light blue
+      },
+      secondary: {
+        main: "#FFCB05", // yellow
+        light: "#ffffff", // white
+        dark: "#FFCB05", // yellow
+      },
+    },
+  });
+
   const { data, error, isLoading } = useQuery<IPokemon, Error>(
     [name, "_pokemon"],
     () => {
@@ -18,7 +39,7 @@ export default function PokemonCard({ name }: PokemonCardProps) {
         .then((res) => res.json())
         .then((res) => res as IPokemon);
       return res;
-    }
+    },
   );
 
   if (isLoading) {
@@ -30,25 +51,55 @@ export default function PokemonCard({ name }: PokemonCardProps) {
   }
 
   return (
-    <Card>
-      <CardMedia
-        sx={{ height: 140 }}
-        image={"/public/mockSpriteIcon.png"}
-        title={data.name}
-      />
+    <Card
+      variant="outlined"
+      sx={{
+        width: 300,
+        border: selected ? "1px solid #E0F1FF" : "none",
+        backgroundColor: theme.palette.primary.main,
+        opacity: selected ? 0.9 : 0.6,
+        transition: selected
+          ? "opacity 0.3s ease-in-out, border 0.3s ease-in-out"
+          : "none",
+        "&:hover": {
+          transition: "background-color 0.3s ease-in-out",
+          backgroundColor: theme.palette.primary.dark,
+        },
+      }}
+    >
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Weight: {data.weight}
-          Height: {data.height}
-        </Typography>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* Left side: Image */}
+          <Box sx={{ marginRight: "10px", alignItems: "center" }}>
+            <img
+              src={image}
+              alt="Image"
+              style={{
+                width: "100px",
+                height: "100px",
+                borderStyle: "solid",
+                backgroundColor: theme.palette.primary.light,
+                borderRadius: "4%",
+              }}
+            />
+          </Box>
+
+          {/* Right side: Text */}
+          <Typography
+            variant="body1"
+            sx={{ color: theme.palette.primary.light }}
+            style={customFontStyle}
+          >
+            {data.name}
+          </Typography>
+        </div>
       </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions>
     </Card>
   );
 }
