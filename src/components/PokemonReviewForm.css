@@ -1,0 +1,78 @@
+/* Pokemon Review Container */
+.pokemon-review {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+/* Title */
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Star Rating */
+.rating {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Review Textarea */
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+/* Submit Button */
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Reviews List */
+h3 {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #fff;
+}
+
+/* Review Rating (No changes needed for star ratings) */
+.review-rating {
+    font-weight: bold;
+}
+
+/* Star Icon Styling */
+.MuiSvgIcon-root {
+    font-size: 32px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+/* Adjust star icon color */
+.MuiSvgIcon-root.primary {
+    color: #fddb3a;
+    /* Color of selected star */
+}
+
+/* Unselected star icon color */
+.MuiSvgIcon-root.action {
+    color: #ccc;
+    /* Default color of unselected star */
+}

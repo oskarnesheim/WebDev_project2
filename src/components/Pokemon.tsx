@@ -1,10 +1,12 @@
 import { NavLink, Outlet, useParams } from "react-router-dom";
 import PokemonAbilities from "./PokemonAbilities";
 import PokemonStats from "./PokemonStats";
+import PokemonReviews from "./PokemonReviews";
 import { useQuery } from "@tanstack/react-query";
 import { IPokemon } from "../interfaces/pokemon";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
+import "./PokemonPage.css";
 
 enum PokemonTabs {
   STATS = "stats",
@@ -110,14 +112,26 @@ export default function Pokemon() {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>
         {data.name} - {data.id}
       </h1>
-      <NavLink to={".."}>Go back</NavLink>
-      <div>
-        <button onClick={() => setTab(PokemonTabs.STATS)}>Stats</button>
-        <button onClick={() => setTab(PokemonTabs.ABILITIES)}>Abilities</button>
+      <NavLink to={".."} className="nav-link">
+        Go back
+      </NavLink>
+      <div className="tabs">
+        <button
+          className={`tab-button ${tab === PokemonTabs.STATS ? "active" : ""}`}
+          onClick={() => setTab(PokemonTabs.STATS)}
+        >
+          Stats
+        </button>
+        <button
+          className={`tab-button ${tab === PokemonTabs.ABILITIES ? "active" : ""}`}
+          onClick={() => setTab(PokemonTabs.ABILITIES)}
+        >
+          Abilities
+        </button>
       </div>
       <div>
         {tab === PokemonTabs.STATS && <PokemonStats pokemon={data} />}
@@ -129,6 +143,7 @@ export default function Pokemon() {
       >
         {checkTeam(data.name) ? "Already in team" : "Add to team"}
       </button>
+      <PokemonReviews pokemonId={data.id.toString()} />
       <Outlet />
     </div>
   );
