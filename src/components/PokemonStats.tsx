@@ -17,25 +17,32 @@ type PokemonStatsProps = {
   pokemon: IPokemon;
 };
 
+// Design from https://www.serebii.net/xy/alakastat.jpg
+// const LIGHTBLUE = "#5cd5ed";
+const LIGHTBLUE = "linear-gradient(to left, #257189,  #5cd5ed)";
+const BLUE = "#257189";
+const DARKBLUE = "linear-gradient(to left, #257189,  #1e4c62)";
+const BACKGROUNDBLUE = "radial-gradient(circle, #5cd5ed 0%,  #257189 69%)";
+
 export default function PokemonStats({ pokemon }: PokemonStatsProps) {
   const navigate = useNavigate();
   useEffect(() => {
     if (!pokemon) navigate("..");
   });
 
-  function createData(stat: string, value: number) {
-    return { stat, value };
+  function createData(stat: string, value: number, color: string) {
+    return { stat, value, color };
   }
 
   const rows = [
-    createData("Height", pokemon.height),
-    createData("Weight", pokemon.weight),
-    createData("HP", pokemon.stats[0].base_stat),
-    createData("Attack", pokemon.stats[1].base_stat),
-    createData("Defense", pokemon.stats[2].base_stat),
-    createData("Special Attack", pokemon.stats[3].base_stat),
-    createData("Special Defense", pokemon.stats[4].base_stat),
-    createData("Speed", pokemon.stats[5].base_stat),
+    createData("Height", pokemon.height, LIGHTBLUE),
+    createData("Weight", pokemon.weight, BLUE),
+    createData("HP", pokemon.stats[0].base_stat, LIGHTBLUE),
+    createData("Attack", pokemon.stats[1].base_stat, BLUE),
+    createData("Defense", pokemon.stats[2].base_stat, LIGHTBLUE),
+    createData("Special Attack", pokemon.stats[3].base_stat, BLUE),
+    createData("Special Defense", pokemon.stats[4].base_stat, LIGHTBLUE),
+    createData("Speed", pokemon.stats[5].base_stat, BLUE),
   ];
 
   return (
@@ -46,28 +53,62 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
           display: "flex",
           justifyContent: "center",
           margin: "auto",
+          padding: 0,
         }}
       >
-        <TableContainer sx={{ maxWidth: 500, backgroundColor: "red" }}>
-          <Typography variant="h5" textAlign={"center"}>
-            Stats for {pokemon.name}
-          </Typography>
-          <Table sx={{ alignItems: "center" }}>
-            <TableHead>
-              <TableRow>
-                <TableCell align="right">Stat</TableCell>
-                <TableCell align="left">Value</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.stat}>
-                  <TableCell align="right">{row.stat}</TableCell>
-                  <TableCell align="left">{row.value}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+        <TableContainer
+          sx={{
+            maxWidth: 800,
+            background: BLUE,
+            padding: "1em 0em",
+          }}
+        >
+          <Box sx={{ background: DARKBLUE, maxWidth: 450 }}>
+            <Typography variant="h5" textAlign={"left"} paddingLeft={"1em"}>
+              Stats for {pokemon.name}
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex" }}>
+            <Box sx={{ minWidth: 250 }}>
+              <Table sx={{ alignItems: "center" }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="left" sx={{ border: 0 }}>
+                      Stat
+                    </TableCell>
+                    <TableCell align="left" sx={{ border: 0 }}>
+                      Value
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row) => (
+                    <TableRow key={row.stat} sx={{ background: row.color }}>
+                      <TableCell align="left" sx={{ border: 0 }}>
+                        {row.stat}
+                      </TableCell>
+                      <TableCell align="left" sx={{ border: 0 }}>
+                        {row.value}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Box>
+            <Box sx={{ minWidth: 550, background: BACKGROUNDBLUE, margin: 0 }}>
+              <Box
+                sx={{
+                  height: 233,
+                  width: 350,
+                  maxHeight: { xs: 233, md: 167 },
+                  maxWidth: { xs: 350, md: 250 },
+                }}
+                component={"img"}
+                alt="Bilde av pokemon"
+                src="/../public/pikachu.png"
+              ></Box>
+            </Box>
+          </Box>
         </TableContainer>
       </Box>
     </>
