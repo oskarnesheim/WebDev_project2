@@ -60,7 +60,7 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
           sx={{
             maxWidth: 800,
             background: BLUE,
-            padding: "1em 0em",
+            paddingTop: "1em",
           }}
         >
           <Box sx={{ background: DARKBLUE, maxWidth: 450 }}>
@@ -95,13 +95,19 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
                 </TableBody>
               </Table>
             </Box>
-            <Box sx={{ minWidth: 550, background: BACKGROUNDBLUE, margin: 0 }}>
+            <Box
+              sx={{
+                minWidth: 550,
+                background: BACKGROUNDBLUE,
+                margin: 0,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               <Box
                 sx={{
-                  height: 233,
-                  width: 350,
-                  maxHeight: { xs: 233, md: 167 },
-                  maxWidth: { xs: 350, md: 250 },
+                  height: 450,
+                  width: 450,
                 }}
                 component={"img"}
                 alt="Bilde av pokemon"
