@@ -25,8 +25,9 @@ export default function Pokemon() {
       const res = fetch(`pokemon_data/${id}.json/`)
         .then((res) => res.json())
         .then((res) => res as IPokemon);
+
       return res;
-    }
+    },
   );
 
   function getTeam() {
