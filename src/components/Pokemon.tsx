@@ -1,10 +1,11 @@
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import PokemonAbilities from "./PokemonAbilities";
 import PokemonStats from "./PokemonStats";
 import { useQuery } from "@tanstack/react-query";
 import { IPokemon } from "../interfaces/pokemon";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
+import { Box, Button, Typography } from "@mui/material";
 
 enum PokemonTabs {
   STATS = "stats",
@@ -16,7 +17,7 @@ export default function Pokemon() {
   const [tab, setTab] = useState<PokemonTabs>(PokemonTabs.STATS);
   const [team, setWindowTeam] = useState<string>("");
   const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
-
+  const navigate = useNavigate();
   const { data, error, isLoading } = useQuery<IPokemon, Error>(
     [id, "_pokemon"],
     () => {
@@ -109,31 +110,34 @@ export default function Pokemon() {
   }
 
   return (
-    <div>
-      <h1>
-        {data.name} - {data.id}
-      </h1>
-      <NavLink to={".."}>Go back</NavLink>
-      <img
-        style={{ height: 140 }}
-        src={data.sprites.front_default}
-        alt="Cool picture of a pokemon"
-      />
-      <div>
-        <button onClick={() => setTab(PokemonTabs.STATS)}>Stats</button>
-        <button onClick={() => setTab(PokemonTabs.ABILITIES)}>Abilities</button>
-      </div>
-      <div>
+    <>
+      <Typography variant="h3" textAlign={"center"}>
+        {data.name} - #{data.id}
+      </Typography>
+
+      <Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Button onClick={() => navigate(-1)}>Go back</Button>
+          <Button onClick={() => setTab(PokemonTabs.STATS)}>Stats</Button>
+          <Button onClick={() => setTab(PokemonTabs.ABILITIES)}>
+            Abilities
+          </Button>
+          <Button
+            disabled={checkTeam(data.name)}
+            onClick={() => addToTeam(data.name)}
+          >
+            {checkTeam(data.name) ? "Already in team" : "Add to team"}
+          </Button>
+        </Box>
         {tab === PokemonTabs.STATS && <PokemonStats pokemon={data} />}
         {tab === PokemonTabs.ABILITIES && <PokemonAbilities pokemon={data} />}
-      </div>
-      <button
-        disabled={checkTeam(data.name)}
-        onClick={() => addToTeam(data.name)}
-      >
-        {checkTeam(data.name) ? "Already in team" : "Add to team"}
-      </button>
+      </Box>
       <Outlet />
-    </div>
+    </>
   );
 }
