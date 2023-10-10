@@ -110,8 +110,8 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
                   width: 450,
                 }}
                 component={"img"}
-                alt="Bilde av pokemon"
-                src="/../public/pikachu.png"
+                alt={"Picture of " + pokemon.name}
+                src={pokemon.sprites.front_default}
               ></Box>
             </Box>
           </Box>
