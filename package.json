@@ -6,7 +6,6 @@
   "scripts": {
     "check": "tsc && vite build && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 && prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\" && vitest --coverage && prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "dev": "vite",
-    "check": "tsc && vite build && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 && prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\" && vitest --coverage && prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
@@ -17,7 +16,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.11",
+    "@mui/icons-material": "^5.14.12",
     "@mui/material": "^5.14.11",
     "@tanstack/react-query": "^4.35.3",
     "@tanstack/react-query-devtools": "^4.35.3",
