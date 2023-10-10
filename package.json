@@ -4,11 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "check": "tsc && vite build && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 && prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\" && vitest --coverage && prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "dev": "vite",
+    "check": "tsc && vite build && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 && prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\" && vitest --coverage && prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest --coverage"
+    "test": "vitest --coverage",
+    "prettier-check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "prettier-write": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

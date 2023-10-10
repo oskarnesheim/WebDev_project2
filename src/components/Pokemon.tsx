@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import PokemonAbilities from "./PokemonAbilities";
 import PokemonStats from "./PokemonStats";
 import PokemonReviews from "./PokemonReviews";
@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { IPokemon } from "../interfaces/pokemon";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
-import "./PokemonPage.css";
+import { Box, Button, Typography } from "@mui/material";
 
 enum PokemonTabs {
   STATS = "stats",
@@ -18,17 +18,16 @@ export default function Pokemon() {
   const [tab, setTab] = useState<PokemonTabs>(PokemonTabs.STATS);
   const [team, setWindowTeam] = useState<string>("");
   const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
-
+  const navigate = useNavigate();
   const { data, error, isLoading } = useQuery<IPokemon, Error>(
     [id, "_pokemon"],
     () => {
-      // const res = fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
       const res = fetch(`pokemon_data/${id}.json/`)
         .then((res) => res.json())
         .then((res) => res as IPokemon);
 
       return res;
-    }
+    },
   );
 
   function getTeam() {
@@ -112,39 +111,34 @@ export default function Pokemon() {
   }
 
   return (
-    <div className="container">
-      <h1>
-        {data.name} - {data.id}
-      </h1>
-      <NavLink to={".."} className="nav-link">
-        Go back
-      </NavLink>
-      <div className="tabs">
-        <button
-          className={`tab-button ${tab === PokemonTabs.STATS ? "active" : ""}`}
-          onClick={() => setTab(PokemonTabs.STATS)}
+    <>
+      <Typography variant="h3" textAlign={"center"}>
+        {data.name} - #{data.id}
+      </Typography>
+
+      <Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
-          Stats
-        </button>
-        <button
-          className={`tab-button ${tab === PokemonTabs.ABILITIES ? "active" : ""}`}
-          onClick={() => setTab(PokemonTabs.ABILITIES)}
-        >
-          Abilities
-        </button>
-      </div>
-      <div>
+          <Button onClick={() => navigate(-1)}>Go back</Button>
+          <Button onClick={() => setTab(PokemonTabs.STATS)}>Stats</Button>
+          <Button onClick={() => setTab(PokemonTabs.ABILITIES)}>
+            Abilities
+          </Button>
+          <Button
+            disabled={checkTeam(data.name)}
+            onClick={() => addToTeam(data.name)}
+          >
+            {checkTeam(data.name) ? "Already in team" : "Add to team"}
+          </Button>
+        </Box>
         {tab === PokemonTabs.STATS && <PokemonStats pokemon={data} />}
         {tab === PokemonTabs.ABILITIES && <PokemonAbilities pokemon={data} />}
-      </div>
-      <button
-        disabled={checkTeam(data.name)}
-        onClick={() => addToTeam(data.name)}
-      >
-        {checkTeam(data.name) ? "Already in team" : "Add to team"}
-      </button>
-      <PokemonReviews pokemonId={data.id.toString()} />
+      </Box>
       <Outlet />
-    </div>
+    </>
   );
 }
