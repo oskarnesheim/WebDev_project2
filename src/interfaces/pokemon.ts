@@ -200,6 +200,29 @@ export interface IPokemon {
         front_shiny: string | null;
       };
     };
+    versions: {
+      "generation-i": {
+        "red-blue": {
+          back_default: string | null;
+          back_gray: string | null;
+          front_default: string | null;
+          front_gray: string | null;
+        };
+        yellow: {
+          back_default: string | null;
+          back_gray: string | null;
+          front_default: string | null;
+          front_gray: string | null;
+        };
+      };
+      "generation-viii": {
+        // name: string;
+        icons: {
+          front_default: string;
+          front_female: string | null;
+        };
+      };
+    };
   };
   stats: {
     base_stat: number;

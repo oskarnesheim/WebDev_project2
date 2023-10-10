@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "pokemonfont"; /* Give your font a name */
+  src: url("/public/PokemonGb-RAeo.ttf") format("truetype"); /* Point to the font file */
+  /* Add additional formats if necessary */
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  background-color: #141c24;
+  color: #fff;
+  font-family: pokemonfont;
+}
