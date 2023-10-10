@@ -1,7 +1,6 @@
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import PokemonAbilities from "./PokemonAbilities";
 import PokemonStats from "./PokemonStats";
-import PokemonReviews from "./PokemonReviews";
 import { useQuery } from "@tanstack/react-query";
 import { IPokemon } from "../interfaces/pokemon";
 import { useState } from "react";
