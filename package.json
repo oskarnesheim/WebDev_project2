@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "check": "tsc && vite build && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 && prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\" && vitest --coverage && prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",

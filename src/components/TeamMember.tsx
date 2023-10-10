@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { IPokemon } from "../interfaces/pokemon";
-import image from "/public/mockSpriteIcon.png";
 import Typography from "@mui/material/Typography";
 // import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -78,15 +77,8 @@ export default function PokemonCard({ name, selected }: PokemonCardProps) {
           {/* Left side: Image */}
           <Box sx={{ marginRight: "10px", alignItems: "center" }}>
             <img
-              src={image}
-              alt="Image"
-              style={{
-                width: "100px",
-                height: "100px",
-                borderStyle: "solid",
-                backgroundColor: theme.palette.primary.light,
-                borderRadius: "4%",
-              }}
+              src={data.sprites.versions["generation-viii"].icons.front_default}
+              alt={name}
             />
           </Box>
 
