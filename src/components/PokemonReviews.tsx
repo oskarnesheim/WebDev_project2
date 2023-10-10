@@ -62,10 +62,9 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
                 <label>Rating:</label>
                 {[1, 2, 3, 4, 5].map((star) => (
                     <StarIcon
-                        className="star"
                         key={star}
                         onClick={() => handleRatingClick(star)}
-                        color={star <= rating ? 'primary' : 'action'}
+                        className={`custom ${star <= rating ? 'primary' : 'secondary'}`}
                     />
                 ))}
             </div>

@@ -65,14 +65,14 @@ li {
     cursor: pointer;
 }
 
-/* Adjust star icon color */
-.MuiSvgIcon-root.primary {
-    color: #fddb3a;
-    /* Color of selected star */
+/* Increase specificity for custom star icon color */
+.MuiSvgIcon-root.primary.custom {
+    color: #ff0000;
+    /* Red color for selected star */
 }
 
-/* Unselected star icon color */
-.MuiSvgIcon-root.action {
+/* Increase specificity for custom star icon color */
+.MuiSvgIcon-root.secondary.custom {
     color: #ccc;
-    /* Default color of unselected star */
+    /* Gray color for unselected star */
 }
