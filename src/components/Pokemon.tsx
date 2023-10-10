@@ -6,6 +6,7 @@ import { IPokemon } from "../interfaces/pokemon";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { Box, Button, Typography } from "@mui/material";
+import PokemonRatingReview from "./PokemonReviews";
 
 enum PokemonTabs {
   STATS = "stats",
@@ -137,6 +138,7 @@ export default function Pokemon() {
         {tab === PokemonTabs.STATS && <PokemonStats pokemon={data} />}
         {tab === PokemonTabs.ABILITIES && <PokemonAbilities pokemon={data} />}
       </Box>
+      <PokemonRatingReview pokemonId={data.id.toString()} />
       <Outlet />
     </>
   );
