@@ -3,7 +3,6 @@ import { IPokemon } from "../interfaces/pokemon";
 import { useEffect } from "react";
 import {
   Box,
-  CssBaseline,
   Table,
   TableBody,
   TableCell,
