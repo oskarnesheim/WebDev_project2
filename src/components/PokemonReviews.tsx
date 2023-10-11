@@ -15,6 +15,14 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrorMessage("");
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [errorMessage]);
 
   useEffect(() => {
     // Load existing reviews from localStorage when the component mounts
@@ -34,65 +42,104 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
     setReview(event.target.value);
   };
 
-  const handleAddReview = () => {
-    if (rating > 0 && review.trim() !== "") {
-      const newReview = {
-        rating,
-        review,
-      };
-
-      // Add the new review to the existing reviews
-      setReviews([...reviews, newReview]);
-
-      // Save reviews to localStorage
-      localStorage.setItem(
-        `pokemon_reviews_${pokemonId}`,
-        JSON.stringify([...reviews, newReview]),
-      );
-
-      // Reset the rating and review input
-      setRating(0);
-      setReview("");
+  const handleAddReview = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (rating === 0) {
+      setErrorMessage("Please select a rating.");
+      return;
     }
+    if (review.trim() === "") {
+      setErrorMessage("Please write a review.");
+      return;
+    }
+    const newReview = {
+      rating,
+      review,
+    };
+
+    // Add the new review to the existing reviews
+    setReviews([...reviews, newReview]);
+
+    // Save reviews to localStorage
+    localStorage.setItem(
+      `pokemon_reviews_${pokemonId}`,
+      JSON.stringify([...reviews, newReview]),
+    );
+
+    // Reset the rating and review input
+    setRating(0);
+    setReview("");
   };
 
   return (
-    <div style={{ maxWidth: "500px", margin: "20px auto", padding: "20px", backgroundColor: "#141c24", color: "white" }}>
+    <div
+      style={{
+        maxWidth: "500px",
+        margin: "20px auto",
+        padding: "20px",
+        backgroundColor: "#141c24",
+        color: "white",
+      }}
+    >
       <h2 style={{ fontSize: "24px", marginBottom: "10px", color: "#1976d2" }}>
-        Rate and Review <span style={{ color: "transparent" }}>{pokemonId}</span>
+        Rate and Review{" "}
+        <span style={{ color: "transparent" }}>{pokemonId}</span>
       </h2>
-      <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
-        <label style={{ marginRight: "10px", marginTop: "10px" }}>Rating</label>
-        {Array.from({ length: 5 }, (_, index) => (
-          <StarIcon
-            key={index}
-            onClick={() => handleRatingClick(index + 1)}
+      <form onSubmit={(e) => handleAddReview(e)}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "10px",
+          }}
+        >
+          <label style={{ marginRight: "10px", marginTop: "10px" }}>
+            Rating
+          </label>
+          {Array.from({ length: 5 }, (_, index) => (
+            <StarIcon
+              key={index}
+              onClick={() => handleRatingClick(index + 1)}
+              style={{
+                fontSize: "24px",
+                cursor: "pointer",
+                color: index < rating ? "#1976d2" : "#ccc",
+                marginTop: "10px",
+              }}
+            />
+          ))}
+        </div>
+        <div>
+          <TextareaAutosize
+            value={review}
+            onChange={handleReviewChange}
+            minRows={4}
             style={{
-              fontSize: "24px",
-              cursor: "pointer",
-              color: index < rating ? "#1976d2" : "#ccc",
+              width: "100%",
+              padding: "8px",
               marginTop: "10px",
+              fontFamily: "pokemonfont",
             }}
+            placeholder="Write your review..."
           />
-        ))}
-      </div>
-      <div>
-        <TextareaAutosize
-          value={review}
-          onChange={handleReviewChange}
-          minRows={4}
-          style={{ width: "100%", padding: "8px", marginTop: "10px", fontFamily: "pokemonfont" }}
-          placeholder="Write your review..."
-        />
-      </div>
-      <Button
-        onClick={handleAddReview}
-        variant="contained"
-        className="custom-button"
-        style={{ margin: "10px 0", padding: "10px 20px", fontFamily: "pokemonfont", backgroundColor: "#1976d2", color: "#141c24" }}
-      >
-        Submit Review
-      </Button>
+        </div>
+        <Button
+          type="submit"
+          // onClick={handleAddReview}
+          variant="contained"
+          className="custom-button"
+          style={{
+            margin: "10px 0",
+            padding: "10px 20px",
+            fontFamily: "pokemonfont",
+            backgroundColor: "#1976d2",
+            color: "#141c24",
+          }}
+        >
+          Submit Review
+        </Button>
+      </form>
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       <div>
         <h3 style={{ fontSize: "20px", marginTop: "20px" }}>Reviews</h3>
         {reviews.length === 0 ? (
@@ -100,15 +147,24 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
         ) : (
           <ul style={{ listStyle: "none", padding: "0" }}>
             {reviews.map((item, index) => (
-              <li key={index} style={{ border: "3px solid #1976d2", padding: "10px", margin: "20px 0", backgroundColor: "#141c24" }}>
+              <li
+                key={index}
+                style={{
+                  border: "3px solid #1976d2",
+                  padding: "10px",
+                  margin: "20px 0",
+                  backgroundColor: "#141c24",
+                }}
+              >
                 <div style={{ marginBottom: "10px" }}>
                   {Array.from({ length: item.rating }, (_, i) => (
-                    <StarIcon key={i} style={{ fontSize: "18px", color: "#1976d2" }} />
+                    <StarIcon
+                      key={i}
+                      style={{ fontSize: "18px", color: "#1976d2" }}
+                    />
                   ))}
                 </div>
-                <div>
-                  {item.review}
-                </div>
+                <div>{item.review}</div>
               </li>
             ))}
           </ul>
