@@ -1,5 +1,4 @@
 import "./App.css";
-import Footer from "./components/Footer";
 import Navbar from "./components/navbar";
 import { Outlet } from "react-router-dom";
 
@@ -10,7 +9,6 @@ function App() {
       <div className="content_container">
         <Outlet />
       </div>
-      <Footer />
     </>
   );
 }
