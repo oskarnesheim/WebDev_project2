@@ -19,7 +19,7 @@ function Searchbar({ updateSearch }: SearchbarProps) {
       id="city_input"
       value={search}
       onChange={(event) => setSearch(event.target.value)}
-      placeholder="E.g. Pikachu"
+      placeholder=" E.g. charizard"
       required
     />
   );

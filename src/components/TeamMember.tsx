@@ -54,7 +54,7 @@ export default function PokemonCard({ name, selected }: PokemonCardProps) {
       variant="outlined"
       sx={{
         width: 300,
-        border: selected ? "1px solid #E0F1FF" : "none",
+        border: selected ? "0.5px solid #E0F1FF" : "none",
         backgroundColor: theme.palette.primary.main,
         opacity: selected ? 0.9 : 0.6,
         transition: selected

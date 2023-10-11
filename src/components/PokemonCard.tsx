@@ -1,11 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import {
-  Card,
-  CardActions,
-  CardContent,
-  Button,
-  Typography,
-} from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { IPokemon } from "../interfaces/pokemon";
 
@@ -68,6 +62,8 @@ export default function PokemonCard({ name }: PokemonCardProps) {
 
   return (
     <Card
+      onClick={() => navigate(name)}
+      className="pokemon-card"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -78,6 +74,10 @@ export default function PokemonCard({ name }: PokemonCardProps) {
       sx={{
         width: "100%",
         textAlign: "center",
+        "&:hover": {
+          cursor: "pointer",
+          boxShadow: `0 0 10vw 0px ${getBackgroundColor()[0]}`,
+        },
       }}
     >
       <CardContent
@@ -105,12 +105,13 @@ export default function PokemonCard({ name }: PokemonCardProps) {
           {data.types.map((type) => type.type.name).join(", ")}
         </Typography>
         <Typography variant="body2">
-          {data.base_experience} XP {data.weight} kg
+          <hr />
+          {data.weight} kg &nbsp; {data.base_experience}XP
         </Typography>
       </CardContent>
-      <CardActions onClick={() => navigate(name)}>
+      {/* <CardActions>
         <Button size="small">Learn more</Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }
