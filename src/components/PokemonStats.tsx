@@ -47,7 +47,6 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
 
   return (
     <>
-      <CssBaseline />
       <Box
         sx={{
           display: "flex",
