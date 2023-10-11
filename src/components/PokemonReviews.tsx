@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./PokemonReviewForm.css";
+import { Button, TextareaAutosize } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 
 type PokemonReviewProps = {
@@ -57,41 +57,58 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
   };
 
   return (
-    <div className="pokemon-review">
-      <h2>Rate and Review {pokemonId}</h2>
-      <div className="rating">
-        <label>Rating:</label>
-        {[1, 2, 3, 4, 5].map((star) => (
+    <div style={{ maxWidth: "500px", margin: "20px auto", padding: "20px", backgroundColor: "#141c24", color: "white" }}>
+      <h2 style={{ fontSize: "24px", marginBottom: "10px", color: "#1976d2" }}>
+        Rate and Review <span style={{ color: "transparent" }}>{pokemonId}</span>
+      </h2>
+      <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+        <label style={{ marginRight: "10px", marginTop: "10px" }}>Rating</label>
+        {Array.from({ length: 5 }, (_, index) => (
           <StarIcon
-            key={star}
-            onClick={() => handleRatingClick(star)}
-            className={`custom ${star <= rating ? "primary" : "secondary"}`}
+            key={index}
+            onClick={() => handleRatingClick(index + 1)}
+            style={{
+              fontSize: "24px",
+              cursor: "pointer",
+              color: index < rating ? "#1976d2" : "#ccc",
+              marginTop: "10px",
+            }}
           />
         ))}
       </div>
       <div>
-        <label>Review:</label>
-        <textarea
+        <TextareaAutosize
           value={review}
           onChange={handleReviewChange}
-          rows={4}
-          cols={50}
+          minRows={4}
+          style={{ width: "100%", padding: "8px", marginTop: "10px", fontFamily: "pokemonfont" }}
           placeholder="Write your review..."
-        ></textarea>
+        />
       </div>
-      <button onClick={handleAddReview}>Submit Review</button>
+      <Button
+        onClick={handleAddReview}
+        variant="contained"
+        className="custom-button"
+        style={{ margin: "10px 0", padding: "10px 20px", fontFamily: "pokemonfont", backgroundColor: "#1976d2", color: "#141c24" }}
+      >
+        Submit Review
+      </Button>
       <div>
-        <h3>Reviews:</h3>
+        <h3 style={{ fontSize: "20px", marginTop: "20px" }}>Reviews</h3>
         {reviews.length === 0 ? (
           <p>No reviews yet.</p>
         ) : (
-          <ul className="reviews">
+          <ul style={{ listStyle: "none", padding: "0" }}>
             {reviews.map((item, index) => (
-              <li key={index} className="review">
-                <strong className="review-rating">Rating:</strong> {item.rating}{" "}
-                Star{item.rating !== 1 ? "s" : ""}
-                <br />
-                <strong>Review:</strong> {item.review}
+              <li key={index} style={{ border: "3px solid #1976d2", padding: "10px", margin: "20px 0", backgroundColor: "#141c24" }}>
+                <div style={{ marginBottom: "10px" }}>
+                  {Array.from({ length: item.rating }, (_, i) => (
+                    <StarIcon key={i} style={{ fontSize: "18px", color: "#1976d2" }} />
+                  ))}
+                </div>
+                <div>
+                  {item.review}
+                </div>
               </li>
             ))}
           </ul>
