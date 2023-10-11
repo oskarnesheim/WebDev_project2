@@ -10,7 +10,7 @@ type FilterAndSortingBoxProps = {
   sortBy: string;
 };
 
-const style = {
+const modalBoxStyles = {
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -42,7 +42,7 @@ export default function FilterAndSortingBox({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={modalBoxStyles}>
           <FilterBox
             currentFilter={currentFilter}
             setCurrentFilter={setCurrentFilter}

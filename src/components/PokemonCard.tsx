@@ -45,24 +45,25 @@ export default function PokemonCard({ name }: PokemonCardProps) {
     },
   );
 
-  function getBackgroundColor() {
-    if (data) {
-      const types = data.types.map((type) => type.type.name);
-      for (let i = 0; i < filters.length; i++) {
-        if (types.includes(filters[i][0].toLowerCase())) {
-          return filters[i][1];
-        }
-      }
-    }
-    return "grey";
-  }
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   if (error) {
     return <div>Error: {error.message}</div>;
+  }
+
+  function getBackgroundColor(): string[] {
+    if (!data) return ["grey"];
+    const colors: string[] = [];
+
+    const types = data.types.map((type) => type.type.name);
+    for (let i = 0; i < filters.length; i++) {
+      if (types.includes(filters[i][0].toLowerCase())) {
+        colors.push(filters[i][1]);
+      }
+    }
+    return colors;
   }
 
   return (
@@ -74,11 +75,25 @@ export default function PokemonCard({ name }: PokemonCardProps) {
         alignItems: "center",
       }}
       key={data.id}
-      onClick={() => navigate(name)}
-      sx={{ width: "100%", textAlign: "center" }}
+      sx={{
+        width: "100%",
+        textAlign: "center",
+      }}
     >
+      <CardContent
+        style={{
+          background: `${
+            getBackgroundColor().length > 1
+              ? `linear-gradient(90deg, ${getBackgroundColor()[0]} 40%, ${
+                  getBackgroundColor()[1]
+                } 60%)`
+              : getBackgroundColor()[0]
+          }`,
+          width: "100%",
+        }}
+      />
       <img
-        // style={{ height: "1%" }}
+        style={{ height: "1%" }}
         src={data.sprites.front_default}
         alt="Cool picture of a Pokémon"
       />
@@ -86,11 +101,14 @@ export default function PokemonCard({ name }: PokemonCardProps) {
         <Typography gutterBottom variant="h5" component="div">
           {name}
         </Typography>
-        <Typography variant="body2" color={getBackgroundColor()}>
-          Type: {data.types.map((type) => type.type.name).join(", ")}
+        <Typography variant="body2">
+          {data.types.map((type) => type.type.name).join(", ")}
+        </Typography>
+        <Typography variant="body2">
+          {data.base_experience} XP {data.weight} kg
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions onClick={() => navigate(name)}>
         <Button size="small">Learn more</Button>
       </CardActions>
     </Card>
