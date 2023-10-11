@@ -14,6 +14,25 @@ type PokemonCardProps = {
 };
 
 export default function PokemonCard({ name }: PokemonCardProps) {
+  const filters = [
+    ["Fire", "red"],
+    ["Water", "blue"],
+    ["Grass", "green"],
+    ["Electric", "yellow"],
+    ["Normal", "grey"],
+    ["Fighting", "brown"],
+    ["poison", "purple"],
+    ["Ground", "brown"],
+    ["Flying", "skyblue"],
+    ["Psychic", "pink"],
+    ["Bug", "green"],
+    ["Rock", "brown"],
+    ["Ghost", "purple"],
+    ["Dark", "black"],
+    ["Dragon", "purple"],
+    ["Steel", "grey"],
+    ["Fairy", "pink"],
+  ];
   const navigate = useNavigate();
 
   const { data, error, isLoading } = useQuery<IPokemon, Error>(
@@ -26,6 +45,18 @@ export default function PokemonCard({ name }: PokemonCardProps) {
     },
   );
 
+  function getBackgroundColor() {
+    if (data) {
+      const types = data.types.map((type) => type.type.name);
+      for (let i = 0; i < filters.length; i++) {
+        if (types.includes(filters[i][0].toLowerCase())) {
+          return filters[i][1];
+        }
+      }
+    }
+    return "grey";
+  }
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -35,24 +66,32 @@ export default function PokemonCard({ name }: PokemonCardProps) {
   }
 
   return (
-    <Card key={data.id} onClick={() => navigate(name)} sx={{ maxWidth: 345 }}>
+    <Card
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      key={data.id}
+      onClick={() => navigate(name)}
+      sx={{ width: "100%", textAlign: "center" }}
+    >
       <img
-        style={{ height: 140 }}
+        // style={{ height: "1%" }}
         src={data.sprites.front_default}
-        alt="Cool picture of a pokemon"
+        alt="Cool picture of a Pokémon"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Weight: {data.weight}
-          Height: {data.height}
+        <Typography variant="body2" color={getBackgroundColor()}>
+          Type: {data.types.map((type) => type.type.name).join(", ")}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="small">Learn more</Button>
       </CardActions>
     </Card>
   );
