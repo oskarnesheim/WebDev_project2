@@ -125,9 +125,6 @@ export default function Pokemon() {
         >
           <Button onClick={() => navigate(-1)}>Go back</Button>
           <Button onClick={() => setTab(PokemonTabs.STATS)}>Stats</Button>
-          <Button onClick={() => setTab(PokemonTabs.ABILITIES)}>
-            Abilities
-          </Button>
           <Button
             disabled={checkTeam(data.name)}
             onClick={() => addToTeam(data.name)}
