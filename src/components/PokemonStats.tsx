@@ -11,17 +11,32 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import theme from "../Theme";
 
 type PokemonStatsProps = {
   pokemon: IPokemon;
 };
 
 // Design from https://www.serebii.net/xy/alakastat.jpg
-// const LIGHTBLUE = "#5cd5ed";
-const LIGHTBLUE = "linear-gradient(to left, #257189,  #5cd5ed)";
-const BLUE = "#257189";
-const DARKBLUE = "linear-gradient(to left, #257189,  #1e4c62)";
-const BACKGROUNDBLUE = "radial-gradient(circle, #5cd5ed 0%,  #257189 69%)";
+const LIGHTBLUEGRADIENT =
+  "linear-gradient(to left, " +
+  theme.palette.primary.main +
+  ", " +
+  theme.palette.primary.light +
+  ")";
+const BLUE = theme.palette.primary.main;
+const DARKBLUEGRADIENT =
+  "linear-gradient(to right," +
+  theme.palette.primary.dark +
+  ", " +
+  theme.palette.primary.main +
+  ")";
+const BLUEGRADIENTCIRCLE =
+  "radial-gradient(circle, " +
+  theme.palette.primary.light +
+  "," +
+  theme.palette.primary.main +
+  " 69%)";
 
 export default function PokemonStats({ pokemon }: PokemonStatsProps) {
   const navigate = useNavigate();
@@ -34,13 +49,17 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
   }
 
   const rows = [
-    createData("Height", pokemon.height, LIGHTBLUE),
+    createData("Height", pokemon.height, LIGHTBLUEGRADIENT),
     createData("Weight", pokemon.weight, BLUE),
-    createData("HP", pokemon.stats[0].base_stat, LIGHTBLUE),
+    createData("HP", pokemon.stats[0].base_stat, LIGHTBLUEGRADIENT),
     createData("Attack", pokemon.stats[1].base_stat, BLUE),
-    createData("Defense", pokemon.stats[2].base_stat, LIGHTBLUE),
+    createData("Defense", pokemon.stats[2].base_stat, LIGHTBLUEGRADIENT),
     createData("Special Attack", pokemon.stats[3].base_stat, BLUE),
-    createData("Special Defense", pokemon.stats[4].base_stat, LIGHTBLUE),
+    createData(
+      "Special Defense",
+      pokemon.stats[4].base_stat,
+      LIGHTBLUEGRADIENT,
+    ),
     createData("Speed", pokemon.stats[5].base_stat, BLUE),
   ];
 
@@ -61,8 +80,17 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
             paddingTop: "1em",
           }}
         >
-          <Box sx={{ background: DARKBLUE, maxWidth: 450 }}>
-            <Typography variant="h5" textAlign={"left"} paddingLeft={"1em"}>
+          <Box
+            sx={{
+              background: DARKBLUEGRADIENT,
+              maxWidth: 800,
+            }}
+          >
+            <Typography
+              variant="h5"
+              textAlign={"left"}
+              padding={"0.5em 0em 0em 1em"}
+            >
               Stats for {pokemon.name}
             </Typography>
           </Box>
@@ -71,10 +99,16 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
               <Table sx={{ alignItems: "center" }}>
                 <TableHead>
                   <TableRow>
-                    <TableCell align="left" sx={{ border: 0 }}>
+                    <TableCell
+                      align="left"
+                      sx={{ border: 0, color: "white", paddingTop: "1.5em" }}
+                    >
                       Stat
                     </TableCell>
-                    <TableCell align="left" sx={{ border: 0 }}>
+                    <TableCell
+                      align="left"
+                      sx={{ border: 0, color: "white", paddingTop: "1.5em" }}
+                    >
                       Value
                     </TableCell>
                   </TableRow>
@@ -82,10 +116,16 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
                 <TableBody>
                   {rows.map((row) => (
                     <TableRow key={row.stat} sx={{ background: row.color }}>
-                      <TableCell align="left" sx={{ border: 0 }}>
+                      <TableCell
+                        align="left"
+                        sx={{ border: 0, color: "white" }}
+                      >
                         {row.stat}
                       </TableCell>
-                      <TableCell align="left" sx={{ border: 0 }}>
+                      <TableCell
+                        align="left"
+                        sx={{ border: 0, color: "white" }}
+                      >
                         {row.value}
                       </TableCell>
                     </TableRow>
@@ -96,7 +136,7 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
             <Box
               sx={{
                 minWidth: 550,
-                background: BACKGROUNDBLUE,
+                background: BLUEGRADIENTCIRCLE,
                 margin: 0,
                 display: "flex",
                 justifyContent: "center",
