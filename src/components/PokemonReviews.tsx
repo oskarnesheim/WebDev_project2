@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, TextareaAutosize } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
+import theme from "../Theme";
 
 type PokemonReviewProps = {
   pokemonId: string; // Change the type to match your actual data type for Pokémon IDs
@@ -81,7 +82,13 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
         color: "white",
       }}
     >
-      <h2 style={{ fontSize: "24px", marginBottom: "10px", color: "#1976d2" }}>
+      <h2
+        style={{
+          fontSize: "24px",
+          marginBottom: "10px",
+          color: theme.palette.primary.main,
+        }}
+      >
         Rate and Review{" "}
         <span style={{ color: "transparent" }}>{pokemonId}</span>
       </h2>
@@ -103,7 +110,7 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
               style={{
                 fontSize: "24px",
                 cursor: "pointer",
-                color: index < rating ? "#1976d2" : "#ccc",
+                color: index < rating ? theme.palette.primary.main : "#ccc",
                 marginTop: "10px",
               }}
             />
@@ -132,7 +139,7 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
             margin: "10px 0",
             padding: "10px 20px",
             fontFamily: "pokemonfont",
-            backgroundColor: "#1976d2",
+            backgroundColor: theme.palette.primary.main,
             color: "#141c24",
           }}
         >
@@ -150,7 +157,7 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
               <li
                 key={index}
                 style={{
-                  border: "3px solid #1976d2",
+                  border: "3px solid " + theme.palette.primary.main,
                   padding: "10px",
                   margin: "20px 0",
                   backgroundColor: "#141c24",
@@ -160,7 +167,10 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
                   {Array.from({ length: item.rating }, (_, i) => (
                     <StarIcon
                       key={i}
-                      style={{ fontSize: "18px", color: "#1976d2" }}
+                      style={{
+                        fontSize: "18px",
+                        color: theme.palette.primary.main,
+                      }}
                     />
                   ))}
                 </div>
