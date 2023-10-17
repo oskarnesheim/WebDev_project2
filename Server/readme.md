@@ -1,17 +1,5 @@
-## How to run the server
+### In order to run the app you have to run the following commands:
 
-### 1. Install the dependencies
-```
-npm install
-```
+1. `npm install` - to install all the dependencies
 
-### 2. Run the server
-```
-npm start
-```
-
-### 3. Open the browser
-```
-http://localhost:3000
-```
-
+2. `npm start` - to start the server
