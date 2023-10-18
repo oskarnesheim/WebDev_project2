@@ -1,6 +1,6 @@
 # Ignore artifacts:
 build
 coverage
-readme.md
+README.md
 public/pokemon_data/*
 ```
