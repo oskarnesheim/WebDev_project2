@@ -14,7 +14,7 @@ node-setup:
     - npm install
   artifacts:
     paths:
-      - node_modules
+      - Client/node_modules
 
 build: # This job runs in the build stage, which runs first.
   stage: build
