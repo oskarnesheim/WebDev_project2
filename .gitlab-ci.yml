@@ -5,10 +5,12 @@ stages:
   - build
   - test
   - lint
+  - prettier
 
 node-setup:
   stage: setup
   script:
+    - cd client
     - npm install
   artifacts:
     paths:
@@ -17,19 +19,23 @@ node-setup:
 build: # This job runs in the build stage, which runs first.
   stage: build
   script:
+    - cd client
     - npm run build
 
 test: # This job runs in the test stage.
   stage: test # It only starts when the job in the build stage completes successfully.
   script:
+    - cd client
     - npm run test
 
-lint: 
+lint:
   stage: lint
   script:
+    - cd client
     - npm run lint
 
 prettier:
-  stage: lint
+  stage: prettier
   script:
+    - cd client
     - npm run prettier-check
