@@ -1,6 +1,4 @@
 import { graphqlHTTP } from "express-graphql";
-import graphql, { GraphQLObjectType } from "graphql";
-// import data from "./public/data.json" assert { type: "json" };
 import express from "express";
 import schema from "./schema/schema.js";
 import dotenv from "dotenv";

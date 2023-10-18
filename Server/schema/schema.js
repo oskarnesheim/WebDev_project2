@@ -3,10 +3,10 @@ import {
   GraphQLString,
   GraphQLSchema,
   GraphQLInt,
-  GraphQLList,
 } from "graphql";
 
-import data from "../beedrill.js";
+import data from "../public/data.json" assert { type: "json" };
+import { log } from "console";
 
 const Pokemon = new GraphQLObjectType({
   name: "pokemon",
@@ -27,7 +27,8 @@ const RootQuery = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve(parent, args) {
-        return data.id.find((id) => data.id === data.id);
+        const foundPokemon = data.find((pokemon) => pokemon.id == args.id);
+        return foundPokemon ? foundPokemon : null;
       },
     },
   },
