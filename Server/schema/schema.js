@@ -1,3 +1,6 @@
+// Mongoose model
+import Pokemon from "../models/Pokemon.js";
+
 import {
   GraphQLObjectType,
   GraphQLString,
@@ -6,15 +9,14 @@ import {
   GraphQLList,
 } from "graphql";
 
-import data from "../public/data.json" assert { type: "json" };
-
-const Pokemon = new GraphQLObjectType({
+const pokemonType = new GraphQLObjectType({
   name: "pokemon",
   fields: () => ({
-    id: { type: GraphQLInt },
+    _id: { type: GraphQLInt },
     name: { type: GraphQLString },
     height: { type: GraphQLInt },
     weight: { type: GraphQLInt },
+    base_experience: { type: GraphQLInt },
   }),
 });
 
@@ -22,18 +24,18 @@ const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
     pokemons: {
-      type: new GraphQLList(Pokemon),
+      type: new GraphQLList(pokemonType),
       resolve(parent, args) {
-        return data;
+        return Pokemon.find();
       },
     },
     pokemon: {
-      type: Pokemon,
+      type: pokemonType,
       args: {
-        id: { type: GraphQLInt },
+        _id: { type: GraphQLInt },
       },
       resolve(parent, args) {
-        return data.find((pokemon) => pokemon.id == args.id);
+        return Pokemon.findById(args._id);
       },
     },
   },

@@ -5,24 +5,24 @@ import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-const port = process.env.PORT || 6969; //Remember to run npm install in server folder
+// Get port from .env file
+const port = process.env.PORT; //Remember to run npm install in server folder
 
 const app = express();
 
 // Connect Database
-connectDB();
+const a = connectDB();
 
 app.use(
   "/graphql",
   graphqlHTTP({
     schema: schema,
-    // rootValue: root,
-    graphiql: true, //process.env.NODE_ENV === "development",
+    graphiql: true, //process.env.NODE_ENV == "development",
   })
 );
 app.listen(
   port,
   console.log(
-    `Server is running on port ${port}. http://localhost:${port}/graphql`
+    `Server is running on port ${port}. URL: http://localhost:${port}/graphql`
   )
 );
