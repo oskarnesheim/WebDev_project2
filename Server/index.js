@@ -1,12 +1,16 @@
 import { graphqlHTTP } from "express-graphql";
 import express from "express";
 import schema from "./schema/schema.js";
+import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 6969; //Remember to run npm install in server folder
 
 const app = express();
+
+// Connect Database
+connectDB();
 
 app.use(
   "/graphql",

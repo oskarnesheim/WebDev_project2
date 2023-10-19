@@ -7,7 +7,6 @@ import {
 } from "graphql";
 
 import data from "../public/data.json" assert { type: "json" };
-import { log } from "console";
 
 const Pokemon = new GraphQLObjectType({
   name: "pokemon",
