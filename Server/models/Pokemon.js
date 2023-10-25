@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-// const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const AbilitySchema = new Schema({
@@ -136,7 +135,7 @@ const SpritesSchema = new Schema({
 });
 
 const PokemonSchema = new Schema({
-  id: Number,
+  _id: Number,
   name: String,
   base_experience: Number,
   height: Number,
