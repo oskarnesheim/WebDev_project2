@@ -1,5 +1,5 @@
 // Mongoose model
-import Pokemon from "../models/Pokemon.js";
+import { PokemonModel } from "../models/Pokemon.js";
 
 import {
   GraphQLObjectType,
@@ -10,7 +10,7 @@ import {
 } from "graphql";
 
 const pokemonType = new GraphQLObjectType({
-  name: "pokemon",
+  name: "pokemons",
   fields: () => ({
     _id: { type: GraphQLInt },
     name: { type: GraphQLString },
@@ -25,9 +25,8 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     pokemons: {
       type: new GraphQLList(pokemonType),
-      resolve(parent, args) {
-        console.log(args);
-        return Pokemon.find();
+      async resolve(parent, args) {
+        return PokemonModel.find();
       },
     },
     pokemon: {
@@ -36,9 +35,7 @@ const RootQuery = new GraphQLObjectType({
         _id: { type: GraphQLInt },
       },
       resolve(parent, args) {
-        console.log(args._id);
-        console.log(Pokemon.findById(args._id));
-        return Pokemon.findById(args._id);
+        return PokemonModel.findById(args._id);
       },
     },
   },

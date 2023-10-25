@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const mongoose = require('mongoose');
+// const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const AbilitySchema = new Schema({
@@ -85,14 +85,14 @@ const AbilityTypeSchema = new Schema({
   type: VersionSchema,
 });
 
-const PastTypeSchema = new Schema({
-  generation: VersionSchema,
-  types: [TypeSlotSchema],
-});
-
 const TypeSlotSchema = new Schema({
   slot: Number,
   type: VersionSchema,
+});
+
+const PastTypeSchema = new Schema({
+  generation: VersionSchema,
+  types: [TypeSlotSchema],
 });
 
 const OtherSpritesSchema = new Schema({
@@ -117,6 +117,24 @@ const TypeSchema = new Schema({
   type: VersionSchema,
 });
 
+const HeldItemSchema = new Schema({
+  item: VersionSchema,
+  version_details: [VersionDetailSchema],
+});
+
+const SpritesSchema = new Schema({
+  back_default: String,
+  back_female: String,
+  back_shiny: String,
+  back_shiny_female: String,
+  front_default: String,
+  front_female: String,
+  front_shiny: String,
+  front_shiny_female: String,
+  other: OtherSpritesSchema,
+  versions: VersionsSchema,
+});
+
 const PokemonSchema = new Schema({
   id: Number,
   name: String,
@@ -138,22 +156,4 @@ const PokemonSchema = new Schema({
   past_types: [PastTypeSchema],
 });
 
-const HeldItemSchema = new Schema({
-  item: VersionSchema,
-  version_details: [VersionDetailSchema],
-});
-
-const SpritesSchema = new Schema({
-  back_default: String,
-  back_female: String,
-  back_shiny: String,
-  back_shiny_female: String,
-  front_default: String,
-  front_female: String,
-  front_shiny: String,
-  front_shiny_female: String,
-  other: OtherSpritesSchema,
-  versions: VersionsSchema,
-});
-
-export default mongoose.model("pokemon_db", PokemonSchema);
+export const PokemonModel = mongoose.model("pokemon", PokemonSchema, "pokemon");

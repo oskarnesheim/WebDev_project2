@@ -25,5 +25,5 @@ app.listen(
   console.log(
     `Server running on port ${port}\nURL: http://localhost:${port}/graphql`
   )
-  // `Server running in ${process.env.NODE_ENV} mode on port ${port}\nURL: http://it2810-08.idi.ntnu.no:27017/graphql`
+  // `Server running in ${process.env.NODE_ENV} mode on port ${port}\nURL: http://it2810-08.idi.ntnu.no:${port}/graphql`
 );
