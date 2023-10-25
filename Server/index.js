@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Get port from .env file
-const port = process.env.PORT; //Remember to run npm install in server folder
+const port = process.env.PORT;
 
 const app = express();
 
@@ -17,12 +17,13 @@ app.use(
   "/graphql",
   graphqlHTTP({
     schema: schema,
-    graphiql: true, //process.env.NODE_ENV == "development",
+    graphiql: process.env.NODE_ENV == "development" || true,
   })
 );
 app.listen(
   port,
   console.log(
-    "Server running in ${process.env.NODE_ENV} mode on port ${port}\nURL: http://it2810-08.idi.ntnu.no:27017/graphql"
+    `Server running on port ${port}\nURL: http://localhost:${port}/graphql`
   )
+  // `Server running in ${process.env.NODE_ENV} mode on port ${port}\nURL: http://it2810-08.idi.ntnu.no:27017/graphql`
 );

@@ -26,6 +26,7 @@ const RootQuery = new GraphQLObjectType({
     pokemons: {
       type: new GraphQLList(pokemonType),
       resolve(parent, args) {
+        console.log(args);
         return Pokemon.find();
       },
     },
@@ -35,6 +36,8 @@ const RootQuery = new GraphQLObjectType({
         _id: { type: GraphQLInt },
       },
       resolve(parent, args) {
+        console.log(args._id);
+        console.log(Pokemon.findById(args._id));
         return Pokemon.findById(args._id);
       },
     },
