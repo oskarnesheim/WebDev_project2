@@ -23,6 +23,6 @@ app.use(
 app.listen(
   port,
   console.log(
-    `Server is running on port ${port}. URL: http://localhost:${port}/graphql`
+    "Server running in ${process.env.NODE_ENV} mode on port ${port}\nURL: http://it2810-08.idi.ntnu.no:27017/graphql"
   )
 );
