@@ -16,6 +16,7 @@ const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
     pokemons: {
+      //todo Denne skal fjernes
       args: {
         upperLimit: { type: GraphQLInt },
         lowerLimit: { type: GraphQLInt },
@@ -58,11 +59,30 @@ const RootQuery = new GraphQLObjectType({
         return PokemonModel.find({
           types: {
             $elemMatch: {
-              "type.name": { $in: filters },
+              // ? $elemMatch for multiple filters.
+              "type.name": { $in: filters }, // ? $in for multiple filters. We check if the pokemon is in the filters array.
             },
           },
         })
           .sort(sortingMap)
+          .skip(range[0])
+          .limit(range[1]);
+      },
+    },
+    pokemonSearch: {
+      type: new GraphQLList(PokemonType),
+      args: {
+        search: { type: GraphQLString },
+        range: { type: GraphQLList(GraphQLInt) },
+      },
+      resolve(parent, args) {
+        const range = args.range;
+        const search = args.search;
+
+        return PokemonModel.find({
+          name: { $regex: search, $options: "i" }, //? i for case insensitive, regex for partial search.
+        })
+          .sort({ name: 1 })
           .skip(range[0])
           .limit(range[1]);
       },
