@@ -1,4 +1,5 @@
 // Mongoose model
+import { log } from "console";
 import { PokemonModel } from "../models/Pokemon.js";
 import PokemonType from "./GetAllPokemons.js"
 
@@ -9,6 +10,7 @@ import {
   GraphQLInt,
   GraphQLList,
 } from "graphql";
+import { skip } from "node:test";
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -36,18 +38,31 @@ const RootQuery = new GraphQLObjectType({
         type: new GraphQLList(PokemonType),
         args: {
             filters: { type: GraphQLList(GraphQLString) },
-            sorting: { type: GraphQLList(GraphQLString) },
+            sorting: { type: GraphQLList(GraphQLList(GraphQLString)) },
             range: { type: GraphQLList(GraphQLInt) },
         },
         resolve(parent, args) {
-          console.log(args);
-            const filters = args.filters.split(',');
-            // todo Finne en måte å hente data fra databasen basert på filters. Bruke mongoose til dette. Men hvordan???
-            return PokemonModel.find().getFilter(args);
-        },
+          const filters = args.filters;
+          const sortingMap = new Map();
+          args.sorting.forEach((sort) => {
+            sortingMap.set(sort[0], sort[1]);
+          });
+          const range = args.range;
+          log(filters);
+          log(sortingMap);
+          log(range);
+
+
+          if (filters.length = 0){
+            if (range.length = 2){
+              return PokemonModel.find().sort(sortingMap).skip(range[0]).limit(range[1]);
+            }
+            return PokemonModel.find().sort(sortingMap);
+          }
+          return PokemonModel.find().sort(sortingMap).skip(range[0]).limit(range[1]);
     },
   },
-});
+}});
 
 const schema = new GraphQLSchema({
   query: RootQuery,
