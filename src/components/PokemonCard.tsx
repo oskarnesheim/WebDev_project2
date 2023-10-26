@@ -105,7 +105,6 @@ export default function PokemonCard({ name }: PokemonCardProps) {
           {data.types.map((type) => type.type.name).join(", ")}
         </Typography>
         <Typography variant="body2">
-          <hr />
           {data.weight} kg &nbsp; {data.base_experience}XP
         </Typography>
       </CardContent>

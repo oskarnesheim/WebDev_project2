@@ -83,6 +83,7 @@ export default function MyTeam() {
 
   function deleteTeamMember(index: number) {
     const updatedTeam = [...team]; // Create a copy of the array
+    console.log(updatedTeam);
     const outcast = updatedTeam.splice(index, 1); // Remove the item from the copy
     alert(`${outcast[0]} was removed from your team`);
     setTeamState(updatedTeam); // Update the state with the new array
