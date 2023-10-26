@@ -34,6 +34,7 @@ export default function PokemonCard({ name, selected }: PokemonCardProps) {
       variant="outlined"
       sx={{
         width: 300,
+        boxSizing: "border-box",
         border: selected ? "1px solid #E0F1FF" : "none",
         backgroundColor: "primary.dark",
         opacity: selected ? 0.9 : 0.6,
@@ -42,7 +43,7 @@ export default function PokemonCard({ name, selected }: PokemonCardProps) {
           : "none",
         "&:hover": {
           transition: "background-color 0.3s ease-in-out",
-          backgroundColor: "primary.dark",
+          backgroundColor: "primary.main",
         },
       }}
     >

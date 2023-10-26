@@ -5,8 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 import { IPokemon } from "../interfaces/pokemon";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Tooltip, Typography } from "@mui/material";
 import PokemonRatingReview from "./PokemonReviews";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 enum PokemonTabs {
   STATS = "stats",
@@ -112,7 +113,7 @@ export default function Pokemon() {
 
   return (
     <>
-      <Typography variant="h3" textAlign={"center"}>
+      <Typography sx={{ marginTop: "5vh" }} variant="h3" textAlign={"center"}>
         {data.name} - #{data.id}
       </Typography>
 
@@ -120,17 +121,49 @@ export default function Pokemon() {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "space-evenly",
+            // border: "1px solid #E0F1FF",
+            alignItems: "center",
+            marginTop: "3vh",
+            marginBottom: "3vh",
+            marginLeft: "10vw",
+            marginRight: "10vw",
           }}
         >
-          <Button onClick={() => navigate(-1)}>Go back</Button>
-          <Button onClick={() => setTab(PokemonTabs.STATS)}>Stats</Button>
-          <Button
-            disabled={checkTeam(data.name)}
-            onClick={() => addToTeam(data.name)}
-          >
-            {checkTeam(data.name) ? "Already in team" : "Add to team"}
+          <Tooltip title="Go back to previous page" arrow>
+            <Button
+              sx={{
+                marginRight: "10px",
+                "&:hover": {
+                  cursor: "alias",
+                },
+              }}
+              onClick={() => navigate(-1)}
+            >
+              <ArrowBackIosNewIcon />
+            </Button>
+          </Tooltip>
+          <Button variant="outlined" onClick={() => setTab(PokemonTabs.STATS)}>
+            Stats
           </Button>
+          <Tooltip
+            title={
+              checkTeam(data.name)
+                ? "Pokemon is already in your team, do you want to remove " +
+                  data.name +
+                  " from your team?"
+                : "Add " + data.name + " to your team"
+            }
+            arrow
+          >
+            <Button
+              variant="outlined"
+              sx={{ color: checkTeam(data.name) ? "red" : "green" }}
+              onClick={() => addToTeam(data.name)}
+            >
+              {checkTeam(data.name) ? "Remove from team" : "Add to team"}
+            </Button>
+          </Tooltip>
         </Box>
         {tab === PokemonTabs.STATS && <PokemonStats pokemon={data} />}
         {tab === PokemonTabs.ABILITIES && <PokemonAbilities pokemon={data} />}

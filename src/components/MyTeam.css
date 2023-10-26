@@ -25,14 +25,13 @@
 .team-grid-child {
   width: fit-content;
   height: fit-content;
-  z-index: 1;
-  /* flex: 0 0 auto; */
+  /* z-index: 1; */
 }
 
 .selected-Info {
   margin-left: 50px;
   margin-top: 60px;
-  width: 20%;
+  width: 20vw;
   background-color: black;
   border-radius: 4%;
   height: 520px;
@@ -63,14 +62,7 @@
 }
 
 .button-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.horizontal-arrows {
-  width: 75%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
