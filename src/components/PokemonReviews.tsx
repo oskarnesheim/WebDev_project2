@@ -46,13 +46,14 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
   const handleAddReview = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (rating === 0) {
-      setErrorMessage("Please select a rating.");
+      setErrorMessage("rating-error");
       return;
     }
     if (review.trim() === "") {
-      setErrorMessage("Please write a review.");
+      setErrorMessage("review-error");
       return;
     }
+
     const newReview = {
       rating,
       review,
@@ -100,21 +101,34 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
             marginBottom: "10px",
           }}
         >
-          <label style={{ marginRight: "10px", marginTop: "10px" }}>
-            Rating
-          </label>
-          {Array.from({ length: 5 }, (_, index) => (
-            <StarIcon
-              key={index}
-              onClick={() => handleRatingClick(index + 1)}
-              style={{
-                fontSize: "24px",
-                cursor: "pointer",
-                color: index < rating ? theme.palette.primary.main : "#ccc",
-                marginTop: "10px",
-              }}
-            />
-          ))}
+          <fieldset>
+            <legend>Rating</legend>
+            <div style={{ display: "flex" }}>
+              {Array.from({ length: 5 }, (_, index) => (
+                <div key={index}>
+                  <input
+                    type="radio"
+                    id={`star-${index + 1}`}
+                    name="rating"
+                    checked={index + 1 === rating}
+                    onChange={() => handleRatingClick(index + 1)}
+                    style={{ display: "none" }} // Hide the radio buttons
+                  />
+                  <label htmlFor={`star-${index + 1}`}>
+                    <StarIcon
+                      style={{
+                        fontSize: "24px",
+                        cursor: "pointer",
+                        color: index < rating ? theme.palette.primary.main : "#ccc",
+                        marginTop: "10px",
+                      }}
+                    />
+                  </label>
+                </div>
+              ))}
+            </div>
+          </fieldset>
+
         </div>
         <div>
           <TextareaAutosize
@@ -146,7 +160,16 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
           Submit Review
         </Button>
       </form>
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+      {errorMessage === "rating-error" && (
+        <p data-testid="rating-error" style={{ color: "red" }}>
+          Please select a rating.
+        </p>
+      )}
+      {errorMessage === "review-error" && (
+        <p data-testid="review-error" style={{ color: "red" }}>
+          Please write a review.
+        </p>
+      )}
       <div>
         <h3 style={{ fontSize: "20px", marginTop: "20px" }}>Reviews</h3>
         {reviews.length === 0 ? (
