@@ -100,7 +100,7 @@ export default function Pokemon() {
 
   if (isLoading) {
     return (
-      <div>
+      <div data-testid="loading-element">
         <CircularProgress />
       </div>
     );
@@ -135,7 +135,7 @@ export default function Pokemon() {
         {tab === PokemonTabs.STATS && <PokemonStats pokemon={data} />}
         {tab === PokemonTabs.ABILITIES && <PokemonAbilities pokemon={data} />}
       </Box>
-      <PokemonRatingReview pokemonId={data.id.toString()} />
+      <PokemonRatingReview pokemonId={data.id} />
       <Outlet />
     </>
   );

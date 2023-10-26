@@ -4,7 +4,7 @@ import StarIcon from "@mui/icons-material/Star";
 import theme from "../Theme";
 
 type PokemonReviewProps = {
-  pokemonId: string; // Change the type to match your actual data type for Pokémon IDs
+  pokemonId: number;
 };
 
 type Review = {
@@ -102,7 +102,7 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
           }}
         >
           <fieldset>
-            <legend>Rating</legend>
+            <legend>Rate</legend>
             <div style={{ display: "flex" }}>
               {Array.from({ length: 5 }, (_, index) => (
                 <div key={index}>

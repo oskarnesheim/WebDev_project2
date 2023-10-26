@@ -1,16 +1,16 @@
 import { test, describe, expect } from "vitest";
 import { render, fireEvent } from "@testing-library/react";
-import PokemonRatingReview from "../PokemonReviews"; // Import your review form component
+import PokemonRatingReview from "../PokemonReviews";
 
 describe("PokemonRatingReview", () => {
     test("Renders the review form", () => {
         // Render the review form component
         const { getByText } = render(
-            <PokemonRatingReview pokemonId="1" /> // Replace with the actual Pokemon ID
+            <PokemonRatingReview pokemonId={1} /> // Replace with the actual Pokemon ID (when back-end is ready)
         );
 
         // Test that the form elements are present
-        const ratingLabel = getByText("Rating");
+        const ratingLabel = getByText("Rate");
         const reviewLabel = getByText("Reviews");
         const submitButton = getByText("Submit Review");
         const reviewsHeading = getByText("Rate and Review");
@@ -24,7 +24,7 @@ describe("PokemonRatingReview", () => {
 
     test("Submitting an incomplete review", () => {
         const { getAllByPlaceholderText, getAllByText, getByTestId } = render(
-            <PokemonRatingReview pokemonId="1" /> // Replace with the actual Pokemon ID
+            <PokemonRatingReview pokemonId={1} /> // Replace with the actual Pokemon ID (when back-end is ready)
         );
 
         // Add a review text
@@ -37,14 +37,13 @@ describe("PokemonRatingReview", () => {
 
         // Check that error message are displayed
         const ratingError = getByTestId("rating-error");
-
-        // Assert that the error message are displayed
         expect(ratingError).not.toBe(null);
+
     });
 
     test("Submitting a valid review", () => {
         const { getAllByPlaceholderText, getAllByText } = render(
-            <PokemonRatingReview pokemonId="1" /> // Replace with the actual Pokemon ID
+            <PokemonRatingReview pokemonId={1} /> // Replace with the actual Pokemon ID (when back-end is ready)
         );
 
         // Select a rating
