@@ -25,7 +25,11 @@
 .team-grid-child {
   width: fit-content;
   height: fit-content;
-  /* z-index: 1; */
+}
+
+.team-grid-child:hover {
+  transform: scale(1.05);
+  transition: 0.5s;
 }
 
 .selected-Info {
