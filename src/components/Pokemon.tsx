@@ -1,4 +1,4 @@
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import PokemonAbilities from "./PokemonAbilities";
 import PokemonStats from "./PokemonStats";
 import { useQuery } from "@tanstack/react-query";
@@ -18,7 +18,6 @@ export default function Pokemon() {
   const [tab, setTab] = useState<PokemonTabs>(PokemonTabs.STATS);
   const [team, setWindowTeam] = useState<string>("");
   const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
-  const navigate = useNavigate();
   const { data, error, isLoading } = useQuery<IPokemon, Error>(
     [id, "_pokemon"],
     () => {
@@ -123,7 +122,7 @@ export default function Pokemon() {
             justifyContent: "center",
           }}
         >
-          <Button onClick={() => navigate(-1)}>Go back</Button>
+          <Button onClick={() => window.history.back()}>Go back</Button>
           <Button onClick={() => setTab(PokemonTabs.STATS)}>Stats</Button>
           <Button
             disabled={checkTeam(data.name)}

@@ -1,46 +1,38 @@
-import { test, describe, expect } from "vitest";
 import { render } from "@testing-library/react";
+import { describe, expect, test } from "vitest";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { RecoilRoot } from "recoil";
+import userEvent from "@testing-library/user-event";
 import Pokemon from "../Pokemon";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// Mock the useNavigate hook
-jest.mock("react-router-dom", () => ({
-    useNavigate: () => jest.fn(),
-}));
+describe("Pokemon Component", () => {
+    test("Renders the pokemon page component", async () => {
+        const queryClient = new QueryClient(); // Create a QueryClient instance
 
-describe("Pokemon", () => {
-    test("Renders loading state", () => {
-        const { getByTestId } = render(<Pokemon />);
-        const loadingElement = getByTestId("loading-element");
+        const { getByText } = render(
+            <RecoilRoot>
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter initialEntries={["/pokemon/1"]}>
+                        <Routes>
+                            <Route path="/pokemon/:id" element={<Pokemon />} />
+                        </Routes>
+                    </MemoryRouter>
+                </QueryClientProvider>
+            </RecoilRoot>
+        );
 
-        expect(loadingElement).not.toBe(null);
-    });
-
-    test("Renders error state", () => {
-        // Mock error state by providing an error object
-        const { getByText } = render(<Pokemon />);
-        const errorElement = getByText("Error:");
-
-        expect(errorElement).not.toBe(null);
-    });
-
-    test("Renders data state", () => {
-        // Mock data state by providing data object
-        const data = {
-            name: "bulbasaur",
-            id: 1,
-        };
-        const { getByText } = render(<Pokemon />);
-        const nameElement = getByText("bulbasaur - #1");
-        const goBackButton = getByText("Go back");
-        const statsButton = getByText("Stats");
-        const addToTeamButton = getByText("Add to team");
-
-        expect(data).not.toBe(null);
-        expect(nameElement).not.toBe(null);
-        expect(goBackButton).not.toBe(null);
-        expect(statsButton).not.toBe(null);
+        //Check if the pokemon page renders properly
+        const back_button = window.location.href;
+        userEvent.click(getByText("Go back"));
+        expect(back_button == window.location.href).toBeTruthy();
+        const statsLabel = getByText("Stats");
+        expect(statsLabel).not.toBe(null);
+        const addToTeamButton = getByText("Add to Team");
         expect(addToTeamButton).not.toBe(null);
-    });
+        userEvent.click(addToTeamButton);
+        const alreadyInTeamLabel = getByText("Already in Team");
+        expect(alreadyInTeamLabel).not.toBe(null);
 
-    // Write more tests for functions like getTeam, checkTeam, addToTeam, and verifyTeam
+    });
 });

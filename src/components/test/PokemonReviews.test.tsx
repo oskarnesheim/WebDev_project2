@@ -4,7 +4,6 @@ import PokemonRatingReview from "../PokemonReviews";
 
 describe("PokemonRatingReview", () => {
     test("Renders the review form", () => {
-        // Render the review form component
         const { getByText } = render(
             <PokemonRatingReview pokemonId={1} /> // Replace with the actual Pokemon ID (when back-end is ready)
         );
@@ -14,8 +13,6 @@ describe("PokemonRatingReview", () => {
         const reviewLabel = getByText("Reviews");
         const submitButton = getByText("Submit Review");
         const reviewsHeading = getByText("Rate and Review");
-
-        // Add more test assertions as needed
         expect(ratingLabel).not.toBe(null);
         expect(reviewLabel).not.toBe(null);
         expect(submitButton).not.toBe(null);
