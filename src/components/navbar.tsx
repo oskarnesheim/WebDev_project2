@@ -11,7 +11,9 @@ export default function Navbar() {
       <h3 className="myteam-link" onClick={() => navigate("/myteam")}>
         My Team <BusinessCenterOutlinedIcon />
       </h3>
-      <h3 className="about-link">About</h3>
+      <h3 className="about-link" onClick={() => navigate("/about")}>
+        About
+      </h3>
     </div>
   );
 }

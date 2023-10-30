@@ -8,6 +8,7 @@ import Pokemon from "./components/Pokemon.tsx";
 import Home from "./components/Home.tsx";
 import MyTeam from "./components/MyTeam.tsx";
 import "./main.css";
+import About from "./components/About.tsx";
 
 const queryClient = new QueryClient();
 export const router = createBrowserRouter(
@@ -23,6 +24,10 @@ export const router = createBrowserRouter(
         {
           path: "myteam",
           element: <MyTeam />,
+        },
+        {
+          path: "about",
+          element: <About />,
         },
         {
           path: ":id/*",

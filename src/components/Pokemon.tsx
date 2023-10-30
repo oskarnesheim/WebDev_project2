@@ -111,6 +111,15 @@ export default function Pokemon() {
     return <div>Error: {error.message}</div>;
   }
 
+  function removeFromTeam(name: string) {
+    const listTeam = team.split(",");
+    const index = listTeam.indexOf(name);
+    if (index > -1) {
+      listTeam.splice(index, 1);
+    }
+    setTeamState(listTeam.join(","));
+  }
+
   return (
     <>
       <Typography sx={{ marginTop: "5vh" }} variant="h3" textAlign={"center"}>
@@ -159,7 +168,11 @@ export default function Pokemon() {
             <Button
               variant="outlined"
               sx={{ color: checkTeam(data.name) ? "red" : "green" }}
-              onClick={() => addToTeam(data.name)}
+              onClick={() =>
+                checkTeam(data.name)
+                  ? removeFromTeam(data.name)
+                  : addToTeam(data.name)
+              }
             >
               {checkTeam(data.name) ? "Remove from team" : "Add to team"}
             </Button>
