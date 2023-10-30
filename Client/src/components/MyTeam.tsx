@@ -139,7 +139,7 @@ export default function MyTeam() {
     return (
       <div className="selected-Info">
         <div className="container" onClick={redirectToPokemon}>
-          <PokemonCard key={selectedPokemon[0]} _id={selectedPokemon[0]} />
+          <PokemonCard key={selectedPokemon[0]} _id={selectedPokemon[1]} />
         </div>
         <ArrowButtons />
         <div className="container">
@@ -164,7 +164,7 @@ export default function MyTeam() {
         className="team-grid-child"
         key={count}
       >
-        <TeamMember selected={checkselected(pokemon)} name={pokemon} />
+        <TeamMember selected={checkselected(pokemon)} _id={pokemon} />
       </div>
     ));
   }

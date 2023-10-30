@@ -1,27 +1,59 @@
-import { useQuery } from "@tanstack/react-query";
-import { IPokemon } from "../interfaces/pokemon";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Box } from "@mui/material";
+import { useQuery, gql } from "@apollo/client";
 
 type PokemonCardProps = {
-  name: string;
+  _id: number;
   selected: boolean;
 };
 
-export default function PokemonCard({ name, selected }: PokemonCardProps) {
-  const { data, error, isLoading } = useQuery<IPokemon, Error>(
-    [name, "_pokemon"],
-    () => {
-      const res = fetch(`pokemon_data/${name}.json/`)
-        .then((res) => res.json())
-        .then((res) => res as IPokemon);
-      return res;
-    },
-  );
+function findSinglePokemon(_id: number) {
+  const q = gql`
+    query query {
+      pokemon(_id: ${_id}) {
+        _id
+        name
+        height
+        base_experience
+        weight
+        stats {
+          stat {
+            name
+          }
+          base_stat
+        }
+        abilities {
+          ability {
+            name
+          }
+        }
+        types{
+          type{
+            name
+          }
+        }
+        sprites {
+          front_default
+          versions{
+            generation-viii{
+              icons{
+                front_default
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+  return q;
+}
 
-  if (isLoading) {
+export default function PokemonCard({ _id, selected }: PokemonCardProps) {
+  const { loading, error, data } = useQuery(findSinglePokemon(_id));
+
+  if (loading) {
     return <div>Loading...</div>;
   }
 
@@ -57,14 +89,17 @@ export default function PokemonCard({ name, selected }: PokemonCardProps) {
           {/* Left side: Image */}
           <Box sx={{ marginRight: "10px", alignItems: "center" }}>
             <img
-              src={data.sprites.versions["generation-viii"].icons.front_default}
-              alt={name}
+              src={
+                data.pokemon.sprites.versions["generation-viii"].icons
+                  .front_default
+              }
+              alt={data.pokemon.name}
             />
           </Box>
 
           {/* Right side: Text */}
           <Typography variant="body1" sx={{ color: "primary.light" }}>
-            {data.name}
+            {data.pokemon.name}
           </Typography>
         </div>
       </CardContent>

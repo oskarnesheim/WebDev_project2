@@ -126,7 +126,7 @@ export default function PokemonCard({ _id }: PokemonCardProps) {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {_id}
+          {data.pokemon.name}
         </Typography>
         <Typography variant="body2">
           {data.pokemon.types

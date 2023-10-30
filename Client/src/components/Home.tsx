@@ -1,7 +1,5 @@
-import { pokemons } from "../../public/test2.ts";
-import { Key, useEffect, useState } from "react";
+import { useState } from "react";
 import Searchbar from "./Searchbar.tsx";
-import { IPokemon_simple } from "../interfaces/pokemon.ts";
 import PokemonCard from "./PokemonCard.tsx";
 import FilterAndSortingBox from "../FilterAndSortingBox.tsx";
 import { useQuery, gql } from "@apollo/client";
@@ -41,8 +39,26 @@ function getPokemons() {
   return q;
 }
 
+function pokeSearch(search: string) {
+  const q = gql`
+    query query {
+      pokemonSearch(search: ${search}) {
+        _id
+        name
+        types {
+          type {
+            name
+          }
+        }
+        base_experience
+        weight
+      }
+    }`;
+  return q;
+}
+
 export default function Home() {
-  const [delayedSearch, setDelayedSearch] = useState<string>("");
+  const [, setDelayedSearch] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>(SortBy.NONE);
   const [currentFilter, setCurrentFilter] = useState<string[]>([]);
   const { loading, error, data } = useQuery(getPokemons());

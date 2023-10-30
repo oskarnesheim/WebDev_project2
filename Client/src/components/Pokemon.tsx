@@ -1,5 +1,4 @@
 import { Outlet, useNavigate, useParams } from "react-router-dom";
-import PokemonAbilities from "./PokemonAbilities";
 import PokemonStats from "./PokemonStats";
 import { useQuery, gql } from "@apollo/client";
 import { useState } from "react";
