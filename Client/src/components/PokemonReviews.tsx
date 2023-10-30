@@ -135,12 +135,15 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
           // onClick={handleAddReview}
           variant="contained"
           className="custom-button"
-          style={{
+          sx={{
             margin: "10px 0",
             padding: "10px 20px",
             fontFamily: "pokemonfont",
             backgroundColor: theme.palette.primary.main,
             color: "#141c24",
+            "&:hover": {
+              backgroundColor: theme.palette.primary.light,
+            },
           }}
         >
           Submit Review

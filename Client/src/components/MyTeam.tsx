@@ -6,8 +6,8 @@ import TeamMember from "./TeamMember";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import CircleTwoToneIcon from "@mui/icons-material/CircleTwoTone";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function MyTeam() {
   const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
@@ -22,15 +22,18 @@ export default function MyTeam() {
 
   function checkselected(name: string): boolean {
     if (selectedPokemon[0] === "") {
+      // index 0 is the name of the pokemon, if it is empty, no pokemon is selected
       return false;
     }
     if (selectedPokemon[0] !== name) {
+      // if the name of the pokemon is not the same as the selected pokemon, it is not selected
       return false;
     }
     return true;
   }
 
   const redirectToPokemon = () => {
+    // redirects to the selected pokemon
     history("/" + selectedPokemon[0]);
   };
 
@@ -59,6 +62,8 @@ export default function MyTeam() {
 
   function setTeam(team: string) {
     localStorage.setItem("team", "");
+    if (team === "") return;
+    localStorage.setItem("team", JSON.stringify(team));
     setTeamState(team.split(","));
   }
 
@@ -71,10 +76,7 @@ export default function MyTeam() {
     let num = selectedPokemon[1];
     if (direction === "right") num += 1;
     if (direction === "left") num -= 1;
-    if (direction === "up") num -= 2;
-    if (direction === "down") num += 2;
     if (num === -1) num = team.length - 1;
-    if (num === -2) num = team.length - 2;
     if (num === team.length) num = 0;
     if (num === team.length + 1) num = 1;
 
@@ -83,9 +85,12 @@ export default function MyTeam() {
 
   function deleteTeamMember(index: number) {
     const updatedTeam = [...team]; // Create a copy of the array
+    console.log("updated team copy" + updatedTeam);
     const outcast = updatedTeam.splice(index, 1); // Remove the item from the copy
+    console.log("Denne kastes ut:" + outcast);
     alert(`${outcast[0]} was removed from your team`);
     setTeamState(updatedTeam); // Update the state with the new array
+    console.log("oppdatert team: " + updatedTeam);
     setTeam(updatedTeam.join(",")); // Update the localStorage with the new array
     setSelectedPokemon(["", 0]);
   }
@@ -93,40 +98,31 @@ export default function MyTeam() {
   const ArrowButtons = () => {
     return (
       <div className="button-container">
+        {/* <div className="horizontal-arrows"> */}
         <Button
           variant="contained"
           color="primary"
-          style={{ margin: "5px" }}
-          onClick={() => moveBy("up")}
+          onClick={() => moveBy("left")}
         >
-          <ArrowUpwardIcon />
+          <ArrowBackIcon />
         </Button>
-        <div className="horizontal-arrows">
+        <Tooltip title="Go to Pokémon" arrow>
           <Button
             variant="contained"
             color="primary"
-            style={{ margin: "5px" }}
-            onClick={() => moveBy("left")}
+            onClick={() => redirectToPokemon()}
           >
-            <ArrowBackIcon />
+            <CircleTwoToneIcon />
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            style={{ margin: "5px" }}
-            onClick={() => moveBy("right")}
-          >
-            <ArrowForwardIcon />
-          </Button>
-        </div>
+        </Tooltip>
         <Button
           variant="contained"
           color="primary"
-          style={{ margin: "5px" }}
-          onClick={() => moveBy("down")}
+          onClick={() => moveBy("right")}
         >
-          <ArrowDownwardIcon />
+          <ArrowForwardIcon />
         </Button>
+        {/* </div> */}
       </div>
     );
   };
@@ -143,14 +139,23 @@ export default function MyTeam() {
         </div>
         <ArrowButtons />
         <div className="container">
-          <Button
-            className="box"
-            onClick={() => deleteTeamMember(selectedPokemon[1])}
-            color="error"
-            variant="outlined"
+          <Tooltip
+            title={
+              "Would you like to remove " +
+              selectedPokemon[0] +
+              " from your team?"
+            }
+            arrow
           >
-            REMOVE
-          </Button>
+            <Button
+              className="box"
+              onClick={() => deleteTeamMember(selectedPokemon[1])}
+              color="error"
+              variant="outlined"
+            >
+              REMOVE
+            </Button>
+          </Tooltip>
         </div>
       </div>
     );
@@ -174,6 +179,7 @@ export default function MyTeam() {
       <div>
         <h1>My Pokémon Team</h1>
         <div className="team-grid">{teamlist()}</div>
+        <h2>{team.length}/6</h2>
       </div>
       {selectedInfo()}
     </div>

@@ -76,7 +76,7 @@ export default function PokemonCard({ name }: PokemonCardProps) {
         textAlign: "center",
         "&:hover": {
           cursor: "pointer",
-          boxShadow: `0 0 10vw 0px ${getBackgroundColor()[0]}`,
+          boxShadow: `0 0 3vw 0px ${getBackgroundColor()[0]}`,
         },
       }}
     >
@@ -105,7 +105,6 @@ export default function PokemonCard({ name }: PokemonCardProps) {
           {data.types.map((type) => type.type.name).join(", ")}
         </Typography>
         <Typography variant="body2">
-          <hr />
           {data.weight} kg &nbsp; {data.base_experience}XP
         </Typography>
       </CardContent>

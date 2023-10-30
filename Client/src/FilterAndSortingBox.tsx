@@ -12,10 +12,10 @@ type FilterAndSortingBoxProps = {
 
 const modalBoxStyles = {
   position: "absolute",
-  top: "50%",
-  left: "50%",
+  top: "50vh",
+  left: "50vw",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "fit-content",
   bgcolor: "#002c58",
   border: "2px solid #000",
   boxShadow: 24,
