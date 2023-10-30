@@ -10,7 +10,6 @@ import {
   GraphQLInt,
   GraphQLList,
 } from "graphql";
-import { skip } from "node:test";
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
