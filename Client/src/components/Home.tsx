@@ -93,7 +93,7 @@ export default function Home() {
             !delayedSearch ? true : pokemon.name.includes(delayedSearch),
           )
           .map((pokemon) => {
-            return <PokemonCard key={pokemon.id} name={pokemon.name} />;
+            return <PokemonCard key={pokemon.id} _id={pokemon.id} />;
           })}{" "}
       </div>
     </div>

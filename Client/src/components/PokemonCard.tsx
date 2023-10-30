@@ -4,10 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import { IPokemon } from "../interfaces/pokemon";
 
 type PokemonCardProps = {
-  name: string;
+  _id: number;
 };
 
-export default function PokemonCard({ name }: PokemonCardProps) {
+export default function PokemonCard({ _id }: PokemonCardProps) {
   const filters = [
     ["Fire", "red"],
     ["Water", "blue"],
@@ -30,9 +30,9 @@ export default function PokemonCard({ name }: PokemonCardProps) {
   const navigate = useNavigate();
 
   const { data, error, isLoading } = useQuery<IPokemon, Error>(
-    [name, "_pokemon"],
+    [_id, "_pokemon"],
     () => {
-      const res = fetch(`pokemon_data/${name}.json/`)
+      const res = fetch(`pokemon_data/${_id}.json/`)
         .then((res) => res.json())
         .then((res) => res as IPokemon);
       return res;
@@ -62,7 +62,7 @@ export default function PokemonCard({ name }: PokemonCardProps) {
 
   return (
     <Card
-      onClick={() => navigate(name)}
+      onClick={() => navigate(_id)}
       className="pokemon-card"
       style={{
         display: "flex",
@@ -99,7 +99,7 @@ export default function PokemonCard({ name }: PokemonCardProps) {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {name}
+          {_id}
         </Typography>
         <Typography variant="body2">
           {data.types.map((type) => type.type.name).join(", ")}

@@ -1,8 +1,7 @@
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import PokemonAbilities from "./PokemonAbilities";
 import PokemonStats from "./PokemonStats";
-import { useQuery } from "@tanstack/react-query";
-import { IPokemon } from "../interfaces/pokemon";
+import { useQuery, gql } from "@apollo/client";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { Box, Button, Typography } from "@mui/material";
@@ -13,22 +12,34 @@ enum PokemonTabs {
   ABILITIES = "abilities",
 }
 
+function findSinglePokemon(_id: number) {
+  return gql`
+    query query {
+      pokemon(_id: ${_id}) {
+        _id
+        name
+        stats {
+          stat {
+            name
+          }
+        }
+        abilities {
+          ability {
+            name
+          }
+        }
+      }
+    }
+  `;
+}
+
 export default function Pokemon() {
-  const { id } = useParams();
+  const { _id } = useParams();
   const [tab, setTab] = useState<PokemonTabs>(PokemonTabs.STATS);
   const [team, setWindowTeam] = useState<string>("");
   const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { data, error, isLoading } = useQuery<IPokemon, Error>(
-    [id, "_pokemon"],
-    () => {
-      const res = fetch(`pokemon_data/${id}.json/`)
-        .then((res) => res.json())
-        .then((res) => res as IPokemon);
-
-      return res;
-    },
-  );
+  const { loading, error, data } = useQuery(findSinglePokemon(parseInt(_id!)));
 
   function getTeam() {
     if (teamIsLoaded) {
@@ -98,12 +109,8 @@ export default function Pokemon() {
     return true;
   }
 
-  if (isLoading) {
-    return (
-      <div>
-        <CircularProgress />
-      </div>
-    );
+  if (loading) {
+    return <CircularProgress />;
   }
 
   if (error) {
@@ -113,7 +120,7 @@ export default function Pokemon() {
   return (
     <>
       <Typography variant="h3" textAlign={"center"}>
-        {data.name} - #{data.id}
+        {data.pokemon.name} - #{data.pokemon.id}
       </Typography>
 
       <Box>
@@ -126,16 +133,16 @@ export default function Pokemon() {
           <Button onClick={() => navigate(-1)}>Go back</Button>
           <Button onClick={() => setTab(PokemonTabs.STATS)}>Stats</Button>
           <Button
-            disabled={checkTeam(data.name)}
-            onClick={() => addToTeam(data.name)}
+            disabled={checkTeam(data.pokemon.name)}
+            onClick={() => addToTeam(data.pokemon.name)}
           >
-            {checkTeam(data.name) ? "Already in team" : "Add to team"}
+            {checkTeam(data.pokemon.name) ? "Already in team" : "Add to team"}
           </Button>
         </Box>
         {tab === PokemonTabs.STATS && <PokemonStats pokemon={data} />}
         {tab === PokemonTabs.ABILITIES && <PokemonAbilities pokemon={data} />}
       </Box>
-      <PokemonRatingReview pokemonId={data.id.toString()} />
+      <PokemonRatingReview pokemonId={data.pokemon._id.toString()} />
       <Outlet />
     </>
   );

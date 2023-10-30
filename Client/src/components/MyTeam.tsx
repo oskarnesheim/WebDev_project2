@@ -139,7 +139,7 @@ export default function MyTeam() {
     return (
       <div className="selected-Info">
         <div className="container" onClick={redirectToPokemon}>
-          <PokemonCard key={selectedPokemon[0]} name={selectedPokemon[0]} />
+          <PokemonCard key={selectedPokemon[0]} _id={selectedPokemon[0]} />
         </div>
         <ArrowButtons />
         <div className="container">

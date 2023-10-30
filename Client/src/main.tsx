@@ -8,6 +8,8 @@ import Pokemon from "./components/Pokemon.tsx";
 import Home from "./components/Home.tsx";
 import MyTeam from "./components/MyTeam.tsx";
 import "./main.css";
+import Databasetest from "./components/Databasetest.tsx";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const queryClient = new QueryClient();
 export const router = createBrowserRouter(
@@ -25,8 +27,12 @@ export const router = createBrowserRouter(
           element: <MyTeam />,
         },
         {
-          path: ":id/*",
+          path: ":_id/*",
           element: <Pokemon />,
+        },
+        {
+          path: "test",
+          element: <Databasetest />,
         },
       ],
     },
@@ -34,11 +40,18 @@ export const router = createBrowserRouter(
   //   { basename: "/project1" }
 );
 
+const client = new ApolloClient({
+  uri: "http://localhost:6969/graphql/",
+  cache: new InMemoryCache(),
+});
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <QueryClientProvider client={queryClient}>
-    <RecoilRoot>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <RouterProvider router={router} />
-    </RecoilRoot>
-  </QueryClientProvider>,
+  <ApolloProvider client={client}>
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <RouterProvider router={router} />
+      </RecoilRoot>
+    </QueryClientProvider>
+  </ApolloProvider>,
 );
