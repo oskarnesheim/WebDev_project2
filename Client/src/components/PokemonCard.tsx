@@ -1,11 +1,44 @@
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import { IPokemon } from "../interfaces/pokemon";
+import { useQuery, gql } from "@apollo/client";
 
 type PokemonCardProps = {
   _id: number;
 };
+
+function findSinglePokemon(_id: number) {
+  const q = gql`
+    query query {
+      pokemon(_id: ${_id}) {
+        _id
+        name
+        height
+        base_experience
+        weight
+        stats {
+          stat {
+            name
+          }
+          base_stat
+        }
+        abilities {
+          ability {
+            name
+          }
+        }
+        types{
+          type{
+            name
+          }
+        }
+        sprites {
+          front_default
+        }
+      }
+    }
+  `;
+  return q;
+}
 
 export default function PokemonCard({ _id }: PokemonCardProps) {
   const filters = [
@@ -29,17 +62,9 @@ export default function PokemonCard({ _id }: PokemonCardProps) {
   ];
   const navigate = useNavigate();
 
-  const { data, error, isLoading } = useQuery<IPokemon, Error>(
-    [_id, "_pokemon"],
-    () => {
-      const res = fetch(`pokemon_data/${_id}.json/`)
-        .then((res) => res.json())
-        .then((res) => res as IPokemon);
-      return res;
-    },
-  );
+  const { loading, error, data } = useQuery(findSinglePokemon(_id));
 
-  if (isLoading) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
@@ -51,7 +76,9 @@ export default function PokemonCard({ _id }: PokemonCardProps) {
     if (!data) return ["grey"];
     const colors: string[] = [];
 
-    const types = data.types.map((type) => type.type.name);
+    const types = data.pokemon.types.map(
+      (type: { type: { name: string } }) => type.type.name,
+    );
     for (let i = 0; i < filters.length; i++) {
       if (types.includes(filters[i][0].toLowerCase())) {
         colors.push(filters[i][1]);
@@ -62,7 +89,7 @@ export default function PokemonCard({ _id }: PokemonCardProps) {
 
   return (
     <Card
-      onClick={() => navigate(_id)}
+      onClick={() => navigate(_id.toString())}
       className="pokemon-card"
       style={{
         display: "flex",
@@ -70,7 +97,7 @@ export default function PokemonCard({ _id }: PokemonCardProps) {
         justifyContent: "center",
         alignItems: "center",
       }}
-      key={data.id}
+      key={data.pokemon._id}
       sx={{
         width: "100%",
         textAlign: "center",
@@ -94,7 +121,7 @@ export default function PokemonCard({ _id }: PokemonCardProps) {
       />
       <img
         style={{ height: "1%" }}
-        src={data.sprites.front_default}
+        src={data.pokemon.sprites.front_default}
         alt="Cool picture of a Pokémon"
       />
       <CardContent>
@@ -102,11 +129,13 @@ export default function PokemonCard({ _id }: PokemonCardProps) {
           {_id}
         </Typography>
         <Typography variant="body2">
-          {data.types.map((type) => type.type.name).join(", ")}
+          {data.pokemon.types
+            .map((type: { type: { name: string } }) => type.type.name)
+            .join(", ")}
         </Typography>
         <Typography variant="body2">
           <hr />
-          {data.weight} kg &nbsp; {data.base_experience}XP
+          {data.pokemon.weight} kg &nbsp; {data.pokemon.base_experience}XP
         </Typography>
       </CardContent>
       {/* <CardActions>
