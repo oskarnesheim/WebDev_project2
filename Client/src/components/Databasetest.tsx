@@ -7,28 +7,45 @@ function SmallComponent(name: string, _id: number) {
     </div>
   );
 }
-
-const TEST = gql`
-  query testQuery {
-    pokemonsSortedAndFiltered(range: [0, 20], filters: [], sorting: []) {
-      _id
-      name
-      stats {
-        base_stat
-        stat {
-          name
-        }
-      }
-      types {
-        type {
-          name
+function findSinglePokemon(_id: number) {
+  const q = gql`
+    query query {
+      pokemon(_id: ${_id}) {
+        _id
+        name
+        stats {
+          stat {
+            name
+          }
         }
       }
     }
-  }
-`;
+  `;
+  console.log(q, "query response");
+  return q;
+}
+
+// const TEST = gql`
+//   query testQuery {
+//     pokemonsSortedAndFiltered(range: [0, 20], filters: [], sorting: []) {
+//       _id
+//       name
+//       stats {
+//         base_stat
+//         stat {
+//           name
+//         }
+//       }
+//       types {
+//         type {
+//           name
+//         }
+//       }
+//     }
+//   }
+// `;
 export default function Databasetest() {
-  const { loading, error, data } = useQuery(TEST);
+  const { loading, error, data } = useQuery(findSinglePokemon(25));
 
   if (loading) return <p>Loading...</p>;
 
@@ -37,9 +54,17 @@ export default function Databasetest() {
 
   return (
     <div>
-      {data.pokemonsSortedAndFiltered.map((p: { name: string; _id: number }) =>
-        SmallComponent(p.name, p._id),
-      )}
+      <ul>
+        <li>{data.pokemon.name}</li>
+        <li>{data.pokemon._id}</li>
+        <li>{data.pokemon.stats.map((s) => s.stat.name)}</li>
+        {/* <li>{data.pokemon.abilities.map((a: { name: string }) => a.name)}</li> */}
+      </ul>
     </div>
+    // <div>
+    //   {data.pokemonsSortedAndFiltered.map((p: { name: string; _id: number }) =>
+    //     SmallComponent(p.name, p._id),
+    //   )}
+    // </div>
   );
 }

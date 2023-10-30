@@ -13,24 +13,31 @@ enum PokemonTabs {
 }
 
 function findSinglePokemon(_id: number) {
-  return gql`
+  const q = gql`
     query query {
       pokemon(_id: ${_id}) {
         _id
         name
+        height
+        weight
         stats {
           stat {
             name
           }
+          base_stat
         }
         abilities {
           ability {
             name
           }
         }
+        sprites {
+          front_default
+        }
       }
     }
   `;
+  return q;
 }
 
 export default function Pokemon() {
@@ -120,7 +127,7 @@ export default function Pokemon() {
   return (
     <>
       <Typography variant="h3" textAlign={"center"}>
-        {data.pokemon.name} - #{data.pokemon.id}
+        {data.pokemon.name} - #{data.pokemon._id}
       </Typography>
 
       <Box>
@@ -139,8 +146,8 @@ export default function Pokemon() {
             {checkTeam(data.pokemon.name) ? "Already in team" : "Add to team"}
           </Button>
         </Box>
-        {tab === PokemonTabs.STATS && <PokemonStats pokemon={data} />}
-        {tab === PokemonTabs.ABILITIES && <PokemonAbilities pokemon={data} />}
+        {tab === PokemonTabs.STATS && <PokemonStats pokemon={data.pokemon} />}
+        {/* {tab === PokemonTabs.ABILITIES && <PokemonAbilities pokemon={data} />} */}
       </Box>
       <PokemonRatingReview pokemonId={data.pokemon._id.toString()} />
       <Outlet />
