@@ -3,7 +3,12 @@ image: node
 cache: # Cache modules in between jobs
   key: $CI_COMMIT_REF_SLUG
   paths:
-    - .npm/
+    - Client/node_modules
+
+before_script:
+  - npm ci
+  - cd Client
+  - npm ci
 
 stages:
   - setup # List of stages for jobs, and their order of execution
@@ -15,32 +20,25 @@ stages:
 node-setup:
   stage: setup
   script:
-    - cd Client
+    - npm install -g typescript
     - npm install
-  artifacts:
-    paths:
-      - Client/node_modules
 
 build: # This job runs in the build stage, which runs first.
   stage: build
   script:
-    - cd Client
     - npm run build
 
 test: # This job runs in the test stage.
   stage: test # It only starts when the job in the build stage completes successfully.
   script:
-    - cd Client
     - npm run test
 
 lint:
   stage: lint
   script:
-    - cd Client
     - npm run lint
 
 prettier:
   stage: prettier
   script:
-    - cd Client
     - npm run prettier-check

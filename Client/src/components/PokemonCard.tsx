@@ -105,7 +105,7 @@ export default function PokemonCard({ _id }: PokemonCardProps) {
         textAlign: "center",
         "&:hover": {
           cursor: "pointer",
-          boxShadow: `0 0 10vw 0px ${getBackgroundColor()[0]}`,
+          boxShadow: `0 0 3vw 0px ${getBackgroundColor()[0]}`,
         },
       }}
     >

@@ -3,8 +3,9 @@ import PokemonStats from "./PokemonStats";
 import { useQuery, gql } from "@apollo/client";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Tooltip, Typography } from "@mui/material";
 import PokemonRatingReview from "./PokemonReviews";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 function findSinglePokemon() {
   const q = gql`
@@ -120,10 +121,19 @@ export default function Pokemon() {
     return <Box>Error: {error.message}</Box>;
   }
 
+  function removeFromTeam(name: string) {
+    const listTeam = team.split(",");
+    const index = listTeam.indexOf(name);
+    if (index > -1) {
+      listTeam.splice(index, 1);
+    }
+    setTeamState(listTeam.join(","));
+  }
+
   return (
     <>
-      <Typography variant="h3" textAlign={"center"}>
-        {data.pokemon.name} - #{data.pokemon._id}
+      <Typography sx={{ marginTop: "5vh" }} variant="h3" textAlign={"center"}>
+        {data.pokemon.name} - #{data.pokemon.id}
       </Typography>
 
       <Box>
@@ -140,7 +150,50 @@ export default function Pokemon() {
             onClick={() => addToTeam(data.pokemon.name)}
           >
             {checkTeam(data.pokemon.name) ? "Already in team" : "Add to team"}
-          </Button>
+            justifyContent: "space-evenly",
+            // border: "1px solid #E0F1FF",
+            alignItems: "center",
+            marginTop: "3vh",
+            marginBottom: "3vh",
+            marginLeft: "10vw",
+            marginRight: "10vw",
+          }}
+        >
+          <Tooltip title="Go back to previous page" arrow>
+            <Button
+              sx={{
+                marginRight: "10px",
+                "&:hover": {
+                  cursor: "alias",
+                },
+              }}
+              onClick={() => navigate(-1)}
+            >
+              <ArrowBackIosNewIcon />
+            </Button>
+          </Tooltip>
+          <Tooltip
+            title={
+              checkTeam(data.name)
+                ? "Pokemon is already in your team, do you want to remove " +
+                  data.name +
+                  " from your team?"
+                : "Add " + data.name + " to your team"
+            }
+            arrow
+          >
+            <Button
+              variant="outlined"
+              sx={{ color: checkTeam(data.name) ? "red" : "green" }}
+              onClick={() =>
+                checkTeam(data.name)
+                  ? removeFromTeam(data.name)
+                  : addToTeam(data.name)
+              }
+            >
+              {checkTeam(data.name) ? "Remove from team" : "Add to team"}
+            </Button>
+          </Tooltip>
         </Box>
         <PokemonStats pokemon={data.pokemon} />
       </Box>
