@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
+import { Box } from "@mui/material";
 
 type sortingBoxProps = {
   updateSort: React.Dispatch<React.SetStateAction<string>>;
@@ -37,8 +38,7 @@ export default function SortingBox({ updateSort }: sortingBoxProps) {
   };
 
   return (
-    <div>
-      <h2>Sorting</h2>
+    <Box>
       <Button
         id="fade-button"
         aria-controls={open ? "fade-menu" : undefined}
@@ -46,7 +46,7 @@ export default function SortingBox({ updateSort }: sortingBoxProps) {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Filters
+        Sorting
       </Button>
       <Menu
         id="fade-menu"
@@ -80,6 +80,6 @@ export default function SortingBox({ updateSort }: sortingBoxProps) {
           Reset
         </MenuItem>
       </Menu>
-    </div>
+    </Box>
   );
 }

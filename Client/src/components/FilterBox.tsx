@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
-import { FormControlLabel, Checkbox } from "@mui/material";
+import { FormControlLabel, Checkbox, Box } from "@mui/material";
 
 const filters = [
   ["fire", "red"],
@@ -44,8 +44,7 @@ export default function Filterbox({
   };
 
   return (
-    <div>
-      <h2>Filters</h2>
+    <Box>
       <Button
         id="fade-button"
         aria-controls={open ? "fade-menu" : undefined}
@@ -96,6 +95,6 @@ export default function Filterbox({
           Reset
         </MenuItem>
       </Menu>
-    </div>
+    </Box>
   );
 }

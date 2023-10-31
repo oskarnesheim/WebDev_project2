@@ -6,11 +6,6 @@ import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { Box, Button, Typography } from "@mui/material";
 import PokemonRatingReview from "./PokemonReviews";
 
-enum PokemonTabs {
-  STATS = "stats",
-  ABILITIES = "abilities",
-}
-
 function findSinglePokemon(_id: number) {
   const q = gql`
     query query {
@@ -41,7 +36,6 @@ function findSinglePokemon(_id: number) {
 
 export default function Pokemon() {
   const { _id } = useParams();
-  const [tab, setTab] = useState<PokemonTabs>(PokemonTabs.STATS);
   const [team, setWindowTeam] = useState<string>("");
   const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -120,7 +114,7 @@ export default function Pokemon() {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <Box>Error: {error.message}</Box>;
   }
 
   return (
@@ -133,11 +127,11 @@ export default function Pokemon() {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "space-between",
+            padding: "0em 12em 0em 12em",
           }}
         >
           <Button onClick={() => navigate(-1)}>Go back</Button>
-          <Button onClick={() => setTab(PokemonTabs.STATS)}>Stats</Button>
           <Button
             disabled={checkTeam(data.pokemon.name)}
             onClick={() => addToTeam(data.pokemon.name)}
@@ -145,8 +139,7 @@ export default function Pokemon() {
             {checkTeam(data.pokemon.name) ? "Already in team" : "Add to team"}
           </Button>
         </Box>
-        {tab === PokemonTabs.STATS && <PokemonStats pokemon={data.pokemon} />}
-        {/* {tab === PokemonTabs.ABILITIES && <PokemonAbilities pokemon={data} />} */}
+        <PokemonStats pokemon={data.pokemon} />
       </Box>
       <PokemonRatingReview pokemonId={data.pokemon._id.toString()} />
       <Outlet />
