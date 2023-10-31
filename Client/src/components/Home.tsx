@@ -1,8 +1,7 @@
 import { useState } from "react";
 import Searchbar from "./Searchbar.tsx";
-import PokemonCard from "./PokemonCard.tsx";
 import FilterAndSortingBox from "../FilterAndSortingBox.tsx";
-import { useQuery, gql } from "@apollo/client";
+import PokemonView from "./PokemonView.tsx";
 
 //! Forslag til hva vi kan sorteve på
 // eslint-disable-next-line react-refresh/only-export-components
@@ -16,60 +15,11 @@ export enum SortBy {
   NONE = "None",
 }
 
-function getPokemons() {
-  const q = gql`
-    query query {
-      pokemonsSortedAndFiltered(
-        filters: ["fire"]
-        sorting: [["name", "1"]]
-        range: [0, 20]
-      ) {
-        _id
-        name
-        types {
-          type {
-            name
-          }
-        }
-        base_experience
-        weight
-      }
-    }
-  `;
-  return q;
-}
-
-function pokeSearch(search: string) {
-  const q = gql`
-    query query {
-      pokemonSearch(search: ${search}) {
-        _id
-        name
-        types {
-          type {
-            name
-          }
-        }
-        base_experience
-        weight
-      }
-    }`;
-  return q;
-}
-
 export default function Home() {
-  const [, setDelayedSearch] = useState<string>("");
+  const [delayedSearch, setDelayedSearch] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>(SortBy.NONE);
   const [currentFilter, setCurrentFilter] = useState<string[]>([]);
-  const { loading, error, data } = useQuery(getPokemons());
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
   return (
     <div className="home">
       <div className="search_container">
@@ -83,11 +33,15 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="pokemons_container">
-        {data.pokemonsSortedAndFiltered.map((pokemon: { _id: number }) => {
-          return <PokemonCard key={pokemon._id} _id={pokemon._id} />;
-        })}
-      </div>
+      <PokemonView
+        filters={["fire"]}
+        range={[0, 40]}
+        sorting={[
+          ["base_experience", "-1"],
+          ["weight", "1"],
+        ]}
+        search={delayedSearch}
+      />
     </div>
   );
 }
