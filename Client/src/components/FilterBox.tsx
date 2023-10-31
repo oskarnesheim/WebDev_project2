@@ -1,41 +1,72 @@
-import Button from "@mui/material/Button/Button";
-import Checkbox from "@mui/material/Checkbox/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup/FormGroup";
 import * as React from "react";
-type FilterBoxProps = {
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Fade from "@mui/material/Fade";
+import { FormControlLabel, Checkbox } from "@mui/material";
+
+const filters = [
+  ["fire", "red"],
+  ["water", "blue"],
+  ["grass", "green"],
+  ["electric", "yellow"],
+  ["normal", "grey"],
+  ["fighting", "brown"],
+  ["poison", "purple"],
+  ["ground", "brown"],
+  ["flying", "skyblue"],
+  ["psychic", "pink"],
+  ["bug", "green"],
+  ["rock", "brown"],
+  ["ghost", "purple"],
+  ["dark", "black"],
+  ["dragon", "purple"],
+  ["steel", "grey"],
+  ["fairy", "pink"],
+];
+
+type FadeMenuProps = {
   currentFilter: string[];
   setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
 };
-const filters = [
-  ["Fire", "red"],
-  ["Water", "blue"],
-  ["Grass", "green"],
-  ["Electric", "yellow"],
-  ["Normal", "grey"],
-  ["Fighting", "brown"],
-  ["poison", "purple"],
-  ["Ground", "brown"],
-  ["Flying", "skyblue"],
-  // ["Psychic", "pink"],
-  // ["Bug", "green"],
-  // ["Rock", "brown"],
-  // ["Ghost", "purple"],
-  // ["Dark", "black"],
-  // ["Dragon", "purple"],
-  // ["Steel", "grey"],
-  // ["Fairy", "pink"],
-];
 
-export default function FilterBox({
+export default function Filterbox({
   currentFilter,
   setCurrentFilter,
-}: FilterBoxProps) {
+}: FadeMenuProps) {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div>
-      <ul id="filter_list">
+      <h2>Filters</h2>
+      <Button
+        id="fade-button"
+        aria-controls={open ? "fade-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+      >
+        Filters
+      </Button>
+      <Menu
+        id="fade-menu"
+        MenuListProps={{
+          "aria-labelledby": "fade-button",
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
         {filters.map((filter) => (
-          <FormGroup key={filter[0]}>
+          <MenuItem>
             <FormControlLabel
               control={
                 <Checkbox
@@ -53,18 +84,18 @@ export default function FilterBox({
                 />
               }
               label={filter[0]}
-              style={{ color: "white" }}
             />
-          </FormGroup>
+          </MenuItem>
         ))}
-      </ul>
-      <Button
-        onClick={() => {
-          setCurrentFilter([]);
-        }}
-      >
-        Reset
-      </Button>
+        <MenuItem
+          onClick={() => {
+            handleClose;
+            setCurrentFilter([]);
+          }}
+        >
+          Reset
+        </MenuItem>
+      </Menu>
     </div>
   );
 }

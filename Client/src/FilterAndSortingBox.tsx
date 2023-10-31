@@ -1,7 +1,7 @@
 import { Box, Button, Modal } from "@mui/material";
 import React from "react";
-import FilterBox from "./components/FilterBox";
 import SortingBox from "./components/SortingBox";
+import Filterbox from "./components/Filterbox";
 
 type FilterAndSortingBoxProps = {
   currentFilter: string[];
@@ -15,7 +15,7 @@ const modalBoxStyles = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 600,
   bgcolor: "#002c58",
   border: "2px solid #000",
   boxShadow: 24,
@@ -42,14 +42,12 @@ export default function FilterAndSortingBox({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={modalBoxStyles}>
-          <FilterBox
+        <Box sx={modalBoxStyles} display={"flex"} flexDirection={"row"}>
+          <Filterbox
             currentFilter={currentFilter}
             setCurrentFilter={setCurrentFilter}
           />
-          <br />
-          <br />
-          <br />
+
           <SortingBox sortBy={sortBy} updateSort={updateSort} />
         </Box>
       </Modal>

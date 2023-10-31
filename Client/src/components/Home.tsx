@@ -6,19 +6,19 @@ import PokemonView from "./PokemonView.tsx";
 //! Forslag til hva vi kan sorteve på
 // eslint-disable-next-line react-refresh/only-export-components
 export enum SortBy {
-  A_Z = "A-Z",
-  Z_A = "Z-A",
-  BASE_EXPERIENCE_INCREASING = "Base experience increasing",
-  BASE_EXPERIENCE_DECREASING = "Base experience decreasing",
-  WEIGHT_INCREASING = "Weight increasing",
-  WEIGHT_DECREASING = "Weight decreasing",
-  NONE = "None",
+  A_Z = "name,1",
+  Z_A = "name,-1",
+  BASE_EXPERIENCE_INCREASING = "base_experience,1",
+  BASE_EXPERIENCE_DECREASING = "base_experience,-1",
+  WEIGHT_INCREASING = "weight,1",
+  WEIGHT_DECREASING = "weight,-1",
 }
 
 export default function Home() {
-  const [delayedSearch, setDelayedSearch] = useState<string>("");
-  const [sortBy, setSortBy] = useState<string>(SortBy.NONE);
+  const [delayedSearch, setDelayedSearch] = useState("");
+  const [sortBy, setSortBy] = useState<string>(SortBy.A_Z);
   const [currentFilter, setCurrentFilter] = useState<string[]>([]);
+  const [range] = useState<number[]>([0, 20]);
 
   return (
     <div className="home">
@@ -34,12 +34,9 @@ export default function Home() {
         </div>
       </div>
       <PokemonView
-        filters={["fire"]}
-        range={[0, 40]}
-        sorting={[
-          ["base_experience", "-1"],
-          ["weight", "1"],
-        ]}
+        filters={currentFilter}
+        range={range}
+        sorting={[sortBy.split(",")]}
         search={delayedSearch}
       />
     </div>
