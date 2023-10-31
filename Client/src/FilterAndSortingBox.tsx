@@ -1,7 +1,7 @@
 import { Box, Button, Modal } from "@mui/material";
 import React, { useState } from "react";
 import SortingBox from "./components/SortingBox";
-import Filterbox from "./components/Filterbox";
+import FilterBox from "./components/FilterBox";
 
 type FilterAndSortingBoxProps = {
   currentFilter: string[];
@@ -59,7 +59,7 @@ export default function FilterAndSortingBox({
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalBoxStyles} display={"flex"} flexDirection={"column"}>
-          <Filterbox
+          <FilterBox
             currentFilter={tempCurrentFilter} // Use the local state here
             setCurrentFilter={setTempCurrentFilter} // Update the local state
           />

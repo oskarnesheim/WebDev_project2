@@ -30,7 +30,7 @@ type FadeMenuProps = {
   setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-export default function Filterbox({
+export default function FilterBox({
   currentFilter,
   setCurrentFilter,
 }: FadeMenuProps) {
