@@ -9,7 +9,6 @@ type PokemonViewProps = {
 };
 
 function getPokemons() {
-  //! spørringen under feiler av en eller annen grunn. Får ikke til å sende inn arrayer
   const q = gql`
     query MyQuery($sorting: [[String]], $filters: [String], $range: [Int]) {
       pokemonsSortedAndFiltered(
@@ -21,7 +20,6 @@ function getPokemons() {
       }
     }
   `;
-  console.log(q);
   return q;
 }
 
@@ -30,14 +28,6 @@ function pokeSearch() {
     query query($search: String, $range: [Int]) {
       pokemonSearch(search: $search, range: $range) {
         _id
-        #   name
-        #   types {
-        #     type {
-        #       name
-        #     }
-        #   }
-        #   base_experience
-        #   weight
       }
     }
   `;
