@@ -5,6 +5,9 @@ cache: # Cache modules in between jobs
   paths:
     - .npm/
 
+before_script:
+  - npm install
+
 stages:
   - setup # List of stages for jobs, and their order of execution
   - build
