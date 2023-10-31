@@ -6,10 +6,10 @@ type PokemonCardProps = {
   _id: number;
 };
 
-function findSinglePokemon(_id: number) {
+function findSinglePokemon() {
   const q = gql`
-    query query {
-      pokemon(_id: ${_id}) {
+    query query($_id: Int!) {
+      pokemon(_id: $_id) {
         _id
         name
         height
@@ -26,8 +26,8 @@ function findSinglePokemon(_id: number) {
             name
           }
         }
-        types{
-          type{
+        types {
+          type {
             name
           }
         }
@@ -61,8 +61,10 @@ export default function PokemonCard({ _id }: PokemonCardProps) {
     ["Fairy", "pink"],
   ];
   const navigate = useNavigate();
-
-  const { loading, error, data } = useQuery(findSinglePokemon(_id));
+  const variables = {
+    _id: _id,
+  };
+  const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
 
   if (loading) {
     return <div>Loading...</div>;

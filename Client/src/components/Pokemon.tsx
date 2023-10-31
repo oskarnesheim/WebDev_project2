@@ -6,10 +6,10 @@ import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { Box, Button, Typography } from "@mui/material";
 import PokemonRatingReview from "./PokemonReviews";
 
-function findSinglePokemon(_id: number) {
+function findSinglePokemon() {
   const q = gql`
-    query query {
-      pokemon(_id: ${_id}) {
+    query query($_id: Int!) {
+      pokemon(_id: $_id) {
         _id
         name
         height
@@ -39,7 +39,10 @@ export default function Pokemon() {
   const [team, setWindowTeam] = useState<string>("");
   const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { loading, error, data } = useQuery(findSinglePokemon(parseInt(_id!)));
+  const variables = {
+    _id: parseInt(_id!),
+  };
+  const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
 
   function getTeam() {
     if (teamIsLoaded) {

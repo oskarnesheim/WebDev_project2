@@ -1,7 +1,7 @@
 import { Box, Button, Modal } from "@mui/material";
 import React, { useState } from "react";
 import SortingBox from "./components/SortingBox";
-import Filterbox from "./components/FilterBox";
+import Filterbox from "./components/Filterbox";
 
 type FilterAndSortingBoxProps = {
   currentFilter: string[];

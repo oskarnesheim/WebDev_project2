@@ -10,32 +10,23 @@ type PokemonViewProps = {
 
 function getPokemons() {
   const q = gql`
-    query MyQuery($sorting: [[String]], $filters: [String], $range: [Int]) {
+    query MyQuery(
+      $sorting: [[String]]
+      $filters: [String]
+      $range: [Int]
+      $search: String
+    ) {
       pokemonsSortedAndFiltered(
         sorting: $sorting
         filters: $filters
         range: $range
+        search: $search
       ) {
         _id
       }
     }
   `;
   return q;
-}
-
-function pokeSearch() {
-  const q = gql`
-    query query($search: String, $range: [Int]) {
-      pokemonSearch(search: $search, range: $range) {
-        _id
-      }
-    }
-  `;
-  return q;
-}
-
-function whatQuery(search: string) {
-  return search.length > 0 ? pokeSearch() : getPokemons();
 }
 
 export default function PokemonView({
@@ -50,7 +41,7 @@ export default function PokemonView({
     range: range,
     search: search,
   };
-  const { loading, error, data } = useQuery(whatQuery(search), { variables });
+  const { loading, error, data } = useQuery(getPokemons(), { variables });
 
   if (loading) {
     return <div>Loading...</div>;
@@ -61,13 +52,9 @@ export default function PokemonView({
   }
   return (
     <div className="pokemons_container">
-      {!search
-        ? data.pokemonsSortedAndFiltered.map((pokemon: { _id: number }) => {
-            return <PokemonCard key={pokemon._id} _id={pokemon._id} />;
-          })
-        : data.pokemonSearch.map((pokemon: { _id: number }) => {
-            return <PokemonCard key={pokemon._id} _id={pokemon._id} />;
-          })}
+      {data.pokemonsSortedAndFiltered.map((pokemon: { _id: number }) => {
+        return <PokemonCard key={pokemon._id} _id={pokemon._id} />;
+      })}
     </div>
   );
 }
