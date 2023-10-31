@@ -19,6 +19,7 @@ node-setup:
   stage: setup
   script:
     - cd Client
+    - npm install -g typescript
     - npm install
   # artifacts:
   #   paths:
