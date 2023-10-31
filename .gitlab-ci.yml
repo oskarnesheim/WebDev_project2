@@ -17,9 +17,9 @@ node-setup:
   script:
     - cd Client
     - npm install
-  artifacts:
-    paths:
-      - Client/node_modules
+  # artifacts:
+  #   paths:
+  #     - Client/node_modules
 
 build: # This job runs in the build stage, which runs first.
   stage: build
