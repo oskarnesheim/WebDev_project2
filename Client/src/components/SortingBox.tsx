@@ -1,55 +1,32 @@
-// import InputLabel from "@mui/material/InputLabel";
-// import MenuItem from "@mui/material/MenuItem";
-// import FormControl from "@mui/material/FormControl";
-// import Select from "@mui/material/Select";
-// import { SortBy } from "./Home";
-// import React from "react";
-
-// type sortingBoxProps = {
-//   updateSort: React.Dispatch<React.SetStateAction<string>>;
-//   sortBy: string;
-// };
-
-// export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
-//   return (
-//     <FormControl>
-//       <h2>Sorting</h2>
-//       <InputLabel style={{ color: "white" }}>Sort by</InputLabel>
-//       <Select
-//         labelId="demo-simple-select-label"
-//         id="demo-simple-select"
-//         style={{ color: "white" }}
-//         value={sortBy}
-//         label="Age"
-//         onChange={(e) => updateSort(e.target.value)}
-//       >
-//         <MenuItem value={SortBy.A_Z}>A-Z</MenuItem>
-//         <MenuItem value={SortBy.Z_A}>Z-A</MenuItem>
-//         <MenuItem value={SortBy.BASE_EXPERIENCE_INCREASING}>
-//           Base experience increasing
-//         </MenuItem>
-//         <MenuItem value={SortBy.BASE_EXPERIENCE_DECREASING}>
-//           Base experience decreasing
-//         </MenuItem>
-//         <MenuItem value={SortBy.WEIGHT_INCREASING}>Weight increasing</MenuItem>
-//         <MenuItem value={SortBy.WEIGHT_DECREASING}>Weight decreasing</MenuItem>
-//       </Select>
-//     </FormControl>
-//   );
-// }
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
-import { SortBy } from "./Home";
 
 type sortingBoxProps = {
   updateSort: React.Dispatch<React.SetStateAction<string>>;
   sortBy: string;
 };
+enum SortBy {
+  A_Z = "name,1",
+  Z_A = "name,-1",
+  BASE_EXPERIENCE_INCREASING = "base_experience,1",
+  BASE_EXPERIENCE_DECREASING = "base_experience,-1",
+  WEIGHT_INCREASING = "weight,1",
+  WEIGHT_DECREASING = "weight,-1",
+}
 
-export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
+const sortings = [
+  ["A-Z", SortBy.A_Z],
+  ["Z-A", SortBy.Z_A],
+  ["Base experience increasing", SortBy.BASE_EXPERIENCE_INCREASING],
+  ["Base experience decreasing", SortBy.BASE_EXPERIENCE_DECREASING],
+  ["Weight increasing", SortBy.WEIGHT_INCREASING],
+  ["Weight decreasing", SortBy.WEIGHT_DECREASING],
+];
+
+export default function SortingBox({ updateSort }: sortingBoxProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -81,20 +58,19 @@ export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        <MenuItem value={SortBy.A_Z}>A-Z</MenuItem>
-        // <MenuItem value={SortBy.Z_A}>Z-A</MenuItem>
-        //{" "}
-        <MenuItem value={SortBy.BASE_EXPERIENCE_INCREASING}>
-          // Base experience increasing //{" "}
-        </MenuItem>
-        //{" "}
-        <MenuItem value={SortBy.BASE_EXPERIENCE_DECREASING}>
-          // Base experience decreasing //{" "}
-        </MenuItem>
-        //{" "}
-        <MenuItem value={SortBy.WEIGHT_INCREASING}>Weight increasing</MenuItem>
-        //{" "}
-        <MenuItem value={SortBy.WEIGHT_DECREASING}>Weight decreasing</MenuItem>
+        {sortings.map((sorting) => (
+          <MenuItem
+            key={sorting[1]}
+            value={sorting[1]}
+            onClick={() => {
+              handleClose;
+              updateSort(sorting[1]);
+            }}
+          >
+            {sorting[0]}
+          </MenuItem>
+        ))}
+
         <MenuItem
           onClick={() => {
             handleClose;
