@@ -5,14 +5,14 @@ import { Box } from "@mui/material";
 import { useQuery, gql } from "@apollo/client";
 
 type PokemonCardProps = {
-  _id: number;
+  name: string;
   selected: boolean;
 };
 
-function findSinglePokemon(_id: number) {
+function findSinglePokemon(name: string) {
   const q = gql`
     query query {
-      pokemon(_id: ${_id}) {
+      pokemon(_id: ${name}) {
         _id
         name
         height
@@ -50,8 +50,8 @@ function findSinglePokemon(_id: number) {
   return q;
 }
 
-export default function PokemonCard({ _id, selected }: PokemonCardProps) {
-  const { loading, error, data } = useQuery(findSinglePokemon(_id));
+export default function PokemonCard({ name, selected }: PokemonCardProps) {
+  const { loading, error, data } = useQuery(findSinglePokemon(name));
 
   if (loading) {
     return <div>Loading...</div>;

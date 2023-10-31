@@ -164,7 +164,7 @@ export default function MyTeam() {
         className="team-grid-child"
         key={count}
       >
-        <TeamMember selected={checkselected(pokemon)} _id={pokemon} />
+        <TeamMember selected={checkselected(pokemon)} name={pokemon} />
       </div>
     ));
   }
