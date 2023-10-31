@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Box } from "@mui/material";
+import { useQuery, gql } from "@apollo/client";
 
 interface IPokemon {
   name: string;
@@ -22,18 +22,49 @@ interface PokemonCardProps {
   name: string;
   selected: boolean;
 }
-
-const PokemonCard: React.FC<PokemonCardProps> = ({ name, selected }) => {
-  const { data, error, isLoading } = useQuery<IPokemon, Error>(
-    [name, "_pokemon"],
-    async () => {
-      const response = await fetch(`pokemon_data/${name}.json/`);
-      if (!response.ok) {
-        throw new Error("Network response was not ok " + response.statusText);
+function findSinglePokemon(name: string) {
+  const q = gql`
+    query query {
+      pokemon(_id: ${name}) {
+        _id
+        name
+        height
+        base_experience
+        weight
+        stats {
+          stat {
+            name
+          }
+          base_stat
+        }
+        abilities {
+          ability {
+            name
+          }
+        }
+        types{
+          type{
+            name
+          }
+        }
+        sprites {
+          front_default
+          versions{
+            generation-viii{
+              icons{
+                front_default
+              }
+            }
+          }
+        }
       }
-      return response.json() as Promise<IPokemon>;
-    },
-  );
+    }
+  `;
+  return q;
+}
+
+export default function PokemonCard({ name, selected }: PokemonCardProps) {
+  const { loading, error, data } = useQuery(findSinglePokemon(name));
 
   const [position, setPosition] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -53,7 +84,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ name, selected }) => {
     transition: "transform 0.2s ease-in-out",
   };
 
-  if (isLoading) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
@@ -101,14 +132,14 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ name, selected }) => {
               style={imageStyle}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              src={data.sprites.versions["generation-viii"].icons.front_default}
+              src={data.pokemon.sprites.versions["generation-viii"].icons.front_default}
               alt={name}
             />
           </Box>
 
           {/* Right side: Text */}
           <Typography variant="body1" sx={{ color: "primary.light" }}>
-            {data.name}
+            {data.pokemon.name}
           </Typography>
         </div>
       </CardContent>

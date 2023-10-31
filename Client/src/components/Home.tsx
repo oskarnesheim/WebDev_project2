@@ -1,79 +1,25 @@
-import { pokemons } from "../../public/test2.ts";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Searchbar from "./Searchbar.tsx";
-import { IPokemon_simple } from "../interfaces/pokemon.ts";
-import PokemonCard from "./PokemonCard.tsx";
 import FilterAndSortingBox from "../FilterAndSortingBox.tsx";
+import PokemonView from "./PokemonView.tsx";
 
 //! Forslag til hva vi kan sorteve på
 // eslint-disable-next-line react-refresh/only-export-components
 export enum SortBy {
-  A_Z = "A-Z",
-  Z_A = "Z-A",
-  BASE_EXPERIENCE_INCREASING = "Base experience increasing",
-  BASE_EXPERIENCE_DECREASING = "Base experience decreasing",
-  WEIGHT_INCREASING = "Weight increasing",
-  WEIGHT_DECREASING = "Weight decreasing",
-  NONE = "None",
+  A_Z = "name,1",
+  Z_A = "name,-1",
+  BASE_EXPERIENCE_INCREASING = "base_experience,1",
+  BASE_EXPERIENCE_DECREASING = "base_experience,-1",
+  WEIGHT_INCREASING = "weight,1",
+  WEIGHT_DECREASING = "weight,-1",
 }
 
 export default function Home() {
-  const [delayedSearch, setDelayedSearch] = useState<string>("");
-  const [sortBy, setSortBy] = useState<string>(SortBy.NONE);
-  const [pokemonList, setPokemonList] = useState<IPokemon_simple[]>(pokemons);
+  const [delayedSearch, setDelayedSearch] = useState("");
+  const [sortBy, setSortBy] = useState<string>(SortBy.A_Z);
   const [currentFilter, setCurrentFilter] = useState<string[]>([]);
+  const [range] = useState<number[]>([0, 20]);
 
-  // const [currentFilter, setCurrentFilter] = useState<string[]>([]);
-
-  useEffect(() => {
-    const sortedList = [...pokemonList];
-    switch (sortBy) {
-      case SortBy.A_Z:
-        sortedList.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case SortBy.BASE_EXPERIENCE_INCREASING:
-        sortedList.sort((a, b) => a.base_experience - b.base_experience);
-        break;
-      case SortBy.BASE_EXPERIENCE_DECREASING:
-        sortedList.sort((a, b) => b.base_experience - a.base_experience);
-        break;
-      case SortBy.WEIGHT_INCREASING:
-        sortedList.sort((a, b) => a.weight - b.weight);
-        break;
-      case SortBy.WEIGHT_DECREASING:
-        sortedList.sort((a, b) => b.weight - a.weight);
-        break;
-      case SortBy.Z_A:
-        sortedList.sort((a, b) => a.name.localeCompare(b.name)).reverse();
-        break;
-      case SortBy.NONE:
-        sortedList.sort(() => Math.random() - 0.5);
-        break;
-      default:
-        break;
-    }
-    setPokemonList(sortedList);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortBy]);
-
-  useEffect(() => {
-    const filters = currentFilter.map((filter) => filter.toLocaleLowerCase());
-    if (currentFilter.length > 0) {
-      const newLlist: IPokemon_simple[] = [];
-      pokemons.forEach((pokemon) => {
-        const types = pokemon.types.map((type) => type.type.name);
-        types.forEach((type) => {
-          if (filters.includes(type.toLocaleLowerCase())) {
-            newLlist.push(pokemon);
-          }
-        });
-      });
-      setPokemonList(newLlist);
-    }
-    if (currentFilter.length === 0) {
-      setPokemonList(pokemons);
-    }
-  }, [currentFilter]);
   return (
     <div className="home">
       <div className="search_container">
@@ -87,15 +33,12 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="pokemons_container">
-        {pokemonList
-          .filter((pokemon) =>
-            !delayedSearch ? true : pokemon.name.includes(delayedSearch),
-          )
-          .map((pokemon) => {
-            return <PokemonCard key={pokemon.id} name={pokemon.name} />;
-          })}{" "}
-      </div>
+      <PokemonView
+        filters={currentFilter}
+        range={range}
+        sorting={[sortBy.split(",")]}
+        search={delayedSearch}
+      />
     </div>
   );
 }

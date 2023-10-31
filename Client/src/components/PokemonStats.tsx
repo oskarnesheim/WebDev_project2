@@ -39,6 +39,7 @@ const BLUEGRADIENTCIRCLE =
   " 69%)";
 
 export default function PokemonStats({ pokemon }: PokemonStatsProps) {
+  console.log(pokemon, "pokemon");
   const navigate = useNavigate();
   useEffect(() => {
     if (!pokemon) navigate("..");
@@ -48,6 +49,8 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
     return { stat, value, color };
   }
 
+  console.log(pokemon.height, "pokemon height");
+  console.log(pokemon.stats[0], "pokemon weight");
   const rows = [
     createData("Height", pokemon.height, LIGHTBLUEGRADIENT),
     createData("Weight", pokemon.weight, BLUE),
