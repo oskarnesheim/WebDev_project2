@@ -8,6 +8,7 @@ type FilterAndSortingBoxProps = {
   setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
   updateSort: React.Dispatch<React.SetStateAction<string>>;
   sortBy: string;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const modalBoxStyles = {
@@ -28,6 +29,7 @@ export default function FilterAndSortingBox({
   setCurrentFilter,
   updateSort,
   sortBy,
+  setPage,
 }: FilterAndSortingBoxProps) {
   const [open, setOpen] = useState(false);
   const [tempCurrentFilter, setTempCurrentFilter] = useState(currentFilter); // Local state for currentFilter
@@ -39,6 +41,7 @@ export default function FilterAndSortingBox({
     // Reset the local state variables if the modal is closed without applying changes
     setTempCurrentFilter(currentFilter);
     setTempSortBy(sortBy);
+    setPage(1);
   };
 
   const handleApplyFilter = () => {

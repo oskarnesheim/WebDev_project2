@@ -32,6 +32,7 @@ export default function Home() {
           setCurrentFilter={setCurrentFilter}
           sortBy={sortBy}
           updateSort={setSortBy}
+          setPage={setPage}
         />
       </div>
       <PokemonView
