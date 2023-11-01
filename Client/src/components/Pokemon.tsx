@@ -54,7 +54,6 @@ export default function Pokemon() {
     if (teamJSON) {
       try {
         const team = JSON.parse(teamJSON);
-        console.log("Loader team fra localstore: " + team);
         setTeamState(team);
         setTeamIsLoaded(true);
         return team;
