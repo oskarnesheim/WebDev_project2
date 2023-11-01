@@ -9,6 +9,7 @@ interface PokemonCardProps {
   _id: number;
   selected: boolean;
 }
+
 function findSinglePokemon() {
   const q = gql`
     query query($_id: Int!) {
