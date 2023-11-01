@@ -1,5 +1,4 @@
 // Mongoose model
-import { log } from "console";
 import { PokemonModel } from "../models/Pokemon.js";
 import PokemonType from "./GetAllPokemons.js";
 
@@ -9,7 +8,18 @@ import {
   GraphQLSchema,
   GraphQLInt,
   GraphQLList,
+  GraphQLNonNull,
+  GraphQLInputObjectType,
 } from "graphql";
+
+const ReviewInputType = new GraphQLInputObjectType({
+  name: "ReviewInput",
+  fields: {
+    rating: { type: new GraphQLNonNull(GraphQLInt) },
+    description: { type: new GraphQLNonNull(GraphQLString) },
+    userID: { type: new GraphQLNonNull(GraphQLString) },
+  },
+});
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -91,8 +101,29 @@ const RootQuery = new GraphQLObjectType({
   },
 });
 
+const Mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    updatePokemonReviews: {
+      type: PokemonType,
+      args: {
+        _id: { type: GraphQLNonNull(GraphQLInt) },
+        reviews: {
+          type: new GraphQLList(ReviewInputType),
+        },
+      },
+      resolve(parent, args) {
+        return PokemonModel.findByIdAndUpdate(args._id, {
+          $set: { reviews: args.reviews },
+        });
+      },
+    },
+  },
+});
+
 const schema = new GraphQLSchema({
   query: RootQuery,
+  mutation: Mutation,
 });
 
 export default schema;

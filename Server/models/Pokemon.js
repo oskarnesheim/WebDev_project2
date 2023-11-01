@@ -135,9 +135,9 @@ const SpritesSchema = new Schema({
 });
 
 const ReviewsSchema = new Schema({
-  stars: Number,
-  text: String,
-  userId: String,
+  rating: Number,
+  description: String,
+  userID: String,
 });
 
 const PokemonSchema = new Schema({
