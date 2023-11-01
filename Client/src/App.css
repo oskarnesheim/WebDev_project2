@@ -122,3 +122,38 @@
   left: 7%;
   margin-bottom: 50px;
 }
+
+.apply_reset_filter{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-left: 25%;
+  width: 50%;
+}
+
+@media screen and (max-width: 600px) {
+  .apply_reset_filter {
+    padding-left: 0%;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .filter_sorting_inner{
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.filter_preview{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 8%;
+}
+
+.filter_single_preview{
+  margin-right: 10px;  
+  text-decoration: underline;
+}
+

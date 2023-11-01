@@ -4,28 +4,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { Box } from "@mui/material";
+import sortings from "../assets/Sortings";
 
 type sortingBoxProps = {
   updateSort: React.Dispatch<React.SetStateAction<string>>;
   sortBy: string;
 };
-enum SortBy {
-  A_Z = "name,1",
-  Z_A = "name,-1",
-  BASE_EXPERIENCE_INCREASING = "base_experience,1",
-  BASE_EXPERIENCE_DECREASING = "base_experience,-1",
-  WEIGHT_INCREASING = "weight,1",
-  WEIGHT_DECREASING = "weight,-1",
-}
-
-const sortings = [
-  ["A-Z", SortBy.A_Z],
-  ["Z-A", SortBy.Z_A],
-  ["Base experience increasing", SortBy.BASE_EXPERIENCE_INCREASING],
-  ["Base experience decreasing", SortBy.BASE_EXPERIENCE_DECREASING],
-  ["Weight increasing", SortBy.WEIGHT_INCREASING],
-  ["Weight decreasing", SortBy.WEIGHT_DECREASING],
-];
 
 export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -36,6 +20,8 @@ export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  console.log(sortBy);
 
   return (
     <Box>
