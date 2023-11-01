@@ -7,9 +7,29 @@ _Latest addition:_ pokemonreviews lets users review pokemon and see other users'
 
 ## Running the App
 
-1. First, make sure you have all the necessary dependencies by running:
+### Start the server
+
+1. First, make sure you have all the necessary dependencies in both folders by running:
 
    ```
+   npm install
+   cd Server
+   npm install
+   ```
+
+2. Once the dependencies are installed, start the development server by running:
+
+   ```
+   cd ..
+   npm run dev
+   ```
+
+### Start the client
+
+1. Open a new terminal and navigate to the client folder and install dependencies:
+
+   ```
+   cd Client
    npm install
    ```
 
