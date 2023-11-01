@@ -1,15 +1,14 @@
 import {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLSchema,
   GraphQLInt,
   GraphQLList,
   GraphQLBoolean,
   GraphQLNonNull,
 } from "graphql";
 
- const PokemonType = new GraphQLObjectType({
-  name: 'Pokemon',
+const PokemonType = new GraphQLObjectType({
+  name: "Pokemon",
   fields: () => ({
     _id: { type: GraphQLInt },
     name: { type: GraphQLString },
@@ -21,11 +20,11 @@ import {
     abilities: {
       type: new GraphQLList(
         new GraphQLObjectType({
-          name: 'Ability',
+          name: "Ability",
           fields: {
             ability: {
               type: new GraphQLObjectType({
-                name: 'AbilityInfo',
+                name: "AbilityInfo",
                 fields: {
                   name: { type: GraphQLString },
                   url: { type: GraphQLString },
@@ -41,7 +40,7 @@ import {
     forms: {
       type: new GraphQLList(
         new GraphQLObjectType({
-          name: 'Form',
+          name: "Form",
           fields: {
             name: { type: GraphQLString },
             url: { type: GraphQLString },
@@ -52,12 +51,12 @@ import {
     game_indices: {
       type: new GraphQLList(
         new GraphQLObjectType({
-          name: 'GameIndex',
+          name: "GameIndex",
           fields: {
             game_index: { type: GraphQLInt },
             version: {
               type: new GraphQLObjectType({
-                name: 'Version',
+                name: "Version",
                 fields: {
                   name: { type: GraphQLString },
                   url: { type: GraphQLString },
@@ -71,11 +70,11 @@ import {
     held_items: {
       type: new GraphQLList(
         new GraphQLObjectType({
-          name: 'HeldItem',
+          name: "HeldItem",
           fields: {
             item: {
               type: new GraphQLObjectType({
-                name: 'Item',
+                name: "Item",
                 fields: {
                   name: { type: GraphQLString },
                   url: { type: GraphQLString },
@@ -85,12 +84,12 @@ import {
             version_details: {
               type: new GraphQLList(
                 new GraphQLObjectType({
-                  name: 'VersionDetail',
+                  name: "VersionDetail",
                   fields: {
                     rarity: { type: GraphQLInt },
                     version: {
                       type: new GraphQLObjectType({
-                        name: 'VersionInfo',
+                        name: "VersionInfo",
                         fields: {
                           name: { type: GraphQLString },
                           url: { type: GraphQLString },
@@ -109,11 +108,11 @@ import {
     moves: {
       type: new GraphQLList(
         new GraphQLObjectType({
-          name: 'Move',
+          name: "Move",
           fields: {
             move: {
               type: new GraphQLObjectType({
-                name: 'MoveInfo',
+                name: "MoveInfo",
                 fields: {
                   name: { type: GraphQLString },
                   url: { type: GraphQLString },
@@ -123,12 +122,12 @@ import {
             version_group_details: {
               type: new GraphQLList(
                 new GraphQLObjectType({
-                  name: 'VersionGroupDetail',
+                  name: "VersionGroupDetail",
                   fields: {
                     level_learned_at: { type: GraphQLInt },
                     move_learn_method: {
                       type: new GraphQLObjectType({
-                        name: 'MoveLearnMethod',
+                        name: "MoveLearnMethod",
                         fields: {
                           name: { type: GraphQLString },
                           url: { type: GraphQLString },
@@ -137,7 +136,7 @@ import {
                     },
                     version_group: {
                       type: new GraphQLObjectType({
-                        name: 'VersionGroup',
+                        name: "VersionGroup",
                         fields: {
                           name: { type: GraphQLString },
                           url: { type: GraphQLString },
@@ -154,7 +153,7 @@ import {
     },
     species: {
       type: new GraphQLObjectType({
-        name: 'Species',
+        name: "Species",
         fields: {
           name: { type: GraphQLString },
           url: { type: GraphQLString },
@@ -163,7 +162,7 @@ import {
     },
     sprites: {
       type: new GraphQLObjectType({
-        name: 'Sprites',
+        name: "Sprites",
         fields: {
           back_default: { type: GraphQLString },
           back_female: { type: GraphQLString },
@@ -175,11 +174,11 @@ import {
           front_shiny_female: { type: GraphQLString },
           other: {
             type: new GraphQLObjectType({
-              name: 'OtherSprites',
+              name: "OtherSprites",
               fields: {
                 dream_world: {
                   type: new GraphQLObjectType({
-                    name: 'DreamWorldSprites',
+                    name: "DreamWorldSprites",
                     fields: {
                       front_default: { type: GraphQLString },
                       front_female: { type: GraphQLString },
@@ -188,7 +187,7 @@ import {
                 },
                 home: {
                   type: new GraphQLObjectType({
-                    name: 'HomeSprites',
+                    name: "HomeSprites",
                     fields: {
                       front_default: { type: GraphQLString },
                       front_female: { type: GraphQLString },
@@ -199,7 +198,7 @@ import {
                 },
                 official_artwork: {
                   type: new GraphQLObjectType({
-                    name: 'OfficialArtworkSprites',
+                    name: "OfficialArtworkSprites",
                     fields: {
                       front_default: { type: GraphQLString },
                       front_shiny: { type: GraphQLString },
@@ -211,15 +210,15 @@ import {
           },
           versions: {
             type: new GraphQLObjectType({
-              name: 'SpriteVersions',
+              name: "SpriteVersions",
               fields: {
                 generation_i: {
                   type: new GraphQLObjectType({
-                    name: 'GenerationI',
+                    name: "GenerationI",
                     fields: {
                       red_blue: {
                         type: new GraphQLObjectType({
-                          name: 'RedBlueSprites',
+                          name: "RedBlueSprites",
                           fields: {
                             back_default: { type: GraphQLString },
                             back_gray: { type: GraphQLString },
@@ -230,7 +229,7 @@ import {
                       },
                       yellow: {
                         type: new GraphQLObjectType({
-                          name: 'YellowSprites',
+                          name: "YellowSprites",
                           fields: {
                             back_default: { type: GraphQLString },
                             back_gray: { type: GraphQLString },
@@ -244,11 +243,11 @@ import {
                 },
                 generation_viii: {
                   type: new GraphQLObjectType({
-                    name: 'GenerationVIII',
+                    name: "GenerationVIII",
                     fields: {
                       icons: {
                         type: new GraphQLObjectType({
-                          name: 'GenerationVIIIIcons',
+                          name: "GenerationVIIIIcons",
                           fields: {
                             front_default: { type: GraphQLString },
                             front_female: { type: GraphQLString },
@@ -267,13 +266,13 @@ import {
     stats: {
       type: new GraphQLList(
         new GraphQLObjectType({
-          name: 'Stat',
+          name: "Stat",
           fields: {
             base_stat: { type: GraphQLInt },
             effort: { type: GraphQLInt },
             stat: {
               type: new GraphQLObjectType({
-                name: 'StatInfo',
+                name: "StatInfo",
                 fields: {
                   name: { type: GraphQLString },
                   url: { type: GraphQLString },
@@ -285,26 +284,43 @@ import {
       ),
     },
     types: {
-        type: new GraphQLList(
+      type: new GraphQLList(
         new GraphQLObjectType({
-            name: 'TypeSlot',
-            fields: {
+          name: "TypeSlot",
+          fields: {
             slot: { type: GraphQLInt },
             type: {
-                type: new GraphQLObjectType({
-                name: 'TypeInfo',
+              type: new GraphQLObjectType({
+                name: "TypeInfo",
                 fields: {
-                    name: { type: GraphQLString },
-                    url: { type: GraphQLString },
+                  name: { type: GraphQLString },
+                  url: { type: GraphQLString },
                 },
-                }),
+              }),
             },
-            },
+          },
         })
-        ),
+      ),
     },
-          }),
+    reviews: {
+      type: new GraphQLList(
+        new GraphQLObjectType({
+          name: "Review",
+          fields: {
+            rating: { type: GraphQLInt },
+            description: { type: GraphQLString },
+            userID: { type: GraphQLString },
+            pokemon: {
+              type: PokemonType,
+              resolve(parent, args) {
+                return PokemonModel.findById(parent.pokemonId);
+              },
+            },
+          },
         })
+      ),
+    },
+  }),
+});
 
 export default PokemonType;
-     

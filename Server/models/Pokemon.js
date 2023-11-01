@@ -134,6 +134,12 @@ const SpritesSchema = new Schema({
   versions: VersionsSchema,
 });
 
+const ReviewsSchema = new Schema({
+  stars: Number,
+  text: String,
+  userId: String,
+});
+
 const PokemonSchema = new Schema({
   _id: Number,
   name: String,
@@ -153,6 +159,7 @@ const PokemonSchema = new Schema({
   stats: [StatSchema],
   types: [TypeSchema],
   past_types: [PastTypeSchema],
+  reviews: [ReviewsSchema],
 });
 
 export const PokemonModel = mongoose.model("pokemon", PokemonSchema, "pokemon");
