@@ -2,7 +2,7 @@ import { useState } from "react";
 import Searchbar from "./Searchbar.tsx";
 import FilterAndSortingBox from "../FilterAndSortingBox.tsx";
 import PokemonView from "./PokemonView.tsx";
-import BasicPagination from "./Pagination.tsx";
+import BasicPagination from "./BasicPagination.tsx";
 
 //! Forslag til hva vi kan sorteve på
 // eslint-disable-next-line react-refresh/only-export-components
@@ -34,7 +34,6 @@ export default function Home() {
           updateSort={setSortBy}
         />
       </div>
-      <BasicPagination maxPage={maxPage} page={page} setPage={setPage} />
       <PokemonView
         filters={currentFilter}
         // range={range}
@@ -43,6 +42,7 @@ export default function Home() {
         page={page}
         setMaxPage={setMaxPage}
       />
+      <BasicPagination maxPage={maxPage} page={page} setPage={setPage} />
     </div>
   );
 }

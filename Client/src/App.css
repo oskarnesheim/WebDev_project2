@@ -116,3 +116,9 @@
   align-items: center;
   justify-content: space-around;
 }
+
+.pagination{
+  position: relative;
+  left: 7%;
+  margin-bottom: 50px;
+}

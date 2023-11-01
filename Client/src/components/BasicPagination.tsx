@@ -13,7 +13,7 @@ export default function BasicPagination({
   maxPage,
 }: BasicPaginationProps) {
   return (
-    <div>
+    <div className="pagination">
       <Pagination
         page={page}
         onChange={(_e: React.ChangeEvent<unknown>, value: number) =>
@@ -23,6 +23,8 @@ export default function BasicPagination({
         color="primary"
         variant="outlined"
         size="large"
+        shape="rounded"
+        style={{ color: "white" }}
       />
     </div>
   );
