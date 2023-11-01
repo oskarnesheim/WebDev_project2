@@ -1,11 +1,8 @@
 import { useState } from "react";
 import "./MyTeam.css";
-import PokemonCard from "./PokemonCard";
 import TeamMember from "./TeamMember";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import ArrowButtons from "./Arrowbuttons";
-import { useNavigate } from "react-router-dom";
+import DisplayPokemon from "./DisplayPokemon";
+
 
 export default function MyTeam() {
   const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
@@ -51,69 +48,6 @@ export default function MyTeam() {
     }
   }
 
-  function setTeam(team: string) {
-    localStorage.setItem("team", "");
-    if (team === "") return;
-    localStorage.setItem("team", JSON.stringify(team));
-    setTeamState(team.split(","));
-  }
-
-  const history = useNavigate();
-  const redirectToPokemon = () => {
-    // redirects to the selected pokemon
-    history("/" + selectedPokemon[0]);
-  };
-
-  function deleteTeamMember(index: number) {
-    const updatedTeam = [...team]; // Create a copy of the array
-    updatedTeam.splice(index, 1); // Remove the item from the copy
-    // alert(`${outcast[0]} was removed from your team`);
-    setTeamState(updatedTeam); // Update the state with the new array
-    setTeam(updatedTeam.join(",")); // Update the localStorage with the new array
-    setSelectedPokemon(["0", 0]);
-  }
-
-  function selectedInfo() {
-    const pokeName = selectedPokemon[0];
-    if (pokeName === "0") {
-      return <div className="selected-Info"></div>;
-    }
-    return (
-      <div className="selected-Info">
-        <div className="container" onClick={redirectToPokemon}>
-          <PokemonCard
-            key={selectedPokemon[0]}
-            _id={Number(selectedPokemon[0])}
-          />
-        </div>
-        <ArrowButtons
-          team={team}
-          selectedPokemon={selectedPokemon}
-          setSelectedPokemon={setSelectedPokemon}
-        />
-        <div className="container">
-          <Tooltip
-            title={
-              "Would you like to remove " +
-              selectedPokemon[0] +
-              " from your team?"
-            }
-            arrow
-          >
-            <Button
-              className="box"
-              onClick={() => deleteTeamMember(selectedPokemon[1])}
-              color="error"
-              variant="outlined"
-            >
-              REMOVE
-            </Button>
-          </Tooltip>
-        </div>
-      </div>
-    );
-  }
-
   function teamlist() {
     if (getTeam() == "") return <p>Team is empty 🙁</p>;
     console.log("team yea: " + team);
@@ -135,7 +69,7 @@ export default function MyTeam() {
         <div className="team-grid">{teamlist()}</div>
         <h2>{team.length}/6</h2>
       </div>
-      {selectedInfo()}
+      <DisplayPokemon team={team} selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} setTeamState={setTeamState}  />
     </div>
   );
 }

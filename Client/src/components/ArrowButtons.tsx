@@ -32,7 +32,6 @@ export default function Arrowbuttons({team, selectedPokemon, setSelectedPokemon 
 
   return (
     <div className="button-container">
-      {/* <div className="horizontal-arrows"> */}
       <Button
         variant="contained"
         color="primary"
@@ -56,7 +55,6 @@ export default function Arrowbuttons({team, selectedPokemon, setSelectedPokemon 
       >
         <ArrowForwardIcon />
       </Button>
-      {/* </div> */}
     </div>
   );
 }
