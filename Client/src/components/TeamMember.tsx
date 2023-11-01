@@ -5,57 +5,18 @@ import CardContent from "@mui/material/CardContent";
 import { Box } from "@mui/material";
 import { useQuery, gql } from "@apollo/client";
 
-// interface IPokemon {
-//   name: string;
-//   sprites: {
-//     versions: {
-//       ["generation-viii"]: {
-//         icons: {
-//           front_default: string;
-//         };
-//       };
-//     };
-//   };
-// }
-
 interface PokemonCardProps {
   _id: number;
   selected: boolean;
 }
 function findSinglePokemon() {
   const q = gql`
-    query query($_id:Int!) {
+    query query($_id: Int!) {
       pokemon(_id: $_id) {
         _id
         name
-        height
-        base_experience
-        weight
-        stats {
-          stat {
-            name
-          }
-          base_stat
-        }
-        abilities {
-          ability {
-            name
-          }
-        }
-        types{
-          type{
-            name
-          }
-        }
         sprites {
           front_default
-          versions{
-            generation-viii{
-              icons{
-                front_default
-              }
-            }
-          }
         }
       }
     }
@@ -67,9 +28,11 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
   const variables = {
     _id: _id,
   };
+
   const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
 
   const [position, setPosition] = useState(0);
+
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
@@ -92,6 +55,7 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
   }
 
   if (error) {
+    console.log(variables);
     return <div>Error: {error.message}</div>;
   }
 
@@ -129,21 +93,15 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
             justifyContent: "space-between",
           }}
         >
-          {/* Left side: Image */}
           <Box sx={{ marginRight: "10px", alignItems: "center" }}>
             <img
               style={imageStyle}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              src={
-                data.pokemon.sprites.versions["generation-viii"].icons
-                  .front_default
-              }
+              src={data.pokemon.sprites.front_default}
               alt={data.pokemon.name}
             />
           </Box>
-
-          {/* Right side: Text */}
           <Typography variant="body1" sx={{ color: "primary.light" }}>
             {data.pokemon.name}
           </Typography>

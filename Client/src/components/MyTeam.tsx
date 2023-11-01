@@ -14,18 +14,18 @@ export default function MyTeam() {
   const [team, setTeamState] = useState<string[]>([]);
 
   const [selectedPokemon, setSelectedPokemon] = useState<[string, number]>([
-    "",
+    "0",
     0,
-  ]); // [name,index]
+  ]); // [pokemon_ID,index]
 
   const history = useNavigate();
 
-  function checkselected(name: string): boolean {
-    if (selectedPokemon[0] === "") {
+  function checkselected(id: string): boolean {
+    if (selectedPokemon[0] === "0") {
       // index 0 is the name of the pokemon, if it is empty, no pokemon is selected
       return false;
     }
-    if (selectedPokemon[0] !== name) {
+    if (selectedPokemon[0] !== id) {
       // if the name of the pokemon is not the same as the selected pokemon, it is not selected
       return false;
     }
@@ -92,7 +92,7 @@ export default function MyTeam() {
     setTeamState(updatedTeam); // Update the state with the new array
     console.log("oppdatert team: " + updatedTeam);
     setTeam(updatedTeam.join(",")); // Update the localStorage with the new array
-    setSelectedPokemon(["", 0]);
+    setSelectedPokemon(["0", 0]);
   }
 
   const ArrowButtons = () => {
@@ -129,13 +129,17 @@ export default function MyTeam() {
 
   function selectedInfo() {
     const pokeName = selectedPokemon[0];
-    if (pokeName === "") {
+    console.log("selected pokemon: " + pokeName);
+    if (pokeName === "0") {
       return <div className="selected-Info"></div>;
     }
     return (
       <div className="selected-Info">
         <div className="container" onClick={redirectToPokemon}>
-          <PokemonCard key={selectedPokemon[0]} _id={selectedPokemon[1]} />
+          <PokemonCard
+            key={selectedPokemon[0]}
+            _id={Number(selectedPokemon[0])}
+          />
         </div>
         <ArrowButtons />
         <div className="container">
@@ -163,13 +167,14 @@ export default function MyTeam() {
 
   function teamlist() {
     if (getTeam() == "") return <p>Team is empty 🙁</p>;
+    console.log("team yea: " + team);
     return team.map((_id: string, count: number) => (
       <div
         onClick={() => editTeamMEmber(count)}
         className="team-grid-child"
         key={count}
       >
-        <TeamMember selected={checkselected(_id)} _id={parseInt(_id)} />
+        <TeamMember selected={checkselected(_id)} _id={Number(_id)} />
       </div>
     ));
   }
