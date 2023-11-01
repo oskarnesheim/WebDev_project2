@@ -30,6 +30,11 @@ function findSinglePokemon() {
         sprites {
           front_default
         }
+        reviews {
+          rating
+          description
+          userID
+        }
       }
     }
   `;
@@ -66,14 +71,14 @@ export default function Pokemon() {
     }
   }
 
-  function checkTeam(name: string): boolean {
+  function checkTeam(_id: number): boolean {
     if (getTeam() === "error") {
       return true;
     }
     const team = getTeam();
     if (team !== "") {
       const listTeam = team.split(",");
-      if (listTeam.includes(name)) {
+      if (listTeam.includes(_id.toString())) {
         return true;
       }
     }
@@ -113,14 +118,6 @@ export default function Pokemon() {
     return true;
   }
 
-  if (loading) {
-    return <CircularProgress />;
-  }
-
-  if (error) {
-    return <Box>Error: {error.message}</Box>;
-  }
-
   function removeFromTeam(name: string) {
     const listTeam = team.split(",");
     const index = listTeam.indexOf(name);
@@ -128,6 +125,13 @@ export default function Pokemon() {
       listTeam.splice(index, 1);
     }
     setTeamState(listTeam.join(","));
+  }
+
+  if (loading) {
+    return <CircularProgress />;
+  }
+  if (error) {
+    return <Box>Error: {error.message}</Box>;
   }
 
   return (
@@ -144,21 +148,6 @@ export default function Pokemon() {
             padding: "0em 12em 0em 12em",
           }}
         >
-          {/* <Button
-            disabled={checkTeam(data.pokemon.name)}
-            onClick={() => addToTeam(data.pokemon.name)}
-            style={{
-              // justifyContent: "space-evenly",
-              // border: "1px solid #E0F1FF",
-              alignItems: "center",
-              marginTop: "3vh",
-              marginBottom: "3vh",
-              marginLeft: "10vw",
-              marginRight: "10vw",
-            }}
-          >
-            {checkTeam(data.pokemon.name) ? "Already in team" : "Add to team"}
-          </Button> */}
           <Tooltip title="Go back to previous page" arrow>
             <Button
               sx={{
@@ -184,7 +173,7 @@ export default function Pokemon() {
           >
             <Button
               variant="outlined"
-              sx={{ color: checkTeam(data.pokemon.name) ? "red" : "green" }}
+              sx={{ color: checkTeam(data.pokemon._id) ? "red" : "green" }}
               onClick={() =>
                 checkTeam(data.pokemon._id.toString())
                   ? removeFromTeam(data.pokemon._id.toString())
