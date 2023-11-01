@@ -28,8 +28,8 @@ const RootQuery = new GraphQLObjectType({
       args: {
         filters: { type: GraphQLList(GraphQLString) },
         sorting: { type: GraphQLList(GraphQLList(GraphQLString)) },
-        range: { type: GraphQLList(GraphQLInt) },
         search: { type: GraphQLString },
+        range: { type: GraphQLList(GraphQLInt) },
       },
       resolve(parent, args) {
         const sortingMap = new Map();
@@ -57,6 +57,35 @@ const RootQuery = new GraphQLObjectType({
           .sort(sortingMap)
           .skip(args.range[0])
           .limit(args.range[1]);
+      },
+    },
+    numberOfPokemonsThatMatchesSearch: {
+      type: GraphQLInt,
+      args: {
+        filters: { type: GraphQLList(GraphQLString) },
+        sorting: { type: GraphQLList(GraphQLList(GraphQLString)) },
+        search: { type: GraphQLString },
+      },
+      resolve(parent, args) {
+        const sortingMap = new Map();
+        args.sorting.forEach((sort) => {
+          sortingMap.set(sort[0], sort[1]);
+        });
+
+        if (args.filters.length === 0) {
+          return PokemonModel.countDocuments({
+            name: { $regex: args.search, $options: "i" },
+          });
+        }
+        return PokemonModel.countDocuments({
+          types: {
+            $elemMatch: {
+              // ? $elemMatch for multiple filters.
+              "type.name": { $in: args.filters }, // ? $in for multiple filters. We check if the pokemon is in the filters array.
+            },
+          },
+          name: { $regex: args.search, $options: "i" },
+        });
       },
     },
   },

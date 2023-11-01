@@ -27,7 +27,7 @@ const sortings = [
   ["Weight decreasing", SortBy.WEIGHT_DECREASING],
 ];
 
-export default function SortingBox({ updateSort }: sortingBoxProps) {
+export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -39,6 +39,7 @@ export default function SortingBox({ updateSort }: sortingBoxProps) {
 
   return (
     <Box>
+      <h2>Sortings</h2>
       <Button
         id="fade-button"
         aria-controls={open ? "fade-menu" : undefined}
@@ -65,6 +66,9 @@ export default function SortingBox({ updateSort }: sortingBoxProps) {
             onClick={() => {
               handleClose;
               updateSort(sorting[1]);
+            }}
+            style={{
+              backgroundColor: sortBy === sorting[1] ? "lightblue" : "white",
             }}
           >
             {sorting[0]}

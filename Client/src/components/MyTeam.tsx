@@ -163,13 +163,13 @@ export default function MyTeam() {
 
   function teamlist() {
     if (getTeam() == "") return <p>Team is empty 🙁</p>;
-    return team.map((pokemon: string, count: number) => (
+    return team.map((_id: string, count: number) => (
       <div
         onClick={() => editTeamMEmber(count)}
         className="team-grid-child"
         key={count}
       >
-        <TeamMember selected={checkselected(pokemon)} name={pokemon} />
+        <TeamMember selected={checkselected(_id)} _id={parseInt(_id)} />
       </div>
     ));
   }

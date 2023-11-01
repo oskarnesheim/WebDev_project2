@@ -94,7 +94,7 @@
 }
 
 #city_input {
-  width: 50%;
+  width: 60%;
   height: 40px;
   border-radius: 5px;
 }
@@ -108,4 +108,17 @@
 #filter_list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+}
+
+.filter_sorting_inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.pagination{
+  position: relative;
+  left: 7%;
+  margin-bottom: 50px;
 }

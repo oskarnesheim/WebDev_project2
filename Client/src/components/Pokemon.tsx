@@ -15,6 +15,7 @@ function findSinglePokemon() {
         name
         height
         weight
+        base_experience
         stats {
           stat {
             name
@@ -80,14 +81,14 @@ export default function Pokemon() {
     return false;
   }
 
-  function addToTeam(name: string) {
-    if (!verifyTeam(name)) {
+  function addToTeam(_id: string) {
+    if (!verifyTeam(_id)) {
       return;
     }
     if (team === "") {
-      setTeamState(name);
+      setTeamState(_id);
     } else {
-      setTeamState(team + "," + name);
+      setTeamState(team + "," + _id);
     }
   }
 
@@ -133,7 +134,7 @@ export default function Pokemon() {
   return (
     <>
       <Typography sx={{ marginTop: "5vh" }} variant="h3" textAlign={"center"}>
-        {data.pokemon.name} - #{data.pokemon.id}
+        {data.pokemon.name} - #{data.pokemon.base_experience}
       </Typography>
 
       <Box>
@@ -144,21 +145,21 @@ export default function Pokemon() {
             padding: "0em 12em 0em 12em",
           }}
         >
-          <Button onClick={() => navigate(-1)}>Go back</Button>
-          <Button
+          {/* <Button
             disabled={checkTeam(data.pokemon.name)}
             onClick={() => addToTeam(data.pokemon.name)}
+            style={{
+              // justifyContent: "space-evenly",
+              // border: "1px solid #E0F1FF",
+              alignItems: "center",
+              marginTop: "3vh",
+              marginBottom: "3vh",
+              marginLeft: "10vw",
+              marginRight: "10vw",
+            }}
           >
             {checkTeam(data.pokemon.name) ? "Already in team" : "Add to team"}
-            justifyContent: "space-evenly",
-            // border: "1px solid #E0F1FF",
-            alignItems: "center",
-            marginTop: "3vh",
-            marginBottom: "3vh",
-            marginLeft: "10vw",
-            marginRight: "10vw",
-          }}
-        >
+          </Button> */}
           <Tooltip title="Go back to previous page" arrow>
             <Button
               sx={{
@@ -174,24 +175,26 @@ export default function Pokemon() {
           </Tooltip>
           <Tooltip
             title={
-              checkTeam(data.name)
+              checkTeam(data.pokemon.name)
                 ? "Pokemon is already in your team, do you want to remove " +
-                  data.name +
+                  data.pokemon.name +
                   " from your team?"
-                : "Add " + data.name + " to your team"
+                : "Add " + data.pokemon.name + " to your team"
             }
             arrow
           >
             <Button
               variant="outlined"
-              sx={{ color: checkTeam(data.name) ? "red" : "green" }}
+              sx={{ color: checkTeam(data.pokemon.name) ? "red" : "green" }}
               onClick={() =>
-                checkTeam(data.name)
-                  ? removeFromTeam(data.name)
-                  : addToTeam(data.name)
+                checkTeam(data.pokemon._id.toString())
+                  ? removeFromTeam(data.pokemon._id.toString())
+                  : addToTeam(data.pokemon._id.toString())
               }
             >
-              {checkTeam(data.name) ? "Remove from team" : "Add to team"}
+              {checkTeam(data.pokemon._id.toString())
+                ? "Remove from team"
+                : "Add to team"}
             </Button>
           </Tooltip>
         </Box>

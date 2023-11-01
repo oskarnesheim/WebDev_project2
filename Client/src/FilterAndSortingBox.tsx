@@ -8,6 +8,7 @@ type FilterAndSortingBoxProps = {
   setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
   updateSort: React.Dispatch<React.SetStateAction<string>>;
   sortBy: string;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const modalBoxStyles = {
@@ -15,7 +16,7 @@ const modalBoxStyles = {
   top: "50vh",
   left: "50vw",
   transform: "translate(-50%, -50%)",
-  width: "fit-content",
+  width: "60%",
   bgcolor: "#002c58",
   border: "2px solid #000",
   boxShadow: 24,
@@ -28,6 +29,7 @@ export default function FilterAndSortingBox({
   setCurrentFilter,
   updateSort,
   sortBy,
+  setPage,
 }: FilterAndSortingBoxProps) {
   const [open, setOpen] = useState(false);
   const [tempCurrentFilter, setTempCurrentFilter] = useState(currentFilter); // Local state for currentFilter
@@ -39,6 +41,7 @@ export default function FilterAndSortingBox({
     // Reset the local state variables if the modal is closed without applying changes
     setTempCurrentFilter(currentFilter);
     setTempSortBy(sortBy);
+    setPage(1);
   };
 
   const handleApplyFilter = () => {
@@ -59,14 +62,16 @@ export default function FilterAndSortingBox({
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalBoxStyles} display={"flex"} flexDirection={"column"}>
-          <FilterBox
-            currentFilter={tempCurrentFilter} // Use the local state here
-            setCurrentFilter={setTempCurrentFilter} // Update the local state
-          />
-          <SortingBox
-            sortBy={tempSortBy} // Use the local state here
-            updateSort={setTempSortBy} // Update the local state
-          />
+          <div className="filter_sorting_inner">
+            <FilterBox
+              currentFilter={tempCurrentFilter} // Use the local state here
+              setCurrentFilter={setTempCurrentFilter} // Update the local state
+            />
+            <SortingBox
+              sortBy={tempSortBy} // Use the local state here
+              updateSort={setTempSortBy} // Update the local state
+            />
+          </div>
           <Button onClick={handleApplyFilter}>Apply</Button>
         </Box>
       </Modal>
