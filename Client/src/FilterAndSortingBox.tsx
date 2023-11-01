@@ -1,7 +1,7 @@
 import { Box, Button, Modal } from "@mui/material";
 import React, { useState } from "react";
-import SortingBox from "./components/SortingBox";
 import FilterBox from "./components/FilterBox";
+import SortingBox from "./components/SortingBox";
 
 type FilterAndSortingBoxProps = {
   currentFilter: string[];
@@ -39,6 +39,12 @@ export default function FilterAndSortingBox({
   const handleClose = () => {
     setOpen(false);
     // Reset the local state variables if the modal is closed without applying changes
+    // setTempCurrentFilter(currentFilter);
+    // setTempSortBy(sortBy);
+    setPage(1);
+  };
+
+  const handleResetFilter = () => {
     setTempCurrentFilter(currentFilter);
     setTempSortBy(sortBy);
     setPage(1);
@@ -54,14 +60,14 @@ export default function FilterAndSortingBox({
 
   return (
     <div className="filter_container">
-      <Button onClick={handleOpen}>Filters</Button>
+      <Button onClick={handleOpen}>Filters/Sorting</Button>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={modalBoxStyles} display={"flex"} flexDirection={"column"}>
+        <Box sx={modalBoxStyles}>
           <div className="filter_sorting_inner">
             <FilterBox
               currentFilter={tempCurrentFilter} // Use the local state here
@@ -72,7 +78,24 @@ export default function FilterAndSortingBox({
               updateSort={setTempSortBy} // Update the local state
             />
           </div>
-          <Button onClick={handleApplyFilter}>Apply</Button>
+          <hr />
+          <div className="apply_reset_filter">
+            <Button
+              style={{ backgroundColor: "green", color: "white" }}
+              onClick={handleApplyFilter}
+            >
+              Apply
+            </Button>
+            <Button
+              style={{
+                backgroundColor: "red",
+                color: "white",
+              }}
+              onClick={handleResetFilter}
+            >
+              Reset
+            </Button>
+          </div>
         </Box>
       </Modal>
     </div>
