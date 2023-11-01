@@ -67,6 +67,14 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
       JSON.stringify([...reviews, newReview]),
     );
 
+    // Get userID from localstorage
+    const userID = localStorage.getItem("userID");
+    // If no userID exists, create a new one
+    if (!userID) {
+      const userID = (Math.random() * 1000000000000000000).toString();
+      localStorage.setItem("userID", userID);
+    }
+
     // Reset the rating and review input
     setRating(0);
     setReview("");
