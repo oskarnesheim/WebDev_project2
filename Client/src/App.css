@@ -109,3 +109,10 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
+
+.filter_sorting_inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}

@@ -45,6 +45,7 @@ export default function FilterBox({
 
   return (
     <Box>
+      <h2>Filters</h2>
       <Button
         id="fade-button"
         aria-controls={open ? "fade-menu" : undefined}

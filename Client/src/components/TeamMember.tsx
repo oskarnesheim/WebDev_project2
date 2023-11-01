@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Box } from "@mui/material";
 import { useQuery, gql } from "@apollo/client";
 
-interface IPokemon {
-  name: string;
-  sprites: {
-    versions: {
-      ["generation-viii"]: {
-        icons: {
-          front_default: string;
-        };
-      };
-    };
-  };
-}
+// interface IPokemon {
+//   name: string;
+//   sprites: {
+//     versions: {
+//       ["generation-viii"]: {
+//         icons: {
+//           front_default: string;
+//         };
+//       };
+//     };
+//   };
+// }
 
 interface PokemonCardProps {
-  name: string;
+  _id: number;
   selected: boolean;
 }
-function findSinglePokemon(name: string) {
+function findSinglePokemon() {
   const q = gql`
-    query query {
-      pokemon(_id: ${name}) {
+    query query($_id:Int!) {
+      pokemon(_id: $_id) {
         _id
         name
         height
@@ -63,8 +63,11 @@ function findSinglePokemon(name: string) {
   return q;
 }
 
-export default function PokemonCard({ name, selected }: PokemonCardProps) {
-  const { loading, error, data } = useQuery(findSinglePokemon(name));
+export default function TeamMember({ _id, selected }: PokemonCardProps) {
+  const variables = {
+    _id: _id,
+  };
+  const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
 
   const [position, setPosition] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -132,8 +135,11 @@ export default function PokemonCard({ name, selected }: PokemonCardProps) {
               style={imageStyle}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              src={data.pokemon.sprites.versions["generation-viii"].icons.front_default}
-              alt={name}
+              src={
+                data.pokemon.sprites.versions["generation-viii"].icons
+                  .front_default
+              }
+              alt={data.pokemon.name}
             />
           </Box>
 
@@ -145,6 +151,4 @@ export default function PokemonCard({ name, selected }: PokemonCardProps) {
       </CardContent>
     </Card>
   );
-};
-
-export default PokemonCard;
+}

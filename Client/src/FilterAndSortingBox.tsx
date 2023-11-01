@@ -15,7 +15,7 @@ const modalBoxStyles = {
   top: "50vh",
   left: "50vw",
   transform: "translate(-50%, -50%)",
-  width: "fit-content",
+  width: "60%",
   bgcolor: "#002c58",
   border: "2px solid #000",
   boxShadow: 24,
@@ -59,14 +59,16 @@ export default function FilterAndSortingBox({
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalBoxStyles} display={"flex"} flexDirection={"column"}>
-          <FilterBox
-            currentFilter={tempCurrentFilter} // Use the local state here
-            setCurrentFilter={setTempCurrentFilter} // Update the local state
-          />
-          <SortingBox
-            sortBy={tempSortBy} // Use the local state here
-            updateSort={setTempSortBy} // Update the local state
-          />
+          <div className="filter_sorting_inner">
+            <FilterBox
+              currentFilter={tempCurrentFilter} // Use the local state here
+              setCurrentFilter={setTempCurrentFilter} // Update the local state
+            />
+            <SortingBox
+              sortBy={tempSortBy} // Use the local state here
+              updateSort={setTempSortBy} // Update the local state
+            />
+          </div>
           <Button onClick={handleApplyFilter}>Apply</Button>
         </Box>
       </Modal>
