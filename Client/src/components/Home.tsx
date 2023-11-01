@@ -2,6 +2,7 @@ import { useState } from "react";
 import Searchbar from "./Searchbar.tsx";
 import FilterAndSortingBox from "../FilterAndSortingBox.tsx";
 import PokemonView from "./PokemonView.tsx";
+import BasicPagination from "./Pagination.tsx";
 
 //! Forslag til hva vi kan sorteve på
 // eslint-disable-next-line react-refresh/only-export-components
@@ -18,26 +19,29 @@ export default function Home() {
   const [delayedSearch, setDelayedSearch] = useState("");
   const [sortBy, setSortBy] = useState<string>(SortBy.A_Z);
   const [currentFilter, setCurrentFilter] = useState<string[]>([]);
-  const [range] = useState<number[]>([0, 20]);
+  // const [range] = useState<number[]>([0, 20]);
+  const [page, setPage] = useState<number>(1);
+  const [maxPage, setMaxPage] = useState<number>(1);
 
   return (
     <div className="home">
       <div className="search_container">
         <Searchbar updateSearch={setDelayedSearch} />
-        <div className="filter_sort_container">
-          <FilterAndSortingBox
-            currentFilter={currentFilter}
-            setCurrentFilter={setCurrentFilter}
-            sortBy={sortBy}
-            updateSort={setSortBy}
-          />
-        </div>
+        <FilterAndSortingBox
+          currentFilter={currentFilter}
+          setCurrentFilter={setCurrentFilter}
+          sortBy={sortBy}
+          updateSort={setSortBy}
+        />
       </div>
+      <BasicPagination maxPage={maxPage} page={page} setPage={setPage} />
       <PokemonView
         filters={currentFilter}
-        range={range}
+        // range={range}
         sorting={[sortBy.split(",")]}
         search={delayedSearch}
+        page={page}
+        setMaxPage={setMaxPage}
       />
     </div>
   );
