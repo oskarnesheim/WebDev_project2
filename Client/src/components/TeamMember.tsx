@@ -70,8 +70,7 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
       sx={{
         width: 300,
         boxSizing: "border-box",
-        border: selected ? "1px solid #E0F1FF" : "none",
-        backgroundColor: "primary.dark",
+        backgroundColor: selected ? "primary.main" : "primary.dark",
         opacity: selected ? 0.9 : 0.6,
         transition: selected
           ? "opacity 0.3s ease-in-out, border 0.3s ease-in-out"

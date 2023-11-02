@@ -1,8 +1,9 @@
 import React from "react";
 import { Button, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import ArrowButtons from "./Arrowbuttons";
+import ArrowButtons from "./ArrowButtons";
 import PokemonCard from "./PokemonCard";
+import { removeFromTeam } from "./TeamFunctions";
 
 type Props = {
   team: string[];
@@ -13,16 +14,20 @@ type Props = {
 
 export default function DisplayPokemon({
   team,
+  setTeamState,
   selectedPokemon,
   setSelectedPokemon,
-  setTeamState,
 }: Props) {
   const history = useNavigate();
 
   const redirectToPokemon = () => {
-    // redirects to the selected pokemon
     history("/" + selectedPokemon[0]);
   };
+
+  function deleteTeamMember(id: string) {
+    removeFromTeam(team, id, setTeamState);
+    setSelectedPokemon(["0", 0]);
+  }
 
   function selectedInfo() {
     const pokeName = selectedPokemon[0];
@@ -46,7 +51,7 @@ export default function DisplayPokemon({
           <Tooltip title={"Remove pokemon from your team. "} arrow>
             <Button
               className="box"
-              onClick={() => deleteTeamMember(selectedPokemon[1])}
+              onClick={() => deleteTeamMember(selectedPokemon[0])}
               color="error"
               variant="outlined"
             >
@@ -56,22 +61,6 @@ export default function DisplayPokemon({
         </div>
       </div>
     );
-  }
-
-  function deleteTeamMember(index: number) {
-    const updatedTeam = [...team]; // Create a copy of the array
-    updatedTeam.splice(index, 1); // Remove the item from the copy
-    // alert(`${outcast[0]} was removed from your team`);
-    setTeamState(updatedTeam); // Update the state with the new array
-    setTeam(updatedTeam.join(",")); // Update the localStorage with the new array
-    setSelectedPokemon(["0", 0]);
-  }
-
-  function setTeam(team: string) {
-    localStorage.setItem("team", "");
-    if (team === "") return;
-    localStorage.setItem("team", JSON.stringify(team));
-    setTeamState(team.split(","));
   }
 
   return selectedInfo();
