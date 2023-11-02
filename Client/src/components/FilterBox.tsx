@@ -66,7 +66,7 @@ export default function FilterBox({
         TransitionComponent={Fade}
       >
         {filters.map((filter) => (
-          <MenuItem>
+          <MenuItem key={filter[0]}>
             <FormControlLabel
               control={
                 <Checkbox

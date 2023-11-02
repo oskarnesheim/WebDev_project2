@@ -135,8 +135,8 @@ export default function PokemonCard({ _id }: PokemonCardProps) {
             .map((type: { type: { name: string } }) => type.type.name)
             .join(", ")}
         </Typography>
+        <hr />
         <Typography variant="body2">
-          <hr />
           {data.pokemon.weight} kg &nbsp; {data.pokemon.base_experience}XP
         </Typography>
       </CardContent>

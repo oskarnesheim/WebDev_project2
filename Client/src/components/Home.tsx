@@ -3,17 +3,8 @@ import Searchbar from "./Searchbar.tsx";
 import FilterAndSortingBox from "../FilterAndSortingBox.tsx";
 import PokemonView from "./PokemonView.tsx";
 import BasicPagination from "./BasicPagination.tsx";
-
-//! Forslag til hva vi kan sorteve på
-// eslint-disable-next-line react-refresh/only-export-components
-export enum SortBy {
-  A_Z = "name,1",
-  Z_A = "name,-1",
-  BASE_EXPERIENCE_INCREASING = "base_experience,1",
-  BASE_EXPERIENCE_DECREASING = "base_experience,-1",
-  WEIGHT_INCREASING = "weight,1",
-  WEIGHT_DECREASING = "weight,-1",
-}
+import PreviewFiltersAndSorting from "./PreviewFiltersAndSorting.tsx";
+import SortBy from "../assets/Enums.ts";
 
 export default function Home() {
   const [delayedSearch, setDelayedSearch] = useState("");
@@ -32,8 +23,10 @@ export default function Home() {
           setCurrentFilter={setCurrentFilter}
           sortBy={sortBy}
           updateSort={setSortBy}
+          setPage={setPage}
         />
       </div>
+      <PreviewFiltersAndSorting currentFilter={currentFilter} sortBy={sortBy} />
       <PokemonView
         filters={currentFilter}
         // range={range}

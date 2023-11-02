@@ -3,9 +3,16 @@ import PokemonStats from "./PokemonStats";
 import { useQuery, gql } from "@apollo/client";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
-import { Box, Button, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Divider, Tooltip, Typography } from "@mui/material";
 import PokemonRatingReview from "./PokemonReviews";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import {
+  getTeamFromLocalStorage,
+  checkTeam,
+  addToTeam,
+  removeFromTeam,
+} from "./TeamFunctions";
+import { useEffect } from "react";
 
 function findSinglePokemon() {
   const q = gql`
@@ -38,8 +45,6 @@ function findSinglePokemon() {
 
 export default function Pokemon() {
   const { _id } = useParams();
-  const [team, setWindowTeam] = useState<string>("");
-  const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
   const navigate = useNavigate();
   const variables = {
     _id: parseInt(_id!),
@@ -80,38 +85,13 @@ export default function Pokemon() {
     return false;
   }
 
-  function addToTeam(_id: string) {
-    if (!verifyTeam(_id)) {
-      return;
-    }
-    if (team === "") {
-      setTeamState(_id);
-    } else {
-      setTeamState(team + "," + _id);
-    }
-  }
+    window.addEventListener("storage", handleStorageChange);
 
-  function setTeamState(newTeam: string) {
-    localStorage.setItem("team", JSON.stringify(newTeam));
-    setWindowTeam(newTeam);
-  }
-
-  function verifyTeam(name: string) {
-    if (team === "") {
-      return true;
-    }
-    const listTeam = team.split(",");
-    if (listTeam.includes(name)) {
-      alert("You already have this pokemon in your team");
-      return false;
-    }
-    if (listTeam.length >= 6) {
-      alert("Your team is full");
-      return false;
-    }
-
-    return true;
-  }
+    // Cleanup listener
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   function removeFromTeam(name: string) {
     const listTeam = team.split(",");
@@ -131,16 +111,21 @@ export default function Pokemon() {
 
   return (
     <>
-      <Typography sx={{ marginTop: "5vh" }} variant="h3" textAlign={"center"}>
-        {data.pokemon.name} - #{data.pokemon.base_experience}
+      <Typography
+        sx={{ marginTop: "5vh", marginBottom: "3vh" }}
+        variant="h3"
+        textAlign={"center"}
+      >
+        {data.pokemon.name} - #{data.pokemon._id}
       </Typography>
-
+      <Divider color="white" />
       <Box>
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
-            padding: "0em 12em 0em 12em",
+            justifyContent: "space-evenly",
+            marginTop: "3vh",
+            marginBottom: "3vh",
           }}
         >
           <Tooltip title="Go back to previous page" arrow>
@@ -158,7 +143,7 @@ export default function Pokemon() {
           </Tooltip>
           <Tooltip
             title={
-              checkTeam(data.pokemon.name)
+              checkTeam(team, data.pokemon._id.toString())
                 ? "Pokemon is already in your team, do you want to remove " +
                   data.pokemon.name +
                   " from your team?"
@@ -170,12 +155,12 @@ export default function Pokemon() {
               variant="outlined"
               sx={{ color: checkTeam(data.pokemon._id) ? "red" : "green" }}
               onClick={() =>
-                checkTeam(data.pokemon._id.toString())
-                  ? removeFromTeam(data.pokemon._id.toString())
-                  : addToTeam(data.pokemon._id.toString())
+                checkTeam(team, data.pokemon._id.toString())
+                  ? removeFromTeam(team, data.pokemon._id.toString(), setTeam)
+                  : addToTeam(team, data.pokemon._id.toString(), setTeam)
               }
             >
-              {checkTeam(data.pokemon._id.toString())
+              {checkTeam(team, data.pokemon._id.toString())
                 ? "Remove from team"
                 : "Add to team"}
             </Button>
