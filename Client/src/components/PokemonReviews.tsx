@@ -1,37 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { Button, TextareaAutosize } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Button, CircularProgress, TextareaAutosize } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import theme from "../Theme";
+import { gql, useQuery, useMutation } from "@apollo/client";
 
 type PokemonReviewProps = {
-  pokemonId: string; // Change the type to match your actual data type for Pokémon IDs
+  _id: number;
 };
 
-type Review = {
+interface Review {
   rating: number;
-  review: string;
-};
+  description: string;
+  userID: string;
+  pokemonID: number;
+}
 
-export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
+export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
+  console.log(_id);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
-  const [reviews, setReviews] = useState<Review[]>([]);
+  // const mutateVariables = {
+  //   rating: number,
+  //   description: string,
+  //   userID: string,
+  //   pokemonID: number,
+  // };
+  const { loading, error, data } = useQuery(getReviews(), {
+    variables: { pokemonID: _id },
+  });
+
   const [errorMessage, setErrorMessage] = useState<string>("");
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setErrorMessage("");
-    }, 4000);
-    return () => clearTimeout(timer);
-  }, [errorMessage]);
-
-  useEffect(() => {
-    // Load existing reviews from localStorage when the component mounts
-    const storedReviews = localStorage.getItem(`pokemon_reviews_${pokemonId}`);
-    if (storedReviews) {
-      setReviews(JSON.parse(storedReviews));
-    }
-  }, [pokemonId]);
 
   const handleRatingClick = (newRating: number) => {
     setRating(newRating);
@@ -43,8 +41,72 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
     setReview(event.target.value);
   };
 
+  function getReviews() {
+    const q = gql`
+      query query($pokemonID: Int!) {
+        reviewsForPokemon(pokemonID: $pokemonID) {
+          userID
+          pokemonID
+          rating
+          description
+        }
+      }
+    `;
+    return q;
+  }
+
+  const ADD_REVIEW = gql`
+    mutation AddReview(
+      $rating: Int!
+      $description: String!
+      $userID: String!
+      $pokemonID: Int!
+    ) {
+      createReview(
+        rating: $rating
+        description: $description
+        userID: $userID
+        pokemonID: $pokemonID
+      ) {
+        userID
+        pokemonID
+        rating
+        description
+      }
+    }
+  `;
+  const [addReview] = useMutation(ADD_REVIEW);
+
+  function getUserID() {
+    // Get userID from localstorage
+
+    let userID = localStorage.getItem("userID");
+    // If no userID exists, create a new one
+    if (!userID || userID == "undefined") {
+      userID = (Math.random() * 1000000000000000000).toString();
+      localStorage.setItem("userID", userID);
+    }
+    return userID;
+  }
+
+  function alreadyReviewed(userID: string) {
+    // Check if user has already reviewed this pokemon
+    const reviews = data.reviewsForPokemon;
+    for (let i = 0; i < reviews.length; i++) {
+      if (reviews[i].userID == userID) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   const handleAddReview = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const userID = getUserID();
+    if (alreadyReviewed(userID)) {
+      setErrorMessage("Already reviewed this pokemon.");
+      return;
+    }
     if (rating === 0) {
       setErrorMessage("Please select a rating.");
       return;
@@ -53,32 +115,29 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
       setErrorMessage("Please write a review.");
       return;
     }
-    const newReview = {
-      rating,
-      review,
-    };
 
-    // Add the new review to the existing reviews
-    setReviews([...reviews, newReview]);
-
-    // Save reviews to localStorage
-    localStorage.setItem(
-      `pokemon_reviews_${pokemonId}`,
-      JSON.stringify([...reviews, newReview]),
-    );
-
-    // Get userID from localstorage
-    const userID = localStorage.getItem("userID");
-    // If no userID exists, create a new one
-    if (!userID) {
-      const userID = (Math.random() * 1000000000000000000).toString();
-      localStorage.setItem("userID", userID);
-    }
+    addReview({
+      variables: {
+        rating,
+        description: review,
+        userID,
+        pokemonID: _id,
+      },
+    });
+    // Reload the page
+    window.location.reload();
 
     // Reset the rating and review input
     setRating(0);
     setReview("");
   };
+
+  if (loading) {
+    return <CircularProgress />;
+  }
+  if (error) {
+    return <Box>Error: {error.message}</Box>;
+  }
 
   return (
     <div
@@ -97,8 +156,7 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
           color: theme.palette.primary.main,
         }}
       >
-        Rate and Review{" "}
-        <span style={{ color: "transparent" }}>{pokemonId}</span>
+        Rate and Review <span style={{ color: "transparent" }}>{_id}</span>
       </h2>
       <form onSubmit={(e) => handleAddReview(e)}>
         <div
@@ -140,9 +198,9 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
         </div>
         <Button
           type="submit"
-          // onClick={handleAddReview}
           variant="contained"
           className="custom-button"
+          disabled={alreadyReviewed(getUserID())}
           sx={{
             margin: "10px 0",
             padding: "10px 20px",
@@ -160,13 +218,13 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       <div>
         <h3 style={{ fontSize: "20px", marginTop: "20px" }}>Reviews</h3>
-        {reviews.length === 0 ? (
+        {data.reviewsForPokemon.length == 0 ? (
           <p>No reviews yet.</p>
         ) : (
           <ul style={{ listStyle: "none", padding: "0" }}>
-            {reviews.map((item, index) => (
+            {data.reviewsForPokemon.map((review: Review) => (
               <li
-                key={index}
+                key={review.userID}
                 style={{
                   border: "3px solid " + theme.palette.primary.main,
                   padding: "10px",
@@ -175,7 +233,7 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
                 }}
               >
                 <div style={{ marginBottom: "10px" }}>
-                  {Array.from({ length: item.rating }, (_, i) => (
+                  {Array.from({ length: review.rating }, (_, i) => (
                     <StarIcon
                       key={i}
                       style={{
@@ -185,7 +243,7 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
                     />
                   ))}
                 </div>
-                <div>{item.review}</div>
+                <div>{review.description}</div>
               </li>
             ))}
           </ul>

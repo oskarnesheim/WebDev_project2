@@ -30,11 +30,6 @@ function findSinglePokemon() {
         sprites {
           front_default
         }
-        reviews {
-          rating
-          description
-          userID
-        }
       }
     }
   `;
@@ -188,7 +183,7 @@ export default function Pokemon() {
         </Box>
         <PokemonStats pokemon={data.pokemon} />
       </Box>
-      <PokemonRatingReview pokemonId={data.pokemon._id.toString()} />
+      <PokemonRatingReview _id={data.pokemon._id} />
       <Outlet />
     </>
   );
