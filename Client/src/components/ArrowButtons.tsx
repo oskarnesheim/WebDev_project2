@@ -7,12 +7,16 @@ import Tooltip from "@mui/material/Tooltip";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
-    team: string[];
-    selectedPokemon: [string, number];
-    setSelectedPokemon: React.Dispatch<React.SetStateAction<[string, number]>>;
+  team: string[];
+  selectedPokemon: [string, number];
+  setSelectedPokemon: React.Dispatch<React.SetStateAction<[string, number]>>;
 }
 
-export default function Arrowbuttons({team, selectedPokemon, setSelectedPokemon } : Props ) {
+export default function Arrowbuttons({
+  team,
+  selectedPokemon,
+  setSelectedPokemon,
+}: Props) {
   const history = useNavigate();
   const redirectToPokemon = () => {
     // redirects to the selected pokemon
