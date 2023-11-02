@@ -3,9 +3,16 @@ import PokemonStats from "./PokemonStats";
 import { useQuery, gql } from "@apollo/client";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
-import { Box, Button, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Divider, Tooltip, Typography } from "@mui/material";
 import PokemonRatingReview from "./PokemonReviews";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import {
+  getTeamFromLocalStorage,
+  checkTeam,
+  addToTeam,
+  removeFromTeam,
+} from "./TeamFunctions";
+import { useEffect } from "react";
 
 function findSinglePokemon() {
   const q = gql`
@@ -38,81 +45,26 @@ function findSinglePokemon() {
 
 export default function Pokemon() {
   const { _id } = useParams();
-  const [team, setWindowTeam] = useState<string>("");
-  const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
   const navigate = useNavigate();
   const variables = {
     _id: parseInt(_id!),
   };
   const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
 
-  function getTeam() {
-    if (teamIsLoaded) {
-      return team;
-    }
-    const teamJSON = localStorage.getItem("team");
-    if (teamJSON) {
-      try {
-        const team = JSON.parse(teamJSON);
-        console.log("Loader team fra localstore: " + team);
-        setTeamState(team);
-        setTeamIsLoaded(true);
-        return team;
-      } catch (error) {
-        console.error("Error parsing JSON:", error);
-        return "error"; // Handle the error appropriately
-      }
-    } else {
-      return ""; // Handle the case when "team" is not found in localStorage
-    }
-  }
+  const [team, setTeam] = useState<string[]>(getTeamFromLocalStorage());
 
-  function checkTeam(name: string): boolean {
-    if (getTeam() === "error") {
-      return true;
-    }
-    const team = getTeam();
-    if (team !== "") {
-      const listTeam = team.split(",");
-      if (listTeam.includes(name)) {
-        return true;
-      }
-    }
-    return false;
-  }
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setTeam(getTeamFromLocalStorage());
+    };
 
-  function addToTeam(_id: string) {
-    if (!verifyTeam(_id)) {
-      return;
-    }
-    if (team === "") {
-      setTeamState(_id);
-    } else {
-      setTeamState(team + "," + _id);
-    }
-  }
+    window.addEventListener("storage", handleStorageChange);
 
-  function setTeamState(newTeam: string) {
-    localStorage.setItem("team", JSON.stringify(newTeam));
-    setWindowTeam(newTeam);
-  }
-
-  function verifyTeam(name: string) {
-    if (team === "") {
-      return true;
-    }
-    const listTeam = team.split(",");
-    if (listTeam.includes(name)) {
-      alert("You already have this pokemon in your team");
-      return false;
-    }
-    if (listTeam.length >= 6) {
-      alert("Your team is full");
-      return false;
-    }
-
-    return true;
-  }
+    // Cleanup listener
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   if (loading) {
     return <CircularProgress />;
@@ -122,44 +74,25 @@ export default function Pokemon() {
     return <Box>Error: {error.message}</Box>;
   }
 
-  function removeFromTeam(name: string) {
-    const listTeam = team.split(",");
-    const index = listTeam.indexOf(name);
-    if (index > -1) {
-      listTeam.splice(index, 1);
-    }
-    setTeamState(listTeam.join(","));
-  }
-
   return (
     <>
-      <Typography sx={{ marginTop: "5vh" }} variant="h3" textAlign={"center"}>
-        {data.pokemon.name} - #{data.pokemon.base_experience}
+      <Typography
+        sx={{ marginTop: "5vh", marginBottom: "3vh" }}
+        variant="h3"
+        textAlign={"center"}
+      >
+        {data.pokemon.name} - #{data.pokemon._id}
       </Typography>
-
+      <Divider color="white" />
       <Box>
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
-            padding: "0em 12em 0em 12em",
+            justifyContent: "space-evenly",
+            marginTop: "3vh",
+            marginBottom: "3vh",
           }}
         >
-          {/* <Button
-            disabled={checkTeam(data.pokemon.name)}
-            onClick={() => addToTeam(data.pokemon.name)}
-            style={{
-              // justifyContent: "space-evenly",
-              // border: "1px solid #E0F1FF",
-              alignItems: "center",
-              marginTop: "3vh",
-              marginBottom: "3vh",
-              marginLeft: "10vw",
-              marginRight: "10vw",
-            }}
-          >
-            {checkTeam(data.pokemon.name) ? "Already in team" : "Add to team"}
-          </Button> */}
           <Tooltip title="Go back to previous page" arrow>
             <Button
               sx={{
@@ -175,7 +108,7 @@ export default function Pokemon() {
           </Tooltip>
           <Tooltip
             title={
-              checkTeam(data.pokemon.name)
+              checkTeam(team, data.pokemon._id.toString())
                 ? "Pokemon is already in your team, do you want to remove " +
                   data.pokemon.name +
                   " from your team?"
@@ -185,14 +118,18 @@ export default function Pokemon() {
           >
             <Button
               variant="outlined"
-              sx={{ color: checkTeam(data.pokemon.name) ? "red" : "green" }}
+              sx={{
+                color: checkTeam(team, data.pokemon._id.toString())
+                  ? "red"
+                  : "green",
+              }}
               onClick={() =>
-                checkTeam(data.pokemon._id.toString())
-                  ? removeFromTeam(data.pokemon._id.toString())
-                  : addToTeam(data.pokemon._id.toString())
+                checkTeam(team, data.pokemon._id.toString())
+                  ? removeFromTeam(team, data.pokemon._id.toString(), setTeam)
+                  : addToTeam(team, data.pokemon._id.toString(), setTeam)
               }
             >
-              {checkTeam(data.pokemon._id.toString())
+              {checkTeam(team, data.pokemon._id.toString())
                 ? "Remove from team"
                 : "Add to team"}
             </Button>
