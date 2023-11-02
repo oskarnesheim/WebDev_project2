@@ -8,7 +8,7 @@ import {
 } from "graphql";
 
 const PokemonType = new GraphQLObjectType({
-  name: "Pokemon",
+  name: "PokemonType",
   fields: () => ({
     _id: { type: GraphQLInt },
     name: { type: GraphQLString },
@@ -297,24 +297,6 @@ const PokemonType = new GraphQLObjectType({
                   url: { type: GraphQLString },
                 },
               }),
-            },
-          },
-        })
-      ),
-    },
-    reviews: {
-      type: new GraphQLList(
-        new GraphQLObjectType({
-          name: "Review",
-          fields: {
-            rating: { type: GraphQLInt },
-            description: { type: GraphQLString },
-            userID: { type: GraphQLString },
-            pokemon: {
-              type: PokemonType,
-              resolve(parent, args) {
-                return PokemonModel.findById(parent.pokemonId);
-              },
             },
           },
         })

@@ -1,5 +1,7 @@
 // Mongoose model
 import { PokemonModel } from "../models/Pokemon.js";
+import { ReviewModel } from "../models/Review.js";
+import ReviewType from "./ReviewType.js";
 import PokemonType from "./GetAllPokemons.js";
 
 import {
@@ -8,18 +10,7 @@ import {
   GraphQLSchema,
   GraphQLInt,
   GraphQLList,
-  GraphQLNonNull,
-  GraphQLInputObjectType,
 } from "graphql";
-
-const ReviewInputType = new GraphQLInputObjectType({
-  name: "ReviewInput",
-  fields: {
-    rating: { type: new GraphQLNonNull(GraphQLInt) },
-    description: { type: new GraphQLNonNull(GraphQLString) },
-    userID: { type: new GraphQLNonNull(GraphQLString) },
-  },
-});
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -31,6 +22,15 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve(parent, args) {
         return PokemonModel.findById(args._id);
+      },
+    },
+    reviewsForPokemon: {
+      type: new GraphQLList(ReviewType),
+      args: {
+        pokemonID: { type: GraphQLInt },
+      },
+      resolve(parent, args) {
+        return ReviewModel.find({ pokemonID: args.pokemonID });
       },
     },
     pokemonsSortedAndFiltered: {
@@ -104,18 +104,23 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
-    updatePokemonReviews: {
-      type: PokemonType,
+    createReview: {
+      type: ReviewType,
       args: {
-        _id: { type: GraphQLNonNull(GraphQLInt) },
-        reviews: {
-          type: new GraphQLList(ReviewInputType),
-        },
+        rating: { type: GraphQLInt },
+        description: { type: GraphQLString },
+        userID: { type: GraphQLString },
+        pokemonID: { type: GraphQLInt },
       },
       resolve(parent, args) {
-        return PokemonModel.findByIdAndUpdate(args._id, {
-          $set: { reviews: args.reviews },
+        const pokemon = PokemonModel.findById(args.pokemonID);
+        const review = new ReviewModel({
+          rating: args.rating,
+          description: args.description,
+          userID: args.userID,
+          pokemonID: args.pokemonID,
         });
+        return review.save();
       },
     },
   },
