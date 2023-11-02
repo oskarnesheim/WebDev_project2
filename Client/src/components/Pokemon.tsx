@@ -51,39 +51,12 @@ export default function Pokemon() {
   };
   const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
 
-  function getTeam() {
-    if (teamIsLoaded) {
-      return team;
-    }
-    const teamJSON = localStorage.getItem("team");
-    if (teamJSON) {
-      try {
-        const team = JSON.parse(teamJSON);
-        setTeamState(team);
-        setTeamIsLoaded(true);
-        return team;
-      } catch (error) {
-        console.error("Error parsing JSON:", error);
-        return "error"; // Handle the error appropriately
-      }
-    } else {
-      return ""; // Handle the case when "team" is not found in localStorage
-    }
-  }
+  const [team, setTeam] = useState<string[]>(getTeamFromLocalStorage());
 
-  function checkTeam(_id: number): boolean {
-    if (getTeam() === "error") {
-      return true;
-    }
-    const team = getTeam();
-    if (team !== "") {
-      const listTeam = team.split(",");
-      if (listTeam.includes(_id.toString())) {
-        return true;
-      }
-    }
-    return false;
-  }
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setTeam(getTeamFromLocalStorage());
+    };
 
     window.addEventListener("storage", handleStorageChange);
 
@@ -93,18 +66,10 @@ export default function Pokemon() {
     };
   }, []);
 
-  function removeFromTeam(name: string) {
-    const listTeam = team.split(",");
-    const index = listTeam.indexOf(name);
-    if (index > -1) {
-      listTeam.splice(index, 1);
-    }
-    setTeamState(listTeam.join(","));
-  }
-
   if (loading) {
     return <CircularProgress />;
   }
+
   if (error) {
     return <Box>Error: {error.message}</Box>;
   }
@@ -153,7 +118,11 @@ export default function Pokemon() {
           >
             <Button
               variant="outlined"
-              sx={{ color: checkTeam(data.pokemon._id) ? "red" : "green" }}
+              sx={{
+                color: checkTeam(team, data.pokemon._id.toString())
+                  ? "red"
+                  : "green",
+              }}
               onClick={() =>
                 checkTeam(team, data.pokemon._id.toString())
                   ? removeFromTeam(team, data.pokemon._id.toString(), setTeam)
