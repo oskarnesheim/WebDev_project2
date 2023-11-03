@@ -4,20 +4,20 @@ import { useNavigate } from "react-router-dom";
 import ArrowButtons from "./ArrowButtons";
 import PokemonCard from "./PokemonCard";
 import { removeFromTeam } from "./TeamFunctions";
+import { useRecoilState } from "recoil";
+import { recoilMyTeam } from "../recoil/atoms";
 
 type Props = {
-  team: string[];
   selectedPokemon: [string, number];
   setSelectedPokemon: React.Dispatch<React.SetStateAction<[string, number]>>;
-  setTeamState: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 export default function DisplayPokemon({
-  team,
-  setTeamState,
   selectedPokemon,
   setSelectedPokemon,
 }: Props) {
+  const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
+
   const history = useNavigate();
 
   const redirectToPokemon = () => {
@@ -25,7 +25,7 @@ export default function DisplayPokemon({
   };
 
   function deleteTeamMember(id: string) {
-    removeFromTeam(team, id, setTeamState);
+    removeFromTeam(team, id, setTeam);
     setSelectedPokemon(["0", 0]);
   }
 

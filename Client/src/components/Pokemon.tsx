@@ -1,18 +1,13 @@
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import PokemonStats from "./PokemonStats";
 import { useQuery, gql } from "@apollo/client";
-import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { Box, Button, Divider, Tooltip, Typography } from "@mui/material";
 import PokemonRatingReview from "./PokemonReviews";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import {
-  getTeamFromLocalStorage,
-  checkTeam,
-  addToTeam,
-  removeFromTeam,
-} from "./TeamFunctions";
-import { useEffect } from "react";
+import { checkTeam, addToTeam, removeFromTeam } from "./TeamFunctions";
+import { recoilMyTeam } from "../recoil/atoms";
+import { useRecoilState } from "recoil";
 
 function findSinglePokemon() {
   const q = gql`
@@ -51,20 +46,7 @@ export default function Pokemon() {
   };
   const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
 
-  const [team, setTeam] = useState<string[]>(getTeamFromLocalStorage());
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setTeam(getTeamFromLocalStorage());
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    // Cleanup listener
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
+  const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
 
   if (loading) {
     return <CircularProgress />;
