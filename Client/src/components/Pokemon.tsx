@@ -56,6 +56,41 @@ export default function Pokemon() {
     return <Box>Error: {error.message}</Box>;
   }
 
+  function handleOnClick() {
+    switch (checkTeam(team, data.pokemon._id.toString())) {
+      case 0:
+        addToTeam(team, data.pokemon._id.toString(), setTeam);
+        break;
+      case 1:
+        removeFromTeam(team, data.pokemon._id.toString(), setTeam);
+        break;
+      case 2:
+        console.log("Your team is full");
+        break;
+      default:
+        break;
+    }
+  }
+
+  function getButtonInfo(mode: number) {
+    switch (checkTeam(team, data.pokemon._id.toString())) {
+      case 0:
+        if (mode == 0) return "green";
+        if (mode == 2) return "Add " + data.pokemon.name + " to your team";
+        return "Add to team";
+      case 1:
+        if (mode == 0) return "red";
+        if (mode == 2) return "Remove " + data.pokemon.name + " from your team";
+        return "Remove from team";
+      case 2:
+        if (mode == 0) return "grey";
+        if (mode == 2) return "Cannot add more Pokemon to your team";
+        return "Team is full";
+      default:
+        break;
+    }
+  }
+
   return (
     <>
       <Typography
@@ -88,32 +123,15 @@ export default function Pokemon() {
               <ArrowBackIosNewIcon />
             </Button>
           </Tooltip>
-          <Tooltip
-            title={
-              checkTeam(team, data.pokemon._id.toString())
-                ? "Pokemon is already in your team, do you want to remove " +
-                  data.pokemon.name +
-                  " from your team?"
-                : "Add " + data.pokemon.name + " to your team"
-            }
-            arrow
-          >
+          <Tooltip title={getButtonInfo(2)} arrow>
             <Button
               variant="outlined"
               sx={{
-                color: checkTeam(team, data.pokemon._id.toString())
-                  ? "red"
-                  : "green",
+                color: getButtonInfo(0),
               }}
-              onClick={() =>
-                checkTeam(team, data.pokemon._id.toString())
-                  ? removeFromTeam(team, data.pokemon._id.toString(), setTeam)
-                  : addToTeam(team, data.pokemon._id.toString(), setTeam)
-              }
+              onClick={() => handleOnClick()}
             >
-              {checkTeam(team, data.pokemon._id.toString())
-                ? "Remove from team"
-                : "Add to team"}
+              {getButtonInfo(1)}
             </Button>
           </Tooltip>
         </Box>
