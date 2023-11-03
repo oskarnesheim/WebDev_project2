@@ -9,10 +9,22 @@ import SortBy from "../assets/Enums.ts";
 export default function Home() {
   const [delayedSearch, setDelayedSearch] = useState("");
   const [sortBy, setSortBy] = useState<string>(SortBy.A_Z);
-  const [currentFilter, setCurrentFilter] = useState<string[]>([]);
-  // const [range] = useState<number[]>([0, 20]);
   const [page, setPage] = useState<number>(1);
   const [maxPage, setMaxPage] = useState<number>(1);
+
+  const filterSessionStorage = () => {
+    const data = sessionStorage.getItem("filter");
+    if (data) {
+      const filterList: string[] = JSON.parse(data);
+      return filterList;
+    } else {
+      return [];
+    }
+  }; 
+
+  const [currentFilter, setCurrentFilter] = useState<string[]>(
+    filterSessionStorage(),
+  );
 
   return (
     <div className="home">
