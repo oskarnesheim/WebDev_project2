@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Pokemon from "./components/Pokemon.tsx";
 import Home from "./components/Home.tsx";
 import MyTeam from "./components/MyTeam.tsx";
+import About from "./components/About.tsx";
 import "./main.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
@@ -23,6 +24,10 @@ export const router = createBrowserRouter(
         {
           path: "myteam",
           element: <MyTeam />,
+        },
+        {
+          path: "about",
+          element: <About />,
         },
         {
           path: ":_id/*",
