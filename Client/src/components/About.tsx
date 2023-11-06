@@ -9,7 +9,7 @@ export default function About() {
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
-      width: "50vw",
+      width: "60vw",
       margin: "auto",
       marginTop: "5vh",
       color: "primary.main",
@@ -22,30 +22,45 @@ export default function About() {
 
   return (
     <Box sx={styles.about}>
-      <Typography variant="h1">About</Typography>
+      <Typography variant="h2">About</Typography>
       <Typography variant="body1">
-        This is a Pokedex where you can keep track of stats on 200 pokemon, and
-        add your favorite Pokemon to your team.
+        Discover our Pokedex, a handy tool for Pokemon enthusiasts featuring
+        information on 300 Pokemons from the first and second generations. Dive
+        into a world of statistics, where you can delve into details like
+        height, weight, type, and more for each Pokemon. Share your own unique
+        insights and reviews about these creatures with fellow users. But that's
+        not all - you can also curate your dream team of six Pokemons to keep
+        them close, offering you a fun and engaging way to stay connected with
+        your favorite companions.
       </Typography>
 
-      <Typography variant="h3" sx={styles.paragraph}>
+      <Typography variant="h4" sx={styles.paragraph}>
         Search
         <Typography variant="body1">
-          You can search for a pokemon by its name or you can find pokemon using
-          filter or sort.
+          You can search for a pokemon by its name or you can filter pokemons
+          based on different types (water, fire, grass etc.). Additionally you
+          can sort pokemons by their name, height, weight, and base experience,
+          in both ascending and descending order. The results will show you the
+          first 20 pokemons that match your search criteria, with the option to
+          go to the next page to see 20 more pokemons.
         </Typography>
       </Typography>
 
-      <Typography variant="h3" sx={styles.paragraph}>
+      <Typography variant="h4" sx={styles.paragraph}>
         My Team
         <Divider />
         <Typography>
-          You can only keep 6 pokémon in your team, but you can always remove
-          pokemon and add new ones. And no, you cannot have 6 Charizards.
+          You have the ability to put together your own team of Pokémon. You can
+          add up to 6 Pokémon to your team before it's full. You also have the
+          ability to remove Pokémon from your team if you suddenly change your
+          mind. And no, you cannot have 6 Charizards.
         </Typography>
       </Typography>
 
-      <Typography variant="body1" sx={styles.paragraph}>
+      <Typography
+        variant="h4"
+        sx={{ marginTop: "5vh", color: "primary.light" }}
+      >
         Gonna catch them all!
       </Typography>
       <img
@@ -54,7 +69,7 @@ export default function About() {
         style={{
           objectFit: "cover",
           marginTop: "5vh",
-          width: "50vw",
+          width: "60vw",
           height: "15vw",
         }}
       />
