@@ -36,8 +36,8 @@ export const recoilSortBy = atom({
 function getSortBy() {
   const sortBy: string = JSON.parse(sessionStorage.getItem("sortBy")!);
   if (!sortBy) {
-    sessionStorage.setItem("sortBy", JSON.stringify("name,1"));
-    return "name,1";
+    sessionStorage.setItem("sortBy", JSON.stringify("_id,1"));
+    return "_id,1";
   }
   return sortBy;
 }

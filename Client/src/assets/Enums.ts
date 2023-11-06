@@ -1,4 +1,5 @@
 enum SortBy {
+  NONE = "_id,1",
   A_Z = "name,1",
   Z_A = "name,-1",
   BASE_EXPERIENCE_INCREASING = "base_experience,1",

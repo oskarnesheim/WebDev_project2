@@ -8,28 +8,38 @@ export default function PreviewFiltersAndSorting() {
 
   const getFilters = () => {
     if (!filterBy || filterBy.length === 0) {
-      return <p className="filter_single_preview">None</p>;
+      return;
     }
-    return filterBy.map((filter) => (
-      <p className="filter_single_preview" key={filter}>
-        {filter},
-      </p>
-    ));
+    return (
+      <>
+        <p style={{ marginLeft: "20px" }}>{`Sorting: `}</p>
+        {filterBy.map((filter) => (
+          <p className="filter_single_preview" key={filter}>
+            {filter},
+          </p>
+        ))}
+      </>
+    );
   };
 
   function getSortings() {
-    if (!sortBy) {
-      ("None");
+    if (!sortBy || sortBy === "_id,1") {
+      return;
     }
-    return sortings.find((sort) => sort[1] === sortBy)![0];
+    return (
+      <>
+        <p style={{ marginLeft: "20px" }}>{`Sorting: `}</p>
+        <p style={{ textDecoration: "underline" }}>
+          {sortings.find((sort) => sort[1] === sortBy)![0]}
+        </p>
+      </>
+    );
   }
 
   return (
     <div className="filter_preview">
-      <p>{"Filters:  "}</p>
       {getFilters()}
-      <p style={{ marginLeft: "20px" }}>{`Sorting: `}</p>
-      <p style={{ textDecoration: "underline" }}>{getSortings()}</p>
+      {getSortings()}
     </div>
   );
 }
