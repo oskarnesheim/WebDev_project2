@@ -2,11 +2,12 @@ import { useState } from "react";
 import "./MyTeam.css";
 import TeamMember from "./TeamMember";
 import DisplayPokemon from "./DisplayPokemon";
-import { getTeamFromLocalStorage } from "./TeamFunctions";
+// import { getTeamFromLocalStorage } from "./TeamFunctions";
+import { useRecoilState } from "recoil";
+import { recoilMyTeam } from "../recoil/atoms";
 
 export default function MyTeam() {
-  const [teamIsLoaded, setTeamIsLoaded] = useState<boolean>(false);
-  const [team, setTeam] = useState<string[]>([]);
+  const [team] = useRecoilState<string[]>(recoilMyTeam);
   const [selectedPokemon, setSelectedPokemon] = useState<[string, number]>([
     "0",
     0,
@@ -19,19 +20,8 @@ export default function MyTeam() {
     return false;
   }
 
-  function getTeam(): string[] {
-    if (teamIsLoaded) {
-      return team;
-    }
-    const newTeam = getTeamFromLocalStorage();
-    setTeam(newTeam);
-    setTeamIsLoaded(true);
-    return newTeam;
-  }
-
   function teamlist() {
-    if (getTeam().length === 0) return <p>Team is empty 🙁</p>;
-    console.log("team yea: " + team);
+    if (team.length === 0) return <p>Team is empty 🙁</p>;
     return team.map((_id: string, count: number) => (
       <div
         onClick={() => setSelectedPokemon([_id, count])}
@@ -51,10 +41,8 @@ export default function MyTeam() {
         <h2>{team.length}/6</h2>
       </div>
       <DisplayPokemon
-        team={team}
         selectedPokemon={selectedPokemon}
         setSelectedPokemon={setSelectedPokemon}
-        setTeamState={setTeam}
       />
     </div>
   );

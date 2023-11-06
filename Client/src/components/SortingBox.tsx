@@ -6,22 +6,25 @@ import Fade from "@mui/material/Fade";
 import { Box } from "@mui/material";
 import sortings from "../assets/Sortings";
 
-type sortingBoxProps = {
-  updateSort: React.Dispatch<React.SetStateAction<string>>;
-  sortBy: string;
+type SortingBoxType = {
+  currentSorting: string;
+  setCurrentSorting: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
+export default function SortingBox({
+  currentSorting,
+  setCurrentSorting,
+}: SortingBoxType) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  console.log(sortBy);
 
   return (
     <Box>
@@ -51,24 +54,16 @@ export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
             value={sorting[1]}
             onClick={() => {
               handleClose;
-              updateSort(sorting[1]);
+              setCurrentSorting(sorting[1]);
             }}
             style={{
-              backgroundColor: sortBy === sorting[1] ? "lightblue" : "white",
+              backgroundColor:
+                currentSorting === sorting[1] ? "lightblue" : "white",
             }}
           >
             {sorting[0]}
           </MenuItem>
         ))}
-
-        <MenuItem
-          onClick={() => {
-            handleClose;
-            updateSort("");
-          }}
-        >
-          Reset
-        </MenuItem>
       </Menu>
     </Box>
   );

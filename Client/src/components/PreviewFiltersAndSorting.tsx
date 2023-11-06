@@ -1,36 +1,45 @@
-import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { recoilFilterBy, recoilSortBy } from "../recoil/atoms";
+import sortings from "../assets/Sortings";
 
-type PreviewFiltersAndSortingProps = {
-  currentFilter: string[];
-  sortBy: string;
-};
+export default function PreviewFiltersAndSorting() {
+  const [filterBy] = useRecoilState<string[]>(recoilFilterBy);
+  const [sortBy] = useRecoilState<string>(recoilSortBy);
 
-export default function PreviewFiltersAndSorting({
-  currentFilter,
-  sortBy,
-}: PreviewFiltersAndSortingProps) {
-  const [ascending_or_descending] = useState<string>(
-    sortBy.split(",")[1] === "1" ? "Ascending" : "Descending",
-  );
-
-  return (
-    <div className="filter_preview">
-      <p>{"Filters:  "}</p>
-      {currentFilter.length > 0 ? (
-        currentFilter.map((filter) => (
+  const getFilters = () => {
+    if (!filterBy || filterBy.length === 0) {
+      return;
+    }
+    return (
+      <>
+        <p style={{ marginLeft: "20px" }}>{`Sorting: `}</p>
+        {filterBy.map((filter) => (
           <p className="filter_single_preview" key={filter}>
             {filter},
           </p>
-        ))
-      ) : (
-        <p className="filter_single_preview">None</p>
-      )}
-      <p style={{ marginLeft: "20px" }}>{`Sorting: `}</p>
-      <p style={{ textDecoration: "underline" }}>
-        {sortBy !== "name,1"
-          ? sortBy.split(",")[0] + " - " + ascending_or_descending
-          : "None"}
-      </p>
+        ))}
+      </>
+    );
+  };
+
+  function getSortings() {
+    if (!sortBy || sortBy === "_id,1") {
+      return;
+    }
+    return (
+      <>
+        <p style={{ marginLeft: "20px" }}>{`Sorting: `}</p>
+        <p style={{ textDecoration: "underline" }}>
+          {sortings.find((sort) => sort[1] === sortBy)![0]}
+        </p>
+      </>
+    );
+  }
+
+  return (
+    <div className="filter_preview">
+      {getFilters()}
+      {getSortings()}
     </div>
   );
 }

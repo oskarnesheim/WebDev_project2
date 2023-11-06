@@ -1,12 +1,14 @@
 import PokemonCard from "./PokemonCard.tsx";
 import { useQuery, gql } from "@apollo/client";
+import {
+  recoilFilterBy,
+  recoilPage,
+  recoilSortBy,
+  recoilSearch,
+} from "../recoil/atoms.ts";
+import { useRecoilState } from "recoil";
 
 type PokemonViewProps = {
-  // range: number[];
-  sorting: string[][];
-  filters: string[];
-  search: string;
-  page: number;
   setMaxPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
@@ -36,28 +38,36 @@ function getPokemons() {
   return q;
 }
 
-export default function PokemonView({
-  setMaxPage,
-  sorting,
-  filters,
-  search,
-  page,
-}: PokemonViewProps) {
+export default function PokemonView({ setMaxPage }: PokemonViewProps) {
+  const [sorting] = useRecoilState<string>(recoilSortBy);
+  const [filters] = useRecoilState<string[]>(recoilFilterBy);
+  const [page] = useRecoilState<number>(recoilPage);
+  const [search] = useRecoilState<string>(recoilSearch);
+
   const variables = {
-    sorting: sorting,
+    sorting: getSorting(),
     filters: filters,
     range: [page * 20 - 20, 20],
     search: search,
   };
+
   const { loading, error, data } = useQuery(getPokemons(), { variables });
+
+  function getSorting() {
+    if (!sorting) {
+      return [["name", "1"]];
+    }
+    return [sorting.split(",")];
+  }
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error! {error.message}</div>;
   }
+
   setMaxPage(Math.ceil(data.numberOfPokemonsThatMatchesSearch / 20));
 
   return (

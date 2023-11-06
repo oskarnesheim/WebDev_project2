@@ -25,15 +25,15 @@ const filters = [
   ["fairy", "pink"],
 ];
 
-type FadeMenuProps = {
-  currentFilter: string[];
+type FilterBoxProps = {
+  currentFilters: string[];
   setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 export default function FilterBox({
-  currentFilter,
+  currentFilters,
   setCurrentFilter,
-}: FadeMenuProps) {
+}: FilterBoxProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -53,7 +53,7 @@ export default function FilterBox({
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Filters
+        Filters:
       </Button>
       <Menu
         id="fade-menu"
@@ -70,15 +70,15 @@ export default function FilterBox({
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={currentFilter.includes(filter[0])}
+                  checked={currentFilters.includes(filter[0])}
                   style={{ color: filter[1] }}
                   onChange={() => {
-                    if (currentFilter.includes(filter[0])) {
+                    if (currentFilters.includes(filter[0])) {
                       setCurrentFilter(
-                        currentFilter.filter((type) => type !== filter[0]),
+                        currentFilters.filter((f) => f !== filter[0]),
                       );
                     } else {
-                      setCurrentFilter([...currentFilter, filter[0]]);
+                      setCurrentFilter([...currentFilters, filter[0]]);
                     }
                   }}
                 />

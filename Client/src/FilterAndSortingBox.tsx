@@ -1,15 +1,9 @@
 import { Box, Button, Modal } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import FilterBox from "./components/FilterBox";
 import SortingBox from "./components/SortingBox";
-
-type FilterAndSortingBoxProps = {
-  currentFilter: string[];
-  setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
-  updateSort: React.Dispatch<React.SetStateAction<string>>;
-  sortBy: string;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-};
+import { recoilFilterBy, recoilSortBy, recoilPage } from "./recoil/atoms";
+import { useRecoilState } from "recoil";
 
 const modalBoxStyles = {
   position: "absolute",
@@ -24,37 +18,51 @@ const modalBoxStyles = {
   text: "white",
 };
 
-export default function FilterAndSortingBox({
-  currentFilter,
-  setCurrentFilter,
-  updateSort,
-  sortBy,
-  setPage,
-}: FilterAndSortingBoxProps) {
+export default function FilterAndSortingBox() {
   const [open, setOpen] = useState(false);
-  const [tempCurrentFilter, setTempCurrentFilter] = useState(currentFilter); // Local state for currentFilter
-  const [tempSortBy, setTempSortBy] = useState(sortBy); // Local state for sortBy
-
+  const [currentFilter, setCurrentFilter] =
+    useRecoilState<string[]>(recoilFilterBy);
+  const [sortBy, setSortBy] = useRecoilState<string>(recoilSortBy);
+  const [page, setPage] = useRecoilState<number>(recoilPage);
+  const [tempFilters, setTempFilters] = useState<string[]>(currentFilter);
+  const [tempSortBy, setTempSortBy] = useState<string>(sortBy);
   const handleOpen = () => setOpen(true);
+
   const handleClose = () => {
     setOpen(false);
     // Reset the local state variables if the modal is closed without applying changes
-    // setTempCurrentFilter(currentFilter);
-    // setTempSortBy(sortBy);
-    setPage(1);
+    updatePage(1);
   };
 
   const handleResetFilter = () => {
-    setTempCurrentFilter(currentFilter);
-    setTempSortBy(sortBy);
-    setPage(1);
+    updateFilterBy([]);
+    updateSortBy("name,1");
+    handleClose();
+    updatePage(1);
   };
 
-  const handleApplyFilter = () => {
-    // Apply the temporary changes to the parent's state variables
-    setCurrentFilter(tempCurrentFilter);
-    updateSort(tempSortBy);
+  function updateFilterBy(filters: string[]) {
+    sessionStorage.setItem("filterBy", JSON.stringify(filters));
+    setCurrentFilter(tempFilters);
+  }
 
+  function updateSortBy(sort: string) {
+    sessionStorage.setItem("sortBy", JSON.stringify(sort));
+    setSortBy(tempSortBy);
+  }
+
+  function updatePage(pagenr: number) {
+    if (page > 20) {
+      throw new Error("Page number cannot be greater than 20");
+    }
+    sessionStorage.setItem("page", JSON.stringify(pagenr));
+    setPage(pagenr);
+  }
+
+  const handleApplyFilter = () => {
+    updateFilterBy(tempFilters);
+    updateSortBy(tempSortBy);
+    updatePage(1);
     handleClose(); // Close the modal
   };
 
@@ -70,12 +78,12 @@ export default function FilterAndSortingBox({
         <Box sx={modalBoxStyles}>
           <div className="filter_sorting_inner">
             <FilterBox
-              currentFilter={tempCurrentFilter} // Use the local state here
-              setCurrentFilter={setTempCurrentFilter} // Update the local state
+              currentFilters={tempFilters}
+              setCurrentFilter={setTempFilters}
             />
             <SortingBox
-              sortBy={tempSortBy} // Use the local state here
-              updateSort={setTempSortBy} // Update the local state
+              currentSorting={tempSortBy}
+              setCurrentSorting={setTempSortBy}
             />
           </div>
           <hr />

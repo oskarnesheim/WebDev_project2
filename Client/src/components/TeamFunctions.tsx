@@ -1,22 +1,8 @@
-// Function to get the team from localStorage
-export const getTeamFromLocalStorage = (): string[] => {
-  const teamJSON = localStorage.getItem("team");
-  if (teamJSON) {
-    try {
-      const teamArray = JSON.parse(teamJSON);
-      return teamArray;
-    } catch (error) {
-      console.error("Error parsing team JSON:", error);
-      return [];
-    }
-  } else {
-    return [];
-  }
-};
-
 // Function to check if a Pokemon is in the team
-export const checkTeam = (team: string[], id: string): boolean => {
-  return team.includes(id);
+export const checkTeam = (team: string[], id: string): number => {
+  if (team.includes(id)) return 1;
+  if (team.length == 6) return 2;
+  return 0;
 };
 
 // Function to add a Pokemon to the team
@@ -28,10 +14,6 @@ export const addToTeam = (
   const currTeam = team;
   if (currTeam.length >= 6) {
     alert("Your team is full");
-    return;
-  }
-  if (currTeam.includes(id)) {
-    alert("This Pokemon is already in your team");
     return;
   }
   const newTeam = [...currTeam, id];
@@ -52,24 +34,5 @@ export const removeFromTeam = (
 
 // Function to save the team to localStorage
 export const saveTeamToLocalStorage = (team: string[]): void => {
-  localStorage.setItem("team", JSON.stringify(team));
-};
-
-export const getTeamFromStorage = (): string[] => {
-  const teamJSON = localStorage.getItem("team");
-  if (teamJSON) {
-    try {
-      const teamArray = JSON.parse(teamJSON);
-      return teamArray;
-    } catch (error) {
-      console.error("Error parsing team JSON:", error);
-      return [];
-    }
-  } else {
-    return [];
-  }
-};
-
-export const saveTeamToStorage = (team: string[]) => {
   localStorage.setItem("team", JSON.stringify(team));
 };
