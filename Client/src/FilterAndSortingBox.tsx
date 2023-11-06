@@ -70,12 +70,10 @@ export default function FilterAndSortingBox({
         <Box sx={modalBoxStyles}>
           <div className="filter_sorting_inner">
             <FilterBox
-              currentFilter={tempCurrentFilter} // Use the local state here
-              setCurrentFilter={setTempCurrentFilter} // Update the local state
+              // currentFilter={tempCurrentFilter} // Use the local state here
+              // setCurrentFilter={setTempCurrentFilter} // Update the local state
             />
             <SortingBox
-              sortBy={tempSortBy} // Use the local state here
-              updateSort={setTempSortBy} // Update the local state
             />
           </div>
           <hr />

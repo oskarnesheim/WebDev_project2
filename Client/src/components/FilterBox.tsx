@@ -4,6 +4,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { FormControlLabel, Checkbox, Box } from "@mui/material";
+import { recoilFilterBy } from "../recoil/atoms";
+import { useRecoilState } from "recoil";
 
 const filters = [
   ["fire", "red"],
@@ -25,15 +27,13 @@ const filters = [
   ["fairy", "pink"],
 ];
 
-type FadeMenuProps = {
-  currentFilter: string[];
-  setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
-};
+// type FadeMenuProps = {
+//   currentFilter: string[];
+//   setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
+// };
 
-export default function FilterBox({
-  currentFilter,
-  setCurrentFilter,
-}: FadeMenuProps) {
+export default function FilterBox() {
+  const [currentFilter] = useRecoilState(recoilFilterBy);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -42,6 +42,25 @@ export default function FilterBox({
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  function updateFilterBy(filter: string) {
+    const prevFilters = filter;
+    if (filter === "") {
+      sessionStorage.setItem("filterBy", JSON.stringify([]));
+      return;
+    }
+    const newFilters = [...prevFilters, filter];
+    sessionStorage.setItem("filterBy", JSON.stringify(newFilters));
+  }
+
+  function getChecked(type: string) {
+    const filter = currentFilter;
+    if (filter.includes(type)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   return (
     <Box>
@@ -70,15 +89,13 @@ export default function FilterBox({
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={currentFilter.includes(filter[0])}
+                  checked={getChecked(filter[0])}
                   style={{ color: filter[1] }}
                   onChange={() => {
-                    if (currentFilter.includes(filter[0])) {
-                      setCurrentFilter(
-                        currentFilter.filter((type) => type !== filter[0]),
-                      );
+                    if (getChecked(filter[0])) {
+                     remove
                     } else {
-                      setCurrentFilter([...currentFilter, filter[0]]);
+                      updateFilterBy(filter[0]);
                     }
                   }}
                 />
@@ -90,7 +107,7 @@ export default function FilterBox({
         <MenuItem
           onClick={() => {
             handleClose;
-            setCurrentFilter([]);
+            updateFilterBy("");
           }}
         >
           Reset

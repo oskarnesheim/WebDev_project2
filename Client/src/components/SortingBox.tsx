@@ -5,13 +5,16 @@ import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { Box } from "@mui/material";
 import sortings from "../assets/Sortings";
+import { recoilSortBy } from "../recoil/atoms";
+import { useRecoilState } from "recoil";
 
-type sortingBoxProps = {
-  updateSort: React.Dispatch<React.SetStateAction<string>>;
-  sortBy: string;
-};
+// type sortingBoxProps = {
+//   updateSort: React.Dispatch<React.SetStateAction<string>>;
+//   sortBy: string;
+// };
 
-export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
+export default function SortingBox() {
+  const [sortBy] = useRecoilState(recoilSortBy);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -22,6 +25,11 @@ export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
   };
 
   console.log(sortBy);
+
+  function updateSortBy(sort: string) {
+    console.log(sort + " is clicked");
+    sessionStorage.setItem("sortBy", JSON.stringify(sort));
+  }
 
   return (
     <Box>
@@ -51,7 +59,7 @@ export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
             value={sorting[1]}
             onClick={() => {
               handleClose;
-              updateSort(sorting[1]);
+              updateSortBy(sorting[1]);
             }}
             style={{
               backgroundColor: sortBy === sorting[1] ? "lightblue" : "white",
@@ -64,7 +72,7 @@ export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
         <MenuItem
           onClick={() => {
             handleClose;
-            updateSort("");
+            updateSortBy("");
           }}
         >
           Reset
