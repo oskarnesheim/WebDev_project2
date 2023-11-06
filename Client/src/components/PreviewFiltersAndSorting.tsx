@@ -2,16 +2,7 @@ import { useRecoilState } from "recoil";
 import { recoilFilterBy, recoilSortBy } from "../recoil/atoms";
 import sortings from "../assets/Sortings";
 
-// type PreviewFiltersAndSortingProps = {
-//   currentFilter: string[];
-//   sortBy: string;
-// };
-
 export default function PreviewFiltersAndSorting() {
-  //   {
-  //   currentFilter,
-  //   sortBy,
-  // }: PreviewFiltersAndSortingProps
   const [filterBy] = useRecoilState<string[]>(recoilFilterBy);
   const [sortBy] = useRecoilState<string>(recoilSortBy);
 

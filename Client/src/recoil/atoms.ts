@@ -42,3 +42,31 @@ function getSortBy() {
   }
   return sortBy;
 }
+
+export const recoilSearch = atom({
+  key: "search", // unique ID (with respect to other atoms/selectors)
+  default: getSearch() as string, // default value (aka initial value)
+});
+
+function getSearch() {
+  const search: string = JSON.parse(sessionStorage.getItem("search")!);
+  if (search === null) {
+    sessionStorage.setItem("search", JSON.stringify(""));
+    return;
+  }
+  return search;
+}
+
+export const recoilPage = atom({
+  key: "page", // unique ID (with respect to other atoms/selectors)
+  default: getPage() as number, // default value (aka initial value)
+});
+
+function getPage() {
+  const page: number = JSON.parse(sessionStorage.getItem("page")!);
+  if (page === null) {
+    sessionStorage.setItem("page", JSON.stringify(1));
+    return;
+  }
+  return page;
+}

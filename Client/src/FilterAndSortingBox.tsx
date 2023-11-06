@@ -1,13 +1,9 @@
 import { Box, Button, Modal } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import FilterBox from "./components/FilterBox";
 import SortingBox from "./components/SortingBox";
-import { recoilFilterBy, recoilSortBy } from "./recoil/atoms";
+import { recoilFilterBy, recoilSortBy, recoilPage } from "./recoil/atoms";
 import { useRecoilState } from "recoil";
-
-type FilterAndSortingBoxProps = {
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-};
 
 const modalBoxStyles = {
   position: "absolute",
@@ -22,29 +18,27 @@ const modalBoxStyles = {
   text: "white",
 };
 
-export default function FilterAndSortingBox({
-  setPage,
-}: FilterAndSortingBoxProps) {
+export default function FilterAndSortingBox() {
   const [open, setOpen] = useState(false);
   const [currentFilter, setCurrentFilter] =
     useRecoilState<string[]>(recoilFilterBy);
   const [sortBy, setSortBy] = useRecoilState<string>(recoilSortBy);
+  const [page, setPage] = useRecoilState<number>(recoilPage);
   const [tempFilters, setTempFilters] = useState<string[]>(currentFilter);
   const [tempSortBy, setTempSortBy] = useState<string>(sortBy);
   const handleOpen = () => setOpen(true);
+
   const handleClose = () => {
     setOpen(false);
     // Reset the local state variables if the modal is closed without applying changes
-    // setTempCurrentFilter(currentFilter);
-    // setTempSortBy(sortBy);
-    setPage(1);
+    updatePage(1);
   };
 
   const handleResetFilter = () => {
     updateFilterBy([]);
     updateSortBy("name,1");
     handleClose();
-    setPage(1);
+    updatePage(1);
   };
 
   function updateFilterBy(filters: string[]) {
@@ -57,9 +51,18 @@ export default function FilterAndSortingBox({
     setSortBy(tempSortBy);
   }
 
+  function updatePage(pagenr: number) {
+    if (page > 20) {
+      throw new Error("Page number cannot be greater than 20");
+    }
+    sessionStorage.setItem("page", JSON.stringify(pagenr));
+    setPage(pagenr);
+  }
+
   const handleApplyFilter = () => {
     updateFilterBy(tempFilters);
     updateSortBy(tempSortBy);
+    updatePage(1);
     handleClose(); // Close the modal
   };
 

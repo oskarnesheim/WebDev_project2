@@ -1,11 +1,10 @@
 import PokemonCard from "./PokemonCard.tsx";
 import { useQuery, gql } from "@apollo/client";
-import { recoilFilterBy, recoilSortBy } from "../recoil/atoms.ts";
+import { recoilFilterBy, recoilPage, recoilSortBy } from "../recoil/atoms.ts";
 import { useRecoilState } from "recoil";
 
 type PokemonViewProps = {
   search: string;
-  page: number;
   setMaxPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
@@ -35,13 +34,10 @@ function getPokemons() {
   return q;
 }
 
-export default function PokemonView({
-  setMaxPage,
-  search,
-  page,
-}: PokemonViewProps) {
+export default function PokemonView({ setMaxPage, search }: PokemonViewProps) {
   const [sorting] = useRecoilState<string>(recoilSortBy);
   const [filters] = useRecoilState<string[]>(recoilFilterBy);
+  const [page] = useRecoilState<number>(recoilPage);
 
   const variables = {
     sorting: [sorting.split(",")],
