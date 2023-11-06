@@ -6,17 +6,17 @@ import BasicPagination from "./BasicPagination.tsx";
 import PreviewFiltersAndSorting from "./PreviewFiltersAndSorting.tsx";
 
 export default function Home() {
-  const [delayedSearch, setDelayedSearch] = useState("");
+  // const [delayedSearch, setDelayedSearch] = useState("");
   const [maxPage, setMaxPage] = useState<number>(1);
 
   return (
     <div className="home">
       <div className="search_container">
-        <Searchbar updateSearch={setDelayedSearch} />
+        <Searchbar />
         <FilterAndSortingBox />
       </div>
       <PreviewFiltersAndSorting />
-      <PokemonView search={delayedSearch} setMaxPage={setMaxPage} />
+      <PokemonView setMaxPage={setMaxPage} />
       <BasicPagination maxPage={maxPage} />
     </div>
   );

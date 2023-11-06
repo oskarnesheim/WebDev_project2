@@ -1,25 +1,41 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { recoilSearch, recoilPage } from "../recoil/atoms";
 
-type SearchbarProps = {
-  updateSearch: React.Dispatch<React.SetStateAction<string>>;
-  currentSearch?: string;
-};
+function Searchbar() {
+  const [stateSearch] = useRecoilState<string>(recoilSearch);
+  const [search, setSearch] = useState<string>(stateSearch);
+  const setUseSearch = useSetRecoilState<string>(recoilSearch);
+  const setPage = useSetRecoilState<number>(recoilPage);
 
-function Searchbar({ updateSearch }: SearchbarProps) {
-  const [search, setSearch] = useState<string>("");
+  const updateSearch = useCallback(
+    (searchValue: string) => {
+      sessionStorage.setItem("search", JSON.stringify(searchValue));
+      setUseSearch(searchValue);
+    },
+    [setUseSearch],
+  );
+
   useEffect(() => {
     const timer = setTimeout(() => {
       updateSearch(search);
     }, 600);
     return () => clearTimeout(timer);
   }, [search, updateSearch]);
+
+  function type(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearch(e.target.value);
+    setPage(1);
+    sessionStorage.setItem("page", JSON.stringify(1));
+  }
+
   return (
     <input
       type="text"
-      id="city_input"
+      id="search_input"
       value={search}
-      onChange={(event) => setSearch(event.target.value)}
-      placeholder=" E.g. charizard"
+      onChange={(event) => type(event)}
+      placeholder="E.g. charizard"
       required
     />
   );

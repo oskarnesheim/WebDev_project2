@@ -7,7 +7,7 @@ export const recoilMyTeam = atom({
 
 function getTeam() {
   const team: string[] = JSON.parse(localStorage.getItem("team")!);
-  if (team === null) {
+  if (!team) {
     localStorage.setItem("team", JSON.stringify([]));
     return [];
   }
@@ -35,10 +35,9 @@ export const recoilSortBy = atom({
 
 function getSortBy() {
   const sortBy: string = JSON.parse(sessionStorage.getItem("sortBy")!);
-  console.log(sortBy);
-  if (sortBy === null) {
+  if (!sortBy) {
     sessionStorage.setItem("sortBy", JSON.stringify("name,1"));
-    return;
+    return "name,1";
   }
   return sortBy;
 }
@@ -50,9 +49,9 @@ export const recoilSearch = atom({
 
 function getSearch() {
   const search: string = JSON.parse(sessionStorage.getItem("search")!);
-  if (search === null) {
+  if (!search) {
     sessionStorage.setItem("search", JSON.stringify(""));
-    return;
+    return "";
   }
   return search;
 }
@@ -64,7 +63,7 @@ export const recoilPage = atom({
 
 function getPage() {
   const page: number = JSON.parse(sessionStorage.getItem("page")!);
-  if (page === null) {
+  if (!page) {
     sessionStorage.setItem("page", JSON.stringify(1));
     return;
   }
