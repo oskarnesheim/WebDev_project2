@@ -36,3 +36,6 @@ export const removeFromTeam = (
 export const saveTeamToLocalStorage = (team: string[]): void => {
   localStorage.setItem("team", JSON.stringify(team));
 };
+
+
+

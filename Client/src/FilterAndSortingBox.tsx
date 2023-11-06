@@ -4,10 +4,6 @@ import FilterBox from "./components/FilterBox";
 import SortingBox from "./components/SortingBox";
 
 type FilterAndSortingBoxProps = {
-  currentFilter: string[];
-  setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
-  updateSort: React.Dispatch<React.SetStateAction<string>>;
-  sortBy: string;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
@@ -25,15 +21,9 @@ const modalBoxStyles = {
 };
 
 export default function FilterAndSortingBox({
-  currentFilter,
-  setCurrentFilter,
-  updateSort,
-  sortBy,
   setPage,
 }: FilterAndSortingBoxProps) {
   const [open, setOpen] = useState(false);
-  const [tempCurrentFilter, setTempCurrentFilter] = useState(currentFilter); // Local state for currentFilter
-  const [tempSortBy, setTempSortBy] = useState(sortBy); // Local state for sortBy
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -45,15 +35,29 @@ export default function FilterAndSortingBox({
   };
 
   const handleResetFilter = () => {
-    setTempCurrentFilter(currentFilter);
-    setTempSortBy(sortBy);
+    updateFilterBy("");
+    updateSortBy("A-Z");
     setPage(1);
   };
 
+  function updateFilterBy(filter: string) {
+    const prevFilters = filter;
+    if (filter === "") {
+      sessionStorage.setItem("filterBy", JSON.stringify([]));
+      return;
+    }
+    const newFilters = [...prevFilters, filter];
+    sessionStorage.setItem("filterBy", JSON.stringify(newFilters));
+  }
+
+  function updateSortBy(sort: string) {
+    sessionStorage.setItem("sortBy", JSON.stringify(sort));
+  }
+
   const handleApplyFilter = () => {
     // Apply the temporary changes to the parent's state variables
-    setCurrentFilter(tempCurrentFilter);
-    updateSort(tempSortBy);
+    // updateFilterBy(tempCurrentFilter);
+    // updateSort(tempSortBy);
 
     handleClose(); // Close the modal
   };
@@ -69,12 +73,8 @@ export default function FilterAndSortingBox({
       >
         <Box sx={modalBoxStyles}>
           <div className="filter_sorting_inner">
-            <FilterBox
-              // currentFilter={tempCurrentFilter} // Use the local state here
-              // setCurrentFilter={setTempCurrentFilter} // Update the local state
-            />
-            <SortingBox
-            />
+            <FilterBox />
+            <SortingBox />
           </div>
           <hr />
           <div className="apply_reset_filter">

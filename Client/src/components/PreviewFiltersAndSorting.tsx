@@ -1,14 +1,19 @@
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { recoilFilterBy, recoilSortBy } from "../recoil/atoms";
 
-type PreviewFiltersAndSortingProps = {
-  currentFilter: string[];
-  sortBy: string;
-};
+// type PreviewFiltersAndSortingProps = {
+//   currentFilter: string[];
+//   sortBy: string;
+// };
 
-export default function PreviewFiltersAndSorting({
-  currentFilter,
-  sortBy,
-}: PreviewFiltersAndSortingProps) {
+export default function PreviewFiltersAndSorting() {
+//   {
+//   currentFilter,
+//   sortBy,
+// }: PreviewFiltersAndSortingProps
+  const [filterBy] = useRecoilState<string[]>(recoilFilterBy);
+  const [sortBy] = useRecoilState<string>(recoilSortBy);
   const [ascending_or_descending] = useState<string>(
     sortBy.split(",")[1] === "1" ? "Ascending" : "Descending",
   );
@@ -16,8 +21,8 @@ export default function PreviewFiltersAndSorting({
   return (
     <div className="filter_preview">
       <p>{"Filters:  "}</p>
-      {currentFilter.length > 0 ? (
-        currentFilter.map((filter) => (
+      {filterBy.length > 0 ? (
+        filterBy.map((filter) => (
           <p className="filter_single_preview" key={filter}>
             {filter},
           </p>

@@ -33,7 +33,8 @@ const filters = [
 // };
 
 export default function FilterBox() {
-  const [currentFilter] = useRecoilState(recoilFilterBy);
+  const [filterBy] = useRecoilState(recoilFilterBy);
+  const [currentFilters, setCurrentFilter] = React.useState<string[]>(filterBy);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -43,23 +44,9 @@ export default function FilterBox() {
     setAnchorEl(null);
   };
 
-  function updateFilterBy(filter: string) {
-    const prevFilters = filter;
-    if (filter === "") {
-      sessionStorage.setItem("filterBy", JSON.stringify([]));
-      return;
-    }
-    const newFilters = [...prevFilters, filter];
-    sessionStorage.setItem("filterBy", JSON.stringify(newFilters));
-  }
-
-  function getChecked(type: string) {
-    const filter = currentFilter;
-    if (filter.includes(type)) {
-      return true;
-    } else {
-      return false;
-    }
+  function updateFilterBy(filters: string[]) {
+    sessionStorage.setItem("filterBy", JSON.stringify(filters));
+    setCurrentFilter(filters);
   }
 
   return (
@@ -72,7 +59,7 @@ export default function FilterBox() {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Filters
+        Filters:
       </Button>
       <Menu
         id="fade-menu"
@@ -89,13 +76,15 @@ export default function FilterBox() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={getChecked(filter[0])}
+                  checked={currentFilters.includes(filter[0])}
                   style={{ color: filter[1] }}
                   onChange={() => {
-                    if (getChecked(filter[0])) {
-                     remove
+                    if (currentFilters.includes(filter[0])) {
+                      updateFilterBy(
+                        currentFilters.filter((f) => f !== filter[0]),
+                      );
                     } else {
-                      updateFilterBy(filter[0]);
+                      updateFilterBy([...currentFilters, filter[0]]);
                     }
                   }}
                 />
@@ -107,7 +96,7 @@ export default function FilterBox() {
         <MenuItem
           onClick={() => {
             handleClose;
-            updateFilterBy("");
+            updateFilterBy([]);
           }}
         >
           Reset

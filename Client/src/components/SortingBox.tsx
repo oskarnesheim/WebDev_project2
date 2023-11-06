@@ -8,13 +8,9 @@ import sortings from "../assets/Sortings";
 import { recoilSortBy } from "../recoil/atoms";
 import { useRecoilState } from "recoil";
 
-// type sortingBoxProps = {
-//   updateSort: React.Dispatch<React.SetStateAction<string>>;
-//   sortBy: string;
-// };
-
 export default function SortingBox() {
   const [sortBy] = useRecoilState(recoilSortBy);
+  const [currentSort, setCurrentSort] = React.useState<string>(sortBy);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -24,11 +20,10 @@ export default function SortingBox() {
     setAnchorEl(null);
   };
 
-  console.log(sortBy);
-
   function updateSortBy(sort: string) {
     console.log(sort + " is clicked");
     sessionStorage.setItem("sortBy", JSON.stringify(sort));
+    setCurrentSort(sort);
   }
 
   return (
@@ -59,10 +54,11 @@ export default function SortingBox() {
             value={sorting[1]}
             onClick={() => {
               handleClose;
-              updateSortBy(sorting[1]);
+              updateSortBy(sorting[0]);
             }}
             style={{
-              backgroundColor: sortBy === sorting[1] ? "lightblue" : "white",
+              backgroundColor:
+                currentSort === sorting[0] ? "lightblue" : "white",
             }}
           >
             {sorting[0]}
@@ -72,7 +68,7 @@ export default function SortingBox() {
         <MenuItem
           onClick={() => {
             handleClose;
-            updateSortBy("");
+            updateSortBy("A-Z");
           }}
         >
           Reset
