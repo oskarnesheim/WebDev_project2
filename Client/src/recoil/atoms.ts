@@ -34,20 +34,11 @@ export const recoilSortBy = atom({
 });
 
 function getSortBy() {
-  const sortBy: string = sessionStorage.getItem("sortBy")!;
+  const sortBy: string = JSON.parse(sessionStorage.getItem("sortBy")!);
+  console.log(sortBy);
   if (sortBy === null) {
-    sessionStorage.setItem("sortBy", "A-Z");
-    return "A-Z";
+    sessionStorage.setItem("sortBy", JSON.stringify("name,1"));
+    return;
   }
   return sortBy;
 }
-
-export const recoilSearch = atom({
-  key: "search", // unique ID (with respect to other atoms/selectors)
-  default: "", // default value (aka initial value)
-});
-
-// export const recoilPage = atom({
-//   key: "page", // unique ID (with respect to other atoms/selectors)
-//   default: 1, // default value (aka initial value)
-// });

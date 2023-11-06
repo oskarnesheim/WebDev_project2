@@ -24,7 +24,8 @@ export default function BasicPagination({
         variant="outlined"
         size="large"
         shape="rounded"
-        style={{ color: "white" }}
+        // style={{ color: "white" }}
+        sx={{ color: "primary.light" }}
       />
     </div>
   );

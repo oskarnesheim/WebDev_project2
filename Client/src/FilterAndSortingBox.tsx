@@ -2,6 +2,8 @@ import { Box, Button, Modal } from "@mui/material";
 import React, { useState } from "react";
 import FilterBox from "./components/FilterBox";
 import SortingBox from "./components/SortingBox";
+import { recoilFilterBy, recoilSortBy } from "./recoil/atoms";
+import { useRecoilState } from "recoil";
 
 type FilterAndSortingBoxProps = {
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -24,7 +26,11 @@ export default function FilterAndSortingBox({
   setPage,
 }: FilterAndSortingBoxProps) {
   const [open, setOpen] = useState(false);
-
+  const [currentFilter, setCurrentFilter] =
+    useRecoilState<string[]>(recoilFilterBy);
+  const [sortBy, setSortBy] = useRecoilState<string>(recoilSortBy);
+  const [tempFilters, setTempFilters] = useState<string[]>(currentFilter);
+  const [tempSortBy, setTempSortBy] = useState<string>(sortBy);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
@@ -35,30 +41,25 @@ export default function FilterAndSortingBox({
   };
 
   const handleResetFilter = () => {
-    updateFilterBy("");
-    updateSortBy("A-Z");
+    updateFilterBy([]);
+    updateSortBy("name,1");
+    handleClose();
     setPage(1);
   };
 
-  function updateFilterBy(filter: string) {
-    const prevFilters = filter;
-    if (filter === "") {
-      sessionStorage.setItem("filterBy", JSON.stringify([]));
-      return;
-    }
-    const newFilters = [...prevFilters, filter];
-    sessionStorage.setItem("filterBy", JSON.stringify(newFilters));
+  function updateFilterBy(filters: string[]) {
+    sessionStorage.setItem("filterBy", JSON.stringify(filters));
+    setCurrentFilter(tempFilters);
   }
 
   function updateSortBy(sort: string) {
     sessionStorage.setItem("sortBy", JSON.stringify(sort));
+    setSortBy(tempSortBy);
   }
 
   const handleApplyFilter = () => {
-    // Apply the temporary changes to the parent's state variables
-    // updateFilterBy(tempCurrentFilter);
-    // updateSort(tempSortBy);
-
+    updateFilterBy(tempFilters);
+    updateSortBy(tempSortBy);
     handleClose(); // Close the modal
   };
 
@@ -73,8 +74,14 @@ export default function FilterAndSortingBox({
       >
         <Box sx={modalBoxStyles}>
           <div className="filter_sorting_inner">
-            <FilterBox />
-            <SortingBox />
+            <FilterBox
+              currentFilters={tempFilters}
+              setCurrentFilter={setTempFilters}
+            />
+            <SortingBox
+              currentSorting={tempSortBy}
+              setCurrentSorting={setTempSortBy}
+            />
           </div>
           <hr />
           <div className="apply_reset_filter">

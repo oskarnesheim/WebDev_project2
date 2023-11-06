@@ -27,14 +27,7 @@ export default function Home() {
         <FilterAndSortingBox setPage={setPage} />
       </div>
       <PreviewFiltersAndSorting />
-      <PokemonView
-        filters={currentFilter}
-        // range={range}
-        sorting={[sortBy.split(",")]}
-        search={delayedSearch}
-        page={page}
-        setMaxPage={setMaxPage}
-      />
+      <PokemonView search={delayedSearch} page={page} setMaxPage={setMaxPage} />
       <BasicPagination maxPage={maxPage} page={page} setPage={setPage} />
     </div>
   );

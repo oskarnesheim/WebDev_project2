@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/material";
 import { Divider } from "@mui/material";
-import pokeBall from "../../public/Pokeball.png";
+import pokeBall from "../assets/Pokeball.png";
 
 export default function About() {
   const styles = {

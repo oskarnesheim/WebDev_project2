@@ -4,8 +4,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { FormControlLabel, Checkbox, Box } from "@mui/material";
-import { recoilFilterBy } from "../recoil/atoms";
-import { useRecoilState } from "recoil";
 
 const filters = [
   ["fire", "red"],
@@ -27,14 +25,15 @@ const filters = [
   ["fairy", "pink"],
 ];
 
-// type FadeMenuProps = {
-//   currentFilter: string[];
-//   setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
-// };
+type FilterBoxProps = {
+  currentFilters: string[];
+  setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
+};
 
-export default function FilterBox() {
-  const [filterBy] = useRecoilState(recoilFilterBy);
-  const [currentFilters, setCurrentFilter] = React.useState<string[]>(filterBy);
+export default function FilterBox({
+  currentFilters,
+  setCurrentFilter,
+}: FilterBoxProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -43,11 +42,6 @@ export default function FilterBox() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  function updateFilterBy(filters: string[]) {
-    sessionStorage.setItem("filterBy", JSON.stringify(filters));
-    setCurrentFilter(filters);
-  }
 
   return (
     <Box>
@@ -80,11 +74,11 @@ export default function FilterBox() {
                   style={{ color: filter[1] }}
                   onChange={() => {
                     if (currentFilters.includes(filter[0])) {
-                      updateFilterBy(
+                      setCurrentFilter(
                         currentFilters.filter((f) => f !== filter[0]),
                       );
                     } else {
-                      updateFilterBy([...currentFilters, filter[0]]);
+                      setCurrentFilter([...currentFilters, filter[0]]);
                     }
                   }}
                 />
@@ -96,7 +90,7 @@ export default function FilterBox() {
         <MenuItem
           onClick={() => {
             handleClose;
-            updateFilterBy([]);
+            setCurrentFilter([]);
           }}
         >
           Reset
