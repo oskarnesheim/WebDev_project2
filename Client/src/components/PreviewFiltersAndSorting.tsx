@@ -1,16 +1,26 @@
 import { useRecoilState } from "recoil";
-import { recoilFilterBy, recoilSortBy } from "../recoil/atoms";
+import {
+  recoilFilterBy,
+  recoilSortBy,
+  removeFromFilter,
+} from "../recoil/atoms";
 import sortings from "../assets/Sortings";
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 
 export default function PreviewFiltersAndSorting() {
-  const [filterBy] = useRecoilState<string[]>(recoilFilterBy);
+  const [filterBy, setFilterBy] = useRecoilState<string[]>(recoilFilterBy);
   const [sortBy] = useRecoilState<string>(recoilSortBy);
 
   const getFilters = () => {
     if (!filterBy || filterBy.length === 0) {
       return;
     }
+    function removeFilter(filter: string) {
+      removeFromFilter(filter);
+      setFilterBy(filterBy.filter((f) => f !== filter));
+    }
+
     return (
       <Box sx={{ display: "flex" }}>
         <Typography sx={{ marginRight: "1vw" }}>{"Filters: "}</Typography>
@@ -30,10 +40,16 @@ export default function PreviewFiltersAndSorting() {
                 borderRadius: "5px",
                 padding: "0.5vw",
                 marginRight: "1vw",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
               key={filter}
             >
-              {filter}
+              {filter}{" "}
+              <IconButton color="primary" onClick={() => removeFilter(filter)}>
+                <ClearIcon />
+              </IconButton>
             </Box>
           ))}
         </Box>

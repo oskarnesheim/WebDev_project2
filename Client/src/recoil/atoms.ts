@@ -19,6 +19,16 @@ export const recoilFilterBy = atom({
   default: getFilterBy() as string[],
 });
 
+export function removeFromFilter(filter: string) {
+  const filterBy: string[] = JSON.parse(sessionStorage.getItem("filterBy")!);
+  const index = filterBy.indexOf(filter);
+  if (index > -1) {
+    filterBy.splice(index, 1);
+  }
+  sessionStorage.setItem("filterBy", JSON.stringify(filterBy));
+  return filterBy;
+}
+
 function getFilterBy() {
   const filterBy: string[] = JSON.parse(sessionStorage.getItem("filterBy")!);
   if (filterBy === null) {
