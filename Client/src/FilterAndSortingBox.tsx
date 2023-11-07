@@ -26,7 +26,11 @@ export default function FilterAndSortingBox() {
   const [page, setPage] = useRecoilState<number>(recoilPage);
   const [tempFilters, setTempFilters] = useState<string[]>(currentFilter);
   const [tempSortBy, setTempSortBy] = useState<string>(sortBy);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setTempFilters(currentFilter);
+    setTempSortBy(sortBy);
+    setOpen(true);
+  };
 
   const handleClose = () => {
     setOpen(false);
