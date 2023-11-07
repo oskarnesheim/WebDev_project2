@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { IPokemon } from "../interfaces/pokemon";
 import { useEffect } from "react";
+import { useMediaQuery } from "@mui/material";
 import {
   Box,
   Table,
@@ -63,6 +64,10 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
     createData("Speed", pokemon.stats[5].base_stat, BLUE),
   ];
 
+  const screenLargerThan830px = useMediaQuery("(min-width: 830px)");
+
+  const screenSmallerThan550px = useMediaQuery("(max-width: 550px)");
+
   return (
     <>
       <Box
@@ -88,13 +93,13 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
           >
             <Typography
               variant="h5"
-              textAlign={"left"}
+              textAlign={screenSmallerThan550px ? "center" : "left"}
               padding={"0.5em 0em 0em 1em"}
             >
               Stats for {pokemon.name}
             </Typography>
           </Box>
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Box sx={{ minWidth: 250 }}>
               <Table sx={{ alignItems: "center" }}>
                 <TableHead>
@@ -106,7 +111,7 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
                       Stat
                     </TableCell>
                     <TableCell
-                      align="left"
+                      align={screenSmallerThan550px ? "right" : "left"}
                       sx={{ border: 0, color: "white", paddingTop: "1.5em" }}
                     >
                       Value
@@ -123,7 +128,7 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
                         {row.stat}
                       </TableCell>
                       <TableCell
-                        align="left"
+                        align={screenSmallerThan550px ? "right" : "left"}
                         sx={{ border: 0, color: "white" }}
                       >
                         {row.value}
@@ -135,23 +140,41 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
             </Box>
             <Box
               sx={{
-                minWidth: 550,
-                background: BLUEGRADIENTCIRCLE,
+                minWidth: screenLargerThan830px ? 450 : "50%",
+                background: screenLargerThan830px ? BLUEGRADIENTCIRCLE : null,
                 margin: 0,
-                display: "flex",
+                display: screenSmallerThan550px ? "none" : "flex", //Wont show picture on mobile
                 justifyContent: "center",
+                alignItems: "center",
               }}
             >
               <Box
                 sx={{
-                  height: 450,
-                  width: 450,
+                  height: screenLargerThan830px ? 450 : "50%",
                 }}
                 component={"img"}
                 alt={"Picture of " + pokemon.name}
                 src={pokemon.sprites.front_default}
               ></Box>
             </Box>
+          </Box>
+          <Box
+            // Shows picture on mobile
+            sx={{
+              display: screenSmallerThan550px ? "flex" : "none",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <Box
+              sx={{
+                height: 150,
+              }}
+              component={"img"}
+              alt={"Picture of " + pokemon.name}
+              src={pokemon.sprites.front_default}
+            ></Box>
           </Box>
         </TableContainer>
       </Box>
