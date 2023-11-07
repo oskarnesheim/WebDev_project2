@@ -84,5 +84,3 @@ export const recoilMaxPage = atom({
   key: "maxPage", // unique ID (with respect to other atoms/selectors)
   default: 15 as number, // default value (aka initial value)
 });
-
-
