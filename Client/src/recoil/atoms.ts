@@ -75,7 +75,14 @@ function getPage() {
   const page: number = JSON.parse(sessionStorage.getItem("page")!);
   if (!page) {
     sessionStorage.setItem("page", JSON.stringify(1));
-    return;
+    return 1;
   }
   return page;
 }
+
+export const recoilMaxPage = atom({
+  key: "maxPage", // unique ID (with respect to other atoms/selectors)
+  default: 15 as number, // default value (aka initial value)
+});
+
+

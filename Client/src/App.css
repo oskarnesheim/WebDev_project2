@@ -51,6 +51,13 @@
   height: calc(100vh - 80px);
 }
 
+@media screen and (max-width: 700px) {
+  .content_container {
+    top: 0px;
+  }
+}
+
+
 .pokemons_container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -90,11 +97,17 @@
 }
 .search_container {
   width: 80vw;
-  margin-top: 5vh;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+}
+
+@media screen and (max-width: 700px){
+  .search_container {
+    width: 100%;
+    flex-direction: column;
+  }
 }
 
 /* .search-bar {
@@ -153,4 +166,12 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
+}
+
+
+/*! Hamburgermenu */
+
+.hamburger_menu_container{
+  display: flex;
+  flex-direction: row;
 }

@@ -140,9 +140,6 @@ export default function PokemonCard({ _id }: PokemonCardProps) {
           {data.pokemon.weight} kg &nbsp; {data.pokemon.base_experience}XP
         </Typography>
       </CardContent>
-      {/* <CardActions>
-        <Button size="small">Learn more</Button>
-      </CardActions> */}
     </Card>
   );
 }
