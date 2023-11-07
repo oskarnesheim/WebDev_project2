@@ -119,7 +119,8 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
                       style={{
                         fontSize: "24px",
                         cursor: "pointer",
-                        color: index < rating ? theme.palette.primary.main : "#ccc",
+                        color:
+                          index < rating ? theme.palette.primary.main : "#ccc",
                         marginTop: "10px",
                       }}
                     />
@@ -128,7 +129,6 @@ export default function PokemonRatingReview({ pokemonId }: PokemonReviewProps) {
               ))}
             </div>
           </fieldset>
-
         </div>
         <div>
           <TextareaAutosize

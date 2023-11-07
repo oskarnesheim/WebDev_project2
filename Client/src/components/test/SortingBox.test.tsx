@@ -5,9 +5,11 @@ import SortingBox from "../SortingBox";
 describe("SortingBox", () => {
   test("Checks that all the sorting options are rendered", async () => {
     const sortBy = "";
-    const updateSort = () => { };
+    const updateSort = () => {};
 
-    const { getByRole, getByText } = render(<SortingBox sortBy={sortBy} updateSort={updateSort} />)
+    const { getByRole, getByText } = render(
+      <SortingBox sortBy={sortBy} updateSort={updateSort} />,
+    );
 
     const sortings = [
       "A-Z",
@@ -35,7 +37,9 @@ describe("SortingBox", () => {
       }
     };
 
-    const { getByRole, getAllByText } = render(<SortingBox sortBy={sortBy} updateSort={updateSort} />);
+    const { getByRole, getAllByText } = render(
+      <SortingBox sortBy={sortBy} updateSort={updateSort} />,
+    );
 
     fireEvent.click(getByRole("button", { name: "Sorting" }));
     const option = getAllByText("Base experience increasing");

@@ -6,7 +6,7 @@ import Searchbar from "../Searchbar";
 describe("Searchbar", () => {
   test("Searchbar renders correctly", () => {
     const { queryByPlaceholderText } = render(
-      <Searchbar updateSearch={() => { }} />,
+      <Searchbar updateSearch={() => {}} />,
     );
     const inputElement = queryByPlaceholderText("E.g. charizard");
     expect(inputElement).not.toBe(null);
