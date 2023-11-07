@@ -7,6 +7,7 @@ import {
   recoilSearch,
 } from "../recoil/atoms.ts";
 import { useRecoilState } from "recoil";
+import { Box } from "@mui/material";
 
 type PokemonViewProps = {
   setMaxPage: React.Dispatch<React.SetStateAction<number>>;
@@ -69,6 +70,11 @@ export default function PokemonView({ setMaxPage }: PokemonViewProps) {
   }
 
   setMaxPage(Math.ceil(data.numberOfPokemonsThatMatchesSearch / 20));
+
+  // If no pokemons are found
+  if (data.pokemonsSortedAndFiltered.length === 0) {
+    return <Box sx={{ marginTop: "5vh" }}>No pokemons found</Box>;
+  }
 
   return (
     <div className="pokemons_container">
