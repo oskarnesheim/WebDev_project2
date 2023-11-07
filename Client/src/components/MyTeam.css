@@ -1,7 +1,16 @@
 .my-team {
-  display: flex; /* Make the parent a flex container */
-  justify-content: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
   flex-direction: row;
+  align-items: center;
+  margin-bottom: 5vh;
+}
+
+@media screen and (max-width: 1200px) {
+  .my-team {
+    flex-direction: column;
+  }
 }
 
 .team-grid {
@@ -11,43 +20,45 @@
     rgba(17, 48, 88, 1) 55%,
     rgba(14, 152, 248, 1) 100%
   );
-  min-width: 680px;
-  min-height: 520px;
   display: grid;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
   place-items: center;
   border: 10px solid black;
   border-radius: 4%;
-  column-gap: 20px;
-  row-gap: 20px;
   grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2vh 2vw;
+  min-height: 520px;
+  min-width: 600px;
+  padding: 2vh 2vw 2vh 2vw;
 }
 
-.team-grid-child {
-  width: fit-content;
-  height: fit-content;
-}
-
-.team-grid-child:hover {
-  transform: scale(1.05);
-  transition: 0.5s;
+@media screen and (max-width: 700px) {
+  .team-grid {
+    grid-template-columns: repeat(1, 1fr);
+    min-width: 50vw;
+  }
 }
 
 .selected-Info {
-  margin-left: 50px;
-  margin-top: 60px;
-  width: 20vw;
+  height: fit-content;
   background-color: black;
   border-radius: 4%;
-  height: 520px;
-  display: flex; /* Make the parent a flex container */
+  display: flex;
   justify-content: space-between;
   flex-direction: column;
+  align-items: center;
+  gap: 2vh;
   padding: 20px;
+  margin-bottom: 5vh;
+  width: 300px;
+  height: 380px;
 }
 
 .box {
   display: inline-block;
-  width: 100px; /* Adjust the width as needed */
+  width: 100px;
   box-sizing: border-box;
 }
 

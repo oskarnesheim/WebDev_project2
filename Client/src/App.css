@@ -46,7 +46,7 @@
 }
 
 .content_container {
-  top: 80px;
+  top: 10vh;
   position: relative;
   height: calc(100vh - 80px);
 }

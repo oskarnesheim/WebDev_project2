@@ -2,9 +2,9 @@ import { useState } from "react";
 import "./MyTeam.css";
 import TeamMember from "./TeamMember";
 import DisplayPokemon from "./DisplayPokemon";
-// import { getTeamFromLocalStorage } from "./TeamFunctions";
 import { useRecoilState } from "recoil";
 import { recoilMyTeam } from "../recoil/atoms";
+import { Box } from "@mui/material";
 
 export default function MyTeam() {
   const [team] = useRecoilState<string[]>(recoilMyTeam);
@@ -20,11 +20,21 @@ export default function MyTeam() {
     return false;
   }
 
+  function setSelectedPokemonFunc(id: string, index: number) {
+    setSelectedPokemon([id, index]);
+    if (window.innerWidth < 1200) {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }
+
   function teamlist() {
-    if (team.length === 0) return <p>Team is empty 🙁</p>;
+    if (team.length === 0) return <p>Team is currently empty </p>;
     return team.map((_id: string, count: number) => (
       <div
-        onClick={() => setSelectedPokemon([_id, count])}
+        onClick={() => setSelectedPokemonFunc(_id, count)}
         className="team-grid-child"
         key={count}
       >
@@ -35,11 +45,13 @@ export default function MyTeam() {
 
   return (
     <div className="my-team">
-      <div>
+      <Box
+        sx={{ display: "flex", flexDirection: "column", textAlign: "center" }}
+      >
         <h1>My Pokémon Team: </h1>
         <div className="team-grid">{teamlist()}</div>
         <h2>{team.length}/6</h2>
-      </div>
+      </Box>
       <DisplayPokemon
         selectedPokemon={selectedPokemon}
         setSelectedPokemon={setSelectedPokemon}

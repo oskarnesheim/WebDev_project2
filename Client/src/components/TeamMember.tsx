@@ -68,8 +68,7 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
     <Card
       variant="outlined"
       sx={{
-        width: 300,
-        boxSizing: "border-box",
+        width: "300px",
         backgroundColor: selected ? "primary.main" : "primary.dark",
         opacity: selected ? 0.9 : 0.6,
         transition: selected
