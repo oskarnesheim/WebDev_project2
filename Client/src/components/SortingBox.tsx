@@ -21,8 +21,6 @@ export default function SortingBox({ updateSort, sortBy }: sortingBoxProps) {
     setAnchorEl(null);
   };
 
-  console.log(sortBy);
-
   return (
     <Box>
       <h2>Sortings</h2>

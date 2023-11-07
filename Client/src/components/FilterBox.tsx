@@ -88,6 +88,7 @@ export default function FilterBox({
           </MenuItem>
         ))}
         <MenuItem
+          data-testid="reset-button"
           onClick={() => {
             handleClose;
             setCurrentFilter([]);

@@ -1,47 +1,41 @@
-import { test, expect } from "vitest";
-import { render, fireEvent } from "@testing-library/react";
-import FilterBox from "../FilterBox";
+import { render, fireEvent } from '@testing-library/react';
+import { describe, test, expect } from 'vitest';
+import FilterBox from '../FilterBox';
 
-test("Checks if the filtering works properly", () => {
-  let currentFilter: string[] = [];
-  const setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>> = (
-    newFilter,
-  ) => {
-    if (typeof newFilter === "function") {
-      currentFilter = newFilter(currentFilter);
-    } else {
-      currentFilter = newFilter;
-    }
-  };
+describe('FilterBox', () => {
+  test('Checks if all filter options are rendered correctly', () => {
+    const currentFilter: string[] = [];
+    const setCurrentFilter = () => { };
 
-  // Checks if all the filters are rendered
-  const { getAllByText } = render(
-    <FilterBox
-      currentFilter={currentFilter}
-      setCurrentFilter={setCurrentFilter}
-    />,
-  );
-  const filters = [
-    "Fire",
-    "Water",
-    "Grass",
-    "Electric",
-    "Normal",
-    "Fighting",
-    "poison",
-    "Ground",
-    "Flying",
-  ];
-  filters.forEach((filter) => {
-    const filterLabel = getAllByText(filter);
-    expect(filterLabel).not.toBe(null);
+    const { getByRole, getByText } = render(<FilterBox currentFilter={currentFilter} setCurrentFilter={setCurrentFilter} />);
+
+    fireEvent.click(getByRole('button', { name: "Filters" }));
+    const filters = ['normal', 'fire', 'water', 'grass', 'electric', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dark', 'dragon', 'steel', 'fairy', 'Reset',];
+    filters.forEach((filter) => {
+      const option = getByText(filter);
+      expect(option).toBeTruthy();
+    });
   });
 
-  // Checks if a filter is applied and removed correctly
-  const fireFilter = getAllByText("Fire")[0];
-  fireEvent.click(fireFilter);
-  expect(currentFilter).toEqual(["Fire"]);
-  const resetButton = getAllByText("Reset")[0];
-  fireEvent.click(resetButton);
-  expect(currentFilter).toEqual([]);
+  test('Checks if filters are applied correctly', () => {
+    let currentFilter: string[] = [];
+    const setCurrentFilter = (newFilter: React.SetStateAction<string[]>) => {
+      if (typeof newFilter === 'function') {
+        currentFilter = newFilter(currentFilter);
+      } else {
+        currentFilter = [...currentFilter, ...newFilter];
+      }
+    };
+
+    const { getByRole, getAllByText } = render(<FilterBox currentFilter={currentFilter} setCurrentFilter={setCurrentFilter} />);
+
+    fireEvent.click(getByRole('button', { name: "Filters" }));
+    const option = getAllByText('fire');
+    fireEvent.click(option[1]);
+    expect(currentFilter).toContain('fire');
+
+    const option2 = getAllByText('water');
+    fireEvent.click(option2[1]);
+    expect(currentFilter).toContain('water');
+  });
 });

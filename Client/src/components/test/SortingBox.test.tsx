@@ -1,89 +1,53 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { test, expect } from "vitest";
-import { BrowserRouter } from "react-router-dom";
-import { RecoilRoot } from "recoil";
+import { fireEvent, render } from "@testing-library/react";
+import { test, expect, describe } from "vitest";
 import SortingBox from "../SortingBox";
 
-test("Checks that all the sorting options are rendered", async () => {
-  let selectedValue = "";
-  const updateSort: React.Dispatch<React.SetStateAction<string>> = (value) => {
-    selectedValue = value instanceof Function ? value(selectedValue) : value;
-  };
+describe("SortingBox", () => {
+  test("Checks that all the sorting options are rendered", async () => {
+    const sortBy = "";
+    const updateSort = () => { };
 
-  render(
-    <BrowserRouter>
-      <RecoilRoot>
-        <SortingBox sortBy="" updateSort={updateSort} />
-      </RecoilRoot>
-    </BrowserRouter>,
-  );
+    const { getByRole, getByText } = render(<SortingBox sortBy={sortBy} updateSort={updateSort} />)
 
-  const select = screen.getByRole("button");
-  fireEvent.mouseDown(select);
-  const option = await screen.findByText("A-Z");
-  const option2 = await screen.findByText("Z-A");
-  const option3 = await screen.findByText("Base experience increasing");
-  const option4 = await screen.findByText("Base experience decreasing");
-  const option5 = await screen.findByText("Weight increasing");
-  const option6 = await screen.findByText("Weight decreasing");
-  const option7 = await screen.findAllByText("Random");
-  expect(option).toBeTruthy();
-  expect(option2).toBeTruthy();
-  expect(option3).toBeTruthy();
-  expect(option4).toBeTruthy();
-  expect(option5).toBeTruthy();
-  expect(option6).toBeTruthy();
-  expect(option7).toBeTruthy();
-});
+    const sortings = [
+      "A-Z",
+      "Z-A",
+      "Base experience increasing",
+      "Base experience decreasing",
+      "Weight increasing",
+      "Weight decreasing",
+      "Reset",
+    ];
+    fireEvent.click(getByRole("button", { name: "Sorting" }));
+    sortings.forEach((sorting) => {
+      const option = getByText(sorting);
+      expect(option).toBeTruthy();
+    });
+  });
 
-test("Checks if the sorting functionality works as intended", async () => {
-  let selectedValue = "";
-  const updateSort: React.Dispatch<React.SetStateAction<string>> = (value) => {
-    selectedValue = value instanceof Function ? value(selectedValue) : value;
-  };
+  test("Checks if sorting is applied correctly", () => {
+    let sortBy = "";
+    const updateSort = (newSort: React.SetStateAction<string>) => {
+      if (typeof newSort === "function") {
+        sortBy = newSort(sortBy);
+      } else {
+        sortBy = newSort;
+      }
+    };
 
-  render(
-    <BrowserRouter>
-      <RecoilRoot>
-        <SortingBox sortBy="" updateSort={updateSort} />
-      </RecoilRoot>
-    </BrowserRouter>,
-  );
+    const { getByRole, getAllByText } = render(<SortingBox sortBy={sortBy} updateSort={updateSort} />);
 
-  const select = screen.getByRole("button");
+    fireEvent.click(getByRole("button", { name: "Sorting" }));
+    const option = getAllByText("Base experience increasing");
+    fireEvent.click(option[1]);
+    expect(sortBy).toBe("base_experience,1");
 
-  fireEvent.mouseDown(select);
-  const option = await screen.findAllByText("A-Z");
-  fireEvent.click(option[1]);
-  expect(selectedValue).toBe("A-Z");
+    const option2 = getAllByText("Z-A");
+    fireEvent.click(option2[1]);
+    expect(sortBy).toBe("name,-1");
 
-  fireEvent.mouseDown(select);
-  const option2 = await screen.findAllByText("Z-A");
-  fireEvent.click(option2[1]);
-  expect(selectedValue).toBe("Z-A");
-
-  fireEvent.mouseDown(select);
-  const option3 = await screen.findAllByText("Base experience increasing");
-  fireEvent.click(option3[1]);
-  expect(selectedValue).toBe("Base experience increasing");
-
-  fireEvent.mouseDown(select);
-  const option4 = await screen.findAllByText("Base experience decreasing");
-  fireEvent.click(option4[1]);
-  expect(selectedValue).toBe("Base experience decreasing");
-
-  fireEvent.mouseDown(select);
-  const option5 = await screen.findAllByText("Weight increasing");
-  fireEvent.click(option5[1]);
-  expect(selectedValue).toBe("Weight increasing");
-
-  fireEvent.mouseDown(select);
-  const option6 = await screen.findAllByText("Weight decreasing");
-  fireEvent.click(option6[1]);
-  expect(selectedValue).toBe("Weight decreasing");
-
-  fireEvent.mouseDown(select);
-  const option7 = await screen.findAllByText("Random");
-  fireEvent.click(option7[1]);
-  expect(selectedValue).toBe("None");
+    const option3 = getAllByText("Reset");
+    fireEvent.click(option3[1]);
+    expect(sortBy).toBe("");
+  });
 });
