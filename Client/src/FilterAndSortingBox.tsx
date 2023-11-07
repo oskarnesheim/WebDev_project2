@@ -39,10 +39,23 @@ export default function FilterAndSortingBox() {
   };
 
   const handleResetFilter = () => {
-    updateFilterBy([]);
-    updateSortBy("name,1");
-    handleClose();
+    // Reset the local state and storage immediately
+    setCurrentFilter([]);
+    setSortBy("name,1");
+
+    // Reset the session storage (Should be done inside function, but that doesn't work for some reason )
+    sessionStorage.setItem("filterBy", JSON.stringify("name,1"));
+    sessionStorage.setItem("sortBy", JSON.stringify([]));
+
+    // Update the local state and local storage for the temporary filters and sorting
+    setTempFilters([]);
+    setTempSortBy("name,1");
+
+    // Update the page immediately
     updatePage(1);
+
+    // Close the modal
+    handleClose();
   };
 
   function updateFilterBy(filters: string[]) {
