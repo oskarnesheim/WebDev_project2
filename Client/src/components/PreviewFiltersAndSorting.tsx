@@ -22,12 +22,20 @@ export default function PreviewFiltersAndSorting() {
     }
 
     return (
-      <Box sx={{ display: "flex" }}>
-        <Typography sx={{ marginRight: "1vw" }}>{"Filters: "}</Typography>
+      <Box
+        sx={{
+          textAlign: "center",
+        }}
+      >
+        <Typography>Filters: </Typography>
         <Box
           sx={{
+            marginTop: "2vh",
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateColumns: {
+              md: "repeat(3, 1fr)",
+              xs: "repeat(2, 1fr)",
+            },
             gridGap: "0.5vh 0.5vw",
           }}
         >
@@ -62,14 +70,18 @@ export default function PreviewFiltersAndSorting() {
       return;
     }
     return (
-      <>
-        <Typography sx={{ marginLeft: "5vw", marginRight: "1vw" }}>
-          {"Sorting:"}
-        </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Typography sx={{ marginRight: "1vw" }}>Sorting:</Typography>
         <Typography sx={{ textDecoration: "underline" }}>
           {sortings.find((sort) => sort[1] === sortBy)![0]}
         </Typography>
-      </>
+      </Box>
     );
   }
 
