@@ -16,7 +16,6 @@ interface Review {
 }
 
 export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
-  console.log(_id);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const { loading, error, data } = useQuery(getReviews(), {
