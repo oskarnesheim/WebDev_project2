@@ -1,6 +1,7 @@
 import { useRecoilState } from "recoil";
 import { recoilFilterBy, recoilSortBy } from "../recoil/atoms";
 import sortings from "../assets/Sortings";
+import { Box, Typography } from "@mui/material";
 
 export default function PreviewFiltersAndSorting() {
   const [filterBy] = useRecoilState<string[]>(recoilFilterBy);
@@ -11,14 +12,32 @@ export default function PreviewFiltersAndSorting() {
       return;
     }
     return (
-      <>
-        <p style={{ marginLeft: "20px" }}>{`Sorting: `}</p>
-        {filterBy.map((filter) => (
-          <p className="filter_single_preview" key={filter}>
-            {filter},
-          </p>
-        ))}
-      </>
+      <Box sx={{ display: "flex" }}>
+        <Typography sx={{ marginRight: "1vw" }}>{"Filters: "}</Typography>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gridGap: "0.5vh 0.5vw",
+          }}
+        >
+          {filterBy.map((filter) => (
+            <Box
+              sx={{
+                borderStyle: "solid",
+                borderColor: "primary.light",
+                borderWidth: "1px",
+                borderRadius: "5px",
+                padding: "0.5vw",
+                marginRight: "1vw",
+              }}
+              key={filter}
+            >
+              {filter}
+            </Box>
+          ))}
+        </Box>
+      </Box>
     );
   };
 
@@ -28,10 +47,12 @@ export default function PreviewFiltersAndSorting() {
     }
     return (
       <>
-        <p style={{ marginLeft: "20px" }}>{`Sorting: `}</p>
-        <p style={{ textDecoration: "underline" }}>
+        <Typography sx={{ marginLeft: "5vw", marginRight: "1vw" }}>
+          {"Sorting:"}
+        </Typography>
+        <Typography sx={{ textDecoration: "underline" }}>
           {sortings.find((sort) => sort[1] === sortBy)![0]}
-        </p>
+        </Typography>
       </>
     );
   }

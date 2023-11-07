@@ -25,12 +25,9 @@ export default function BasicPagination({ maxPage }: BasicPaginationProps) {
           setPage(value)
         }
         count={maxPage}
-        color="primary"
         variant="outlined"
         size="large"
         shape="rounded"
-        // style={{ color: "white" }}
-        sx={{ color: "primary.light" }}
       />
     </div>
   );

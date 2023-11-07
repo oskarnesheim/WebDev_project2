@@ -17,6 +17,43 @@ const theme = createTheme({
   typography: {
     fontFamily: ["pokemonfont;"].join(","),
   },
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          color: "white",
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "#0c72bb",
+            },
+            "&:hover fieldset": {
+              borderColor: "#FFCB05",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#6cb9f0",
+            },
+          },
+        },
+      },
+    },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: {
+          color: "white",
+          backgroundColor: "#1a1a1a",
+          "&.Mui-selected": {
+            backgroundColor: "#0c72bb",
+          },
+          "&.Mui-selected:hover": {
+            backgroundColor: "#FFCB05",
+          },
+          "&:hover": {
+            backgroundColor: "#6cb9f0",
+          },
+        },
+      },
+    },
+  },
 });
 
 export default theme;

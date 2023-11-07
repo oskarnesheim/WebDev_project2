@@ -68,7 +68,13 @@ export default function FilterAndSortingBox() {
 
   return (
     <div className="filter_container">
-      <Button onClick={handleOpen}>Filters/Sorting</Button>
+      <Button
+        sx={{ width: "fit-content", padding: "20px" }}
+        variant="outlined"
+        onClick={handleOpen}
+      >
+        Filters/Sorting
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
