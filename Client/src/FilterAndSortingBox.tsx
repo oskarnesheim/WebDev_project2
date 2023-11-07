@@ -44,8 +44,8 @@ export default function FilterAndSortingBox() {
     setSortBy("name,1");
 
     // Reset the session storage (Should be done inside function, but that doesn't work for some reason )
-    sessionStorage.setItem("filterBy", JSON.stringify("name,1"));
-    sessionStorage.setItem("sortBy", JSON.stringify([]));
+    sessionStorage.setItem("filterBy", JSON.stringify([]));
+    sessionStorage.setItem("sortBy", JSON.stringify("name,1"));
 
     // Update the local state and local storage for the temporary filters and sorting
     setTempFilters([]);
