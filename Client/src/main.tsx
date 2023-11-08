@@ -3,10 +3,10 @@ import { RecoilRoot } from "recoil";
 import App from "./App.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Pokemon from "./components/Pokemon.tsx";
-import Home from "./components/Home.tsx";
-import MyTeam from "./components/MyTeam.tsx";
-import About from "./components/About.tsx";
+import Pokemon from "./components/pokemon/Pokemon.tsx";
+import Home from "./components/home/Home.tsx";
+import MyTeam from "./components/team/MyTeam.tsx";
+import About from "./components/about/About.tsx";
 import "./main.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 

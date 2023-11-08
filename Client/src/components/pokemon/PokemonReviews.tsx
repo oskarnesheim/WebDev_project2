@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Box, Button, CircularProgress, TextareaAutosize } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
-import theme from "../Theme";
+import theme from "../../Theme";
 import { useQuery, useMutation } from "@apollo/client";
-import { getReviews, ADD_REVIEW } from "../assets/GraphQLQueries";
-import { Review } from "../interfaces/pokemon";
+import { getReviews, ADD_REVIEW } from "../../functions/GraphQLQueries";
+import { Review } from "../../interfaces/pokemon";
 
 type PokemonReviewProps = {
   _id: number;

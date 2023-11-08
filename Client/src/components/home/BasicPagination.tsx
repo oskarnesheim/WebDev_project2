@@ -1,5 +1,5 @@
 import Pagination from "@mui/material/Pagination";
-import { recoilMaxPage, recoilPage } from "../recoil/atoms";
+import { recoilMaxPage, recoilPage } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 import { useState } from "react";

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { PokemonPageI } from "../interfaces/pokemon";
+import { PokemonPageI } from "../../interfaces/pokemon";
 import { useEffect } from "react";
 import { useMediaQuery } from "@mui/material";
 import {
@@ -12,7 +12,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import theme from "../Theme";
+import theme from "../../Theme";
 
 type PokemonStatsProps = {
   pokemon: PokemonPageI;

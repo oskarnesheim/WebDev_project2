@@ -3,7 +3,7 @@ import "./MyTeam.css";
 import TeamMember from "./TeamMember";
 import DisplayPokemon from "./DisplayPokemon";
 import { useRecoilState } from "recoil";
-import { recoilMyTeam } from "../recoil/atoms";
+import { recoilMyTeam } from "../../recoil/atoms";
 import { Box } from "@mui/material";
 
 /**

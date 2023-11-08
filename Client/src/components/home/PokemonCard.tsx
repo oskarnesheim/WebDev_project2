@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, Typography } from "@mui/material";
-import { PokemonCardI } from "../interfaces/pokemon";
+import { PokemonCardI } from "../../interfaces/pokemon";
 
 type PokemonCardProps = {
   PokemonData: PokemonCardI;

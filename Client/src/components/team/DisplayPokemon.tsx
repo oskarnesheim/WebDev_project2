@@ -1,13 +1,13 @@
 import { useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { findSinglePokemon } from "../assets/GraphQLQueries";
-import { recoilMyTeam } from "../recoil/atoms";
+import { findSinglePokemon } from "../../functions/GraphQLQueries";
+import { recoilMyTeam } from "../../recoil/atoms";
 import { Box, Button, CircularProgress, Tooltip } from "@mui/material";
 import ArrowButtons from "./ArrowButtons";
-import PokemonCard from "./PokemonCard";
+import PokemonCard from "../home/PokemonCard";
 import { removeFromTeam } from "./TeamFunctions";
-import { PokemonCardI } from "../interfaces/pokemon";
+import { PokemonCardI } from "../../interfaces/pokemon";
 
 type Props = {
   selectedPokemon: [string, number];

@@ -3,8 +3,8 @@ import {
   recoilFilterBy,
   recoilSortBy,
   removeFromFilter,
-} from "../recoil/atoms";
-import sortings from "../assets/Sortings";
+} from "../../recoil/atoms";
+import sortings from "../../assets/Sortings";
 import { Box, IconButton, Typography } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
