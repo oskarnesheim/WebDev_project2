@@ -5,7 +5,7 @@ import { atom } from "recoil";
  */
 export const recoilMyTeam = atom({
   key: "myTeam",
-  default: getTeam() as string[], 
+  default: getTeam() as string[],
 });
 
 function getTeam() {
@@ -27,7 +27,7 @@ export const recoilFilterBy = atom({
 
 /**
  * Global function that removes a filter from the filterBy array in session storage
- * @param filter 
+ * @param filter
  * @returns filterBy array after removing the given filter
  */
 export function removeFromFilter(filter: string) {
@@ -53,8 +53,8 @@ function getFilterBy() {
  * Global state: SortBy loaded from session storage
  */
 export const recoilSortBy = atom({
-  key: "sortBy", 
-  default: getSortBy() as string, 
+  key: "sortBy",
+  default: getSortBy() as string,
 });
 
 function getSortBy() {
@@ -71,7 +71,7 @@ function getSortBy() {
  */
 export const recoilSearch = atom({
   key: "search",
-  default: getSearch() as string, 
+  default: getSearch() as string,
 });
 
 function getSearch() {
@@ -88,7 +88,7 @@ function getSearch() {
  */
 export const recoilPage = atom({
   key: "page",
-  default: getPage() as number, 
+  default: getPage() as number,
 });
 
 function getPage() {
