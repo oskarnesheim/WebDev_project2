@@ -11,7 +11,7 @@ export default function Navbar() {
   };
   const navigate = useNavigate();
   return (
-    <div>
+    <div >
       {windowSize < 700 ? (
         <HamburgerMenu />
       ) : (

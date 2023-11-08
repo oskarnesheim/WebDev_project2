@@ -7,6 +7,7 @@ import { useState } from "react";
 export default function BasicPagination() {
   const [page, setRecPage] = useRecoilState<number>(recoilPage);
   const [maxPage] = useRecoilState<number>(recoilMaxPage);
+  const [width, setWidth] = useState<number>(window.innerWidth);
 
   function setPage(page: number) {
     console.log("page: ", page);
@@ -23,6 +24,17 @@ export default function BasicPagination() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  function getSize() {
+    switch (true) {
+      case width < 465 && width > 370:
+        return "medium";
+      case width < 370:
+        return "small";
+      default:
+        return "large";
+    }
+  }
+
   return (
     <div className="pagination">
       <Pagination
@@ -32,7 +44,7 @@ export default function BasicPagination() {
         }
         count={maxPage}
         variant="outlined"
-        size={width > 465 ? "large" : "small"}
+        size={getSize()}
         shape="rounded"
       />
     </div>

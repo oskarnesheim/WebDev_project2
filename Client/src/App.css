@@ -25,8 +25,6 @@
   align-items: center;
 }
 
-
-
 .pokedex-link:hover {
   color: red;
   cursor: pointer;
@@ -52,7 +50,6 @@
   position: relative;
   height: calc(100vh - 80px);
 }
-
 
 .pokemons_container {
   display: grid;
@@ -100,7 +97,7 @@
   gap: 4vw;
 }
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 700px) {
   .search_container {
     width: 100%;
     flex-direction: column;
@@ -123,7 +120,7 @@
   }
 }
 
-#filter_header{
+#filter_header {
   margin-left: 20px;
 }
 
@@ -185,7 +182,7 @@
   }
 }
 
-.sorting_preview{
+.sorting_preview {
   margin-right: 20px;
   width: 30%;
   display: flex;
@@ -199,10 +196,10 @@
   }
 }
 
-
 /*! Hamburgermenu */
 
-.hamburger_menu_container{
+.hamburger_menu_container {
+  z-index: 1;
   display: flex;
   flex-direction: row;
   background-color: #000000;
@@ -215,5 +212,3 @@
   right: 0;
   height: 80px;
 }
-
-
