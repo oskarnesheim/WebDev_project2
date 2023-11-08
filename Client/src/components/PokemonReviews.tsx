@@ -2,24 +2,20 @@ import React, { useState } from "react";
 import { Box, Button, CircularProgress, TextareaAutosize } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import theme from "../Theme";
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
+import { getReviews, ADD_REVIEW } from "../assets/GraphQLQueries";
+import { Review } from "../interfaces/pokemon";
 
 type PokemonReviewProps = {
   _id: number;
 };
-
-interface Review {
-  rating: number;
-  description: string;
-  userID: string;
-  pokemonID: number;
-}
 
 export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const { loading, error, data } = useQuery(getReviews(), {
     variables: { pokemonID: _id },
+    fetchPolicy: "network-only",
   });
 
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -34,41 +30,9 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     setReview(event.target.value);
   };
 
-  function getReviews() {
-    const q = gql`
-      query query($pokemonID: Int!) {
-        reviewsForPokemon(pokemonID: $pokemonID) {
-          userID
-          pokemonID
-          rating
-          description
-        }
-      }
-    `;
-    return q;
-  }
-
-  const ADD_REVIEW = gql`
-    mutation AddReview(
-      $rating: Int!
-      $description: String!
-      $userID: String!
-      $pokemonID: Int!
-    ) {
-      createReview(
-        rating: $rating
-        description: $description
-        userID: $userID
-        pokemonID: $pokemonID
-      ) {
-        userID
-        pokemonID
-        rating
-        description
-      }
-    }
-  `;
-  const [addReview] = useMutation(ADD_REVIEW);
+  const [addReview] = useMutation(ADD_REVIEW, {
+    refetchQueries: [{ query: getReviews(), variables: { pokemonID: _id } }],
+  });
 
   function getUserID() {
     // Get userID from localstorage
@@ -117,12 +81,11 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
         pokemonID: _id,
       },
     });
-    // Reload the page
-    window.location.reload();
 
     // Reset the rating and review input
     setRating(0);
     setReview("");
+    setErrorMessage("");
   };
 
   if (loading) {

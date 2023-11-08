@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { Box } from "@mui/material";
 import sortings from "../assets/Sortings";
+import ArrowDropDownCircleOutlinedIcon from "@mui/icons-material/ArrowDropDownCircleOutlined";
 
 type SortingBoxType = {
   currentSorting: string;
@@ -36,7 +37,10 @@ export default function SortingBox({
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Sorting
+        Sorting{" "}
+        <ArrowDropDownCircleOutlinedIcon
+          sx={{ marginTop: "-5px", marginLeft: "5px" }}
+        />
       </Button>
       <Menu
         id="fade-menu"

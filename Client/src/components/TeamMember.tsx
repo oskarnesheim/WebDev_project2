@@ -25,6 +25,12 @@ function findSinglePokemon() {
   return q;
 }
 
+/**
+ * Function that returns a card with the Pokemon's name and image, used in MyTeam.tsx
+ * @param _id - Pokemon ID
+ * @param selected - boolean to check if the Pokemon is selected
+ * @returns Mui Card with Pokemon's name and image
+ */
 export default function TeamMember({ _id, selected }: PokemonCardProps) {
   const variables = {
     _id: _id,
@@ -56,20 +62,14 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
   }
 
   if (error) {
-    console.log(variables);
     return <div>Error: {error.message}</div>;
-  }
-
-  if (!data) {
-    return <div>No data found</div>;
   }
 
   return (
     <Card
       variant="outlined"
       sx={{
-        width: 300,
-        boxSizing: "border-box",
+        width: "300px",
         backgroundColor: selected ? "primary.main" : "primary.dark",
         opacity: selected ? 0.9 : 0.6,
         transition: selected
