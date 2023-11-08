@@ -65,34 +65,10 @@ export function getPokemons() {
   return q;
 }
 
-
 export function getReviews() {
-    const q = gql`
-      query query($pokemonID: Int!) {
-        reviewsForPokemon(pokemonID: $pokemonID) {
-          userID
-          pokemonID
-          rating
-          description
-        }
-      }
-    `;
-    return q;
-  }
-
-  export const ADD_REVIEW = gql`
-    mutation AddReview(
-      $rating: Int!
-      $description: String!
-      $userID: String!
-      $pokemonID: Int!
-    ) {
-      createReview(
-        rating: $rating
-        description: $description
-        userID: $userID
-        pokemonID: $pokemonID
-      ) {
+  const q = gql`
+    query query($pokemonID: Int!) {
+      reviewsForPokemon(pokemonID: $pokemonID) {
         userID
         pokemonID
         rating
@@ -100,3 +76,26 @@ export function getReviews() {
       }
     }
   `;
+  return q;
+}
+
+export const ADD_REVIEW = gql`
+  mutation AddReview(
+    $rating: Int!
+    $description: String!
+    $userID: String!
+    $pokemonID: Int!
+  ) {
+    createReview(
+      rating: $rating
+      description: $description
+      userID: $userID
+      pokemonID: $pokemonID
+    ) {
+      userID
+      pokemonID
+      rating
+      description
+    }
+  }
+`;
