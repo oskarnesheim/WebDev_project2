@@ -15,6 +15,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
   const [review, setReview] = useState("");
   const { loading, error, data } = useQuery(getReviews(), {
     variables: { pokemonID: _id },
+    fetchPolicy: "network-only",
   });
 
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -29,7 +30,9 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     setReview(event.target.value);
   };
 
-  const [addReview] = useMutation(ADD_REVIEW);
+  const [addReview] = useMutation(ADD_REVIEW, {
+    refetchQueries: [{ query: getReviews(), variables: { pokemonID: _id } }],
+  });
 
   function getUserID() {
     // Get userID from localstorage
@@ -78,8 +81,6 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
         pokemonID: _id,
       },
     });
-    // Reload the page
-    window.location.reload();
 
     // Reset the rating and review input
     setRating(0);
