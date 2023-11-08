@@ -1,8 +1,11 @@
 import { atom } from "recoil";
 
+/**
+ * Global state: MyTeam loaded from local storage
+ */
 export const recoilMyTeam = atom({
-  key: "myTeam", // unique ID (with respect to other atoms/selectors)
-  default: getTeam() as string[], // default value (aka initial value)
+  key: "myTeam",
+  default: getTeam() as string[],
 });
 
 function getTeam() {
@@ -14,11 +17,19 @@ function getTeam() {
   return team;
 }
 
+/**
+ * Global state: Filters loaded from session storage
+ */
 export const recoilFilterBy = atom({
   key: "filterBy",
   default: getFilterBy() as string[],
 });
 
+/**
+ * Global function that removes a filter from the filterBy array in session storage
+ * @param filter
+ * @returns filterBy array after removing the given filter
+ */
 export function removeFromFilter(filter: string) {
   const filterBy: string[] = JSON.parse(sessionStorage.getItem("filterBy")!);
   const index = filterBy.indexOf(filter);
@@ -38,9 +49,12 @@ function getFilterBy() {
   return filterBy;
 }
 
+/**
+ * Global state: SortBy loaded from session storage
+ */
 export const recoilSortBy = atom({
-  key: "sortBy", // unique ID (with respect to other atoms/selectors)
-  default: getSortBy() as string, // default value (aka initial value)
+  key: "sortBy",
+  default: getSortBy() as string,
 });
 
 function getSortBy() {
@@ -52,9 +66,12 @@ function getSortBy() {
   return sortBy;
 }
 
+/**
+ * Global state: Search loaded from session storage
+ */
 export const recoilSearch = atom({
-  key: "search", // unique ID (with respect to other atoms/selectors)
-  default: getSearch() as string, // default value (aka initial value)
+  key: "search",
+  default: getSearch() as string,
 });
 
 function getSearch() {
@@ -66,9 +83,12 @@ function getSearch() {
   return search;
 }
 
+/**
+ * Global state: Page loaded from session storage
+ */
 export const recoilPage = atom({
-  key: "page", // unique ID (with respect to other atoms/selectors)
-  default: getPage() as number, // default value (aka initial value)
+  key: "page",
+  default: getPage() as number,
 });
 
 function getPage() {

@@ -4,6 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { FormControlLabel, Checkbox, Box } from "@mui/material";
+import ArrowDropDownCircleOutlinedIcon from "@mui/icons-material/ArrowDropDownCircleOutlined";
 
 const filters = [
   ["fire", "red"],
@@ -53,7 +54,10 @@ export default function FilterBox({
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Filters:
+        Filters{" "}
+        <ArrowDropDownCircleOutlinedIcon
+          sx={{ marginTop: "-5px", marginLeft: "5px" }}
+        />
       </Button>
       <Menu
         id="fade-menu"

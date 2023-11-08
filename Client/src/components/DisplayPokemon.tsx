@@ -14,6 +14,11 @@ type Props = {
   setSelectedPokemon: React.Dispatch<React.SetStateAction<[string, number]>>;
 };
 
+/**
+ * Function that returns a display of the selected Pokemon, including PokemonCard that redirects to the Pokemon's page, ArrowButtons to navigate between team members, and a button to remove the Pokemon from the team
+ * @param selectedPokemon - [Pokemon ID, index of the Pokemon in the team]
+ * @returns div with the selected Pokemon's info
+ */
 export default function DisplayPokemon({
   selectedPokemon,
   setSelectedPokemon,
@@ -38,11 +43,19 @@ export default function DisplayPokemon({
     history("/" + selectedPokemon[0]);
   };
 
+  /**
+   * Function that calls removeFromTeam() to remove a Pokemon from the team, and sets the restets selectedPokemon to [0,0]
+   * @param id - Pokemon ID
+   */
   function deleteTeamMember(id: string) {
     removeFromTeam(team, id, setTeam);
     setSelectedPokemon(["0", 0]);
   }
 
+  /**
+   * Function that returns a display of the selected Pokemon, including PokemonCard that redirects to the Pokemon's page, ArrowButtons to navigate between team members, and a button to remove the Pokemon from the team
+   * @returns div with the selected Pokemon's info
+   */
   function selectedInfo() {
     const pokeName = selectedPokemon[0];
     if (pokeName === "0") {
