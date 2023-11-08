@@ -109,7 +109,15 @@ The database we used for this project is MongoDB. We host the database on NTNU's
 
 ### Component testing
 
-TODO: write about component testing
+We have created multiple tests for checking our application's behaviour. Our project so for includes testing of various functionalities such as navigation, searching, filtering and sorting. (Testing of review form is under maintenance for now).
+
+#### Running the tests
+
+Run the tests by running the following command in the client folder:
+
+```
+npm test
+```
 
 ### End-to-end testing
 
