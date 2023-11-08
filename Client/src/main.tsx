@@ -40,7 +40,7 @@ export const router = createBrowserRouter(
 );
 
 const client = new ApolloClient({
-  uri: "http://ntnu@it2810-08.idi.ntnu.no/project2/server/",
+  uri: "http://it2810-08.idi.ntnu.no:6969/graphql/",
   // uri: "http://localhost:6969/graphql/",
   cache: new InMemoryCache(),
 });
