@@ -36,7 +36,7 @@ export const router = createBrowserRouter(
       ],
     },
   ],
-  //   { basename: "/project1" }
+  { basename: "/project2" },
 );
 
 const client = new ApolloClient({
