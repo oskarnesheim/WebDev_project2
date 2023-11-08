@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react";
 import { test, expect, describe } from "vitest";
-import SortingBox from "../SortingBox";
+import SortingBox from "../sorting_and_filtering/SortingBox";
 
 describe("SortingBox", () => {
   test("Checks that all the sorting options are rendered", async () => {

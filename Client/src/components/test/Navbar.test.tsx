@@ -1,7 +1,7 @@
 import { describe, test, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import Navbar from "../navbar";
+import Navbar from "../navbar/navbar";
 
 describe("Navbar", () => {
   test("Navbar component renders", () => {
