@@ -33,6 +33,8 @@ Run the following command all 3 places:
 npm install
 ```
 
+Then go to `localhost:6969` in your browser.
+
 ### Run the app in one terminal
 
 After installing the dependencies, you have the choice to run the app with on terminal, or run the client and server in seperate terminals.
@@ -72,12 +74,12 @@ o
 The tech stack used in this project is the following:
 
 - React
-- Next.js
-- MongoDB
-- Express
-- Node.js
 - TypeScript
-- Tailwind CSS
+- MaterialUI
+- Next.js
+- Node.js
+- Express
+- MongoDB
 
 ## Frontend
 
@@ -87,16 +89,26 @@ TODO: Add frontend description
 
 ### Server
 
-The server is hosted on ntnu's page. TODO: write more about the server
+The server is hosted on NTNU's page. The server is built with Node.js and Express. The server is responsible for fetching data from the database and sending it to the client. The server also handles the requests from the client, such as adding a pokemon to the team, and saving it to the database.
 
 ### Database
 
-The database we used for this project is MongoDB. TODO: write more about the database
+The database we used for this project is MongoDB. We host the database on NTNU's server, which is only accissible from NTNU's network. The database contains 300 pokemons from the first and second generation. The data is fetched from [PokeAPI](https://pokeapi.co/). In addition to pokemons, the database also saves the reviews the different users publish about the pokemons.
 
-## Test
+## Testing
 
-TODO: write about testing
+### Component testing
+
+TODO: write about component testing
+
+### End-to-end testing
+
+TODO: write about end-to-end testing
 
 ## Responsive Design
 
 TODO: write about responsive design
+
+## Sustainability
+
+TODO: write about sustainability
