@@ -9,7 +9,11 @@ export default function About() {
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
-      width: "60vw",
+      width: {
+        xs: "90vw",
+        sm: "80vw",
+        md: "60vw",
+      },
       margin: "auto",
       marginTop: "5vh",
       color: "primary.main",
@@ -18,12 +22,18 @@ export default function About() {
     paragraph: {
       marginTop: "5vh",
     },
+    paragraphAlingment: {
+      textAlign: {
+        xs: "left",
+        sm: "center",
+      },
+    },
   };
 
   return (
     <Box sx={styles.about}>
       <Typography variant="h2">About</Typography>
-      <Typography variant="body1">
+      <Typography sx={styles.paragraphAlingment}>
         Discover our Pokedex, a handy tool for Pokemon enthusiasts featuring
         information on 300 Pokemons from the first and second generations. Dive
         into a world of statistics, where you can delve into details like
@@ -36,7 +46,7 @@ export default function About() {
 
       <Typography variant="h4" sx={styles.paragraph}>
         Search
-        <Typography variant="body1">
+        <Typography sx={styles.paragraphAlingment}>
           You can search for a pokemon by its name or you can filter pokemons
           based on different types (water, fire, grass etc.). Additionally you
           can sort pokemons by their name, height, weight, and base experience,
@@ -49,7 +59,7 @@ export default function About() {
       <Typography variant="h4" sx={styles.paragraph}>
         My Team
         <Divider />
-        <Typography>
+        <Typography sx={styles.paragraphAlingment}>
           You have the ability to put together your own team of Pokémon. You can
           add up to 6 Pokémon to your team before it's full. You also have the
           ability to remove Pokémon from your team if you suddenly change your
