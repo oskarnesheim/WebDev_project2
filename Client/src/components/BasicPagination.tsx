@@ -1,18 +1,15 @@
 import Pagination from "@mui/material/Pagination";
-import { recoilPage } from "../recoil/atoms";
+import { recoilMaxPage, recoilPage } from "../recoil/atoms";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 import { useState } from "react";
 
-type BasicPaginationProps = {
-  maxPage: number;
-};
-
-export default function BasicPagination({ maxPage }: BasicPaginationProps) {
+export default function BasicPagination() {
   const [page, setRecPage] = useRecoilState<number>(recoilPage);
-  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [maxPage] = useRecoilState<number>(recoilMaxPage);
 
   function setPage(page: number) {
+    console.log("page: ", page);
     sessionStorage.setItem("page", JSON.stringify(page));
     setRecPage(page);
   }
