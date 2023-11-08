@@ -8,7 +8,7 @@ import {
   recoilMaxPage,
 } from "../recoil/atoms.ts";
 import { useRecoilState } from "recoil";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { PokemonCardI } from "../interfaces/pokemon.ts";
 import { getPokemons } from "../assets/GraphQLQueries.ts";
 
@@ -35,7 +35,7 @@ export default function PokemonView() {
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <CircularProgress />;
   }
 
   if (error) {
