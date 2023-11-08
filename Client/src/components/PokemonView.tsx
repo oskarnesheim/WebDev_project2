@@ -1,5 +1,5 @@
 import PokemonCard from "./PokemonCard.tsx";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import {
   recoilFilterBy,
   recoilPage,
@@ -10,50 +10,7 @@ import {
 import { useRecoilState } from "recoil";
 import { Box } from "@mui/material";
 import { PokemonCardI } from "../interfaces/pokemon.ts";
-
-function getPokemons() {
-  const q = gql`
-    query MyQuery(
-      $sorting: [[String]]
-      $filters: [String]
-      $range: [Int]
-      $search: String
-    ) {
-      pokemonsSortedAndFiltered(
-        sorting: $sorting
-        filters: $filters
-        search: $search
-        range: $range
-      ) {
-        _id
-        name
-        height
-        base_experience
-        weight
-        stats {
-          stat {
-            name
-          }
-          base_stat
-        }
-        types {
-          type {
-            name
-          }
-        }
-        sprites {
-          front_default
-        }
-      }
-      numberOfPokemonsThatMatchesSearch(
-        sorting: $sorting
-        filters: $filters
-        search: $search
-      )
-    }
-  `;
-  return q;
-}
+import { getPokemons } from "../assets/GraphQLQueries.ts";
 
 export default function PokemonView() {
   const [sorting] = useRecoilState<string>(recoilSortBy);

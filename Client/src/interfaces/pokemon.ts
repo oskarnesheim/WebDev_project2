@@ -1,15 +1,8 @@
 export interface PokemonCardI {
   _id: number;
   name: string;
-  height: number;
   base_experience: number;
   weight: number;
-  stats: {
-    stat: {
-      name: string;
-    };
-    base_stat: number;
-  }[];
   types: {
     type: {
       name: string;
@@ -20,7 +13,28 @@ export interface PokemonCardI {
   };
 }
 
+export interface PokemonPageI {
+  _id: number;
+  name: string;
+  height: number;
+  weight: number;
+  stats: {
+    stat: {
+      name: string;
+    };
+    base_stat: number;
+  }[];
+  sprites: {
+    front_default: string;
+  };
+}
 
+export interface Review {
+  rating: number;
+  description: string;
+  userID: string;
+  pokemonID: number;
+}
 
 export interface IPokemon {
   id: number;
@@ -162,4 +176,3 @@ export interface IPokemon {
     }[];
   }[];
 }
-

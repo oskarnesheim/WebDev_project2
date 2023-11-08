@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { IPokemon } from "../interfaces/pokemon";
+import { PokemonPageI } from "../interfaces/pokemon";
 import { useEffect } from "react";
 import { useMediaQuery } from "@mui/material";
 import {
@@ -15,7 +15,7 @@ import {
 import theme from "../Theme";
 
 type PokemonStatsProps = {
-  pokemon: IPokemon;
+  pokemon: PokemonPageI;
 };
 
 // Design from https://www.serebii.net/xy/alakastat.jpg
