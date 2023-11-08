@@ -6,11 +6,11 @@ import {
   recoilSortBy,
   recoilSearch,
   recoilMaxPage,
-} from "../recoil/atoms.ts";
+} from "../../recoil/atoms.ts";
 import { useRecoilState } from "recoil";
 import { Box, CircularProgress } from "@mui/material";
-import { PokemonCardI } from "../interfaces/pokemon.ts";
-import { getPokemons } from "../assets/GraphQLQueries.ts";
+import { PokemonCardI } from "../../interfaces/pokemon.ts";
+import { getPokemons } from "../../functions/GraphQLQueries.ts";
 
 export default function PokemonView() {
   const [sorting] = useRecoilState<string>(recoilSortBy);

@@ -1,8 +1,8 @@
 import { Box, Button, Modal } from "@mui/material";
 import { useState } from "react";
-import FilterBox from "./components/FilterBox";
-import SortingBox from "./components/SortingBox";
-import { recoilFilterBy, recoilSortBy, recoilPage } from "./recoil/atoms";
+import FilterBox from "./FilterBox";
+import SortingBox from "./SortingBox";
+import { recoilFilterBy, recoilSortBy, recoilPage } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
 
 const modalBoxStyles = {

@@ -5,11 +5,11 @@ import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { Box, Button, Divider, Tooltip, Typography } from "@mui/material";
 import PokemonRatingReview from "./PokemonReviews";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { checkTeam, addToTeam, removeFromTeam } from "./TeamFunctions";
-import { recoilMyTeam } from "../recoil/atoms";
+import { checkTeam, addToTeam, removeFromTeam } from "../team/TeamFunctions";
+import { recoilMyTeam } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
-import { PokemonPageI } from "../interfaces/pokemon";
-import { findSinglePokemon } from "../assets/GraphQLQueries";
+import { PokemonPageI } from "../../interfaces/pokemon";
+import { findSinglePokemon } from "../../functions/GraphQLQueries";
 
 export default function Pokemon() {
   const { _id } = useParams();

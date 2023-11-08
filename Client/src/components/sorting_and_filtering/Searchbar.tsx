@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback, ChangeEvent } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { recoilSearch, recoilPage } from "../recoil/atoms";
+import { recoilSearch, recoilPage } from "../../recoil/atoms";
 import { IconButton, TextField } from "@mui/material";
 import { InputAdornment } from "@mui/material";
-import "../App.css";
+import "../../App.css";
 import React from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 
