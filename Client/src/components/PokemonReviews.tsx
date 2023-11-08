@@ -122,9 +122,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
             marginBottom: "10px",
           }}
         >
-          <label style={{ marginRight: "10px", marginTop: "10px" }}>
-            Rating
-          </label>
+          <label style={{ marginRight: "10px", marginTop: "10px" }}>Rate</label>
           {Array.from({ length: 5 }, (_, index) => (
             <StarIcon
               key={index}
