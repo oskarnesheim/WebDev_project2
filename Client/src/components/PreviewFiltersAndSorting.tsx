@@ -23,12 +23,14 @@ export default function PreviewFiltersAndSorting() {
 
     return (
       <Box sx={{ display: "flex" }}>
-        <Typography sx={{ marginRight: "1vw" }}>{"Filters: "}</Typography>
+        {/* <Typography sx={{ marginRight: "1vw"}}>
+          {"Filters: "}
+        </Typography> */}
+        <h5 id="filter_header">Filters: </h5>
         <Box
           sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gridGap: "0.5vh 0.5vw",
+            display: "flex",
+            flexWrap: "wrap",
           }}
         >
           {filterBy.map((filter) => (
@@ -63,9 +65,7 @@ export default function PreviewFiltersAndSorting() {
     }
     return (
       <>
-        <Typography sx={{ marginLeft: "5vw", marginRight: "1vw" }}>
-          {"Sorting:"}
-        </Typography>
+        <Typography sx={{ marginRight: "1vw" }}>{"Sorting:"}</Typography>
         <Typography sx={{ textDecoration: "underline" }}>
           {sortings.find((sort) => sort[1] === sortBy)![0]}
         </Typography>
@@ -75,8 +75,8 @@ export default function PreviewFiltersAndSorting() {
 
   return (
     <div className="filter_preview">
-      {getFilters()}
       {getSortings()}
+      {getFilters()}
     </div>
   );
 }
