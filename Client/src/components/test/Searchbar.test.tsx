@@ -2,7 +2,7 @@ import { describe, test, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { RecoilRoot } from "recoil";
 import userEvent from "@testing-library/user-event";
-import Searchbar from "../Searchbar";
+import Searchbar from "../sorting_and_filtering/Searchbar";
 
 describe("Searchbar", () => {
   test("Searchbar works as intended", () => {

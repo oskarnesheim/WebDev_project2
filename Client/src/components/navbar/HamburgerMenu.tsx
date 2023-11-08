@@ -4,6 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { useNavigate } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
 
 export default function FadeMenu() {
   const location = window.location.pathname;
@@ -36,7 +37,7 @@ export default function FadeMenu() {
           marginRight: "20px",
         }}
       >
-        <img src="../../public/hamburgermenu_white.png" alt="Menu" />
+        <MenuIcon />
       </Button>
       <Menu
         id="fade-menu"

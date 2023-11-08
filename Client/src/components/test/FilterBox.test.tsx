@@ -1,6 +1,6 @@
 import { render, fireEvent } from "@testing-library/react";
 import { describe, test, expect } from "vitest";
-import FilterBox from "../FilterBox";
+import FilterBox from "../sorting_and_filtering/FilterBox";
 
 describe("FilterBox", () => {
   test("Checks if all filter options are rendered correctly", () => {

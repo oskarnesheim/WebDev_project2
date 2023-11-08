@@ -1,6 +1,6 @@
 import { test, describe, expect } from "vitest";
 import { render, fireEvent } from "@testing-library/react";
-import PokemonRatingReview from "../PokemonReviews";
+import PokemonRatingReview from "../pokemon/PokemonReviews";
 
 describe("PokemonRatingReview", () => {
   test.skip("Renders the review form", () => {
