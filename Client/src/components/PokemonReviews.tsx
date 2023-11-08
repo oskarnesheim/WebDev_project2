@@ -101,11 +101,11 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
       return;
     }
     if (rating === 0) {
-      setErrorMessage("rating-error");
+      setErrorMessage("Please select a rating.");
       return;
     }
     if (review.trim() === "") {
-      setErrorMessage("review-error");
+      setErrorMessage("Please write a review.");
       return;
     }
 
@@ -159,34 +159,21 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
             marginBottom: "10px",
           }}
         >
-          <fieldset>
-            <legend>Rate</legend>
-            <div style={{ display: "flex" }}>
-              {Array.from({ length: 5 }, (_, index) => (
-                <div key={index}>
-                  <input
-                    type="radio"
-                    id={`star-${index + 1}`}
-                    name="rating"
-                    checked={index + 1 === rating}
-                    onChange={() => handleRatingClick(index + 1)}
-                    style={{ display: "none" }} // Hide the radio buttons
-                  />
-                  <label htmlFor={`star-${index + 1}`}>
-                    <StarIcon
-                      style={{
-                        fontSize: "24px",
-                        cursor: "pointer",
-                        color:
-                          index < rating ? theme.palette.primary.main : "#ccc",
-                        marginTop: "10px",
-                      }}
-                    />
-                  </label>
-                </div>
-              ))}
-            </div>
-          </fieldset>
+          <label style={{ marginRight: "10px", marginTop: "10px" }}>
+            Rating
+          </label>
+          {Array.from({ length: 5 }, (_, index) => (
+            <StarIcon
+              key={index}
+              onClick={() => handleRatingClick(index + 1)}
+              style={{
+                fontSize: "24px",
+                cursor: "pointer",
+                color: index < rating ? theme.palette.primary.main : "#ccc",
+                marginTop: "10px",
+              }}
+            />
+          ))}
         </div>
         <div>
           <TextareaAutosize
@@ -225,16 +212,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
           {alreadyReviewed(getUserID()) ? "Already reviewed" : "Add review"}
         </Button>
       </form>
-      {errorMessage === "rating-error" && (
-        <p data-testid="rating-error" style={{ color: "red" }}>
-          Please select a rating.
-        </p>
-      )}
-      {errorMessage === "review-error" && (
-        <p data-testid="review-error" style={{ color: "red" }}>
-          Please write a review.
-        </p>
-      )}
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       <div>
         <h3 style={{ fontSize: "20px", marginTop: "20px" }}>Reviews</h3>
         {data.reviewsForPokemon.length == 0 ? (
