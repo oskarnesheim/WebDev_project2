@@ -1,24 +1,61 @@
 import { useRecoilState } from "recoil";
-import { recoilFilterBy, recoilSortBy } from "../recoil/atoms";
+import {
+  recoilFilterBy,
+  recoilSortBy,
+  removeFromFilter,
+} from "../recoil/atoms";
 import sortings from "../assets/Sortings";
+import { Box, IconButton, Typography } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 
 export default function PreviewFiltersAndSorting() {
-  const [filterBy] = useRecoilState<string[]>(recoilFilterBy);
+  const [filterBy, setFilterBy] = useRecoilState<string[]>(recoilFilterBy);
   const [sortBy] = useRecoilState<string>(recoilSortBy);
 
   const getFilters = () => {
     if (!filterBy || filterBy.length === 0) {
       return;
     }
+    function removeFilter(filter: string) {
+      removeFromFilter(filter);
+      setFilterBy(filterBy.filter((f) => f !== filter));
+    }
+
     return (
-      <>
-        <p style={{ marginLeft: "20px" }}>{`Sorting: `}</p>
-        {filterBy.map((filter) => (
-          <p className="filter_single_preview" key={filter}>
-            {filter},
-          </p>
-        ))}
-      </>
+      <Box sx={{ display: "flex", flexWrap: "wrap" }} border={"ActiveBorder"}>
+        {/* <Typography sx={{ marginRight: "1vw"}}>
+          {"Filters: "}
+        </Typography> */}
+        <h5 id="filter_header">Filters: </h5>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+          }}
+        >
+          {filterBy.map((filter) => (
+            <Box
+              sx={{
+                borderStyle: "solid",
+                borderColor: "primary.light",
+                borderWidth: "1px",
+                borderRadius: "5px",
+                padding: "0.5vw",
+                marginRight: "1vw",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+              key={filter}
+            >
+              {filter}{" "}
+              <IconButton color="primary" onClick={() => removeFilter(filter)}>
+                <ClearIcon />
+              </IconButton>
+            </Box>
+          ))}
+        </Box>
+      </Box>
     );
   };
 
@@ -27,19 +64,19 @@ export default function PreviewFiltersAndSorting() {
       return;
     }
     return (
-      <>
-        <p style={{ marginLeft: "20px" }}>{`Sorting: `}</p>
-        <p style={{ textDecoration: "underline" }}>
+      <div className="sorting_preview">
+        <Typography>{"Sorting:"}</Typography>
+        <Typography sx={{ textDecoration: "underline" }}>
           {sortings.find((sort) => sort[1] === sortBy)![0]}
-        </p>
-      </>
+        </Typography>
+      </div>
     );
   }
 
   return (
     <div className="filter_preview">
-      {getFilters()}
       {getSortings()}
+      {getFilters()}
     </div>
   );
 }

@@ -5,12 +5,14 @@ import {
   recoilPage,
   recoilSortBy,
   recoilSearch,
+  recoilMaxPage,
 } from "../recoil/atoms.ts";
 import { useRecoilState } from "recoil";
+import { Box } from "@mui/material";
 
-type PokemonViewProps = {
-  setMaxPage: React.Dispatch<React.SetStateAction<number>>;
-};
+// type PokemonViewProps = {
+//   setMaxPage: React.Dispatch<React.SetStateAction<number>>;
+// };
 
 function getPokemons() {
   const q = gql`
@@ -38,12 +40,12 @@ function getPokemons() {
   return q;
 }
 
-export default function PokemonView({ setMaxPage }: PokemonViewProps) {
+export default function PokemonView() {
   const [sorting] = useRecoilState<string>(recoilSortBy);
   const [filters] = useRecoilState<string[]>(recoilFilterBy);
   const [page] = useRecoilState<number>(recoilPage);
   const [search] = useRecoilState<string>(recoilSearch);
-
+  const [, setMaxPage] = useRecoilState<number>(recoilMaxPage);
   const variables = {
     sorting: getSorting(),
     filters: filters,
@@ -68,7 +70,14 @@ export default function PokemonView({ setMaxPage }: PokemonViewProps) {
     return <div>Error! {error.message}</div>;
   }
 
+  //? Denne gjør så vi får en feilmelding i console.
+  //? Dette skjer siden den ikke skjer med en gang komponenten blir rendret.
   setMaxPage(Math.ceil(data.numberOfPokemonsThatMatchesSearch / 20));
+
+  // If no pokemons are found
+  if (data.pokemonsSortedAndFiltered.length === 0) {
+    return <Box sx={{ marginTop: "5vh" }}>No pokemons found</Box>;
+  }
 
   return (
     <div className="pokemons_container">

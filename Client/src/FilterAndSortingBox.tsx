@@ -26,7 +26,11 @@ export default function FilterAndSortingBox() {
   const [page, setPage] = useRecoilState<number>(recoilPage);
   const [tempFilters, setTempFilters] = useState<string[]>(currentFilter);
   const [tempSortBy, setTempSortBy] = useState<string>(sortBy);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setTempFilters(currentFilter);
+    setTempSortBy(sortBy);
+    setOpen(true);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -35,10 +39,23 @@ export default function FilterAndSortingBox() {
   };
 
   const handleResetFilter = () => {
-    updateFilterBy([]);
-    updateSortBy("name,1");
-    handleClose();
+    // Reset the local state and storage immediately
+    setCurrentFilter([]);
+    setSortBy("name,1");
+
+    // Reset the session storage (Should be done inside function, but that doesn't work for some reason )
+    sessionStorage.setItem("filterBy", JSON.stringify([]));
+    sessionStorage.setItem("sortBy", JSON.stringify("name,1"));
+
+    // Update the local state and local storage for the temporary filters and sorting
+    setTempFilters([]);
+    setTempSortBy("name,1");
+
+    // Update the page immediately
     updatePage(1);
+
+    // Close the modal
+    handleClose();
   };
 
   function updateFilterBy(filters: string[]) {
@@ -68,7 +85,13 @@ export default function FilterAndSortingBox() {
 
   return (
     <div className="filter_container">
-      <Button onClick={handleOpen}>Filters/Sorting</Button>
+      <Button
+        sx={{ height: "100px", padding: "20px", width: "100%" }}
+        variant="outlined"
+        onClick={handleOpen}
+      >
+        Filters/Sorting
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}

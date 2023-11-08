@@ -16,15 +16,8 @@ interface Review {
 }
 
 export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
-  console.log(_id);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
-  // const mutateVariables = {
-  //   rating: number,
-  //   description: string,
-  //   userID: string,
-  //   pokemonID: number,
-  // };
   const { loading, error, data } = useQuery(getReviews(), {
     variables: { pokemonID: _id },
   });
@@ -210,9 +203,13 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
             "&:hover": {
               backgroundColor: theme.palette.primary.light,
             },
+            "&:disabled": {
+              backgroundColor: theme.palette.primary.dark, // Change the background color for disabled state
+              color: "#000", // Change the text color for disabled state
+            },
           }}
         >
-          Submit Review
+          {alreadyReviewed(getUserID()) ? "Already reviewed" : "Add review"}
         </Button>
       </form>
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}

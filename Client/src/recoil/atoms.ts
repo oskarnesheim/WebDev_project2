@@ -19,6 +19,16 @@ export const recoilFilterBy = atom({
   default: getFilterBy() as string[],
 });
 
+export function removeFromFilter(filter: string) {
+  const filterBy: string[] = JSON.parse(sessionStorage.getItem("filterBy")!);
+  const index = filterBy.indexOf(filter);
+  if (index > -1) {
+    filterBy.splice(index, 1);
+  }
+  sessionStorage.setItem("filterBy", JSON.stringify(filterBy));
+  return filterBy;
+}
+
 function getFilterBy() {
   const filterBy: string[] = JSON.parse(sessionStorage.getItem("filterBy")!);
   if (filterBy === null) {
@@ -65,7 +75,12 @@ function getPage() {
   const page: number = JSON.parse(sessionStorage.getItem("page")!);
   if (!page) {
     sessionStorage.setItem("page", JSON.stringify(1));
-    return;
+    return 1;
   }
   return page;
 }
+
+export const recoilMaxPage = atom({
+  key: "maxPage", // unique ID (with respect to other atoms/selectors)
+  default: 15 as number, // default value (aka initial value)
+});
