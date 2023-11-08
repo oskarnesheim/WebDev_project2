@@ -1,11 +1,13 @@
-import React from "react";
-import { Button, Tooltip } from "@mui/material";
+import { useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { findSinglePokemon } from "../assets/GraphQLQueries";
+import { recoilMyTeam } from "../recoil/atoms";
+import { Box, Button, CircularProgress, Tooltip } from "@mui/material";
 import ArrowButtons from "./ArrowButtons";
 import PokemonCard from "./PokemonCard";
 import { removeFromTeam } from "./TeamFunctions";
-import { useRecoilState } from "recoil";
-import { recoilMyTeam } from "../recoil/atoms";
+import { PokemonCardI } from "../interfaces/pokemon";
 
 type Props = {
   selectedPokemon: [string, number];
@@ -21,9 +23,22 @@ export default function DisplayPokemon({
   selectedPokemon,
   setSelectedPokemon,
 }: Props) {
-  const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
   const history = useNavigate();
+  const variables = {
+    _id: parseInt(selectedPokemon[0]),
+  };
+  const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
+  const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
 
+  if (loading) {
+    return <CircularProgress />;
+  }
+
+  if (error) {
+    return <Box>Error: {error.message}</Box>;
+  }
+
+  const PokemonData: PokemonCardI = data.pokemon;
   const redirectToPokemon = () => {
     history("/" + selectedPokemon[0]);
   };
@@ -49,10 +64,7 @@ export default function DisplayPokemon({
     return (
       <div className="selected-Info">
         <div className="container" onClick={redirectToPokemon}>
-          <PokemonCard
-            key={selectedPokemon[0]}
-            _id={Number(selectedPokemon[0])}
-          />
+          <PokemonCard key={selectedPokemon[0]} PokemonData={PokemonData} />
         </div>
         <ArrowButtons
           team={team}

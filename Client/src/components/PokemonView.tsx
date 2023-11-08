@@ -1,5 +1,5 @@
 import PokemonCard from "./PokemonCard.tsx";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import {
   recoilFilterBy,
   recoilPage,
@@ -9,36 +9,8 @@ import {
 } from "../recoil/atoms.ts";
 import { useRecoilState } from "recoil";
 import { Box } from "@mui/material";
-
-// type PokemonViewProps = {
-//   setMaxPage: React.Dispatch<React.SetStateAction<number>>;
-// };
-
-function getPokemons() {
-  const q = gql`
-    query MyQuery(
-      $sorting: [[String]]
-      $filters: [String]
-      $range: [Int]
-      $search: String
-    ) {
-      pokemonsSortedAndFiltered(
-        sorting: $sorting
-        filters: $filters
-        search: $search
-        range: $range
-      ) {
-        _id
-      }
-      numberOfPokemonsThatMatchesSearch(
-        sorting: $sorting
-        filters: $filters
-        search: $search
-      )
-    }
-  `;
-  return q;
-}
+import { PokemonCardI } from "../interfaces/pokemon.ts";
+import { getPokemons } from "../assets/GraphQLQueries.ts";
 
 export default function PokemonView() {
   const [sorting] = useRecoilState<string>(recoilSortBy);
@@ -70,9 +42,12 @@ export default function PokemonView() {
     return <div>Error! {error.message}</div>;
   }
 
+  const numberOfPokemonsThatMatchesSearch =
+    data.numberOfPokemonsThatMatchesSearch;
+  const pokemonList: PokemonCardI[] = data.pokemonsSortedAndFiltered;
   //? Denne gjør så vi får en feilmelding i console.
   //? Dette skjer siden den ikke skjer med en gang komponenten blir rendret.
-  setMaxPage(Math.ceil(data.numberOfPokemonsThatMatchesSearch / 20));
+  setMaxPage(Math.ceil(numberOfPokemonsThatMatchesSearch / 20));
 
   // If no pokemons are found
   if (data.pokemonsSortedAndFiltered.length === 0) {
@@ -81,8 +56,8 @@ export default function PokemonView() {
 
   return (
     <div className="pokemons_container">
-      {data.pokemonsSortedAndFiltered.map((pokemon: { _id: number }) => {
-        return <PokemonCard key={pokemon._id} _id={pokemon._id} />;
+      {pokemonList.map((pokemon: PokemonCardI) => {
+        return <PokemonCard key={pokemon._id} PokemonData={pokemon} />;
       })}
     </div>
   );

@@ -65,10 +65,6 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
     return <div>Error: {error.message}</div>;
   }
 
-  if (!data) {
-    return <div>No data found</div>;
-  }
-
   return (
     <Card
       variant="outlined"

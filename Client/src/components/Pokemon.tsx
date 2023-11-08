@@ -1,6 +1,6 @@
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import PokemonStats from "./PokemonStats";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { Box, Button, Divider, Tooltip, Typography } from "@mui/material";
 import PokemonRatingReview from "./PokemonReviews";
@@ -8,35 +8,8 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { checkTeam, addToTeam, removeFromTeam } from "./TeamFunctions";
 import { recoilMyTeam } from "../recoil/atoms";
 import { useRecoilState } from "recoil";
-
-function findSinglePokemon() {
-  const q = gql`
-    query query($_id: Int!) {
-      pokemon(_id: $_id) {
-        _id
-        name
-        height
-        weight
-        base_experience
-        stats {
-          stat {
-            name
-          }
-          base_stat
-        }
-        abilities {
-          ability {
-            name
-          }
-        }
-        sprites {
-          front_default
-        }
-      }
-    }
-  `;
-  return q;
-}
+import { PokemonPageI } from "../interfaces/pokemon";
+import { findSinglePokemon } from "../assets/GraphQLQueries";
 
 export default function Pokemon() {
   const { _id } = useParams();
@@ -44,9 +17,9 @@ export default function Pokemon() {
   const variables = {
     _id: parseInt(_id!),
   };
-  const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
 
   const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
+  const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
 
   if (loading) {
     return <CircularProgress />;
@@ -56,13 +29,15 @@ export default function Pokemon() {
     return <Box>Error: {error.message}</Box>;
   }
 
+  const PokemonData: PokemonPageI = data.pokemon;
+
   function handleOnClick() {
-    switch (checkTeam(team, data.pokemon._id.toString())) {
+    switch (checkTeam(team, PokemonData._id.toString())) {
       case 0:
-        addToTeam(team, data.pokemon._id.toString(), setTeam);
+        addToTeam(team, PokemonData._id.toString(), setTeam);
         break;
       case 1:
-        removeFromTeam(team, data.pokemon._id.toString(), setTeam);
+        removeFromTeam(team, PokemonData._id.toString(), setTeam);
         break;
       case 2:
         console.log("Your team is full");
@@ -73,14 +48,14 @@ export default function Pokemon() {
   }
 
   function getButtonInfo(mode: number) {
-    switch (checkTeam(team, data.pokemon._id.toString())) {
+    switch (checkTeam(team, PokemonData._id.toString())) {
       case 0:
         if (mode == 0) return "green";
-        if (mode == 2) return "Add " + data.pokemon.name + " to your team";
+        if (mode == 2) return "Add " + PokemonData.name + " to your team";
         return "Add to team";
       case 1:
         if (mode == 0) return "red";
-        if (mode == 2) return "Remove " + data.pokemon.name + " from your team";
+        if (mode == 2) return "Remove " + PokemonData.name + " from your team";
         return "Remove from team";
       case 2:
         if (mode == 0) return "grey";
@@ -98,7 +73,7 @@ export default function Pokemon() {
         variant="h3"
         textAlign={"center"}
       >
-        {data.pokemon.name} - #{data.pokemon._id}
+        {PokemonData.name} - #{PokemonData._id}
       </Typography>
       <Divider color="white" />
       <Box>
@@ -135,9 +110,9 @@ export default function Pokemon() {
             </Button>
           </Tooltip>
         </Box>
-        <PokemonStats pokemon={data.pokemon} />
+        <PokemonStats pokemon={PokemonData} />
       </Box>
-      <PokemonRatingReview _id={data.pokemon._id} />
+      <PokemonRatingReview _id={PokemonData._id} />
       <Outlet />
     </>
   );
