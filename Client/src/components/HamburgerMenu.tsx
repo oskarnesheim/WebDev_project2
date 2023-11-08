@@ -6,6 +6,7 @@ import Fade from "@mui/material/Fade";
 import { useNavigate } from "react-router-dom";
 
 export default function FadeMenu() {
+  const location = window.location.pathname;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
@@ -16,6 +17,12 @@ export default function FadeMenu() {
     setAnchorEl(null);
     navigate(toWhatPage);
   };
+
+  const pages = [
+    ["Pokedex", "/"],
+    ["My Team", "/myteam"],
+    ["About", "/about"],
+  ];
 
   return (
     <div className="hamburger_menu_container">
@@ -41,9 +48,19 @@ export default function FadeMenu() {
         onClose={changePage}
         TransitionComponent={Fade}
       >
-        <MenuItem onClick={() => changePage("/")}>Pokedex</MenuItem>
-        <MenuItem onClick={() => changePage("/myteam")}>My Team</MenuItem>
-        <MenuItem onClick={() => changePage("/about")}>About</MenuItem>
+        {pages.map((page) => {
+          return (
+            <MenuItem
+              style={{
+                color: location === page[1] ? "red" : "black",
+              }}
+              key={page[0]}
+              onClick={() => changePage(page[1])}
+            >
+              {page[0]}
+            </MenuItem>
+          );
+        })}
       </Menu>
       <h1>Pokedex</h1>
     </div>
