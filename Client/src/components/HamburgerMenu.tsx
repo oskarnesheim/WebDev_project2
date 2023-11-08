@@ -19,9 +19,9 @@ export default function FadeMenu() {
   };
 
   const pages = [
-    ["Pokedex", "/"],
-    ["My Team", "/myteam"],
-    ["About", "/about"],
+    ["Pokedex", "/", "red"],
+    ["My Team", "/myteam", "cornflowerblue"],
+    ["About", "/about", "green"],
   ];
 
   return (
@@ -52,7 +52,7 @@ export default function FadeMenu() {
           return (
             <MenuItem
               style={{
-                color: location === page[1] ? "red" : "black",
+                color: location === page[1] ? page[2] : "black",
               }}
               key={page[0]}
               onClick={() => changePage(page[1])}

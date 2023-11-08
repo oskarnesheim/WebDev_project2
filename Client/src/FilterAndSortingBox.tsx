@@ -86,7 +86,7 @@ export default function FilterAndSortingBox() {
   return (
     <div className="filter_container">
       <Button
-        sx={{ height: "100px", padding: "20px" }}
+        sx={{ height: "100px", padding: "20px", width: "100%" }}
         variant="outlined"
         onClick={handleOpen}
       >

@@ -22,7 +22,7 @@ export default function PreviewFiltersAndSorting() {
     }
 
     return (
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap" }} border={"ActiveBorder"}>
         {/* <Typography sx={{ marginRight: "1vw"}}>
           {"Filters: "}
         </Typography> */}
@@ -64,12 +64,12 @@ export default function PreviewFiltersAndSorting() {
       return;
     }
     return (
-      <>
-        <Typography sx={{ marginRight: "1vw" }}>{"Sorting:"}</Typography>
+      <div className="sorting_preview">
+        <Typography>{"Sorting:"}</Typography>
         <Typography sx={{ textDecoration: "underline" }}>
           {sortings.find((sort) => sort[1] === sortBy)![0]}
         </Typography>
-      </>
+      </div>
     );
   }
 
