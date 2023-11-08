@@ -14,7 +14,7 @@ describe("FilterBox", () => {
       />,
     );
 
-    fireEvent.click(getByRole("button", { name: "Filters:" }));
+    fireEvent.click(getByRole("button", { name: "Filters" }));
     const filters = [
       "normal",
       "fire",
@@ -58,7 +58,7 @@ describe("FilterBox", () => {
       />,
     );
 
-    fireEvent.click(getByRole("button", { name: "Filters:" }));
+    fireEvent.click(getByRole("button", { name: "Filters" }));
     const option = getAllByText("fire");
     fireEvent.click(option[1]);
     expect(currentFilters).toContain("fire");
