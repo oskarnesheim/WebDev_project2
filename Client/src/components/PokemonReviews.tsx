@@ -160,7 +160,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
           }}
         >
           <label style={{ marginRight: "10px", marginTop: "10px" }}>
-            Rating
+            Rate
           </label>
           {Array.from({ length: 5 }, (_, index) => (
             <StarIcon
