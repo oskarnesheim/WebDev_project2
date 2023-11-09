@@ -23,12 +23,12 @@ The app is hosted on NTNU's servers. This means that in order to visit the webpa
 
 ### Environment variables
 
-To be able to run the app, you need to create a `.env` file in the root folder. This file should contain the following variables (with correct username/password):
+To be able to run the app, you need to create a `.env` file in the root folder. This file should contain the following variables:
 
 ```
 NODE_ENV = development
 PORT = 6969
-MONGO_URI = mongodb://USERNAME:PASSWORD@it2810-08.idi.ntnu.no:27017/pokemon_db
+MONGO_URI = mongodb://admin:dreamteam08@it2810-08.idi.ntnu.no:27017/pokemon_db
 ```
 
 ### Install dependecies
