@@ -27,3 +27,9 @@ Client/coverage/
 *.njsproj
 *.sln
 *.sw?
+
+Client/node_modules/
+Client/test-results/
+Client/playwright-report/
+Client/blob-report/
+Client/playwright/.cache/
