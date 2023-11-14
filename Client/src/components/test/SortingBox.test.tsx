@@ -24,7 +24,7 @@ describe("SortingBox", () => {
       "kg increasing",
       "kg decreasing",
     ];
-    fireEvent.click(getByRole("button", { name: "Sorting" }));
+    fireEvent.click(getByRole("button", { name: "Choose Sorting" }));
     sortings.forEach((sorting) => {
       const option = getByText(sorting);
       expect(option).toBeTruthy();
@@ -48,7 +48,7 @@ describe("SortingBox", () => {
       />,
     );
 
-    fireEvent.click(getByRole("button", { name: "Sorting" }));
+    fireEvent.click(getByRole("button", { name: "Choose Sorting" }));
     const option = getAllByText("XP increasing");
     fireEvent.click(option[1]);
     expect(currentSorting).toBe("base_experience,1");
