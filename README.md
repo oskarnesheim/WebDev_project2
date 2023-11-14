@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a **pokedex** app that allows users to search 300 different pokemons from the first and second generation. In addition to search, you have the ability to filter by type and sort by name, base experience and weigth, all in ascending and descending order. 
+This is a **pokedex** app that allows users to search 300 different pokemons from the first and second generation. In addition to search, you have the ability to filter by type and sort by name, base experience and weigth, all in ascending and descending order.
 
 By clicking on a pokemon, you can see more details about it, such as its stats. You also have the option to rate a pokemon and give it a review, which will show for every user.
 
@@ -44,13 +44,14 @@ Then go to `localhost:6969` in your browser.
 
 ### Run the app in one terminal
 
-After installing the dependencies, you have the choice to run the app with on terminal, or run the client and server in seperate terminals.
+After installing the dependencies, you have the choice to run the app with one terminal, or run the client and server in seperate terminals.
 
 To run one terminal, you can run the following command in the root folder:
 
 ```
 npm start
 ```
+Then you go to the localhost given given.
 
 ### Starting server and client in seperate terminals
 
@@ -93,27 +94,39 @@ The tech stack used in this project is the following:
 
 ## Frontend
 
-The frontend can be found in the `client` folder, and is built with React and TypeScript. For global state we use Recoil. For fetching and caching data from the bachend we use Apollo client with Graphql. This way we are able to get just the data we need, and not the whole database. For styling we use Material UI. Material UI is a component library that makes it easy to create responsive and good looking components.
+The frontend can be found in the `client` folder, and is built with React and TypeScript. For global state management we use Recoil. 
+
+We decided to with Recoil for local state management. Recoil makes it easy for all components to use the same state without passing props. This results in a clean code that is easy to understand. This decision was based on previous experience with the technology and recommendation in the project description. We used Recoil for storing state about search, filter, sorting, page and maxpage when a user goes to pokemon or “My Team” and back to the homepage.
+
+For fetching and caching data from the backend we use Apollo client with Graphql. This way we are able to get just the data we need for each query. An example is when fetching information about a pokemon. If we would have used REST API we would get all the information pokemon, when in reality we just needed maybe 6 attributes. 
+
+For styling we use Material UI. Material UI is a component library that makes it easy to create responsive and good looking components. It is widely used and has very good documentation and support with React.
 
 ### Server
 
-The server is built with Node.js and Express, and responsible for fetching data from the database and sending it to the client. The server also handles the requests from the client, such as adding a pokemon to the team, and saving it to the database.
+The server is built with Node.js and Express. It is responsible for fetching data from the database and sending it to the client. The server also handles mutations, such as adding a review to a pokemon.
 
-We have used mongoose to connect to the database, and to create schemas for the different models we use.
+The combination of Node.js and Express is a very good choice for building web applications. Here we have javascript/typescript in both the backend and frontend. All group members have experience with both languages which made it an easy choice.
+
+We have used mongoose to connect the server to the database, and create schemas for the different models we use. These include pokemons and reviews.
+
+The decision to work with Mongoose was based on the fact that it is a popular library for Mongodb and Node.js. Resulting in great performance and plenty of good documentation. When looking back on this decision we are very happy. When we faced problems, we were able to quickly find a solution due to the great amount of documentation and online sources.
 
 ### Database
 
-The database we used for this project is MongoDB. We host the database on NTNU's server, which is only accissible from NTNU's network or via an VPN. The database contains 300 pokemons from the first and second generation. The data is fetched from [PokeAPI](https://pokeapi.co/). In addition to pokemons, the database also saves the reviews the different users publish about the pokemons.
+The database we used for this project is MongoDB. We host the **database** on NTNU's server, which is only accessible from NTNU's network or via a VPN. The database contains 300 pokemons from the first and second generation. The data is fetched from [PokeAPI](https://pokeapi.co/). In addition to pokemons, the database also saves the reviews the different users publish about the pokemons.
+
+We decided to use Mongodb because of its high performance and ease of use. The data is stored in BSON (Binary JSON) which is an advantage for developers used to working with JSON. All the members in the group have experience working with JSON, so it made sense to work with it this time as well. 
 
 ## Testing
 
 ### Component testing
 
-We have created multiple tests for checking our application's behaviour. Our project so for includes testing of various functionalities such as navigation, searching, filtering and sorting. (Testing of review form is under maintenance for now).
+We have created multiple tests for checking our application's behavior. Our project so far includes testing of various functionalities such as navigation, searching, filtering and sorting. (Testing of review form is under maintenance for now).
 
 #### Running the tests
 
-Run the tests by running the following command in the client folder:
+Make sure you are in the /Client folder and run the following command:
 
 ```
 npm test
@@ -130,3 +143,6 @@ TODO: write about responsive design
 ## Sustainability
 
 TODO: write about sustainability
+
+
+heisann
