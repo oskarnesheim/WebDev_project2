@@ -1,4 +1,4 @@
-import { Box, Button, Modal } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 import FilterBox from "./FilterBox";
 import SortingBox from "./SortingBox";
@@ -99,28 +99,74 @@ export default function FilterAndSortingBox() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalBoxStyles}>
-          <div className="filter_sorting_inner">
-            <FilterBox
-              currentFilters={tempFilters}
-              setCurrentFilter={setTempFilters}
-            />
+          <div className="filter_sorting_dropdowns">
             <SortingBox
               currentSorting={tempSortBy}
               setCurrentSorting={setTempSortBy}
             />
+            <FilterBox
+              currentFilters={tempFilters}
+              setCurrentFilter={setTempFilters}
+            />
+          </div>
+          <div className="current_active_filters">
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Typography variant="body1">Active Sorting:</Typography>
+              <Typography variant="body1">
+                {tempSortBy === "name,1"
+                  ? "Name (A-Z)"
+                  : tempSortBy === "name,-1"
+                  ? "Name (Z-A)"
+                  : tempSortBy === "id,1"
+                  ? "ID (Ascending)"
+                  : tempSortBy === "id,-1"
+                  ? "ID (Descending)"
+                  : tempSortBy === "height,1"
+                  ? "Height (Ascending)"
+                  : tempSortBy === "height,-1"
+                  ? "Height (Descending)"
+                  : tempSortBy === "weight,1"
+                  ? "Weight (Ascending)"
+                  : tempSortBy === "weight,-1"
+                  ? "Weight (Descending)"
+                  : "None"}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                maxWidth: "40%",
+              }}
+            >
+              <Typography variant="body1">Active Filters:</Typography>
+              <Typography variant="body1">
+                {tempFilters.length === 0 ? "None" : tempFilters.join(", ")}
+              </Typography>
+            </Box>
           </div>
           <hr />
           <div className="apply_reset_filter">
             <Button
-              style={{ backgroundColor: "green", color: "white" }}
+              sx={{
+                backgroundColor: "green",
+                color: "white",
+                "&:hover": { backgroundColor: "lightgreen", boxShadow: 10 },
+              }}
               onClick={handleApplyFilter}
             >
               Apply
             </Button>
             <Button
-              style={{
+              sx={{
                 backgroundColor: "red",
                 color: "white",
+                "&:hover": { backgroundColor: "pink", boxShadow: 10 },
               }}
               onClick={handleResetFilter}
             >

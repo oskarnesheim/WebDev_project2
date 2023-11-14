@@ -46,7 +46,6 @@ export default function FilterBox({
 
   return (
     <Box>
-      <h2>Filters</h2>
       <Button
         id="fade-button"
         aria-controls={open ? "fade-menu" : undefined}
@@ -54,7 +53,7 @@ export default function FilterBox({
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Filters{" "}
+        Choose filters{" "}
         <ArrowDropDownCircleOutlinedIcon
           sx={{ marginTop: "-5px", marginLeft: "5px" }}
         />
