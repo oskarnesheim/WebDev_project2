@@ -1,8 +1,8 @@
 import SortBy from "./Enums";
 
 const sortings = [
-  ["ID ascending (default)", SortBy.NONE],
-  ["ID descending", SortBy.ID_DECREASING],
+  ["ID increasing (default)", SortBy.NONE],
+  ["ID decreasing", SortBy.ID_DECREASING],
   ["A-Z", SortBy.A_Z],
   ["Z-A", SortBy.Z_A],
   ["XP increasing", SortBy.BASE_EXPERIENCE_INCREASING],
