@@ -4,12 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "concurrently \"cd ../server && npm run server\" \"npm run dev\"",
     "check": "tsc && vite build && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 && prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\" && vitest --coverage",
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest --coverage",
+    "test": "vitest --root ./src/  --coverage",
+    "e2e": "npx playwright test",
     "prettier-check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "prettier-write": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
   },
