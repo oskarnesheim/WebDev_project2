@@ -41,7 +41,7 @@ export default function FilterAndSortingBox() {
   const handleResetFilter = () => {
     // Reset the local state and storage immediately
     setCurrentFilter([]);
-    setSortBy("name,1");
+    setSortBy("_id,1");
 
     // Reset the session storage (Should be done inside function, but that doesn't work for some reason )
     sessionStorage.setItem("filterBy", JSON.stringify([]));
