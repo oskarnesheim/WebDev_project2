@@ -3,7 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { findSinglePokemon } from "../../functions/GraphQLQueries";
 import { recoilMyTeam } from "../../recoil/atoms";
-import { Box, Button, CircularProgress, Tooltip } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import ArrowButtons from "./ArrowButtons";
 import PokemonCard from "../home/PokemonCard";
 import { removeFromTeam } from "./TeamFunctions";
@@ -53,38 +59,50 @@ export default function DisplayPokemon({
   }
 
   /**
-   * Function that returns a display of the selected Pokemon, including PokemonCard that redirects to the Pokemon's page, ArrowButtons to navigate between team members, and a button to remove the Pokemon from the team
+   * Function that returns a display of the selected Pokemon,
+   * including PokemonCard that redirects to the Pokemon's page,
+   * ArrowButtons to navigate between team members,
+   * and a button to remove the Pokemon from the team. First pokemon in team is automaticly selected if no pokemon is selected.
    * @returns div with the selected Pokemon's info
    */
   function selectedInfo() {
     const pokeName = selectedPokemon[0];
-    if (pokeName === "0") {
-      return <div className="selected-Info"></div>;
+    if (team.length === 0) {
+      return (
+        <div className="selected-Info">
+          <Typography variant="body1">
+            Pokemons will be displayed here once you add them to your team.
+          </Typography>
+        </div>
+      );
     }
-    return (
-      <div className="selected-Info">
-        <div className="container" onClick={redirectToPokemon}>
-          <PokemonCard key={selectedPokemon[0]} PokemonData={PokemonData} />
+    if (pokeName === "0") {
+      setSelectedPokemon([team[0], 0]);
+    } else
+      return (
+        <div className="selected-Info">
+          <div className="container" onClick={redirectToPokemon}>
+            <PokemonCard key={selectedPokemon[0]} PokemonData={PokemonData} />
+          </div>
+          <ArrowButtons
+            team={team}
+            selectedPokemon={selectedPokemon}
+            setSelectedPokemon={setSelectedPokemon}
+          />
+          <div className="container">
+            <Tooltip title={"Remove pokemon from your team. "} arrow>
+              <Button
+                className="box"
+                onClick={() => deleteTeamMember(selectedPokemon[0])}
+                color="error"
+                variant="outlined"
+              >
+                REMOVE
+              </Button>
+            </Tooltip>
+          </div>
         </div>
-        <ArrowButtons
-          team={team}
-          selectedPokemon={selectedPokemon}
-          setSelectedPokemon={setSelectedPokemon}
-        />
-        <div className="container">
-          <Tooltip title={"Remove pokemon from your team. "} arrow>
-            <Button
-              className="box"
-              onClick={() => deleteTeamMember(selectedPokemon[0])}
-              color="error"
-              variant="outlined"
-            >
-              REMOVE
-            </Button>
-          </Tooltip>
-        </div>
-      </div>
-    );
+      );
   }
 
   return selectedInfo();
