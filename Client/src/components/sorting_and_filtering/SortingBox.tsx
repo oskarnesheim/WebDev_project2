@@ -35,6 +35,14 @@ export default function SortingBox({
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        sx={{
+          backgroundColor: "primary.main",
+          color: "white",
+          padding: "10px",
+          "&:hover": {
+            backgroundColor: "primary.light",
+          },
+        }}
       >
         Choose Sorting{" "}
         <ArrowDropDownCircleOutlinedIcon

@@ -52,8 +52,16 @@ export default function FilterBox({
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        sx={{
+          backgroundColor: "primary.main",
+          color: "white",
+          padding: "10px",
+          "&:hover": {
+            backgroundColor: "primary.light",
+          },
+        }}
       >
-        Choose filters{" "}
+        Choose Filters{" "}
         <ArrowDropDownCircleOutlinedIcon
           sx={{ marginTop: "-5px", marginLeft: "5px" }}
         />

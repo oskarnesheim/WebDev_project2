@@ -1,9 +1,10 @@
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, List, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 import FilterBox from "./FilterBox";
 import SortingBox from "./SortingBox";
 import { recoilFilterBy, recoilSortBy, recoilPage } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
+import sortings from "../../assets/Sortings";
 
 const modalBoxStyles = {
   position: "absolute",
@@ -116,38 +117,29 @@ export default function FilterAndSortingBox() {
                 flexDirection: "column",
               }}
             >
-              <Typography variant="body1">Active Sorting:</Typography>
               <Typography variant="body1">
-                {tempSortBy === "name,1"
-                  ? "Name (A-Z)"
-                  : tempSortBy === "name,-1"
-                  ? "Name (Z-A)"
-                  : tempSortBy === "id,1"
-                  ? "ID (Ascending)"
-                  : tempSortBy === "id,-1"
-                  ? "ID (Descending)"
-                  : tempSortBy === "height,1"
-                  ? "Height (Ascending)"
-                  : tempSortBy === "height,-1"
-                  ? "Height (Descending)"
-                  : tempSortBy === "weight,1"
-                  ? "Weight (Ascending)"
-                  : tempSortBy === "weight,-1"
-                  ? "Weight (Descending)"
-                  : "None"}
+                Active Sorting: <hr />
+              </Typography>
+              <Typography variant="body1">
+                {sortings.find((sort) => sort[1] === tempSortBy)![0]}
               </Typography>
             </Box>
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                maxWidth: "40%",
               }}
             >
-              <Typography variant="body1">Active Filters:</Typography>
               <Typography variant="body1">
-                {tempFilters.length === 0 ? "None" : tempFilters.join(", ")}
+                Active Filters:
+                <hr />
               </Typography>
+
+              <List>
+                {tempFilters.map((filter) => (
+                  <Typography variant="body1">{filter}</Typography>
+                ))}
+              </List>
             </Box>
           </div>
           <hr />
