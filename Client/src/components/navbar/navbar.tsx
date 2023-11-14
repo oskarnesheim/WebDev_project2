@@ -15,7 +15,7 @@ export default function Navbar() {
       {windowSize < 700 ? (
         <HamburgerMenu />
       ) : (
-        <div className="navbar">
+        <div className="navbar" data-testid="navbar">
           <h2 className="pokedex-link" onClick={() => navigate("/")}>
             Pokedex
           </h2>

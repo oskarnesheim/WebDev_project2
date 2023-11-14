@@ -88,6 +88,7 @@ export default function FilterAndSortingBox() {
       <Button
         sx={{ height: "100px", padding: "20px", width: "100%" }}
         variant="outlined"
+        data-testid="filter_button"
         onClick={handleOpen}
       >
         Filters/Sorting

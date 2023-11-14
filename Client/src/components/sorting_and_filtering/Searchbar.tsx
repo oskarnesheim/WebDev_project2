@@ -48,6 +48,7 @@ function Searchbar() {
       onChange={(event: ChangeEvent<HTMLInputElement>) => type(event)}
       placeholder="pokemon name..."
       fullWidth
+      data-testid="search-bar"
       id="outlined"
       InputProps={{
         endAdornment: (

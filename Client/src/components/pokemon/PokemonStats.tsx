@@ -95,6 +95,7 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
               variant="h5"
               textAlign={screenSmallerThan550px ? "center" : "left"}
               padding={"0.5em 0em 0em 1em"}
+              data-testid="pokemon-stats-title"
             >
               Stats for {pokemon.name}
             </Typography>
@@ -153,6 +154,7 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
                   height: screenLargerThan830px ? 450 : "50%",
                 }}
                 component={"img"}
+                data-testid="pokemon-stats-image"
                 alt={"Picture of " + pokemon.name}
                 src={pokemon.sprites.front_default}
               ></Box>
