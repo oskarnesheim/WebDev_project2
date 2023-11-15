@@ -29,7 +29,7 @@ test("Checks that the page render correctly with 20 pokemons", async ({
   // Checks that the page contains the pagination
   await expect(page.getByTestId("pagination")).toBeVisible();
 
-  // Checks that the page contains 20 pokemons
+  // Checks that the page contains the 20 first pokemons (sorted by id)
   for (let i = 1; i < 21; i++) {
     await expect(page.getByTestId(i.toString())).toBeVisible();
   }
@@ -39,7 +39,44 @@ test("Checks that the page render correctly with 20 pokemons", async ({
 });
 
 test("Checks that sorting and filtering works correctly", async ({ page }) => {
-  //
+  // Checks that the modal is not visible before clicking on the filter-box
+  await expect(page.getByTestId("filter-box-modal")).not.toBeVisible();
+  // Opens the filter-box and checks that it is visible
+  await page.getByTestId("filter_button").click();
+  await expect(page.getByTestId("filter-box-modal")).toBeVisible();
+
+  // Apply "fire" and "water" filter
+  await page.getByTestId("filter-list-button").click();
+  await page.getByTestId("fire").click();
+  await page.getByTestId("water").click();
+
+  // Clicks the esc button to close the modal
+  await page.keyboard.press("Escape");
+
+  // Apply "kg increasing" filter
+  await page.getByTestId("sort-list-button").click();
+  await page.getByTestId("kg increasing").click();
+
+  // Clicks the esc button to close the modal
+  await page.keyboard.press("Escape");
+
+  // Applys the filters
+  await page.getByTestId("apply-filter-button").click();
+
+  // IDs of the pokemons that should be visible
+  const pokemonIDs = [
+    283, 255, 270, 211, 90, 222, 98, 138, 258, 155, 116, 4, 194, 183, 7, 278,
+    158, 37, 129, 228,
+  ];
+
+  // Checks that the page contains only the correct pokemons
+  for (let i = 1; i < 301; i++) {
+    if (pokemonIDs.includes(i)) {
+      await expect(page.getByTestId(i.toString())).toBeVisible();
+    } else {
+      await expect(page.getByTestId(i.toString())).not.toBeVisible();
+    }
+  }
 });
 
 test("Checks that you can search for pikachu and show stats about it", async ({
