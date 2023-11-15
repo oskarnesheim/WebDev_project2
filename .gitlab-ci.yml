@@ -32,6 +32,7 @@ test: # This job runs in the test stage.
   stage: test # It only starts when the job in the build stage completes successfully.
   script:
     - npm run test
+    - npm run e2e
 
 lint:
   stage: lint

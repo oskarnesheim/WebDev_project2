@@ -7,18 +7,21 @@ test.beforeEach(async ({ page }) => {
 test("Checks that the navigation works correctly", async ({ page }) => {
   // Gets the baseURL
   const baseURL = page.url();
+  const windowSize = page.viewportSize()?.width || 1000;
+  // Only checks the navigation if the navbar is visible
+  if (windowSize > 700) {
+    // Cheks that the "Myteam" button navigates correctly
+    await page.getByTestId("myteam_link_button").click();
+    expect(page.url()).toBe(baseURL + "/myteam");
 
-  // Cheks that the "Myteam" button navigates correctly
-  await page.getByTestId("myteam_link_button").click();
-  expect(page.url()).toBe(baseURL + "/myteam");
+    // Cheks that the "About" button navigates correctly
+    await page.getByTestId("about_link_button").click();
+    expect(page.url()).toBe(baseURL + "/about");
 
-  // Cheks that the "About" button navigates correctly
-  await page.getByTestId("about_link_button").click();
-  expect(page.url()).toBe(baseURL + "/about");
-
-  // Cheks that the "Pokedex" button navigates correctly
-  await page.getByTestId("pokedex_link_button").click();
-  expect(page.url()).toBe(baseURL);
+    // Cheks that the "Pokedex" button navigates correctly
+    await page.getByTestId("pokedex_link_button").click();
+    expect(page.url()).toBe(baseURL);
+  }
 });
 
 test("Checks that the page render correctly with 20 pokemons", async ({
