@@ -1,31 +1,6 @@
 import { atom } from "recoil";
 
 /**
- * Global state: MyTeam loaded from local storage
- */
-export const recoilMyTeam = atom({
-  key: "myTeam",
-  default: getTeam() as string[],
-});
-
-function getTeam() {
-  const team: string[] = JSON.parse(localStorage.getItem("team")!);
-  if (!team) {
-    localStorage.setItem("team", JSON.stringify([]));
-    return [];
-  }
-  return team;
-}
-
-/**
- * Global state: Filters loaded from session storage
- */
-export const recoilFilterBy = atom({
-  key: "filterBy",
-  default: getFilterBy() as string[],
-});
-
-/**
  * Global function that removes a filter from the filterBy array in session storage
  * @param filter
  * @returns filterBy array after removing the given filter
@@ -40,67 +15,65 @@ export function removeFromFilter(filter: string) {
   return filterBy;
 }
 
-function getFilterBy() {
-  const filterBy: string[] = JSON.parse(sessionStorage.getItem("filterBy")!);
-  if (filterBy === null) {
-    sessionStorage.setItem("filterBy", JSON.stringify([]));
-    return [];
-  }
-  return filterBy;
-}
+// Define your atom without the default value being read from storage directly
+export const recoilMyTeam = atom<string[]>({
+  key: "myTeam",
+  default: [], // initialize with a sensible default or an empty array
+});
 
-/**
- * Global state: SortBy loaded from session storage
- */
-export const recoilSortBy = atom({
+export const recoilFilterBy = atom<string[]>({
+  key: "filterBy",
+  default: [],
+});
+
+export const recoilSortBy = atom<string>({
   key: "sortBy",
-  default: getSortBy() as string,
+  default: "_id,1",
 });
 
-function getSortBy() {
-  const sortBy: string = JSON.parse(sessionStorage.getItem("sortBy")!);
-  if (!sortBy) {
-    sessionStorage.setItem("sortBy", JSON.stringify("_id,1"));
-    return "_id,1";
-  }
-  return sortBy;
-}
-
-/**
- * Global state: Search loaded from session storage
- */
-export const recoilSearch = atom({
+export const recoilSearch = atom<string>({
   key: "search",
-  default: getSearch() as string,
+  default: "",
 });
 
-function getSearch() {
-  const search: string = JSON.parse(sessionStorage.getItem("search")!);
-  if (!search) {
-    sessionStorage.setItem("search", JSON.stringify(""));
-    return "";
-  }
-  return search;
-}
-
-/**
- * Global state: Page loaded from session storage
- */
-export const recoilPage = atom({
+export const recoilPage = atom<number>({
   key: "page",
-  default: getPage() as number,
+  default: 1,
 });
 
-function getPage() {
-  const page: number = JSON.parse(sessionStorage.getItem("page")!);
-  if (!page) {
-    sessionStorage.setItem("page", JSON.stringify(1));
-    return 1;
+export const recoilMaxPage = atom<number>({
+  key: "maxPage",
+  default: 15,
+});
+
+// A utility function to safely parse JSON from storage
+function safeParse<T>(value: string | null, defaultValue: T): T {
+  if (value === null) return defaultValue;
+  try {
+    const parsed = JSON.parse(value) as T;
+    return parsed;
+  } catch {
+    return defaultValue;
   }
-  return page;
 }
 
-export const recoilMaxPage = atom({
-  key: "maxPage", // unique ID (with respect to other atoms/selectors)
-  default: 15 as number, // default value (aka initial value)
-});
+// Functions to initialize state from storage
+export function initializeStateFromStorage<T>(
+  setStateFunction: (val: T) => void,
+  storage: Storage,
+  key: string,
+  defaultValue: T,
+) {
+  const storedValue = storage.getItem(key);
+  const parsedValue = safeParse(storedValue, defaultValue);
+  setStateFunction(parsedValue);
+}
+
+// Functions to handle storage updates
+export function updateStorageOnChange<T>(
+  key: string,
+  value: T,
+  storage: Storage,
+) {
+  storage.setItem(key, JSON.stringify(value));
+}

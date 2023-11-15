@@ -6,15 +6,15 @@
  */
 export const checkTeam = (team: string[], id: string): number => {
   if (team.includes(id)) return 1;
-  if (team.length == 6) return 2;
+  if (team.length === 6) return 2; // Use === for strict equality check
   return 0;
 };
 
 /**
- * Function that saves a Pokemon to the team in localStorage
+ * Function that adds a Pokemon to the team
  * @param team
  * @param id - Pokemon ID
- * @param setTeam - function to set the team in localStorage
+ * @param setTeam - Recoil state setter function for the team
  * @returns void
  */
 export const addToTeam = (
@@ -22,21 +22,19 @@ export const addToTeam = (
   id: string,
   setTeam: (newTeam: string[]) => void,
 ): void => {
-  const currTeam = team;
-  if (currTeam.length >= 6) {
+  if (team.length >= 6) {
     alert("Your team is full");
     return;
   }
-  const newTeam = [...currTeam, id];
-  setTeam(newTeam);
-  saveTeamToLocalStorage(newTeam);
+  const newTeam = [...team, id];
+  setTeam(newTeam); // Only update the Recoil state
 };
 
 /**
- * Function that removes a Pokemon from the team in localStorage
+ * Function that removes a Pokemon from the team
  * @param team
  * @param id - Pokemon ID
- * @param setTeam - function to set the team in localStorage
+ * @param setTeam - Recoil state setter function for the team
  * @returns void
  */
 export const removeFromTeam = (
@@ -45,14 +43,5 @@ export const removeFromTeam = (
   setTeam: (newTeam: string[]) => void,
 ): void => {
   const newTeam = team.filter((teamId) => teamId !== id);
-  setTeam(newTeam);
-  saveTeamToLocalStorage(newTeam);
-};
-
-/**
- * Support function that saves the team to localStorage
- * @param team
- */
-export const saveTeamToLocalStorage = (team: string[]): void => {
-  localStorage.setItem("team", JSON.stringify(team));
+  setTeam(newTeam); // Only update the Recoil state
 };
