@@ -29,15 +29,22 @@ export default function SortingBox({
 
   return (
     <Box>
-      <h2>Sortings</h2>
       <Button
         id="fade-button"
         aria-controls={open ? "fade-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        sx={{
+          backgroundColor: "primary.main",
+          color: "white",
+          padding: "10px",
+          "&:hover": {
+            backgroundColor: "primary.light",
+          },
+        }}
       >
-        Sorting{" "}
+        Choose Sorting{" "}
         <ArrowDropDownCircleOutlinedIcon
           sx={{ marginTop: "-5px", marginLeft: "5px" }}
         />

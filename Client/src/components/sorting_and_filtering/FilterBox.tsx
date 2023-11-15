@@ -46,15 +46,22 @@ export default function FilterBox({
 
   return (
     <Box>
-      <h2>Filters</h2>
       <Button
         id="fade-button"
         aria-controls={open ? "fade-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        sx={{
+          backgroundColor: "primary.main",
+          color: "white",
+          padding: "10px",
+          "&:hover": {
+            backgroundColor: "primary.light",
+          },
+        }}
       >
-        Filters{" "}
+        Choose Filters{" "}
         <ArrowDropDownCircleOutlinedIcon
           sx={{ marginTop: "-5px", marginLeft: "5px" }}
         />
