@@ -96,6 +96,7 @@ export default function DisplayPokemon({
                 onClick={() => deleteTeamMember(selectedPokemon[0])}
                 color="error"
                 variant="outlined"
+                data-testid="remove_from_team_button"
               >
                 REMOVE
               </Button>
