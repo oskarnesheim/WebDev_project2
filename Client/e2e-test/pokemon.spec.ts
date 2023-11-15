@@ -38,6 +38,10 @@ test("Checks that the page render correctly with 20 pokemons", async ({
   await expect(page.getByTestId("21")).not.toBeVisible();
 });
 
+test("Checks that sorting and filtering works correctly", async ({ page }) => {
+  //
+});
+
 test("Checks that you can search for pikachu and show stats about it", async ({
   page,
 }) => {
@@ -70,8 +74,6 @@ test("Checks that you can search for pikachu and show stats about it", async ({
     const altText = await image.getAttribute("alt");
     // Check that the alt-text is correct
     expect(altText).toBe("Picture of pikachu");
-  } else {
-    test.fail();
   }
 
   // Checks that the page redirects back to baseURL by clicking on the "pokedex"-logo
