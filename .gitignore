@@ -14,6 +14,7 @@ dist-ssr
 *.local
 .env
 Client/coverage/
+Client/src/coverage/
 
 /coverage
 
@@ -27,3 +28,9 @@ Client/coverage/
 *.njsproj
 *.sln
 *.sw?
+
+Client/node_modules/
+Client/test-results/
+Client/playwright-report/
+Client/blob-report/
+Client/playwright/.cache/

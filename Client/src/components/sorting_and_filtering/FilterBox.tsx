@@ -46,15 +46,23 @@ export default function FilterBox({
 
   return (
     <Box>
-      <h2>Filters</h2>
       <Button
         id="fade-button"
         aria-controls={open ? "fade-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        data-testid="filter-list-button"
+        sx={{
+          backgroundColor: "primary.main",
+          color: "white",
+          padding: "10px",
+          "&:hover": {
+            backgroundColor: "primary.light",
+          },
+        }}
       >
-        Filters{" "}
+        Choose Filters{" "}
         <ArrowDropDownCircleOutlinedIcon
           sx={{ marginTop: "-5px", marginLeft: "5px" }}
         />
@@ -70,9 +78,11 @@ export default function FilterBox({
         TransitionComponent={Fade}
       >
         {filters.map((filter) => (
-          <MenuItem key={filter[0]}
+          <MenuItem
+            key={filter[0]}
+            data-testid={filter[0]}
             onKeyDown={(event) => {
-              if (event.key === 'Enter') {
+              if (event.key === "Enter") {
                 event.preventDefault();
                 if (currentFilters.includes(filter[0])) {
                   setCurrentFilter(
@@ -82,7 +92,8 @@ export default function FilterBox({
                   setCurrentFilter([...currentFilters, filter[0]]);
                 }
               }
-            }}>
+            }}
+          >
             <FormControlLabel
               control={
                 <Checkbox

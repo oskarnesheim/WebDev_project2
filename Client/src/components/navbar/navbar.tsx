@@ -15,14 +15,38 @@ export default function Navbar() {
       {windowSize < 700 ? (
         <HamburgerMenu />
       ) : (
-        <div className="navbar">
-          <h2 tabIndex={0} className="pokedex-link" onClick={() => navigate("/")} onKeyDown={(event) => { if (event.key === 'Enter') navigate("/"); }}>
+        <div className="navbar" data-testid="navbar">
+          <h2
+            className="pokedex-link"
+            data-testid="pokedex_link_button"
+            onClick={() => navigate("/")}
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") navigate("/");
+            }}
+          >
             Pokedex
           </h2>
-          <h3 tabIndex={0} className="myteam-link" onClick={() => navigate("/myteam")} onKeyDown={(event) => { if (event.key === 'Enter') navigate("/myteam"); }}>
+          <h3
+            className="myteam-link"
+            data-testid="myteam_link_button"
+            onClick={() => navigate("/myteam")}
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") navigate("/myteam");
+            }}
+          >
             My Team <BusinessCenterOutlinedIcon />
           </h3>
-          <h3 tabIndex={0} className="about-link" onClick={() => navigate("/about")} onKeyDown={(event) => { if (event.key === 'Enter') navigate("/about"); }}>
+          <h3
+            className="about-link"
+            data-testid="about_link_button"
+            onClick={() => navigate("/about")}
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") navigate("/about");
+            }}
+          >
             About
           </h3>
         </div>

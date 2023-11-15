@@ -51,7 +51,11 @@ export default function PokemonView() {
 
   // If no pokemons are found
   if (data.pokemonsSortedAndFiltered.length === 0) {
-    return <Box sx={{ marginTop: "5vh" }}>No pokemons found</Box>;
+    return (
+      <Box sx={{ marginTop: "5vh" }} data-testid="Error_message_no_pokemons">
+        No pokemons found
+      </Box>
+    );
   }
 
   return (

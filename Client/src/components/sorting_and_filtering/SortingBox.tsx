@@ -10,10 +10,12 @@ import ArrowDropDownCircleOutlinedIcon from "@mui/icons-material/ArrowDropDownCi
 
 type SortingBoxType = {
   setCurrentSorting: React.Dispatch<React.SetStateAction<string>>;
+  currentSorting: string;
 };
 
 export default function SortingBox({
   setCurrentSorting,
+  currentSorting,
 }: SortingBoxType) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -26,22 +28,30 @@ export default function SortingBox({
     setAnchorEl(null);
   };
   const StyledMenuItem = styled(MenuItem)(() => ({
-    '&.Mui-focusVisible': {
-      backgroundColor: 'lightblue',
+    "&.Mui-focusVisible": {
+      backgroundColor: "lightblue",
     },
   }));
 
   return (
     <Box>
-      <h2>Sortings</h2>
       <Button
         id="fade-button"
         aria-controls={open ? "fade-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        data-testid="sort-list-button"
+        sx={{
+          backgroundColor: "primary.main",
+          color: "white",
+          padding: "10px",
+          "&:hover": {
+            backgroundColor: "primary.light",
+          },
+        }}
       >
-        Sorting{" "}
+        Choose Sorting{" "}
         <ArrowDropDownCircleOutlinedIcon
           sx={{ marginTop: "-5px", marginLeft: "5px" }}
         />
@@ -66,9 +76,14 @@ export default function SortingBox({
                 setCurrentSorting(sorting[1]);
               }
             }}
+            data-testid={sorting[0]}
             onClick={() => {
               handleClose;
               setCurrentSorting(sorting[1]);
+            }}
+            style={{
+              backgroundColor:
+                sorting[1] === currentSorting ? "lightblue" : "white",
             }}
           >
             {sorting[0]}

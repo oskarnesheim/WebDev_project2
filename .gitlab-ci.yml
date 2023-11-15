@@ -13,7 +13,8 @@ before_script:
 stages:
   - setup # List of stages for jobs, and their order of execution
   - build
-  - test
+  - component_test
+  - e2e_test
   - lint
   - prettier
 
@@ -28,10 +29,17 @@ build: # This job runs in the build stage, which runs first.
   script:
     - npm run build
 
-test: # This job runs in the test stage.
-  stage: test # It only starts when the job in the build stage completes successfully.
+component_test: # This job runs in the test stage.
+  stage: component_test # It only starts when the job in the build stage completes successfully.
   script:
     - npm run test
+
+e2e_test:
+  stage: e2e_test
+  image: mcr.microsoft.com/playwright:v1.39.0-jammy
+  script:
+    - npx playwright install
+    - npm run e2e
 
 lint:
   stage: lint
@@ -41,4 +49,5 @@ lint:
 prettier:
   stage: prettier
   script:
+    - npm run prettier-write
     - npm run prettier-check

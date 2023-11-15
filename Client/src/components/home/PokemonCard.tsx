@@ -45,8 +45,13 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
 
   return (
     <Card
-      tabIndex={0} onClick={() => navigate("/" + PokemonData._id.toString())} onKeyDown={(event) => { if (event.key === 'Enter') navigate("/" + PokemonData._id.toString()); }}
+      tabIndex={0}
+      onClick={() => navigate("/" + PokemonData._id.toString())}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") navigate("/" + PokemonData._id.toString());
+      }}
       className="pokemon-card"
+      data-testid={PokemonData._id}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -65,11 +70,13 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
     >
       <CardContent
         style={{
-          background: `${getBackgroundColor().length > 1
-            ? `linear-gradient(90deg, ${getBackgroundColor()[0]} 40%, ${getBackgroundColor()[1]
-            } 60%)`
-            : getBackgroundColor()[0]
-            }`,
+          background: `${
+            getBackgroundColor().length > 1
+              ? `linear-gradient(90deg, ${getBackgroundColor()[0]} 40%, ${
+                  getBackgroundColor()[1]
+                } 60%)`
+              : getBackgroundColor()[0]
+          }`,
           width: "100%",
         }}
       />

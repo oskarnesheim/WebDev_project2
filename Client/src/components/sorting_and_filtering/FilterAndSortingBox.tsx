@@ -1,9 +1,10 @@
-import { Box, Button, Modal } from "@mui/material";
+import { Box, Button, List, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 import FilterBox from "./FilterBox";
 import SortingBox from "./SortingBox";
 import { recoilFilterBy, recoilSortBy, recoilPage } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
+import sortings from "../../assets/Sortings";
 
 const modalBoxStyles = {
   position: "absolute",
@@ -41,7 +42,7 @@ export default function FilterAndSortingBox() {
   const handleResetFilter = () => {
     // Reset the local state and storage immediately
     setCurrentFilter([]);
-    setSortBy("name,1");
+    setSortBy("_id,1");
 
     // Reset the session storage (Should be done inside function, but that doesn't work for some reason )
     sessionStorage.setItem("filterBy", JSON.stringify([]));
@@ -88,6 +89,7 @@ export default function FilterAndSortingBox() {
       <Button
         sx={{ height: "100px", padding: "20px", width: "100%" }}
         variant="outlined"
+        data-testid="filter_button"
         onClick={handleOpen}
       >
         Filters/Sorting
@@ -97,30 +99,69 @@ export default function FilterAndSortingBox() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        data-testid="filter-box-modal"
       >
         <Box sx={modalBoxStyles}>
-          <div className="filter_sorting_inner">
-            <FilterBox
-              currentFilters={tempFilters}
-              setCurrentFilter={setTempFilters}
-            />
+          <div className="filter_sorting_dropdowns">
             <SortingBox
               currentSorting={tempSortBy}
               setCurrentSorting={setTempSortBy}
             />
+            <FilterBox
+              currentFilters={tempFilters}
+              setCurrentFilter={setTempFilters}
+            />
+          </div>
+          <div className="current_active_filters">
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Typography variant="body1">
+                Active Sorting: <hr />
+              </Typography>
+              <Typography variant="body1">
+                {sortings.find((sort) => sort[1] === tempSortBy)![0]}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Typography variant="body1">
+                Active Filters:
+                <hr />
+              </Typography>
+
+              <List>
+                {tempFilters.map((filter) => (
+                  <Typography variant="body1">{filter}</Typography>
+                ))}
+              </List>
+            </Box>
           </div>
           <hr />
           <div className="apply_reset_filter">
             <Button
-              style={{ backgroundColor: "green", color: "white" }}
+              sx={{
+                backgroundColor: "green",
+                color: "white",
+                "&:hover": { backgroundColor: "lightgreen", boxShadow: 10 },
+              }}
               onClick={handleApplyFilter}
+              data-testid="apply-filter-button"
             >
               Apply
             </Button>
             <Button
-              style={{
+              sx={{
                 backgroundColor: "red",
                 color: "white",
+                "&:hover": { backgroundColor: "pink", boxShadow: 10 },
               }}
               onClick={handleResetFilter}
             >

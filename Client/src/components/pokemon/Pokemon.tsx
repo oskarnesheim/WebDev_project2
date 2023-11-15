@@ -100,6 +100,7 @@ export default function Pokemon() {
           </Tooltip>
           <Tooltip title={getButtonInfo(2)} arrow>
             <Button
+              data-testid="add_to_team_button"
               variant="outlined"
               sx={{
                 color: getButtonInfo(0),
