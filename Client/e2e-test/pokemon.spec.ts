@@ -117,3 +117,68 @@ test("Checks that you can search for pikachu and show stats about it", async ({
   await page.getByTestId("ArrowBackIosNewIcon").click();
   expect(page.url()).toBe(baseURL);
 });
+
+test("Checks that you get response when searching for a pokemon that doesn't exist", async ({
+  page,
+}) => {
+  // Checks that the text "No pokemons found" is not visible by default
+  await expect(page.getByTestId("Error_message_no_pokemons")).not.toBeVisible();
+
+  // Write "No pokemon with this name" in the search bar
+  await page
+    .getByPlaceholder("pokemon name...")
+    .fill("No pokemon with this name");
+
+  // Checks that the text "No pokemons found" is visible
+  await expect(page.getByTestId("Error_message_no_pokemons")).toBeVisible();
+});
+
+test("Checks that the team-functionality works correctly", async ({ page }) => {
+  // Checks that the team is empty by default
+  await page.goto("/project2/myteam/");
+  await expect(page.getByTestId("Empty_team_message")).toBeVisible();
+
+  await page.goto("/");
+
+  // Adds the first 6 pokemons to the team
+  for (let i = 1; i < 7; i++) {
+    await page.getByTestId(i.toString()).click();
+
+    // Checks that the pokemon have the option to be added to the team
+    expect(await page.getByTestId("add_to_team_button").textContent()).toBe(
+      "Add to team",
+    );
+    await page.getByTestId("add_to_team_button").click();
+    expect(await page.getByTestId("add_to_team_button").textContent()).toBe(
+      "Remove from team",
+    );
+
+    // Navigates back to the home page
+    await page.goto("/");
+  }
+
+  // Checks that its not possible to add a 7th pokemon to the team
+  await page.getByTestId("7").click();
+  expect(await page.getByTestId("add_to_team_button").textContent()).toBe(
+    "Team is full",
+  );
+  await page.goto("/");
+
+  // Checks that the team contains the correct pokemons
+  await page.goto("/project2/myteam/");
+  await expect(page.getByTestId("Empty_team_message")).not.toBeVisible();
+
+  for (let i = 1; i < 7; i++) {
+    expect(page.getByTestId(i.toString()));
+    // Navigates to the next pokemon in the team
+    await page.getByTestId("right_button_team").click();
+  }
+
+  // Removes every pokemon from the team to make it empty again
+  for (let i = 1; i < 7; i++) {
+    await page.getByTestId("remove_from_team_button").click();
+  }
+
+  // Checks that the team is empty
+  await expect(page.getByTestId("Empty_team_message")).toBeVisible();
+});
