@@ -4,6 +4,23 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
+test("Checks that the navigation works correctly", async ({ page }) => {
+  // Gets the baseURL
+  const baseURL = page.url();
+
+  // Cheks that the "Myteam" button navigates correctly
+  await page.getByTestId("myteam_link_button").click();
+  expect(page.url()).toBe(baseURL + "/myteam");
+
+  // Cheks that the "About" button navigates correctly
+  await page.getByTestId("about_link_button").click();
+  expect(page.url()).toBe(baseURL + "/about");
+
+  // Cheks that the "Pokedex" button navigates correctly
+  await page.getByTestId("pokedex_link_button").click();
+  expect(page.url()).toBe(baseURL);
+});
+
 test("Checks that the page render correctly with 20 pokemons", async ({
   page,
 }) => {
@@ -36,6 +53,9 @@ test("Checks that the page render correctly with 20 pokemons", async ({
 
   // Checks that the page don't have pokemon 21
   await expect(page.getByTestId("21")).not.toBeVisible();
+
+  // Checks that there are 15 pages in the pagination
+  await expect(page.getByTestId("pagination")).toContainText("12345…15");
 });
 
 test("Checks that sorting and filtering works correctly", async ({ page }) => {
@@ -77,6 +97,9 @@ test("Checks that sorting and filtering works correctly", async ({ page }) => {
       await expect(page.getByTestId(i.toString())).not.toBeVisible();
     }
   }
+
+  // Checks that there are 5 pages in the pagination
+  await expect(page.getByTestId("pagination")).toContainText("12345");
 });
 
 test("Checks that you can search for pikachu and show stats about it", async ({
