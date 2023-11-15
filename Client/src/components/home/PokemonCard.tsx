@@ -45,7 +45,11 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
 
   return (
     <Card
+      tabIndex={0}
       onClick={() => navigate("/" + PokemonData._id.toString())}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") navigate("/" + PokemonData._id.toString());
+      }}
       className="pokemon-card"
       data-testid={PokemonData._id}
       style={{

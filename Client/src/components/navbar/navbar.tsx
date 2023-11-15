@@ -20,6 +20,10 @@ export default function Navbar() {
             className="pokedex-link"
             data-testid="pokedex_link_button"
             onClick={() => navigate("/")}
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") navigate("/");
+            }}
           >
             Pokedex
           </h2>
@@ -27,6 +31,10 @@ export default function Navbar() {
             className="myteam-link"
             data-testid="myteam_link_button"
             onClick={() => navigate("/myteam")}
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") navigate("/myteam");
+            }}
           >
             My Team <BusinessCenterOutlinedIcon />
           </h3>
@@ -34,6 +42,10 @@ export default function Navbar() {
             className="about-link"
             data-testid="about_link_button"
             onClick={() => navigate("/about")}
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") navigate("/about");
+            }}
           >
             About
           </h3>

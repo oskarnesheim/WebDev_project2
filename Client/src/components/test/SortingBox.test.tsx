@@ -4,8 +4,8 @@ import SortingBox from "../sorting_and_filtering/SortingBox";
 
 describe("SortingBox", () => {
   test("Checks that all the sorting options are rendered", async () => {
-    const currentSorting = "";
     const setCurrentSorting = () => {};
+    const currentSorting = "";
 
     const { getByRole, getByText } = render(
       <SortingBox
