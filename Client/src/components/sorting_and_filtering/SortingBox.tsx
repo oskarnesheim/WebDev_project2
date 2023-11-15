@@ -35,6 +35,7 @@ export default function SortingBox({
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        data-testid="sort-list-button"
         sx={{
           backgroundColor: "primary.main",
           color: "white",
@@ -63,6 +64,7 @@ export default function SortingBox({
           <MenuItem
             key={sorting[1]}
             value={sorting[1]}
+            data-testid={sorting[0]}
             onClick={() => {
               handleClose;
               setCurrentSorting(sorting[1]);

@@ -49,7 +49,8 @@ export default function MyTeam() {
    * @returns a list of TeamMember components
    */
   function teamlist() {
-    if (team.length === 0) return <p>Team is currently empty </p>;
+    if (team.length === 0)
+      return <p data-testid="Empty_team_message">Team is currently empty </p>;
     return team.map((_id: string, count: number) => (
       <div
         onClick={() => setSelectedPokemonFunc(_id, count)}

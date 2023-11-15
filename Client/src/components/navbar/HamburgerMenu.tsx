@@ -36,6 +36,7 @@ export default function FadeMenu() {
         style={{
           marginRight: "20px",
         }}
+        data-testid="hamburger_menu"
       >
         <MenuIcon />
       </Button>

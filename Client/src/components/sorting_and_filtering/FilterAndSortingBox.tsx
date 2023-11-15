@@ -89,6 +89,7 @@ export default function FilterAndSortingBox() {
       <Button
         sx={{ height: "100px", padding: "20px", width: "100%" }}
         variant="outlined"
+        data-testid="filter_button"
         onClick={handleOpen}
       >
         Filters/Sorting
@@ -98,6 +99,7 @@ export default function FilterAndSortingBox() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        data-testid="filter-box-modal"
       >
         <Box sx={modalBoxStyles}>
           <div className="filter_sorting_dropdowns">
@@ -151,6 +153,7 @@ export default function FilterAndSortingBox() {
                 "&:hover": { backgroundColor: "lightgreen", boxShadow: 10 },
               }}
               onClick={handleApplyFilter}
+              data-testid="apply-filter-button"
             >
               Apply
             </Button>

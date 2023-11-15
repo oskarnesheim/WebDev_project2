@@ -15,14 +15,26 @@ export default function Navbar() {
       {windowSize < 700 ? (
         <HamburgerMenu />
       ) : (
-        <div className="navbar">
-          <h2 className="pokedex-link" onClick={() => navigate("/")}>
+        <div className="navbar" data-testid="navbar">
+          <h2
+            className="pokedex-link"
+            data-testid="pokedex_link_button"
+            onClick={() => navigate("/")}
+          >
             Pokedex
           </h2>
-          <h3 className="myteam-link" onClick={() => navigate("/myteam")}>
+          <h3
+            className="myteam-link"
+            data-testid="myteam_link_button"
+            onClick={() => navigate("/myteam")}
+          >
             My Team <BusinessCenterOutlinedIcon />
           </h3>
-          <h3 className="about-link" onClick={() => navigate("/about")}>
+          <h3
+            className="about-link"
+            data-testid="about_link_button"
+            onClick={() => navigate("/about")}
+          >
             About
           </h3>
         </div>

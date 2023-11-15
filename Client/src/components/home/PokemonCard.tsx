@@ -47,6 +47,7 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
     <Card
       onClick={() => navigate("/" + PokemonData._id.toString())}
       className="pokemon-card"
+      data-testid={PokemonData._id}
       style={{
         display: "flex",
         flexDirection: "column",
