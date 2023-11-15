@@ -4,12 +4,10 @@ import SortingBox from "../sorting_and_filtering/SortingBox";
 
 describe("SortingBox", () => {
   test("Checks that all the sorting options are rendered", async () => {
-    const currentSorting = "";
-    const setCurrentSorting = () => {};
+    const setCurrentSorting = () => { };
 
     const { getByRole, getByText } = render(
       <SortingBox
-        currentSorting={currentSorting}
         setCurrentSorting={setCurrentSorting}
       />,
     );
@@ -42,7 +40,6 @@ describe("SortingBox", () => {
 
     const { getByRole, getAllByText } = render(
       <SortingBox
-        currentSorting={currentSorting}
         setCurrentSorting={setCurrentSorting}
       />,
     );

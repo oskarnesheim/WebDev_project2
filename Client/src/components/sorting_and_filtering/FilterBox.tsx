@@ -70,7 +70,19 @@ export default function FilterBox({
         TransitionComponent={Fade}
       >
         {filters.map((filter) => (
-          <MenuItem key={filter[0]}>
+          <MenuItem key={filter[0]}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                if (currentFilters.includes(filter[0])) {
+                  setCurrentFilter(
+                    currentFilters.filter((f) => f !== filter[0]),
+                  );
+                } else {
+                  setCurrentFilter([...currentFilters, filter[0]]);
+                }
+              }
+            }}>
             <FormControlLabel
               control={
                 <Checkbox

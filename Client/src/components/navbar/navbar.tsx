@@ -16,13 +16,13 @@ export default function Navbar() {
         <HamburgerMenu />
       ) : (
         <div className="navbar">
-          <h2 className="pokedex-link" onClick={() => navigate("/")}>
+          <h2 tabIndex={0} className="pokedex-link" onClick={() => navigate("/")} onKeyDown={(event) => { if (event.key === 'Enter') navigate("/"); }}>
             Pokedex
           </h2>
-          <h3 className="myteam-link" onClick={() => navigate("/myteam")}>
+          <h3 tabIndex={0} className="myteam-link" onClick={() => navigate("/myteam")} onKeyDown={(event) => { if (event.key === 'Enter') navigate("/myteam"); }}>
             My Team <BusinessCenterOutlinedIcon />
           </h3>
-          <h3 className="about-link" onClick={() => navigate("/about")}>
+          <h3 tabIndex={0} className="about-link" onClick={() => navigate("/about")} onKeyDown={(event) => { if (event.key === 'Enter') navigate("/about"); }}>
             About
           </h3>
         </div>

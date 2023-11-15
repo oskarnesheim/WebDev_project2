@@ -4,16 +4,15 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { Box } from "@mui/material";
+import styled from "@mui/material/styles/styled";
 import sortings from "../../assets/Sortings";
 import ArrowDropDownCircleOutlinedIcon from "@mui/icons-material/ArrowDropDownCircleOutlined";
 
 type SortingBoxType = {
-  currentSorting: string;
   setCurrentSorting: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function SortingBox({
-  currentSorting,
   setCurrentSorting,
 }: SortingBoxType) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -26,6 +25,11 @@ export default function SortingBox({
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const StyledMenuItem = styled(MenuItem)(() => ({
+    '&.Mui-focusVisible': {
+      backgroundColor: 'lightblue',
+    },
+  }));
 
   return (
     <Box>
@@ -53,20 +57,22 @@ export default function SortingBox({
         TransitionComponent={Fade}
       >
         {sortings.map((sorting) => (
-          <MenuItem
+          <StyledMenuItem
             key={sorting[1]}
             value={sorting[1]}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                event.preventDefault();
+                setCurrentSorting(sorting[1]);
+              }
+            }}
             onClick={() => {
               handleClose;
               setCurrentSorting(sorting[1]);
             }}
-            style={{
-              backgroundColor:
-                currentSorting === sorting[1] ? "lightblue" : "white",
-            }}
           >
             {sorting[0]}
-          </MenuItem>
+          </StyledMenuItem>
         ))}
       </Menu>
     </Box>
