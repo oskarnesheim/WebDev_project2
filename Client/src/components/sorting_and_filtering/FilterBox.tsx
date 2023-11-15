@@ -52,6 +52,7 @@ export default function FilterBox({
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        data-testid="filter-list-button"
         sx={{
           backgroundColor: "primary.main",
           color: "white",
@@ -77,7 +78,7 @@ export default function FilterBox({
         TransitionComponent={Fade}
       >
         {filters.map((filter) => (
-          <MenuItem key={filter[0]}>
+          <MenuItem key={filter[0]} data-testid={filter[0]}>
             <FormControlLabel
               control={
                 <Checkbox
