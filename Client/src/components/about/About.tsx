@@ -71,7 +71,7 @@ export default function About() {
         variant="h4"
         sx={{ marginTop: "5vh", color: "primary.light" }}
       >
-        Gonna catch them all!
+        Gotta Catch 'Em All!
       </Typography>
       <img
         src={pokeBall}

@@ -4,8 +4,8 @@ import SortingBox from "../sorting_and_filtering/SortingBox";
 
 describe("SortingBox", () => {
   test("Checks that all the sorting options are rendered", async () => {
-    const currentSorting = "";
     const setCurrentSorting = () => {};
+    const currentSorting = "";
 
     const { getByRole, getByText } = render(
       <SortingBox
@@ -15,7 +15,8 @@ describe("SortingBox", () => {
     );
 
     const sortings = [
-      "None",
+      "ID increasing (default)",
+      "ID decreasing",
       "A-Z",
       "Z-A",
       "XP increasing",
@@ -23,7 +24,7 @@ describe("SortingBox", () => {
       "kg increasing",
       "kg decreasing",
     ];
-    fireEvent.click(getByRole("button", { name: "Sorting" }));
+    fireEvent.click(getByRole("button", { name: "Choose Sorting" }));
     sortings.forEach((sorting) => {
       const option = getByText(sorting);
       expect(option).toBeTruthy();
@@ -47,7 +48,7 @@ describe("SortingBox", () => {
       />,
     );
 
-    fireEvent.click(getByRole("button", { name: "Sorting" }));
+    fireEvent.click(getByRole("button", { name: "Choose Sorting" }));
     const option = getAllByText("XP increasing");
     fireEvent.click(option[1]);
     expect(currentSorting).toBe("base_experience,1");
@@ -56,7 +57,7 @@ describe("SortingBox", () => {
     fireEvent.click(option2[1]);
     expect(currentSorting).toBe("name,-1");
 
-    const option3 = getAllByText("None");
+    const option3 = getAllByText("ID increasing (default)");
     fireEvent.click(option3[1]);
     expect(currentSorting).toBe("_id,1");
   });

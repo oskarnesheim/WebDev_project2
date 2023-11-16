@@ -56,6 +56,7 @@ export default function Arrowbuttons({
         variant="contained"
         color="primary"
         onClick={() => moveBy("right")}
+        data-testid="right_button_team"
       >
         <ArrowForwardIcon />
       </Button>

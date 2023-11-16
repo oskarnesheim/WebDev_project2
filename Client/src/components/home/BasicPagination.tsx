@@ -46,6 +46,7 @@ export default function BasicPagination() {
         variant="outlined"
         size={getSize()}
         shape="rounded"
+        data-testid="pagination"
       />
     </div>
   );
