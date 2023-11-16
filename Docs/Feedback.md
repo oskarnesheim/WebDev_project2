@@ -59,20 +59,16 @@ _In this delivery we also got feedback from 7 groups. Most of the feedback were 
 **Solution:** Embarassing, but we have fixed it now.
 
 **Feedback:** Search includes every pokemon which got the given string. Should show pokemons which starts on the letters first.<br>
-**Solution:** We see the point of this and would change the search if we had more time. But we have not prioritized this.
+**Solution:** We have changed the search to only show pokemons which starts on the given string. 
 
 **Feedback:** Filtering works as a logical OR. Should include a logical AND.<br>
 **Solution:** Indeed would be nice to have a logical AND, but we have not prioritized this.
 
 **Feedback:** Some styling is inline and some styling is in seperate css files.<br>
-###############################################################<br>
-**Solution:** @Johannes??<br>
-###############################################################
+**Solution:** We have removed inline styling where it is possible. There are som places where we use variables from the code in the styling. Here we have chosen to continue with inline styling. We also have inline styling for MUI components as you cannot style those in .css files.<br>
 
 **Feedback:** The file with GraphQL queries is exporting functions while it can be changed to just export constants.<br>
-###############################################################<br>
-**Solution:** @Oskar??<br>
-###############################################################
+**Solution:** We changed GraphQLQueris so the files exports graphql queris instead of funtions with the queries inside.<br>
 
 **Feedback:** It is not intuitive what the black box on the myteam page is doing.<br>
 **Solution:** Changed the box to automaticly select the first pokemon in the team, and show a text if your team is empty.
