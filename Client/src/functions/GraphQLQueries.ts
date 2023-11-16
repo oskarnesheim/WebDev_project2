@@ -1,7 +1,6 @@
 import { gql } from "@apollo/client";
 
-export function findSinglePokemon() {
-  const q = gql`
+  export const findSinglePokemon = gql`
     query query($_id: Int!) {
       pokemon(_id: $_id) {
         _id
@@ -25,11 +24,8 @@ export function findSinglePokemon() {
       }
     }
   `;
-  return q;
-}
 
-export function getPokemons() {
-  const q = gql`
+  export const getPokemons = gql`
     query MyQuery(
       $sorting: [[String]]
       $filters: [String]
@@ -62,11 +58,8 @@ export function getPokemons() {
       )
     }
   `;
-  return q;
-}
 
-export function getReviews() {
-  const q = gql`
+  export const getReviews = gql`
     query query($pokemonID: Int!) {
       reviewsForPokemon(pokemonID: $pokemonID) {
         userID
@@ -76,8 +69,6 @@ export function getReviews() {
       }
     }
   `;
-  return q;
-}
 
 export const ADD_REVIEW = gql`
   mutation AddReview(

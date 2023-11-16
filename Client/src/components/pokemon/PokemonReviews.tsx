@@ -13,7 +13,7 @@ type PokemonReviewProps = {
 export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
-  const { loading, error, data } = useQuery(getReviews(), {
+  const { loading, error, data } = useQuery(getReviews, {
     variables: { pokemonID: _id },
     fetchPolicy: "network-only",
   });
@@ -31,7 +31,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
   };
 
   const [addReview] = useMutation(ADD_REVIEW, {
-    refetchQueries: [{ query: getReviews(), variables: { pokemonID: _id } }],
+    refetchQueries: [{ query: getReviews, variables: { pokemonID: _id } }],
   });
 
   function getUserID() {

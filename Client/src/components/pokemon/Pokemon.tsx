@@ -19,7 +19,7 @@ export default function Pokemon() {
   };
 
   const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
-  const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
+  const { loading, error, data } = useQuery(findSinglePokemon, { variables });
 
   if (loading) {
     return <CircularProgress />;

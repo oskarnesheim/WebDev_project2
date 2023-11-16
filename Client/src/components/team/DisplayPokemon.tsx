@@ -34,7 +34,7 @@ export default function DisplayPokemon({
     _id: parseInt(selectedPokemon[0]),
   };
   const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
-  const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
+  const { loading, error, data } = useQuery(findSinglePokemon, { variables });
 
   if (loading) {
     return <CircularProgress />;
