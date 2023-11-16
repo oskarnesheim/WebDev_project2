@@ -64,7 +64,17 @@ export default function FadeMenu() {
           );
         })}
       </Menu>
-      <h1>Pokedex</h1>
+      <h2
+        className="pokedex-link"
+        data-testid="pokedex_link_button"
+        onClick={() => navigate("/")}
+        tabIndex={0}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") navigate("/");
+        }}
+      >
+        Pokedex
+      </h2>
     </div>
   );
 }
