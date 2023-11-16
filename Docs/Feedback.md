@@ -41,13 +41,13 @@ _In this delivery we also got feedback from 7 groups. Most of the feedback were 
 **Solution:** This was something we did not catch when testing. Changed ID to default and named it _ID increasing (default)_. Also changed the reset button to reset to default.
 
 **Feedback:** You don't get a visuall response when selected filters and sorting.<br>
-**Solution:** Make a test-box inside the "filter and sorting"-box which shows the current filters and sorting you have selected.
+**Solution:** Make a preview-box inside the "filter and sorting"-box which shows the selected filters and sorting.
 
 **Feedback:** The page can't handle refresh.<br>
 **Solution:** This was due to some wrong setup of Apache. Fixed now.
 
 **Feedback:** The pokemon pictures are low quality.<br>
-**Solution:** The same feedback as in delivery 1, and same solution (Keep pictures).
+**Solution:** The same feedback as in delivery 1, and same solution (Keep pictures). We are going for a retro style.
 
 **Feedback:** Miss sorting on pokemon ID.<br>
 **Solution:** Added sorting on pokemon ID, and made this default.
