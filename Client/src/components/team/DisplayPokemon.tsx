@@ -14,6 +14,7 @@ import ArrowButtons from "./ArrowButtons";
 import PokemonCard from "../home/PokemonCard";
 import { removeFromTeam } from "./TeamFunctions";
 import { PokemonCardI } from "../../interfaces/pokemon";
+import { useEffect } from "react";
 
 type Props = {
   selectedPokemon: [string, number];
@@ -35,6 +36,13 @@ export default function DisplayPokemon({
   };
   const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
   const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
+
+  useEffect(() => {
+    if (selectedPokemon)
+      if (selectedPokemon[0] === "0" && team.length > 0) {
+        setSelectedPokemon([team[0], 0]);
+      }
+  }, [selectedPokemon, team, setSelectedPokemon]);
 
   if (loading) {
     return <CircularProgress />;
@@ -66,7 +74,7 @@ export default function DisplayPokemon({
    * @returns div with the selected Pokemon's info
    */
   function selectedInfo() {
-    const pokeName = selectedPokemon[0];
+    // const pokeName = selectedPokemon[0];
     if (team.length === 0) {
       return (
         <div className="selected-Info">
@@ -76,9 +84,9 @@ export default function DisplayPokemon({
         </div>
       );
     }
-    if (pokeName === "0") {
-      setSelectedPokemon([team[0], 0]);
-    } else
+    // if (pokeName === "0") {
+    //   setSelectedPokemon([team[0], 0]);
+    else
       return (
         <div className="selected-Info">
           <div className="container" onClick={redirectToPokemon}>

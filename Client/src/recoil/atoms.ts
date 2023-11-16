@@ -15,38 +15,77 @@ export function removeFromFilter(filter: string) {
   return filterBy;
 }
 
-// Define your atom without the default value being read from storage directly
-export const recoilMyTeam = atom<string[]>({
+/**
+ * Global state: MyTeam loaded from local storage
+ */
+export const recoilMyTeam = atom({
   key: "myTeam",
-  default: [], // initialize with a sensible default or an empty array
+  default: getTeam() as string[],
 });
 
+
+/**
+ * Global state: MyTeam loaded from local storage
+ */
+function getTeam() {
+  const team: string[] = JSON.parse(localStorage.getItem("team")!);
+  if (!team) {
+    localStorage.setItem("team", JSON.stringify([]));
+    return [];
+  }
+  return team;
+}
+
+
+/**
+ * Global state: Filter by
+ */
 export const recoilFilterBy = atom<string[]>({
   key: "filterBy",
   default: [],
 });
 
+
+/**
+ * Global state: Sort by
+ */
 export const recoilSortBy = atom<string>({
   key: "sortBy",
   default: "_id,1",
 });
 
+
+/**
+ * Global state: Search string
+ */
 export const recoilSearch = atom<string>({
   key: "search",
   default: "",
 });
 
+
+/**
+ * Global state: Page number
+ */
 export const recoilPage = atom<number>({
   key: "page",
   default: 1,
 });
 
+/**
+ * Global state: Max page number
+ */
 export const recoilMaxPage = atom<number>({
   key: "maxPage",
   default: 15,
 });
 
-// A utility function to safely parse JSON from storage
+/**
+ * Function to safely parse JSON from storage
+ * @param value  The value to be parsed
+ * @param defaultValue  The default value to use if the value is not found
+ * @returns  The parsed value or the default value
+ */
 function safeParse<T>(value: string | null, defaultValue: T): T {
   if (value === null) return defaultValue;
   try {
@@ -57,7 +96,13 @@ function safeParse<T>(value: string | null, defaultValue: T): T {
   }
 }
 
-// Functions to initialize state from storage
+/**
+ * Function to initialize state from storage
+ * @param setStateFunction  The function to set the state
+ * @param storage  socalstorage/sessionstorage
+ * @param key   The key to use to retrieve the value from storage ex "filterBy"
+ * @param defaultValue  The default value to use if the value is not found
+ */
 export function initializeStateFromStorage<T>(
   setStateFunction: (val: T) => void,
   storage: Storage,
@@ -69,7 +114,13 @@ export function initializeStateFromStorage<T>(
   setStateFunction(parsedValue);
 }
 
-// Functions to handle storage updates
+
+/**
+ *  Function to update storage on change
+ * @param key  The key to use to retrieve the value from storage ex "filterBy"
+ * @param value  The value to be stored
+ * @param storage  socalstorage/sessionstorage
+ */
 export function updateStorageOnChange<T>(
   key: string,
   value: T,
