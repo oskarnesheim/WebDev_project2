@@ -18,12 +18,11 @@ The app is hosted on NTNU's servers. This means that in order to visit the webpa
 
 - http://it2810-08.idi.ntnu.no/project2/
 
-
 ## Start the App locally
 
 ### Environment variables
 
-To be able to run the app, you need to create a `.env` file in the root folder. This file should contain the following variables:
+To be able to run the app, you need to create a `.env` file in the folder you choose to run the app from (Client or root (or both)). This file should contain the following variables:
 
 ```
 NODE_ENV = development
@@ -40,8 +39,6 @@ Run the following command all 3 places:
 npm install
 ```
 
-Then go to `localhost:6969` in your browser.
-
 ### Run the app in one terminal
 
 After installing the dependencies, you have the choice to run the app with one terminal, or run the client and server in seperate terminals.
@@ -51,7 +48,8 @@ To run one terminal, you can run the following command in the root folder:
 ```
 npm start
 ```
-Then you go to the localhost given given.
+
+Then you go to `http://localhost:5173/project2`.
 
 ### Starting server and client in seperate terminals
 
@@ -77,6 +75,8 @@ Open in browser by writing:
 o
 ```
 
+Or go to `http://localhost:5173/project2`.
+
 ## Tech Stack
 
 The tech stack used in this project is the following:
@@ -94,11 +94,11 @@ The tech stack used in this project is the following:
 
 ## Frontend
 
-The frontend can be found in the `client` folder, and is built with React and TypeScript. For global state management we use Recoil. 
+The frontend can be found in the `client` folder, and is built with React and TypeScript. For global state management we use Recoil.
 
-We decided to with Recoil for local state management. Recoil makes it easy for all components to use the same state without passing props. This results in a clean code that is easy to understand. This decision was based on previous experience with the technology and recommendation in the project description. We used Recoil for storing state about search, filter, sorting, page and maxpage when a user goes to pokemon or “My Team” and back to the homepage.
+We decided to use Recoil for local state management. Recoil makes it easy for all components to use the same state without passing props. This results in a clean code that is easy to understand. This decision was based on previous experience with the technology and recommendation in the project description. We used Recoil for storing state about search, filter, sorting, page and maxpage when a user goes to pokemon or “My Team” and back to the homepage.
 
-For fetching and caching data from the backend we use Apollo client with Graphql. This way we are able to get just the data we need for each query. An example is when fetching information about a pokemon. If we would have used REST API we would get all the information pokemon, when in reality we just needed maybe 6 attributes. 
+For fetching and caching data from the backend we use Apollo client with Graphql. This way we are able to get just the data we need for each query. An example is when fetching information about a pokemon. If we would have used REST API we would get all the information pokemon, when in reality we just needed maybe 6 attributes.
 
 For styling we use Material UI. Material UI is a component library that makes it easy to create responsive and good looking components. It is widely used and has very good documentation and support with React.
 
@@ -116,7 +116,7 @@ The decision to work with Mongoose was based on the fact that it is a popular li
 
 The database we used for this project is MongoDB. We host the **database** on NTNU's server, which is only accessible from NTNU's network or via a VPN. The database contains 300 pokemons from the first and second generation. The data is fetched from [PokeAPI](https://pokeapi.co/). In addition to pokemons, the database also saves the reviews the different users publish about the pokemons.
 
-We decided to use Mongodb because of its high performance and ease of use. The data is stored in BSON (Binary JSON) which is an advantage for developers used to working with JSON. All the members in the group have experience working with JSON, so it made sense to work with it this time as well. 
+We decided to use Mongodb because of its high performance and ease of use. The data is stored in BSON (Binary JSON) which is an advantage for developers used to working with JSON. All the members in the group have experience working with JSON, so it made sense to work with it this time as well.
 
 ## Testing
 
@@ -124,17 +124,24 @@ We decided to use Mongodb because of its high performance and ease of use. The d
 
 We have created multiple tests for checking our application's behavior. Our project so far includes testing of various functionalities such as navigation, searching, filtering and sorting. (Testing of review form is under maintenance for now).
 
+### End-to-end testing
+
+We created end-to-end tests for several scenarios. Our tests cover mostly functionality of the app except testing to publish a review. The reason we don’t have review tests is written in our choices doc LINK HERE!! By testing a series of user-interactions, we get to see how the app performs when people use it. The tests are also important for discovering errors. An example is when a group member refactored the recoil-functionality and did something wrong which caused the team-function to not work as intended. Then this was quickly discovered due to a failed test.
+
 #### Running the tests
 
-Make sure you are in the /Client folder and run the following command:
+Make sure you are in the /Client folder and run the following commands:
+Component tests:
 
 ```
 npm test
 ```
 
-### End-to-end testing
+End-to-end tests:
 
-TODO: write about end-to-end testing
+```
+npm e2e
+```
 
 ## Responsive Design
 
@@ -143,6 +150,3 @@ TODO: write about responsive design
 ## Sustainability
 
 TODO: write about sustainability
-
-
-heisann

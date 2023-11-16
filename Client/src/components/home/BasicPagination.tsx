@@ -10,7 +10,6 @@ export default function BasicPagination() {
   const [width, setWidth] = useState<number>(window.innerWidth);
 
   function setPage(page: number) {
-    console.log("page: ", page);
     sessionStorage.setItem("page", JSON.stringify(page));
     setRecPage(page);
   }
