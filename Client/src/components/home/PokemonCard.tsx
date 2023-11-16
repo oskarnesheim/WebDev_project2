@@ -81,7 +81,6 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
         }}
       />
       <img
-        style={{ height: "1%" }}
         src={PokemonData.sprites.front_default}
         alt="Cool picture of a Pokémon"
       />

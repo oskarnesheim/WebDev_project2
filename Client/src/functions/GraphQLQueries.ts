@@ -1,74 +1,74 @@
 import { gql } from "@apollo/client";
 
-  export const findSinglePokemon = gql`
-    query query($_id: Int!) {
-      pokemon(_id: $_id) {
-        _id
-        name
-        height
-        weight
-        stats {
-          stat {
-            name
-          }
-          base_stat
+export const findSinglePokemon = gql`
+  query query($_id: Int!) {
+    pokemon(_id: $_id) {
+      _id
+      name
+      height
+      weight
+      stats {
+        stat {
+          name
         }
-        sprites {
-          front_default
-        }
-        types {
-          type {
-            name
-          }
+        base_stat
+      }
+      sprites {
+        front_default
+      }
+      types {
+        type {
+          name
         }
       }
     }
-  `;
+  }
+`;
 
-  export const getPokemons = gql`
-    query MyQuery(
-      $sorting: [[String]]
-      $filters: [String]
-      $range: [Int]
-      $search: String
+export const getPokemons = gql`
+  query MyQuery(
+    $sorting: [[String]]
+    $filters: [String]
+    $range: [Int]
+    $search: String
+  ) {
+    pokemonsSortedAndFiltered(
+      sorting: $sorting
+      filters: $filters
+      search: $search
+      range: $range
     ) {
-      pokemonsSortedAndFiltered(
-        sorting: $sorting
-        filters: $filters
-        search: $search
-        range: $range
-      ) {
-        _id
-        name
-        base_experience
-        weight
-        types {
-          type {
-            name
-          }
-        }
-        sprites {
-          front_default
+      _id
+      name
+      base_experience
+      weight
+      types {
+        type {
+          name
         }
       }
-      numberOfPokemonsThatMatchesSearch(
-        sorting: $sorting
-        filters: $filters
-        search: $search
-      )
+      sprites {
+        front_default
+      }
     }
-  `;
+    numberOfPokemonsThatMatchesSearch(
+      sorting: $sorting
+      filters: $filters
+      search: $search
+    )
+  }
+`;
 
-  export const getReviews = gql`
-    query query($pokemonID: Int!) {
-      reviewsForPokemon(pokemonID: $pokemonID) {
-        userID
-        pokemonID
-        rating
-        description
-      }
+export const getReviews = gql`
+  query query($pokemonID: Int!) {
+    reviewsForPokemon(pokemonID: $pokemonID) {
+      userID
+      pokemonID
+      rating
+      description
     }
-  `;
+  }
+`;
 
 export const ADD_REVIEW = gql`
   mutation AddReview(

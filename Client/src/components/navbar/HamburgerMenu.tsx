@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 
 export default function FadeMenu() {
-  const location = window.location.pathname;
+  // const location = window.location.pathname;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
@@ -54,7 +54,8 @@ export default function FadeMenu() {
           return (
             <MenuItem
               style={{
-                color: location === page[1] ? page[2] : "black",
+                color: "black",
+                // color: location === page[1] ? page[2] : "black",
               }}
               key={page[0]}
               onClick={() => changePage(page[1])}
