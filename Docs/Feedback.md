@@ -1,8 +1,24 @@
-# Feedback
+# Feedback and version log
 
-In our peer reviews we received different feedback from other students. We have then tried to see on the feedback and improve our application. In this document we will go through the feedback we received and what we have done with it.
+In our peer reviews we received different feedback from other students. We have then tried to see on the feedback and improve our application. In this document we will go through the feedback we received and what we have done with it. We will also provied an version log were we sum up what the features of that version is.
 
 ## Delivery 1
+
+### Version log
+
+_In this version we had implemented the following:_
+
+- Frontend with nearly all functionality including:
+  - Grid with 20 pokemons on home page
+  - Searching functionality
+  - Filtering/sorting functionality
+  - Navbar
+  - Pokemon-stats page
+  - My team page
+  - Reviews for pokemons (saved in localstorage)
+- Mockup data with 20 pokemons
+
+### Feedback
 
 _In this delivery we got feedback from 7 different groups. We have tried to go through all the feedback and how we solved it. We recived several things we could improve and have tried to sum it up in the following:_
 
@@ -32,7 +48,29 @@ _In this delivery we got feedback from 7 different groups. We have tried to go t
 
 ## Delivery 2
 
-_In this delivery we also got feedback from 7 groups. Most of the feedback were positive with little improvments, but there are some things we have changed:_
+### Version log
+
+_In this version we had implemented the following (Changes from delivery 1 are marked in **bold**):_
+
+- Frontend with nearly all functionality including:
+  - Grid with 20 pokemons on home page
+  - Searching functionality
+  - Filtering/sorting functionality (**Improved from V1**)
+  - Navbar (**Improved from V1**)
+  - Pokemon-stats page (**Improved from V1**)
+  - My team page
+  - Reviews for pokemons (saved on **database**)
+  - **Responsive design**
+  - **About page**
+  - **Pageination**
+- **Backend with GraphQL and MongoDB**
+  - **Database with 300 pokemons**
+- **Tests**
+  - **Component tests**
+
+### Feedback
+
+_In this delivery we also got feedback from 7 groups. Most of the feedback were positive with little improvments, but there are some things we have changed for delivery 3:_
 
 **Feedback:** There is a enourmous JSON file in the repository which is not used.<br>
 **Solution:** This was the JSON file used to fill up the database. Had just forgotten to delete it. Deleted it.
@@ -59,7 +97,7 @@ _In this delivery we also got feedback from 7 groups. Most of the feedback were 
 **Solution:** Embarassing, but we have fixed it now.
 
 **Feedback:** Search includes every pokemon which got the given string. Should show pokemons which starts on the letters first.<br>
-**Solution:** We have changed the search to only show pokemons which starts on the given string. 
+**Solution:** We have changed the search to only show pokemons which starts on the given string.
 
 **Feedback:** Filtering works as a logical OR. Should include a logical AND.<br>
 **Solution:** Indeed would be nice to have a logical AND, but we have not prioritized this.
@@ -88,3 +126,26 @@ _In this delivery we also got feedback from 7 groups. Most of the feedback were 
 
 **Feedback:** Error-handeling when going to a page not in use (e.g. /301).<br>
 **Solution:** Add a 404 page.
+
+## Delivery 3
+
+### Version log
+
+_In this version we had implemented the following (Changes from delivery 2 are marked in **bold**):_
+
+- Frontend with nearly all functionality including:
+  - Grid with 20 pokemons on home page
+  - Searching functionality
+  - Filtering/sorting functionality (**Improved from V2**)
+  - Navbar
+  - Pokemon-stats page
+  - My team page (**Improved from V2**)
+  - Reviews for pokemons (saved on database)
+  - Responsive design
+  - About page
+  - Pageination
+- Backend with GraphQL and MongoDB
+  - Database with 300 pokemons
+- Tests
+  - Component tests
+  - **End-to-end tests**
