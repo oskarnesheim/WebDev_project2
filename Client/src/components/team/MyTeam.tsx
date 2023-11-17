@@ -4,7 +4,7 @@ import TeamMember from "./TeamMember";
 import DisplayPokemon from "./DisplayPokemon";
 import { useRecoilState } from "recoil";
 import { recoilMyTeam } from "../../recoil/atoms";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 /**
  * Function that returns a page that displays the user's team
@@ -12,10 +12,11 @@ import { Box } from "@mui/material";
  */
 export default function MyTeam() {
   const [team] = useRecoilState<string[]>(recoilMyTeam);
-  const [selectedPokemon, setSelectedPokemon] = useState<[string, number]>([
-    "0",
-    0,
-  ]); // [pokemon_ID,index]
+  const [selectedPokemon, setSelectedPokemon] = useState<number>(0);
+  // ([
+  //   "0",
+  //   0,
+  // ]); // [pokemon_ID,index]
 
   /**
    * Function that checks if a Pokemon is selected
@@ -23,7 +24,7 @@ export default function MyTeam() {
    * @returns true if the Pokemon is selected, false otherwise
    */
   function checkselected(id: string): boolean {
-    if (selectedPokemon[0] === id) {
+    if (team[selectedPokemon] === id) {
       return true;
     }
     return false;
@@ -35,7 +36,7 @@ export default function MyTeam() {
    * @param index - index of the Pokemon in the team
    */
   function setSelectedPokemonFunc(id: string, index: number) {
-    setSelectedPokemon([id, index]);
+    setSelectedPokemon(index);
     if (window.innerWidth < 1200) {
       window.scrollTo({
         top: document.body.scrollHeight,
@@ -77,10 +78,18 @@ export default function MyTeam() {
         <div className="team-grid">{teamlist()}</div>
         <h2>{team.length}/6</h2>
       </Box>
-      <DisplayPokemon
-        selectedPokemon={selectedPokemon}
-        setSelectedPokemon={setSelectedPokemon}
-      />
+      {team.length === 0 ? (
+        <div className="selected-Info">
+          <Typography variant="body1">
+            Pokemons will be displayed here once you add them to your team.
+          </Typography>
+        </div>
+      ) : (
+        <DisplayPokemon
+          selectedPokemon={selectedPokemon}
+          setSelectedPokemon={setSelectedPokemon}
+        />
+      )}
     </div>
   );
 }

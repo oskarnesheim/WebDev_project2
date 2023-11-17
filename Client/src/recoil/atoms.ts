@@ -19,10 +19,9 @@ export function removeFromFilter(filter: string) {
  * Global state: MyTeam loaded from local storage
  */
 export const recoilMyTeam = atom({
-  key: "myTeam",
+  key: "myTeamAtom",
   default: getTeam() as string[],
 });
-
 
 /**
  * Global state: MyTeam loaded from local storage
@@ -36,39 +35,35 @@ function getTeam() {
   return team;
 }
 
-
 /**
  * Global state: Filter by
  */
 export const recoilFilterBy = atom<string[]>({
-  key: "filterBy",
+  key: "filterByAtom",
   default: [],
 });
-
 
 /**
  * Global state: Sort by
  */
 export const recoilSortBy = atom<string>({
-  key: "sortBy",
+  key: "sortByAtom",
   default: "_id,1",
 });
-
 
 /**
  * Global state: Search string
  */
 export const recoilSearch = atom<string>({
-  key: "search",
+  key: "searchAtom",
   default: "",
 });
-
 
 /**
  * Global state: Page number
  */
 export const recoilPage = atom<number>({
-  key: "page",
+  key: "pageAtom",
   default: 1,
 });
 
@@ -76,7 +71,7 @@ export const recoilPage = atom<number>({
  * Global state: Max page number
  */
 export const recoilMaxPage = atom<number>({
-  key: "maxPage",
+  key: "maxPageAtom ",
   default: 15,
 });
 
@@ -113,7 +108,6 @@ export function initializeStateFromStorage<T>(
   const parsedValue = safeParse(storedValue, defaultValue);
   setStateFunction(parsedValue);
 }
-
 
 /**
  *  Function to update storage on change
