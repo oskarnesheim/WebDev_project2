@@ -8,8 +8,8 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   recoilSearch,
   recoilPage,
-  initializeStateFromStorage,
-  updateStorageOnChange,
+  // initializeStateFromStorage,
+  // updateStorageOnChange
 } from "../../recoil/atoms";
 
 function Searchbar() {
@@ -17,14 +17,14 @@ function Searchbar() {
   const [search, setSearch] = useState<string>(stateSearch);
   const setPage = useSetRecoilState<number>(recoilPage);
 
-  useEffect(() => {
-    initializeStateFromStorage(setStateSearch, sessionStorage, "search", "");
-  }, [setStateSearch]);
+  // useEffect(() => {
+  //   initializeStateFromStorage(setStateSearch, sessionStorage, "search", "");
+  // }, [setStateSearch]);
 
-  useEffect(() => {
-    updateStorageOnChange("search", stateSearch, sessionStorage);
-    updateStorageOnChange("page", 1, sessionStorage);
-  }, [stateSearch]);
+  // useEffect(() => {
+  //   updateStorageOnChange("search", stateSearch, sessionStorage);
+  //   updateStorageOnChange("page", 1, sessionStorage);
+  // }, [stateSearch]);
 
   const updateSearch = useCallback(
     (searchValue: string) => {
