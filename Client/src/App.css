@@ -30,6 +30,8 @@
   cursor: pointer;
 }
 
+/* Team */
+
 .myteam-link {
   width: fit-content;
   color: #ffffff;
@@ -40,13 +42,20 @@
   cursor: pointer;
 }
 
+.team_member_contaienr{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
 .about-link:hover {
   color: green;
   cursor: pointer;
 }
 
 .content_container {
-  top: 10vh;
+  top: 80px;
   position: relative;
   height: calc(100vh - 80px);
 }
@@ -189,6 +198,8 @@
   }
 }
 
+/* Reviews */
+
 .filter_preview {
   margin: 20px 0px;
   display: flex;
@@ -221,6 +232,55 @@
   }
 }
 
+.pokemon_reviews_container{
+  color: white;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #141c24;
+}
+
+.star_rating_container{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.star_rating_label{
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.pokemon_reviews_header{
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.review_error_message{
+  color: red;
+}
+
+.pokemon_review_sub_header{
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.review_list_container{
+  list-style: none;
+  padding: 0;
+}
+
+.review_list_item{
+  padding: 10px;
+  margin: 20px 0;
+  background-color: #141c24;
+}
+
+.review_list_item_star_container{
+  margin-bottom: 10px;
+}
+
+
 /*! Hamburgermenu */
 
 .hamburger_menu_container {
@@ -236,4 +296,29 @@
   left: 0;
   right: 0;
   height: 80px;
+}
+
+
+/*? Errorpage */
+
+.error_page_container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;  
+}
+
+#error_404_icon{
+  width: 500px;
+}
+
+
+/*? Aboutpage */
+
+#pokeball{
+  object-fit: cover;
+  margin-top: 5vh;
+  width: 60vw;
+  height: 15vw;
 }
