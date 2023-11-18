@@ -67,7 +67,6 @@ export default function DisplayPokemon({
           <PokemonCard key={team[selectedPokemon]} PokemonData={PokemonData} />
         </div>
         <ArrowButtons
-          team={team}
           selectedPokemon={selectedPokemon}
           setSelectedPokemon={setSelectedPokemon}
         />
@@ -75,7 +74,7 @@ export default function DisplayPokemon({
           <Tooltip title={"Remove pokemon from your team. "} arrow>
             <Button
               className="box"
-              onClick={() => deleteTeamMember(selectedPokemon[0])}
+              onClick={() => deleteTeamMember(team[selectedPokemon])}
               color="error"
               variant="outlined"
               data-testid="remove_from_team_button"

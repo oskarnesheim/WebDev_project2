@@ -5,33 +5,32 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CircleTwoToneIcon from "@mui/icons-material/CircleTwoTone";
 import Tooltip from "@mui/material/Tooltip";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { recoilMyTeam } from "../../recoil/atoms";
 
 interface Props {
-  team: string[];
-  selectedPokemon: [string, number];
-  setSelectedPokemon: React.Dispatch<React.SetStateAction<[string, number]>>;
+  selectedPokemon: number;
+  setSelectedPokemon: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function Arrowbuttons({
-  team,
   selectedPokemon,
   setSelectedPokemon,
 }: Props) {
+  const [team] = useRecoilState<string[]>(recoilMyTeam);
   const history = useNavigate();
   const redirectToPokemon = () => {
-    // redirects to the selected pokemon
-    history("/" + selectedPokemon[0]);
+    history("/" + team[selectedPokemon]);
   };
 
   function moveBy(direction: string) {
     if (team.length === 1) return;
-    let num = selectedPokemon[1];
+    let num = selectedPokemon;
     if (direction === "right") num += 1;
     if (direction === "left") num -= 1;
     if (num === -1) num = team.length - 1;
     if (num === team.length) num = 0;
-    if (num === team.length + 1) num = 1;
-    setSelectedPokemon([team[num], num]);
+    setSelectedPokemon(num);
   }
 
   return (

@@ -13,10 +13,6 @@ import { Box, Typography } from "@mui/material";
 export default function MyTeam() {
   const [team] = useRecoilState<string[]>(recoilMyTeam);
   const [selectedPokemon, setSelectedPokemon] = useState<number>(0);
-  // ([
-  //   "0",
-  //   0,
-  // ]); // [pokemon_ID,index]
 
   /**
    * Function that checks if a Pokemon is selected
@@ -35,7 +31,7 @@ export default function MyTeam() {
    * @param id - Pokemon ID
    * @param index - index of the Pokemon in the team
    */
-  function setSelectedPokemonFunc(id: string, index: number) {
+  function setSelectedPokemonFunc(index: number) {
     setSelectedPokemon(index);
     if (window.innerWidth < 1200) {
       window.scrollTo({
@@ -55,10 +51,10 @@ export default function MyTeam() {
     return team.map((_id: string, count: number) => (
       <div
         tabIndex={0}
-        onClick={() => setSelectedPokemonFunc(_id, count)}
+        onClick={() => setSelectedPokemonFunc(count)}
         onKeyDown={(event) => {
           if (event.key === "Enter") {
-            setSelectedPokemonFunc(_id, count);
+            setSelectedPokemonFunc(count);
           }
         }}
         className="team-grid-child"

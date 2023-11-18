@@ -17,12 +17,10 @@ function Searchbar() {
   const [search, setSearch] = useState<string>(stateSearch);
   const setPage = useSetRecoilState<number>(recoilPage);
 
-  // Initialize state from sessionStorage
   useEffect(() => {
     initializeStateFromStorage(setStateSearch, sessionStorage, "search", "");
   }, [setStateSearch]);
 
-  // Update sessionStorage whenever state changes
   useEffect(() => {
     updateStorageOnChange("search", stateSearch, sessionStorage);
     updateStorageOnChange("page", 1, sessionStorage);
@@ -71,19 +69,14 @@ function Searchbar() {
           </InputAdornment>
         ),
         style: {
-          // height removed, consider using min-height if necessary
-          minHeight: "100px", // default for MUI TextField
-          padding: "10px", // Adjust padding to vertically center the text
+          minHeight: "100px",
+          padding: "10px",
           color: "white",
-          // backgroundColor: "rgba(0,0,0,0.5)",
-          // Removed width as fullWidth prop is used
         },
       }}
       InputLabelProps={{
         style: {
           color: "white",
-          // Make sure the label is positioned correctly
-          // lineHeight: '1', // Uncomment if needed
         },
       }}
     />
