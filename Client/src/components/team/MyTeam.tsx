@@ -27,8 +27,7 @@ export default function MyTeam() {
   }
 
   /**
-   * Function that sets the selected Pokemon and scrolls to the bottom of the page
-   * @param id - Pokemon ID
+   *  Function that sets the selectedPokemon state to the index of the Pokemon in the team
    * @param index - index of the Pokemon in the team
    */
   function setSelectedPokemonFunc(index: number) {
