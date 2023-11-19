@@ -28,8 +28,6 @@ export default function Navbar() {
       setFilterBy([]);
       updateStorageOnChange("filterBy", [], sessionStorage);
     }
-    setFilterBy([]);
-    updateStorageOnChange("filterBy", [], sessionStorage);
     if (sortBy !== "_id,1") {
       setSortBy("_id,1");
       updateStorageOnChange("sortBy", "_id,1", sessionStorage);
