@@ -5,26 +5,16 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import {
-  recoilSearch,
-  recoilPage,
-  // initializeStateFromStorage,
-  // updateStorageOnChange
-} from "../../recoil/atoms";
+import { recoilSearch, recoilPage } from "../../recoil/atoms";
 
 function Searchbar() {
   const [stateSearch, setStateSearch] = useRecoilState<string>(recoilSearch);
   const [search, setSearch] = useState<string>(stateSearch);
   const setPage = useSetRecoilState<number>(recoilPage);
 
-  // useEffect(() => {
-  //   initializeStateFromStorage(setStateSearch, sessionStorage, "search", "");
-  // }, [setStateSearch]);
-
-  // useEffect(() => {
-  //   updateStorageOnChange("search", stateSearch, sessionStorage);
-  //   updateStorageOnChange("page", 1, sessionStorage);
-  // }, [stateSearch]);
+  useEffect(() => {
+    setSearch(stateSearch);
+  }, [stateSearch]);
 
   const updateSearch = useCallback(
     (searchValue: string) => {

@@ -8,6 +8,7 @@ import {
   recoilSortBy,
   recoilPage,
   recoilSearch,
+  updateStorageOnChange,
 } from "../../recoil/atoms";
 
 export default function Navbar() {
@@ -23,10 +24,23 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const logoOnclick = () => {
+    if (filterBy.length !== 0) {
+      setFilterBy([]);
+      updateStorageOnChange("filterBy", [], sessionStorage);
+    }
     setFilterBy([]);
-    setSortBy("_id,1");
-    setPage(1);
-    setSearch("");
+    updateStorageOnChange("filterBy", [], sessionStorage);
+    if (sortBy !== "_id,1") {
+      setSortBy("_id,1");
+      updateStorageOnChange("sortBy", "_id,1", sessionStorage);
+    }
+    if (page !== 1) {
+      setPage(1);
+      updateStorageOnChange("page", 1, sessionStorage);
+    }
+    if (search !== "") {
+      setSearch("");
+    }
     navigate("/");
   };
 
