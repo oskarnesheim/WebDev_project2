@@ -1,8 +1,15 @@
 import { Box, Button, List, Modal, Typography } from "@mui/material";
-import { useState } from "react";
+import { SetStateAction, useState, useEffect } from "react";
+
 import FilterBox from "./FilterBox";
 import SortingBox from "./SortingBox";
-import { recoilFilterBy, recoilSortBy, recoilPage } from "../../recoil/atoms";
+import {
+  recoilFilterBy,
+  recoilSortBy,
+  recoilPage,
+  initializeStateFromStorage,
+  updateStorageOnChange,
+} from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
 import sortings from "../../assets/Sortings";
 
@@ -21,12 +28,31 @@ const modalBoxStyles = {
 
 export default function FilterAndSortingBox() {
   const [open, setOpen] = useState(false);
-  const [currentFilter, setCurrentFilter] =
-    useRecoilState<string[]>(recoilFilterBy);
-  const [sortBy, setSortBy] = useRecoilState<string>(recoilSortBy);
-  const [page, setPage] = useRecoilState<number>(recoilPage);
-  const [tempFilters, setTempFilters] = useState<string[]>(currentFilter);
-  const [tempSortBy, setTempSortBy] = useState<string>(sortBy);
+  const [currentFilter, setCurrentFilter] = useRecoilState(recoilFilterBy);
+  const [sortBy, setSortBy] = useRecoilState(recoilSortBy);
+  const [page, setPage] = useRecoilState(recoilPage);
+  const [tempFilters, setTempFilters] = useState<string[]>([]);
+  const [tempSortBy, setTempSortBy] = useState<string>("");
+
+  // Initialize state from sessionStorage
+  useEffect(() => {
+    initializeStateFromStorage(
+      setCurrentFilter,
+      sessionStorage,
+      "filterBy",
+      [],
+    );
+    initializeStateFromStorage(setSortBy, sessionStorage, "sortBy", "_id,1");
+    initializeStateFromStorage(setPage, sessionStorage, "page", 1);
+  }, [setCurrentFilter, setSortBy, setPage]);
+
+  // Update sessionStorage whenever state changes
+  useEffect(() => {
+    updateStorageOnChange("filterBy", currentFilter, sessionStorage);
+    updateStorageOnChange("sortBy", sortBy, sessionStorage);
+    updateStorageOnChange("page", page, sessionStorage);
+  }, [currentFilter, sortBy, page]);
+
   const handleOpen = () => {
     setTempFilters(currentFilter);
     setTempSortBy(sortBy);
@@ -35,52 +61,27 @@ export default function FilterAndSortingBox() {
 
   const handleClose = () => {
     setOpen(false);
-    // Reset the local state variables if the modal is closed without applying changes
-    updatePage(1);
+    setTempFilters(currentFilter); // Reset temporary states to currentFilter
+    setTempSortBy(sortBy); // Reset temporary states to sortBy
   };
 
   const handleResetFilter = () => {
-    // Reset the local state and storage immediately
-    setCurrentFilter([]);
-    setSortBy("_id,1");
+    const defaultFilters: SetStateAction<string[]> = [];
+    const defaultSort = "_id,1";
 
-    // Reset the session storage (Should be done inside function, but that doesn't work for some reason )
-    sessionStorage.setItem("filterBy", JSON.stringify([]));
-    sessionStorage.setItem("sortBy", JSON.stringify("name,1"));
+    setCurrentFilter(defaultFilters);
+    setSortBy(defaultSort);
+    setTempFilters(defaultFilters);
+    setTempSortBy(defaultSort);
+    setPage(1); // Reset the page to 1
 
-    // Update the local state and local storage for the temporary filters and sorting
-    setTempFilters([]);
-    setTempSortBy("name,1");
-
-    // Update the page immediately
-    updatePage(1);
-
-    // Close the modal
-    handleClose();
+    handleClose(); // Close the modal
   };
 
-  function updateFilterBy(filters: string[]) {
-    sessionStorage.setItem("filterBy", JSON.stringify(filters));
-    setCurrentFilter(tempFilters);
-  }
-
-  function updateSortBy(sort: string) {
-    sessionStorage.setItem("sortBy", JSON.stringify(sort));
-    setSortBy(tempSortBy);
-  }
-
-  function updatePage(pagenr: number) {
-    if (page > 20) {
-      throw new Error("Page number cannot be greater than 20");
-    }
-    sessionStorage.setItem("page", JSON.stringify(pagenr));
-    setPage(pagenr);
-  }
-
   const handleApplyFilter = () => {
-    updateFilterBy(tempFilters);
-    updateSortBy(tempSortBy);
-    updatePage(1);
+    setCurrentFilter(tempFilters);
+    setSortBy(tempSortBy);
+    setPage(1); // Reset the page to 1
     handleClose(); // Close the modal
   };
 
@@ -123,7 +124,11 @@ export default function FilterAndSortingBox() {
                 Active Sorting: <hr />
               </Typography>
               <Typography variant="body1">
-                {sortings.find((sort) => sort[1] === tempSortBy)![0]}
+                {sortings.map((sort) => {
+                  if (sort[1] === tempSortBy) {
+                    return sort[0];
+                  }
+                })}
               </Typography>
             </Box>
             <Box
