@@ -1,9 +1,10 @@
-import { Box, Button, Modal } from "@mui/material";
+import { Box, Button, List, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 import FilterBox from "./FilterBox";
 import SortingBox from "./SortingBox";
 import { recoilFilterBy, recoilSortBy, recoilPage } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
+import sortings from "../../assets/Sortings";
 
 const modalBoxStyles = {
   position: "absolute",
@@ -41,7 +42,7 @@ export default function FilterAndSortingBox() {
   const handleResetFilter = () => {
     // Reset the local state and storage immediately
     setCurrentFilter([]);
-    setSortBy("name,1");
+    setSortBy("_id,1");
 
     // Reset the session storage (Should be done inside function, but that doesn't work for some reason )
     sessionStorage.setItem("filterBy", JSON.stringify([]));
@@ -96,6 +97,7 @@ export default function FilterAndSortingBox() {
       <Button
         sx={{ height: "100px", padding: "20px", width: "100%" }}
         variant="outlined"
+        data-testid="filter_button"
         onClick={handleOpen}
         onFocus={() => handleFocus('Filters and Sorting')}
 
@@ -107,6 +109,7 @@ export default function FilterAndSortingBox() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        data-testid="filter-box-modal"
       >
         <Box sx={modalBoxStyles}>
           <div className="filter_sorting_container" style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -125,16 +128,21 @@ export default function FilterAndSortingBox() {
           <hr />
           <div className="apply_reset_filter">
             <Button
-              style={{ backgroundColor: "green", color: "white" }}
+              sx={{
+                backgroundColor: "green",
+                color: "white",
+                "&:hover": { backgroundColor: "lightgreen", boxShadow: 10 },
+              }}
               onClick={handleApplyFilter}
               onFocus={() => handleFocus('Apply')}
             >
               Apply
             </Button>
             <Button
-              style={{
+              sx={{
                 backgroundColor: "red",
                 color: "white",
+                "&:hover": { backgroundColor: "pink", boxShadow: 10 },
               }}
               onClick={handleResetFilter}
               onFocus={() => handleFocus('Reset')}

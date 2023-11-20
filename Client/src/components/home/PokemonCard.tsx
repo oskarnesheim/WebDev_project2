@@ -92,6 +92,7 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
         }
       }}
       className="pokemon-card"
+      data-testid={PokemonData._id}
       style={{
         display: "flex",
         flexDirection: "column",

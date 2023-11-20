@@ -67,6 +67,7 @@ export default function Arrowbuttons({
         color="primary"
         onFocus={() => handleFocus("Next Pokémon")}
         onClick={() => moveBy("right")}
+        data-testid="right_button_team"
       >
         <ArrowForwardIcon />
       </Button>
