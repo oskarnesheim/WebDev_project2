@@ -61,4 +61,17 @@ describe("SortingBox", () => {
     fireEvent.click(option3[1]);
     expect(currentSorting).toBe("_id,1");
   });
+
+  test("Snapshot test of sorting box", () => {
+    const currentSorting = "";
+    const setCurrentSorting = () => {};
+
+    const page = render(
+      <SortingBox
+        currentSorting={currentSorting}
+        setCurrentSorting={setCurrentSorting}
+      />,
+    );
+    expect(page).toMatchSnapshot();
+  });
 });
