@@ -9,13 +9,10 @@ import sortings from "../../assets/Sortings";
 import ArrowDropDownCircleOutlinedIcon from "@mui/icons-material/ArrowDropDownCircleOutlined";
 
 type SortingBoxType = {
-  setCurrentSorting: React.Dispatch<React.SetStateAction<string>>
+  setCurrentSorting: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function SortingBox({
-  setCurrentSorting,
-  currentSorting,
-}: SortingBoxType) {
+export default function SortingBox({ setCurrentSorting }: SortingBoxType) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
@@ -75,7 +72,8 @@ export default function SortingBox({
         TransitionComponent={Fade}
       >
         {sortings.map((sorting) => (
-          <StyledMenuItem onFocus={() => handleFocus(sorting[0])}
+          <StyledMenuItem
+            onFocus={() => handleFocus(sorting[0])}
             key={sorting[1]}
             value={sorting[1]}
             onKeyDown={(event) => {
@@ -89,10 +87,10 @@ export default function SortingBox({
               handleClose();
               setCurrentSorting(sorting[1]);
             }}
-            style={{
-              backgroundColor:
-                sorting[1] === currentSorting ? "lightblue" : "white",
-            }}
+            // style={{
+            //   backgroundColor:
+            //     sorting[1] === currentSorting ? "lightblue" : "white",
+            // }}
           >
             {sorting[0]}
           </StyledMenuItem>

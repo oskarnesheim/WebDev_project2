@@ -5,13 +5,9 @@ import SortingBox from "../sorting_and_filtering/SortingBox";
 describe("SortingBox", () => {
   test("Checks that all the sorting options are rendered", async () => {
     const setCurrentSorting = () => {};
-    const currentSorting = "";
 
     const { getByRole, getByText } = render(
-      <SortingBox
-        currentSorting={currentSorting}
-        setCurrentSorting={setCurrentSorting}
-      />,
+      <SortingBox setCurrentSorting={setCurrentSorting} />,
     );
 
     const sortings = [
@@ -42,10 +38,7 @@ describe("SortingBox", () => {
     };
 
     const { getByRole, getAllByText } = render(
-      <SortingBox
-        currentSorting={currentSorting}
-        setCurrentSorting={setCurrentSorting}
-      />,
+      <SortingBox setCurrentSorting={setCurrentSorting} />,
     );
 
     fireEvent.click(getByRole("button", { name: "Choose Sorting" }));

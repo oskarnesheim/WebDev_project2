@@ -100,8 +100,7 @@ export default function FilterAndSortingBox() {
         variant="outlined"
         data-testid="filter_button"
         onClick={handleOpen}
-        onFocus={() => handleFocus('Filters and Sorting')}
-
+        onFocus={() => handleFocus("Filters and Sorting")}
       >
         Filters/Sorting
       </Button>
@@ -114,10 +113,7 @@ export default function FilterAndSortingBox() {
       >
         <Box sx={modalBoxStyles}>
           <div className="filter_sorting_dropdowns">
-            <SortingBox
-              currentSorting={tempSortBy}
-              setCurrentSorting={setTempSortBy}
-            />
+            <SortingBox setCurrentSorting={setTempSortBy} />
             <FilterBox
               currentFilters={tempFilters}
               setCurrentFilter={setTempFilters}
@@ -168,7 +164,8 @@ export default function FilterAndSortingBox() {
                 "&:hover": { backgroundColor: "lightgreen", boxShadow: 10 },
               }}
               onClick={handleApplyFilter}
-              onFocus={() => handleFocus('Apply')}
+              onFocus={() => handleFocus("Apply")}
+              data-testid="apply-filter-button"
             >
               Apply
             </Button>
@@ -179,7 +176,7 @@ export default function FilterAndSortingBox() {
                 "&:hover": { backgroundColor: "pink", boxShadow: 10 },
               }}
               onClick={handleResetFilter}
-              onFocus={() => handleFocus('Reset')}
+              onFocus={() => handleFocus("Reset")}
             >
               Reset
             </Button>

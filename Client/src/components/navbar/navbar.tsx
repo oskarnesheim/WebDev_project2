@@ -10,6 +10,7 @@ import {
   recoilSearch,
   updateStorageOnChange,
 } from "../../recoil/atoms";
+import { handleFocus } from "../../functions/GraphQLQueries";
 
 export default function Navbar() {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
@@ -59,10 +60,28 @@ export default function Navbar() {
           >
             Pokedex
           </h2>
-          <h3 tabIndex={0} className="myteam-link" onClick={() => navigate("/myteam")} onKeyDown={(event) => { if (event.key === 'Enter') navigate("/myteam"); }} onFocus={() => handleFocus('My Team')}>
+          <h3
+            tabIndex={0}
+            data-testid="myteam_link_button"
+            className="myteam-link"
+            onClick={() => navigate("/myteam")}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") navigate("/myteam");
+            }}
+            onFocus={() => handleFocus("My Team")}
+          >
             My Team <BusinessCenterOutlinedIcon />
           </h3>
-          <h3 tabIndex={0} className="about-link" onClick={() => navigate("/about")} onKeyDown={(event) => { if (event.key === 'Enter') navigate("/about"); }} onFocus={() => handleFocus('About')}>
+          <h3
+            tabIndex={0}
+            className="about-link"
+            onClick={() => navigate("/about")}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") navigate("/about");
+            }}
+            onFocus={() => handleFocus("About")}
+            data-testid="about_link_button"
+          >
             About
           </h3>
         </div>

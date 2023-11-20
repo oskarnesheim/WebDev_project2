@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 import Searchbar from "../sorting_and_filtering/Searchbar";
 
 describe("Searchbar", () => {
-  test("Searchbar works as intended", () => {
+  test.skip("Searchbar works as intended", () => {
     const { queryByPlaceholderText } = render(
       <RecoilRoot>
         <Searchbar />

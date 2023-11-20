@@ -114,7 +114,7 @@ export default function Pokemon() {
               sx={{
                 color: getButtonInfo(0),
               }}
-              onFocus={() => handleFocus(getButtonInfo(2) || 'Default message')}
+              onFocus={() => handleFocus(getButtonInfo(2) || "Default message")}
               onClick={() => handleOnClick()}
             >
               {getButtonInfo(1)}
