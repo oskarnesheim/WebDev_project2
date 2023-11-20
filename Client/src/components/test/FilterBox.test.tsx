@@ -67,4 +67,17 @@ describe("FilterBox", () => {
     fireEvent.click(option2[1]);
     expect(currentFilters).toContain("water");
   });
+
+  test("Snapshot test of filter box", () => {
+    const currentFilters: string[] = [];
+    const setCurrentFilter = () => {};
+
+    const page = render(
+      <FilterBox
+        currentFilters={currentFilters}
+        setCurrentFilter={setCurrentFilter}
+      />,
+    );
+    expect(page).toMatchSnapshot();
+  });
 });

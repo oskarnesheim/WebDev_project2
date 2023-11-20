@@ -95,6 +95,9 @@ export default function FadeMenu() {
               }}
               key={page[0]}
               onClick={() => changePage(page[1])}
+              data-testid={`${page[0]
+                .toLowerCase()
+                .replace(" ", "")}_link_button`}
             >
               {page[0]}
             </MenuItem>
