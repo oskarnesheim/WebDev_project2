@@ -13,7 +13,7 @@ type PokemonReviewProps = {
 export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
-  const { loading, error, data } = useQuery(getReviews(), {
+  const { loading, error, data } = useQuery(getReviews, {
     variables: { pokemonID: _id },
     fetchPolicy: "network-only",
   });
@@ -31,7 +31,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
   };
 
   const [addReview] = useMutation(ADD_REVIEW, {
-    refetchQueries: [{ query: getReviews(), variables: { pokemonID: _id } }],
+    refetchQueries: [{ query: getReviews, variables: { pokemonID: _id } }],
   });
 
   function getUserID() {
@@ -104,33 +104,18 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "500px",
-        margin: "20px auto",
-        padding: "20px",
-        backgroundColor: "#141c24",
-        color: "white",
-      }}
-    >
+    <div className="pokemon_reviews_container">
       <h2
+        className="pokemon_reviews_header"
         style={{
-          fontSize: "24px",
-          marginBottom: "10px",
           color: theme.palette.primary.main,
         }}
       >
-        Rate and Review <span style={{ color: "transparent" }}>{_id}</span>
+        Rate and Review
       </h2>
       <form onSubmit={(e) => handleAddReview(e)}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "10px",
-          }}
-        >
-          <label style={{ marginRight: "10px", marginTop: "10px" }}>Rate</label>
+        <div className="star_rating_container">
+          <label className="star_rating_label">Rate</label>
           {Array.from({ length: 5 }, (_, index) => (
             <StarIcon
               tabIndex={0}
@@ -185,24 +170,22 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
           {alreadyReviewed(getUserID()) ? "Already reviewed" : "Add review"}
         </Button>
       </form>
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+      {errorMessage && <p className="review_error_message">{errorMessage}</p>}
       <div>
-        <h3 style={{ fontSize: "20px", marginTop: "20px" }}>Reviews</h3>
+        <h3 className="pokemon_review_sub_header">Reviews</h3>
         {data.reviewsForPokemon.length == 0 ? (
           <p>No reviews yet.</p>
         ) : (
-          <ul style={{ listStyle: "none", padding: "0" }}>
+          <ul className="review_list_container">
             {data.reviewsForPokemon.map((review: Review) => (
               <li
                 key={review.userID}
+                className="review_list_item"
                 style={{
                   border: "3px solid " + theme.palette.primary.main,
-                  padding: "10px",
-                  margin: "20px 0",
-                  backgroundColor: "#141c24",
                 }}
               >
-                <div style={{ marginBottom: "10px" }}>
+                <div className="review_list_item_star_container">
                   {Array.from({ length: review.rating }, (_, i) => (
                     <StarIcon
                       key={i}

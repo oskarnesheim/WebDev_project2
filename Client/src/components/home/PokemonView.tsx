@@ -25,7 +25,7 @@ export default function PokemonView() {
     search: search,
   };
 
-  const { loading, error, data } = useQuery(getPokemons(), { variables });
+  const { loading, error, data } = useQuery(getPokemons, { variables });
 
   function getSorting() {
     if (!sorting) {

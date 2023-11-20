@@ -1,24 +1,26 @@
+import "../../App.css";
 import { useEffect, useState, useCallback, ChangeEvent } from "react";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { recoilSearch, recoilPage } from "../../recoil/atoms";
-import { IconButton, TextField } from "@mui/material";
-import { InputAdornment } from "@mui/material";
-import "../../App.css";
-import React from "react";
-import ClearIcon from "@mui/icons-material/Clear";
 
 function Searchbar() {
-  const [stateSearch] = useRecoilState<string>(recoilSearch);
+  const [stateSearch, setStateSearch] = useRecoilState<string>(recoilSearch);
   const [search, setSearch] = useState<string>(stateSearch);
-  const setUseSearch = useSetRecoilState<string>(recoilSearch);
   const setPage = useSetRecoilState<number>(recoilPage);
+
+  useEffect(() => {
+    setSearch(stateSearch);
+  }, [stateSearch]);
 
   const updateSearch = useCallback(
     (searchValue: string) => {
-      sessionStorage.setItem("search", JSON.stringify(searchValue));
-      setUseSearch(searchValue);
+      setStateSearch(searchValue);
     },
-    [setUseSearch],
+    [setStateSearch],
   );
 
   useEffect(() => {
@@ -28,16 +30,14 @@ function Searchbar() {
     return () => clearTimeout(timer);
   }, [search, updateSearch]);
 
-  function type(e: React.ChangeEvent<HTMLInputElement>) {
+  function type(e: ChangeEvent<HTMLInputElement>) {
     setSearch(e.target.value);
     setPage(1);
-    sessionStorage.setItem("page", JSON.stringify(1));
   }
 
   function eraseInput() {
     setSearch("");
     setPage(1);
-    sessionStorage.setItem("page", JSON.stringify(1));
   }
 
   const handleFocus = (text: string) => {
@@ -68,19 +68,14 @@ function Searchbar() {
           </InputAdornment>
         ),
         style: {
-          // height removed, consider using min-height if necessary
-          minHeight: "100px", // default for MUI TextField
-          padding: "10px", // Adjust padding to vertically center the text
+          minHeight: "100px",
+          padding: "10px",
           color: "white",
-          // backgroundColor: "rgba(0,0,0,0.5)",
-          // Removed width as fullWidth prop is used
         },
       }}
       InputLabelProps={{
         style: {
           color: "white",
-          // Make sure the label is positioned correctly
-          // lineHeight: '1', // Uncomment if needed
         },
       }}
     />

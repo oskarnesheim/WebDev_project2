@@ -9,6 +9,7 @@ import MyTeam from "./components/team/MyTeam.tsx";
 import About from "./components/about/About.tsx";
 import "./main.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import ErrorElement from "./components/ErrorElement.tsx";
 
 const queryClient = new QueryClient();
 export const router = createBrowserRouter(
@@ -16,6 +17,7 @@ export const router = createBrowserRouter(
     {
       path: "/",
       element: <App />,
+      errorElement: <ErrorElement />,
       children: [
         {
           path: "",
@@ -41,7 +43,6 @@ export const router = createBrowserRouter(
 
 const client = new ApolloClient({
   uri: "http://it2810-08.idi.ntnu.no:6969/graphql/",
-  // uri: "http://localhost:6969/graphql/",
   cache: new InMemoryCache(),
 });
 

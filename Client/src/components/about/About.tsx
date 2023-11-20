@@ -73,16 +73,7 @@ export default function About() {
       >
         Gotta Catch 'Em All!
       </Typography>
-      <img
-        src={pokeBall}
-        alt="pokeball"
-        style={{
-          objectFit: "cover",
-          marginTop: "5vh",
-          width: "60vw",
-          height: "15vw",
-        }}
-      />
+      <img src={pokeBall} id="pokeball" alt="pokeball" />
     </Box>
   );
 }

@@ -1,5 +1,10 @@
 import Pagination from "@mui/material/Pagination";
-import { recoilMaxPage, recoilPage } from "../../recoil/atoms";
+import {
+  recoilMaxPage,
+  recoilPage,
+  initializeStateFromStorage,
+  updateStorageOnChange,
+} from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -9,20 +14,14 @@ export default function BasicPagination() {
   const [maxPage] = useRecoilState<number>(recoilMaxPage);
   const [width, setWidth] = useState<number>(window.innerWidth);
 
-  const handleFocus = (text: string) => {
-    const speechSynthesis = window.speechSynthesis;
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.volume = 0.5;
-    speechSynthesis.speak(utterance);
-  };
+  useEffect(() => {
+    initializeStateFromStorage<number>(setRecPage, sessionStorage, "page", 1);
+  }, [setRecPage]);
 
-  function setPage(page: number) {
-    console.log("page: ", page);
-    sessionStorage.setItem("page", JSON.stringify(page));
-    setRecPage(page);
-    handleFocus(`Page ${page}`);
-  }
+  // Update localStorage whenever myTeam changes
+  useEffect(() => {
+    updateStorageOnChange<number>("page", page, sessionStorage);
+  }, [page]);
 
   useEffect(() => {
     function handleResize() {
@@ -49,7 +48,7 @@ export default function BasicPagination() {
       <Pagination
         page={page}
         onChange={(_e: React.ChangeEvent<unknown>, value: number) =>
-          setPage(value)
+          setRecPage(value)
         }
         count={maxPage}
         variant="outlined"

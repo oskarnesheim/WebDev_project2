@@ -52,11 +52,6 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
     return () => clearInterval(intervalId);
   }, [isHovered]);
 
-  const imageStyle = {
-    transform: `translateY(${position}px)`,
-    transition: "transform 0.2s ease-in-out",
-  };
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -97,16 +92,13 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
           overflow: "hidden",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+        <div className="team_member_contaienr">
           <Box sx={{ marginRight: "10px", alignItems: "center" }}>
             <img
-              style={imageStyle}
+              style={{
+                transform: `translateY(${position}px)`,
+                transition: "transform 0.2s ease-in-out",
+              }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               src={data.pokemon.sprites.front_default}
