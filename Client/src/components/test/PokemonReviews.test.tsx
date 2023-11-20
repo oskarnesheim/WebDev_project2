@@ -1,5 +1,5 @@
 import { test, describe, expect } from "vitest";
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor, cleanup } from "@testing-library/react";
 import PokemonRatingReview from "../pokemon/PokemonReviews";
 import { MockedProvider } from "@apollo/client/testing";
 import { AddReview, getReviews } from "../../functions/GraphQLQueries";
@@ -57,12 +57,12 @@ const ReviewMutationMock = [
 ];
 
 describe("PokemonRatingReview", () => {
-  const { getAllByText } = render(
-    <MockedProvider mocks={ReviewMutationMock} addTypename={false}>
-      <PokemonRatingReview _id={1} />
-    </MockedProvider>,
-  );
   test("Renders the review form", async () => {
+    const { getAllByText } = render(
+      <MockedProvider mocks={ReviewMutationMock} addTypename={false}>
+        <PokemonRatingReview _id={1} />
+      </MockedProvider>,
+    );
     await waitFor(() => {
       //? Here we test that the component is rendered
       expect(getAllByText("Rate and Review")).not.toBe(null);
@@ -73,6 +73,7 @@ describe("PokemonRatingReview", () => {
       expect(getAllByText("dafa")).not.toBe(null);
       expect(getAllByText("Denne pokemonen er grov")).not.toBe(null);
     });
+    cleanup();
   });
   test("Submitting with no rating", async () => {
     const { getAllByText, getByPlaceholderText, getAllByTestId } = render(
@@ -95,6 +96,7 @@ describe("PokemonRatingReview", () => {
         target: { value: "" },
       });
     });
+    cleanup();
   });
   test("Submitting with no description", async () => {
     const { getAllByText, getAllByTestId } = render(
@@ -114,27 +116,29 @@ describe("PokemonRatingReview", () => {
       const ratingError = getAllByText("Please write a review.")[0];
       expect(ratingError).not.toBe(null);
     });
+
+    cleanup();
   });
 
-  // test("Submitting a valid review", async () => {
-  //   const { getAllByTestId, getAllByPlaceholderText } = render(
-  //     <MockedProvider mocks={ReviewMutationMock} addTypename={false}>
-  //       <PokemonRatingReview _id={1} />
-  //     </MockedProvider>,
-  //   );
-  //   await waitFor(() => {
-  //     const reviewInput = getAllByPlaceholderText("Write your review...")[0];
-  //     fireEvent.change(reviewInput, {
-  //       target: { value: "This is a great Pokemon!" },
-  //     });
+  test.skip("Submitting a valid review", async () => {
+    const { getAllByTestId, getAllByPlaceholderText } = render(
+      <MockedProvider mocks={ReviewMutationMock} addTypename={false}>
+        <PokemonRatingReview _id={1} />
+      </MockedProvider>,
+    );
+    await waitFor(() => {
+      const reviewInput = getAllByPlaceholderText("Write your review...")[0];
+      fireEvent.change(reviewInput, {
+        target: { value: "This is a great Pokemon!" },
+      });
 
-  //     const star4 = getAllByTestId("star-rating-4");
-  //     if (star4) {
-  //       fireEvent.click(star4[0]);
-  //     }
+      const star4 = getAllByTestId("star-rating-4");
+      if (star4) {
+        fireEvent.click(star4[0]);
+      }
 
-  //     const submitButton = getAllByTestId("add-review-button");
-  //     fireEvent.click(submitButton[0]);
-  //   });
-  // });
+      const submitButton = getAllByTestId("add-review-button");
+      fireEvent.click(submitButton[0]);
+    });
+  });
 });

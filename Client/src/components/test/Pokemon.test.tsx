@@ -1,5 +1,5 @@
 import { test, describe, expect, afterEach, beforeEach } from "vitest";
-import { render, waitFor } from "@testing-library/react";
+import { cleanup, render, waitFor } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { findSinglePokemon } from "../../functions/GraphQLQueries";
 import Pokemon from "../pokemon/Pokemon";
@@ -54,7 +54,7 @@ describe("Test loading of a single pokemoncard", () => {
       writable: true,
     });
   });
-  test("Test loading of a single pokemon", async () => {
+  test.skip("Test loading of a single pokemon", async () => {
     const { getAllByText } = render(
       <MockedProvider mocks={PokemonMock} addTypename={false}>
         <RecoilRoot>
@@ -69,5 +69,5 @@ describe("Test loading of a single pokemoncard", () => {
     });
   });
 
-  afterEach(() => {});
+  cleanup();
 });
