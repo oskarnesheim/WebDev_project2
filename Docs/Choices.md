@@ -14,7 +14,7 @@ The reason we have chosen our approach, is because waiting 600 milliseconds make
 
 ### Colors
 
-![Colors](./img/colors.png)
+![Colors](./img/Colors.png)
 
 ### Overall theme
 
@@ -26,7 +26,7 @@ The pokemon cards have a lot of different colors. This is because our target use
 
 ### Font
 
-![Font](./img/font.png)
+![Font](./img/Font.png)
 
 The font for the page is inspired by the old pokemon games. This is a very retro style and hopefully brings nostalgia to the user. The font does not go very well with Norwegian characters such as “æøå”, but the application is in English and therefore this should not be a too big of a problem.
 
@@ -41,6 +41,12 @@ On delivery two we received a comment that said the picture resolution for the p
 We created several end-to-end tests. Normally you want to test every aspect of the application. In our case, we made e2e tests for every aspect of the app that don’t generate user-data. That means that our pokemon-review function is not tested through e2e. In a professional app-development we would have made a test-database that could host the tests and therefore it would not be a problem to write test-reviews. But in our case, we have to make it simple enough that people can use it and reproduce it. It should also be available for students to run the tests when doing the peer evaluation. Therefore we tested the reviews-function manually. (See piazza @177).
 
 We do not have separate backend-tests to test the queries, but instead test them through the e2e tests. An example of this is the filter-test which checks that we get the correct pokemons according to the filters.
+
+### Component testing
+
+We have made component tests for several of the components we have in out app. In some of the tests, the coverage rate is not that high. This is because some of the functionality is tested through the end-to-end tests.
+
+# TODO: Vidar
 
 ### Accessibility
 
