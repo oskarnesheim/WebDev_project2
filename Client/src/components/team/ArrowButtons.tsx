@@ -33,11 +33,20 @@ export default function Arrowbuttons({
     setSelectedPokemon(num);
   }
 
+  const handleFocus = (text: string) => {
+    const speechSynthesis = window.speechSynthesis;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.volume = 0.5;
+    speechSynthesis.speak(utterance);
+  };
+
   return (
     <div className="button-container">
       <Button
         variant="contained"
         color="primary"
+        onFocus={() => handleFocus("Previous Pokémon")}
         onClick={() => moveBy("left")}
       >
         <ArrowBackIcon />
@@ -46,6 +55,7 @@ export default function Arrowbuttons({
         <Button
           variant="contained"
           color="primary"
+          onFocus={() => handleFocus("Go to Pokémon")}
           onClick={() => redirectToPokemon()}
         >
           <CircleTwoToneIcon />
@@ -54,6 +64,7 @@ export default function Arrowbuttons({
       <Button
         variant="contained"
         color="primary"
+        onFocus={() => handleFocus("Next Pokémon")}
         onClick={() => moveBy("right")}
         data-testid="right_button_team"
       >

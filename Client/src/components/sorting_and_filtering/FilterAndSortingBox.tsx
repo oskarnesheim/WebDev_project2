@@ -85,6 +85,14 @@ export default function FilterAndSortingBox() {
     handleClose(); // Close the modal
   };
 
+  const handleFocus = (text: string) => {
+    const speechSynthesis = window.speechSynthesis;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.volume = 0.5;
+    speechSynthesis.speak(utterance);
+  };
+
   return (
     <div className="filter_container">
       <Button
@@ -92,6 +100,8 @@ export default function FilterAndSortingBox() {
         variant="outlined"
         data-testid="filter_button"
         onClick={handleOpen}
+        onFocus={() => handleFocus('Filters and Sorting')}
+
       >
         Filters/Sorting
       </Button>
@@ -158,7 +168,7 @@ export default function FilterAndSortingBox() {
                 "&:hover": { backgroundColor: "lightgreen", boxShadow: 10 },
               }}
               onClick={handleApplyFilter}
-              data-testid="apply-filter-button"
+              onFocus={() => handleFocus('Apply')}
             >
               Apply
             </Button>
@@ -169,6 +179,7 @@ export default function FilterAndSortingBox() {
                 "&:hover": { backgroundColor: "pink", boxShadow: 10 },
               }}
               onClick={handleResetFilter}
+              onFocus={() => handleFocus('Reset')}
             >
               Reset
             </Button>

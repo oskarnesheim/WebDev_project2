@@ -43,6 +43,14 @@ export default function DisplayPokemon({
     history("/" + team[selectedPokemon]);
   };
 
+  const handleFocus = (text: string) => {
+    const speechSynthesis = window.speechSynthesis;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.volume = 0.5;
+    speechSynthesis.speak(utterance);
+  };
+
   /**
    * Function that calls removeFromTeam() to remove a Pokemon from the team, and sets the restets selectedPokemon to [0,0]
    * @param id - Pokemon ID

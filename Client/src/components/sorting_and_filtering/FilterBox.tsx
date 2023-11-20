@@ -44,6 +44,19 @@ export default function FilterBox({
     setAnchorEl(null);
   };
 
+  const handleFocus = (text: string) => {
+    const speechSynthesis = window.speechSynthesis;
+    if (!speechSynthesis) return;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.volume = 0.5;
+    speechSynthesis.speak(utterance);
+  };
+
+  const handleMousedown = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+  };
+
   return (
     <Box>
       <Button
@@ -78,9 +91,9 @@ export default function FilterBox({
         TransitionComponent={Fade}
       >
         {filters.map((filter) => (
-          <MenuItem
-            key={filter[0]}
-            data-testid={filter[0]}
+          <MenuItem key={filter[0]}
+            onFocus={() => handleFocus(filter[0])}
+            onMouseDown={handleMousedown}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
                 event.preventDefault();
@@ -88,8 +101,10 @@ export default function FilterBox({
                   setCurrentFilter(
                     currentFilters.filter((f) => f !== filter[0]),
                   );
+                  handleFocus(`${filter[0]} unselected`);
                 } else {
                   setCurrentFilter([...currentFilters, filter[0]]);
+                  handleFocus(`${filter[0]} selected`);
                 }
               }
             }}

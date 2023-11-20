@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, Typography } from "@mui/material";
 import { PokemonCardI } from "../../interfaces/pokemon";
+import { useEffect, useRef } from "react";
 
 type PokemonCardProps = {
   PokemonData: PokemonCardI;
@@ -43,12 +44,52 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
     return colors;
   }
 
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const card = cardRef.current;
+
+    if (card) {
+      const handleFocus = () => {
+
+        const speechSynthesis = window.speechSynthesis;
+        speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(`${PokemonData.name}`);
+        utterance.volume = 0.5;
+        speechSynthesis.speak(utterance);
+      };
+
+      const handleEnter = (event: KeyboardEvent) => {
+        if (event.key === 'Enter') {
+          const speechSynthesis = window.speechSynthesis;
+          speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(`${PokemonData.name} selected`);
+          utterance.volume = 0.5;
+          speechSynthesis.speak(utterance);
+        }
+      };
+
+      card.addEventListener('focus', handleFocus);
+      card.addEventListener('keydown', handleEnter);
+
+      return () => {
+        card.removeEventListener('focus', handleFocus);
+        card.removeEventListener('keydown', handleEnter);
+      };
+    }
+  }, [PokemonData.name]);
+
   return (
     <Card
+      ref={cardRef}
       tabIndex={0}
-      onClick={() => navigate("/" + PokemonData._id.toString())}
+      onClick={() => {
+        navigate("/" + PokemonData._id.toString());
+      }}
       onKeyDown={(event) => {
-        if (event.key === "Enter") navigate("/" + PokemonData._id.toString());
+        if (event.key === 'Enter') {
+          navigate("/" + PokemonData._id.toString());
+        }
       }}
       className="pokemon-card"
       data-testid={PokemonData._id}
@@ -70,13 +111,11 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
     >
       <CardContent
         style={{
-          background: `${
-            getBackgroundColor().length > 1
-              ? `linear-gradient(90deg, ${getBackgroundColor()[0]} 40%, ${
-                  getBackgroundColor()[1]
-                } 60%)`
-              : getBackgroundColor()[0]
-          }`,
+          background: `${getBackgroundColor().length > 1
+            ? `linear-gradient(90deg, ${getBackgroundColor()[0]} 40%, ${getBackgroundColor()[1]
+            } 60%)`
+            : getBackgroundColor()[0]
+            }`,
           width: "100%",
         }}
       />

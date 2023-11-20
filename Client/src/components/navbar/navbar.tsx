@@ -59,26 +59,10 @@ export default function Navbar() {
           >
             Pokedex
           </h2>
-          <h3
-            className="myteam-link"
-            data-testid="myteam_link_button"
-            onClick={() => navigate("/myteam")}
-            tabIndex={0}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") navigate("/myteam");
-            }}
-          >
+          <h3 tabIndex={0} className="myteam-link" onClick={() => navigate("/myteam")} onKeyDown={(event) => { if (event.key === 'Enter') navigate("/myteam"); }} onFocus={() => handleFocus('My Team')}>
             My Team <BusinessCenterOutlinedIcon />
           </h3>
-          <h3
-            className="about-link"
-            data-testid="about_link_button"
-            onClick={() => navigate("/about")}
-            tabIndex={0}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") navigate("/about");
-            }}
-          >
+          <h3 tabIndex={0} className="about-link" onClick={() => navigate("/about")} onKeyDown={(event) => { if (event.key === 'Enter') navigate("/about"); }} onFocus={() => handleFocus('About')}>
             About
           </h3>
         </div>
