@@ -7,6 +7,8 @@ import { Box } from "@mui/material";
 import styled from "@mui/material/styles/styled";
 import sortings from "../../assets/Sortings";
 import ArrowDropDownCircleOutlinedIcon from "@mui/icons-material/ArrowDropDownCircleOutlined";
+import { useRecoilState } from "recoil";
+import { recoilTTS } from "../../recoil/atoms";
 
 type SortingBoxType = {
   setCurrentSorting: React.Dispatch<React.SetStateAction<string>>
@@ -14,11 +16,12 @@ type SortingBoxType = {
 
 export default function SortingBox({
   setCurrentSorting,
-  currentSorting,
 }: SortingBoxType) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
+
+  const [ttsEnabled] = useRecoilState(recoilTTS);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -33,12 +36,12 @@ export default function SortingBox({
   }));
 
   const handleFocus = (text: string) => {
-    const speechSynthesis = window.speechSynthesis;
-    if (!speechSynthesis) return;
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.volume = 0.5;
-    speechSynthesis.speak(utterance);
+    if (ttsEnabled && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.volume = 0.5;
+      window.speechSynthesis.speak(utterance);
+    }
   };
 
   return (
@@ -48,6 +51,7 @@ export default function SortingBox({
         aria-controls={open ? "fade-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
+        onFocus={() => handleFocus("Choose Sorting")}
         onClick={handleClick}
         data-testid="sort-list-button"
         sx={{
@@ -91,7 +95,7 @@ export default function SortingBox({
             }}
             style={{
               backgroundColor:
-                sorting[1] === currentSorting ? "lightblue" : "white",
+                sorting[1] === "default" ? "lightblue" : "white",
             }}
           >
             {sorting[0]}

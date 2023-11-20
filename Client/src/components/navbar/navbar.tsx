@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
+import { Switch } from "@mui/material";
 import { useState } from "react";
 import HamburgerMenu from "./HamburgerMenu";
 import { useRecoilState } from "recoil";
 import {
+  recoilTTS,
   recoilFilterBy,
   recoilSortBy,
   recoilPage,
@@ -17,6 +19,7 @@ export default function Navbar() {
   const [sortBy, setSortBy] = useRecoilState(recoilSortBy);
   const [page, setPage] = useRecoilState(recoilPage);
   const [search, setSearch] = useRecoilState(recoilSearch);
+  const [ttsEnabled, setTtsEnabled] = useRecoilState(recoilTTS);
 
   window.onresize = () => {
     setWindowSize(window.innerWidth);
@@ -42,6 +45,15 @@ export default function Navbar() {
     navigate("/");
   };
 
+  const handleFocus = (text: string) => {
+    if (ttsEnabled && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.volume = 0.5;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
   return (
     <div>
       {windowSize < 700 ? (
@@ -53,6 +65,7 @@ export default function Navbar() {
             data-testid="pokedex_link_button"
             onClick={() => logoOnclick()}
             tabIndex={0}
+            onFocus={() => handleFocus("Pokedex")}
             onKeyDown={(event) => {
               if (event.key === "Enter") navigate("/");
             }}
@@ -65,6 +78,24 @@ export default function Navbar() {
           <h3 tabIndex={0} className="about-link" onClick={() => navigate("/about")} onKeyDown={(event) => { if (event.key === 'Enter') navigate("/about"); }} onFocus={() => handleFocus('About')}>
             About
           </h3>
+          <Switch
+            checked={ttsEnabled}
+            onFocus={() => handleFocus('Text to speech')}
+            onChange={() => setTtsEnabled(!ttsEnabled)}
+            name="ttsSwitch"
+            inputProps={{ 'aria-label': 'TTS switch' }}
+            sx={{
+              '& .MuiSwitch-thumb': {
+                backgroundColor: ttsEnabled ? 'primary' : 'grey', // change 'blue' and 'grey' to the colors you want
+              },
+              '& .MuiSwitch-track': {
+                backgroundColor: ttsEnabled ? 'lightblue' : 'lightgrey', // change 'lightblue' and 'lightgrey' to the colors you want
+              },
+            }}
+          />
+          <p style={{ fontSize: '0.8rem', margin: '0', marginTop: '0px', marginLeft: '-100px', padding: '0' }}>
+            Text to speech
+          </p>
         </div>
       )}
     </div>

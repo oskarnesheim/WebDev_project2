@@ -76,6 +76,14 @@ export const recoilMaxPage = atom<number>({
 });
 
 /**
+ * Global state: TTS enabled/disabled
+ */
+export const recoilTTS = atom({
+  key: "ttsAtom",
+  default: false, // TTS is disabled by default
+});
+
+/**
  * Function to safely parse JSON from storage
  * @param value  The value to be parsed
  * @param defaultValue  The default value to use if the value is not found

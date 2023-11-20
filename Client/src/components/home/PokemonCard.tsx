@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, Typography } from "@mui/material";
 import { PokemonCardI } from "../../interfaces/pokemon";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useRecoilState } from "recoil";
+import { recoilTTS } from "../../recoil/atoms";
 
 type PokemonCardProps = {
   PokemonData: PokemonCardI;
@@ -28,6 +30,7 @@ const filters = [
 
 export default function PokemonCard({ PokemonData }: PokemonCardProps) {
   const navigate = useNavigate();
+  const [ttsEnabled] = useRecoilState(recoilTTS);
 
   function getBackgroundColor(): string[] {
     if (!PokemonData) return ["grey"];
@@ -46,43 +49,20 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
 
   const cardRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const card = cardRef.current;
-
-    if (card) {
-      const handleFocus = () => {
-
-        const speechSynthesis = window.speechSynthesis;
-        speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(`${PokemonData.name}`);
-        utterance.volume = 0.5;
-        speechSynthesis.speak(utterance);
-      };
-
-      const handleEnter = (event: KeyboardEvent) => {
-        if (event.key === 'Enter') {
-          const speechSynthesis = window.speechSynthesis;
-          speechSynthesis.cancel();
-          const utterance = new SpeechSynthesisUtterance(`${PokemonData.name} selected`);
-          utterance.volume = 0.5;
-          speechSynthesis.speak(utterance);
-        }
-      };
-
-      card.addEventListener('focus', handleFocus);
-      card.addEventListener('keydown', handleEnter);
-
-      return () => {
-        card.removeEventListener('focus', handleFocus);
-        card.removeEventListener('keydown', handleEnter);
-      };
+  const handleFocus = (text: string) => {
+    if (ttsEnabled && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.volume = 0.5;
+      window.speechSynthesis.speak(utterance);
     }
-  }, [PokemonData.name]);
+  };
 
   return (
     <Card
       ref={cardRef}
       tabIndex={0}
+      onFocus={() => handleFocus(PokemonData.name)}
       onClick={() => {
         navigate("/" + PokemonData._id.toString());
       }}

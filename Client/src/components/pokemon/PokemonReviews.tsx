@@ -5,6 +5,8 @@ import theme from "../../Theme";
 import { useQuery, useMutation } from "@apollo/client";
 import { getReviews, ADD_REVIEW } from "../../functions/GraphQLQueries";
 import { Review } from "../../interfaces/pokemon";
+import { useRecoilState } from "recoil";
+import { recoilTTS } from "../../recoil/atoms";
 
 type PokemonReviewProps = {
   _id: number;
@@ -19,6 +21,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
   });
 
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [ttsEnabled] = useRecoilState(recoilTTS);
 
   const handleRatingClick = (newRating: number) => {
     setRating(newRating);
@@ -96,12 +99,14 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
   }
 
   const handleFocus = (text: string) => {
-    const speechSynthesis = window.speechSynthesis;
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.volume = 0.5;
-    speechSynthesis.speak(utterance);
+    if (ttsEnabled && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.volume = 0.5;
+      window.speechSynthesis.speak(utterance);
+    }
   };
+
 
   return (
     <div className="pokemon_reviews_container">
