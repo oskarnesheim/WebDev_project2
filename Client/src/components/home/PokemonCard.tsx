@@ -51,7 +51,6 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
 
     if (card) {
       const handleFocus = () => {
-
         const speechSynthesis = window.speechSynthesis;
         speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(`${PokemonData.name}`);
@@ -60,21 +59,23 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
       };
 
       const handleEnter = (event: KeyboardEvent) => {
-        if (event.key === 'Enter') {
+        if (event.key === "Enter") {
           const speechSynthesis = window.speechSynthesis;
           speechSynthesis.cancel();
-          const utterance = new SpeechSynthesisUtterance(`${PokemonData.name} selected`);
+          const utterance = new SpeechSynthesisUtterance(
+            `${PokemonData.name} selected`,
+          );
           utterance.volume = 0.5;
           speechSynthesis.speak(utterance);
         }
       };
 
-      card.addEventListener('focus', handleFocus);
-      card.addEventListener('keydown', handleEnter);
+      card.addEventListener("focus", handleFocus);
+      card.addEventListener("keydown", handleEnter);
 
       return () => {
-        card.removeEventListener('focus', handleFocus);
-        card.removeEventListener('keydown', handleEnter);
+        card.removeEventListener("focus", handleFocus);
+        card.removeEventListener("keydown", handleEnter);
       };
     }
   }, [PokemonData.name]);
@@ -87,7 +88,7 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
         navigate("/" + PokemonData._id.toString());
       }}
       onKeyDown={(event) => {
-        if (event.key === 'Enter') {
+        if (event.key === "Enter") {
           navigate("/" + PokemonData._id.toString());
         }
       }}
@@ -111,17 +112,19 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
     >
       <CardContent
         style={{
-          background: `${getBackgroundColor().length > 1
-            ? `linear-gradient(90deg, ${getBackgroundColor()[0]} 40%, ${getBackgroundColor()[1]
-            } 60%)`
-            : getBackgroundColor()[0]
-            }`,
+          background: `${
+            getBackgroundColor().length > 1
+              ? `linear-gradient(90deg, ${getBackgroundColor()[0]} 40%, ${
+                  getBackgroundColor()[1]
+                } 60%)`
+              : getBackgroundColor()[0]
+          }`,
           width: "100%",
         }}
       />
       <img
         src={PokemonData.sprites.front_default}
-        alt="Cool picture of a Pokémon"
+        alt={"Picture of " + PokemonData.name}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
