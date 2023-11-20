@@ -1,15 +1,16 @@
 import { fireEvent, render } from "@testing-library/react";
 import { test, expect, describe } from "vitest";
 import SortingBox from "../sorting_and_filtering/SortingBox";
+import { RecoilRoot } from "recoil";
 
 describe("SortingBox", () => {
   test("Checks that all the sorting options are rendered", async () => {
-    const setCurrentSorting = () => { };
+    const setCurrentSorting = () => {};
 
     const { getByRole, getByText } = render(
-      <SortingBox
-        setCurrentSorting={setCurrentSorting}
-      />,
+      <RecoilRoot>
+        <SortingBox setCurrentSorting={setCurrentSorting} />
+      </RecoilRoot>,
     );
 
     const sortings = [
@@ -40,9 +41,9 @@ describe("SortingBox", () => {
     };
 
     const { getByRole, getAllByText } = render(
-      <SortingBox
-        setCurrentSorting={setCurrentSorting}
-      />,
+      <RecoilRoot>
+        <SortingBox setCurrentSorting={setCurrentSorting} />
+      </RecoilRoot>,
     );
 
     fireEvent.click(getByRole("button", { name: "Choose Sorting" }));

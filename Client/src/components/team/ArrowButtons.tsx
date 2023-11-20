@@ -43,7 +43,6 @@ export default function Arrowbuttons({
     }
   };
 
-
   return (
     <div className="button-container">
       <Button

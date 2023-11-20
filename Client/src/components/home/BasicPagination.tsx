@@ -70,7 +70,9 @@ export default function BasicPagination() {
         renderItem={(item) => (
           <PaginationItem
             {...item}
-            style={item.page === focusedItem ? { backgroundColor: 'lightgray' } : {}}
+            style={
+              item.page === focusedItem ? { backgroundColor: "lightgray" } : {}
+            }
             onFocus={() => {
               handleFocus("Page " + item.page);
               setFocusedItem(item.page);

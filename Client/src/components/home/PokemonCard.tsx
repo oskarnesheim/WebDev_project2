@@ -67,7 +67,7 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
         navigate("/" + PokemonData._id.toString());
       }}
       onKeyDown={(event) => {
-        if (event.key === 'Enter') {
+        if (event.key === "Enter") {
           navigate("/" + PokemonData._id.toString());
         }
       }}
@@ -91,11 +91,13 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
     >
       <CardContent
         style={{
-          background: `${getBackgroundColor().length > 1
-            ? `linear-gradient(90deg, ${getBackgroundColor()[0]} 40%, ${getBackgroundColor()[1]
-            } 60%)`
-            : getBackgroundColor()[0]
-            }`,
+          background: `${
+            getBackgroundColor().length > 1
+              ? `linear-gradient(90deg, ${getBackgroundColor()[0]} 40%, ${
+                  getBackgroundColor()[1]
+                } 60%)`
+              : getBackgroundColor()[0]
+          }`,
           width: "100%",
         }}
       />

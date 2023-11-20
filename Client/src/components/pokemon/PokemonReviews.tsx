@@ -107,7 +107,6 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     }
   };
 
-
   return (
     <div className="pokemon_reviews_container">
       <h2

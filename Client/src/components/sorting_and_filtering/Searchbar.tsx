@@ -64,7 +64,11 @@ function Searchbar() {
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton color="primary" onFocus={() => handleFocus("Clear Search")} onClick={() => eraseInput()}>
+            <IconButton
+              color="primary"
+              onFocus={() => handleFocus("Clear Search")}
+              onClick={() => eraseInput()}
+            >
               <ClearIcon />
             </IconButton>
           </InputAdornment>

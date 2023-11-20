@@ -54,7 +54,6 @@ export default function DisplayPokemon({
     }
   };
 
-
   /**
    * Function that calls removeFromTeam() to remove a Pokemon from the team, and sets the restets selectedPokemon to [0,0]
    * @param id - Pokemon ID

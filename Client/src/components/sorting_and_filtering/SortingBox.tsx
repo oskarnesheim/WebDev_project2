@@ -11,12 +11,10 @@ import { useRecoilState } from "recoil";
 import { recoilTTS } from "../../recoil/atoms";
 
 type SortingBoxType = {
-  setCurrentSorting: React.Dispatch<React.SetStateAction<string>>
+  setCurrentSorting: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function SortingBox({
-  setCurrentSorting,
-}: SortingBoxType) {
+export default function SortingBox({ setCurrentSorting }: SortingBoxType) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
@@ -79,7 +77,8 @@ export default function SortingBox({
         TransitionComponent={Fade}
       >
         {sortings.map((sorting) => (
-          <StyledMenuItem onFocus={() => handleFocus(sorting[0])}
+          <StyledMenuItem
+            onFocus={() => handleFocus(sorting[0])}
             key={sorting[1]}
             value={sorting[1]}
             onKeyDown={(event) => {
@@ -94,8 +93,7 @@ export default function SortingBox({
               setCurrentSorting(sorting[1]);
             }}
             style={{
-              backgroundColor:
-                sorting[1] === "default" ? "lightblue" : "white",
+              backgroundColor: sorting[1] === "default" ? "lightblue" : "white",
             }}
           >
             {sorting[0]}

@@ -95,7 +95,8 @@ export default function FilterBox({
         TransitionComponent={Fade}
       >
         {filters.map((filter) => (
-          <MenuItem key={filter[0]}
+          <MenuItem
+            key={filter[0]}
             onFocus={() => handleFocus(filter[0])}
             onMouseDown={handleMousedown}
             onKeyDown={(event) => {
