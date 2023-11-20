@@ -115,14 +115,12 @@ _In this delivery we also got feedback from 7 groups. Most of the feedback were 
 **Solution:** We see the point, but have chosen to not prioritized this with the limited time.
 
 **Feedback:** Don't see the reason for saving the page in both session storage and recoil state.<br>
-###############################################################<br>
-**Solution:** @Johannes??<br>
-###############################################################
+**Solution:**
+The reason we stored states in both Recoil and session storage is because we wanted to save filtering, etc., in session storage to improve user experience, while also wanting to have them available in Recoil state. We have modified atoms.tsx so that it is possible to store atoms without adding them to session storage. We see the search value as not necessary to have in session storage, so it is only stored as a Recoil state. The rest of the atoms are still stored in session storage as well, but the implementation has been changed so that unnecessary calls to session storage are not made. Regardless of whether the states are stored in session storage or not, they are all used in various components, and here we see Recoil state as necessary. <br>
+
 
 **Feedback:** When clicking on a pokemon and then clicking on the "Pokedex" button, you get back to the previous page. Should be brought to the home page.<br>
-###############################################################<br>
-**Solution:** @Johannes??<br>
-###############################################################
+**Solution:** We changed the Pokedex (AKA home) - navigation button to bring the user back to the homepage and at the same time reset all filters, sorting, pagination and search. <br>
 
 **Feedback:** Error-handeling when going to a page not in use (e.g. /301).<br>
 **Solution:** Add a 404 page.
