@@ -66,6 +66,14 @@ export default function Pokemon() {
     }
   }
 
+  const handleFocus = (text: string) => {
+    const speechSynthesis = window.speechSynthesis;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.volume = 0.5;
+    speechSynthesis.speak(utterance);
+  };
+
   return (
     <>
       <Typography
@@ -93,6 +101,7 @@ export default function Pokemon() {
                   cursor: "alias",
                 },
               }}
+              onFocus={() => handleFocus("Go back")}
               onClick={() => navigate(-1)}
             >
               <ArrowBackIosNewIcon />
@@ -104,6 +113,7 @@ export default function Pokemon() {
               sx={{
                 color: getButtonInfo(0),
               }}
+              onFocus={() => handleFocus(getButtonInfo(2) || 'Default message')}
               onClick={() => handleOnClick()}
             >
               {getButtonInfo(1)}

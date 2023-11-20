@@ -95,6 +95,14 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     return <Box>Error: {error.message}</Box>;
   }
 
+  const handleFocus = (text: string) => {
+    const speechSynthesis = window.speechSynthesis;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.volume = 0.5;
+    speechSynthesis.speak(utterance);
+  };
+
   return (
     <div
       style={{
@@ -125,7 +133,9 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
           <label style={{ marginRight: "10px", marginTop: "10px" }}>Rate</label>
           {Array.from({ length: 5 }, (_, index) => (
             <StarIcon
+              tabIndex={0}
               key={index}
+              onFocus={() => handleFocus("Rate " + (index + 1) + " out of 5")}
               onClick={() => handleRatingClick(index + 1)}
               style={{
                 fontSize: "24px",
@@ -139,6 +149,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
         <div>
           <TextareaAutosize
             value={review}
+            onFocus={() => handleFocus("Write your review here")}
             onChange={handleReviewChange}
             minRows={4}
             style={{
@@ -154,6 +165,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
           type="submit"
           variant="contained"
           className="custom-button"
+          onFocus={() => handleFocus("Submit your review")}
           disabled={alreadyReviewed(getUserID())}
           sx={{
             margin: "10px 0",

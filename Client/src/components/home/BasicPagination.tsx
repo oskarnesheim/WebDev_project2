@@ -9,10 +9,19 @@ export default function BasicPagination() {
   const [maxPage] = useRecoilState<number>(recoilMaxPage);
   const [width, setWidth] = useState<number>(window.innerWidth);
 
+  const handleFocus = (text: string) => {
+    const speechSynthesis = window.speechSynthesis;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.volume = 0.5;
+    speechSynthesis.speak(utterance);
+  };
+
   function setPage(page: number) {
     console.log("page: ", page);
     sessionStorage.setItem("page", JSON.stringify(page));
     setRecPage(page);
+    handleFocus(`Page ${page}`);
   }
 
   useEffect(() => {

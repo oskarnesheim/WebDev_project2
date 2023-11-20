@@ -40,6 +40,14 @@ function Searchbar() {
     sessionStorage.setItem("page", JSON.stringify(1));
   }
 
+  const handleFocus = (text: string) => {
+    const speechSynthesis = window.speechSynthesis;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.volume = 0.5;
+    speechSynthesis.speak(utterance);
+  };
+
   return (
     <TextField
       type="text"
@@ -49,10 +57,11 @@ function Searchbar() {
       placeholder="pokemon name..."
       fullWidth
       id="outlined"
+      onFocus={() => handleFocus("Search")}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton color="primary" onClick={() => eraseInput()}>
+            <IconButton color="primary" onFocus={() => handleFocus("Clear Search")} onClick={() => eraseInput()}>
               <ClearIcon />
             </IconButton>
           </InputAdornment>

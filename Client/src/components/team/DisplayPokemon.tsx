@@ -43,6 +43,14 @@ export default function DisplayPokemon({
     history("/" + selectedPokemon[0]);
   };
 
+  const handleFocus = (text: string) => {
+    const speechSynthesis = window.speechSynthesis;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.volume = 0.5;
+    speechSynthesis.speak(utterance);
+  };
+
   /**
    * Function that calls removeFromTeam() to remove a Pokemon from the team, and sets the restets selectedPokemon to [0,0]
    * @param id - Pokemon ID
@@ -75,6 +83,7 @@ export default function DisplayPokemon({
           <Tooltip title={"Remove pokemon from your team. "} arrow>
             <Button
               className="box"
+              onFocus={() => handleFocus("Remove Pokemon from your team")}
               onClick={() => deleteTeamMember(selectedPokemon[0])}
               color="error"
               variant="outlined"

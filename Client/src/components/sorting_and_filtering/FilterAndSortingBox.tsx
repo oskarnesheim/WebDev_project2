@@ -83,12 +83,22 @@ export default function FilterAndSortingBox() {
     handleClose(); // Close the modal
   };
 
+  const handleFocus = (text: string) => {
+    const speechSynthesis = window.speechSynthesis;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.volume = 0.5;
+    speechSynthesis.speak(utterance);
+  };
+
   return (
     <div className="filter_container">
       <Button
         sx={{ height: "100px", padding: "20px", width: "100%" }}
         variant="outlined"
         onClick={handleOpen}
+        onFocus={() => handleFocus('Filters and Sorting')}
+
       >
         Filters/Sorting
       </Button>
@@ -99,21 +109,25 @@ export default function FilterAndSortingBox() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalBoxStyles}>
-          <div className="filter_sorting_inner">
-            <FilterBox
-              currentFilters={tempFilters}
-              setCurrentFilter={setTempFilters}
-            />
-            <SortingBox
-              currentSorting={tempSortBy}
-              setCurrentSorting={setTempSortBy}
-            />
+          <div className="filter_sorting_container" style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div className="filter_inner" onFocus={() => handleFocus('Filters')}>
+              <FilterBox
+                currentFilters={tempFilters}
+                setCurrentFilter={setTempFilters}
+              />
+            </div>
+            <div className="sorting_inner" onFocus={() => handleFocus('Sorting')}>
+              <SortingBox
+                setCurrentSorting={setTempSortBy}
+              />
+            </div>
           </div>
           <hr />
           <div className="apply_reset_filter">
             <Button
               style={{ backgroundColor: "green", color: "white" }}
               onClick={handleApplyFilter}
+              onFocus={() => handleFocus('Apply')}
             >
               Apply
             </Button>
@@ -123,6 +137,7 @@ export default function FilterAndSortingBox() {
                 color: "white",
               }}
               onClick={handleResetFilter}
+              onFocus={() => handleFocus('Reset')}
             >
               Reset
             </Button>

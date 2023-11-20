@@ -65,8 +65,19 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
     return <div>Error: {error.message}</div>;
   }
 
+  const handleFocus = (text: string) => {
+    const speechSynthesis = window.speechSynthesis;
+    if (!speechSynthesis) return;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.volume = 0.5;
+    speechSynthesis.speak(utterance);
+  };
+
   return (
     <Card
+      tabIndex={0}
+      onFocus={() => handleFocus(data.pokemon.name)}
       variant="outlined"
       sx={{
         width: "300px",

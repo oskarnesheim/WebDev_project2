@@ -9,7 +9,7 @@ import sortings from "../../assets/Sortings";
 import ArrowDropDownCircleOutlinedIcon from "@mui/icons-material/ArrowDropDownCircleOutlined";
 
 type SortingBoxType = {
-  setCurrentSorting: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentSorting: React.Dispatch<React.SetStateAction<string>>
 };
 
 export default function SortingBox({
@@ -30,6 +30,15 @@ export default function SortingBox({
       backgroundColor: 'lightblue',
     },
   }));
+
+  const handleFocus = (text: string) => {
+    const speechSynthesis = window.speechSynthesis;
+    if (!speechSynthesis) return;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.volume = 0.5;
+    speechSynthesis.speak(utterance);
+  };
 
   return (
     <Box>
@@ -57,17 +66,17 @@ export default function SortingBox({
         TransitionComponent={Fade}
       >
         {sortings.map((sorting) => (
-          <StyledMenuItem
+          <StyledMenuItem onFocus={() => handleFocus(sorting[0])}
             key={sorting[1]}
             value={sorting[1]}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
-                event.preventDefault();
+                handleClose();
                 setCurrentSorting(sorting[1]);
               }
             }}
             onClick={() => {
-              handleClose;
+              handleClose();
               setCurrentSorting(sorting[1]);
             }}
           >
