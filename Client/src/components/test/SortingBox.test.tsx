@@ -1,17 +1,16 @@
 import { fireEvent, render } from "@testing-library/react";
 import { test, expect, describe } from "vitest";
 import SortingBox from "../sorting_and_filtering/SortingBox";
+import { RecoilRoot } from "recoil";
 
 describe("SortingBox", () => {
   test("Checks that all the sorting options are rendered", async () => {
     const setCurrentSorting = () => {};
-    const currentSorting = "";
 
     const { getByRole, getByText } = render(
-      <SortingBox
-        currentSorting={currentSorting}
-        setCurrentSorting={setCurrentSorting}
-      />,
+      <RecoilRoot>
+        <SortingBox setCurrentSorting={setCurrentSorting} />
+      </RecoilRoot>,
     );
 
     const sortings = [
@@ -42,10 +41,9 @@ describe("SortingBox", () => {
     };
 
     const { getByRole, getAllByText } = render(
-      <SortingBox
-        currentSorting={currentSorting}
-        setCurrentSorting={setCurrentSorting}
-      />,
+      <RecoilRoot>
+        <SortingBox setCurrentSorting={setCurrentSorting} />
+      </RecoilRoot>,
     );
 
     fireEvent.click(getByRole("button", { name: "Choose Sorting" }));
@@ -63,14 +61,12 @@ describe("SortingBox", () => {
   });
 
   test("Snapshot test of sorting box", () => {
-    const currentSorting = "";
     const setCurrentSorting = () => {};
 
     const page = render(
-      <SortingBox
-        currentSorting={currentSorting}
-        setCurrentSorting={setCurrentSorting}
-      />,
+      <RecoilRoot>
+        <SortingBox setCurrentSorting={setCurrentSorting} />
+      </RecoilRoot>,
     );
     expect(page).toMatchSnapshot();
   });

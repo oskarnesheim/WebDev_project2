@@ -78,12 +78,13 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
         card.removeEventListener("keydown", handleEnter);
       };
     }
-  }, [PokemonData.name]);
+  });
 
   return (
     <Card
       ref={cardRef}
       tabIndex={0}
+      // onFocus={() => handleFocus(PokemonData.name)}
       onClick={() => {
         navigate("/" + PokemonData._id.toString());
       }}

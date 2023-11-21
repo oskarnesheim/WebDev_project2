@@ -4,6 +4,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Box } from "@mui/material";
 import { useQuery, gql } from "@apollo/client";
+import { useRecoilState } from "recoil";
+import { recoilTTS } from "../../recoil/atoms";
 
 interface PokemonCardProps {
   _id: number;
@@ -42,6 +44,8 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
 
   const [isHovered, setIsHovered] = useState(false);
 
+  const [ttsEnabled] = useRecoilState(recoilTTS);
+
   useEffect(() => {
     let intervalId: number;
     if (isHovered) {
@@ -61,12 +65,12 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
   }
 
   const handleFocus = (text: string) => {
-    const speechSynthesis = window.speechSynthesis;
-    if (!speechSynthesis) return;
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.volume = 0.5;
-    speechSynthesis.speak(utterance);
+    if (ttsEnabled && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.volume = 0.5;
+      window.speechSynthesis.speak(utterance);
+    }
   };
 
   return (

@@ -4,6 +4,7 @@ import { SetStateAction, useState, useEffect } from "react";
 import FilterBox from "./FilterBox";
 import SortingBox from "./SortingBox";
 import {
+  recoilTTS,
   recoilFilterBy,
   recoilSortBy,
   recoilPage,
@@ -33,6 +34,7 @@ export default function FilterAndSortingBox() {
   const [page, setPage] = useRecoilState(recoilPage);
   const [tempFilters, setTempFilters] = useState<string[]>([]);
   const [tempSortBy, setTempSortBy] = useState<string>("");
+  const [ttsEnabled] = useRecoilState(recoilTTS);
 
   // Initialize state from sessionStorage
   useEffect(() => {
@@ -86,11 +88,12 @@ export default function FilterAndSortingBox() {
   };
 
   const handleFocus = (text: string) => {
-    const speechSynthesis = window.speechSynthesis;
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.volume = 0.5;
-    speechSynthesis.speak(utterance);
+    if (ttsEnabled && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.volume = 0.5;
+      window.speechSynthesis.speak(utterance);
+    }
   };
 
   return (
@@ -100,8 +103,7 @@ export default function FilterAndSortingBox() {
         variant="outlined"
         data-testid="filter_button"
         onClick={handleOpen}
-        onFocus={() => handleFocus('Filters and Sorting')}
-
+        onFocus={() => handleFocus("Filters and Sorting")}
       >
         Filters/Sorting
       </Button>
@@ -114,10 +116,7 @@ export default function FilterAndSortingBox() {
       >
         <Box sx={modalBoxStyles}>
           <div className="filter_sorting_dropdowns">
-            <SortingBox
-              currentSorting={tempSortBy}
-              setCurrentSorting={setTempSortBy}
-            />
+            <SortingBox setCurrentSorting={setTempSortBy} />
             <FilterBox
               currentFilters={tempFilters}
               setCurrentFilter={setTempFilters}
@@ -168,7 +167,8 @@ export default function FilterAndSortingBox() {
                 "&:hover": { backgroundColor: "lightgreen", boxShadow: 10 },
               }}
               onClick={handleApplyFilter}
-              onFocus={() => handleFocus('Apply')}
+              data-testid="apply-filter-button"
+              onFocus={() => handleFocus("Apply")}
             >
               Apply
             </Button>
@@ -179,7 +179,7 @@ export default function FilterAndSortingBox() {
                 "&:hover": { backgroundColor: "pink", boxShadow: 10 },
               }}
               onClick={handleResetFilter}
-              onFocus={() => handleFocus('Reset')}
+              onFocus={() => handleFocus("Reset")}
             >
               Reset
             </Button>
