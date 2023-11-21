@@ -67,10 +67,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
           tabindex="-1"
         >
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters Mui-focusVisible MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters Mui-focusVisible MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="ID increasing (default)"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="0"
             value="_id,1"
           >
@@ -80,10 +80,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="ID decreasing"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="_id,-1"
           >
@@ -93,10 +93,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="A-Z"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="name,1"
           >
@@ -106,10 +106,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="Z-A"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="name,-1"
           >
@@ -119,10 +119,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="XP increasing"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="base_experience,1"
           >
@@ -132,10 +132,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="XP decreasing"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="base_experience,-1"
           >
@@ -145,10 +145,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="kg increasing"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="weight,1"
           >
@@ -158,10 +158,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="kg decreasing"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="weight,-1"
           >
@@ -236,10 +236,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
           tabindex="-1"
         >
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="ID increasing (default)"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="0"
             value="_id,1"
           >
@@ -249,10 +249,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="ID decreasing"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="_id,-1"
           >
@@ -262,10 +262,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="A-Z"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="name,1"
           >
@@ -275,10 +275,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="Z-A"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="name,-1"
           >
@@ -288,10 +288,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="XP increasing"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="base_experience,1"
           >
@@ -301,10 +301,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="XP decreasing"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="base_experience,-1"
           >
@@ -314,10 +314,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="kg increasing"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="weight,1"
           >
@@ -327,10 +327,10 @@ exports[`SortingBox > Snapshot test of sorting box 1`] = `
             />
           </li>
           <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-1bh0x4e-MuiButtonBase-root-MuiMenuItem-root"
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="kg decreasing"
             role="menuitem"
-            style="background-color: white;"
+            style="color: black;"
             tabindex="-1"
             value="weight,-1"
           >

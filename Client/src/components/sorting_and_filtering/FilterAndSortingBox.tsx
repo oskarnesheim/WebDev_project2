@@ -29,12 +29,15 @@ const modalBoxStyles = {
 
 export default function FilterAndSortingBox() {
   const [open, setOpen] = useState(false);
+
   const [currentFilter, setCurrentFilter] = useRecoilState(recoilFilterBy);
   const [sortBy, setSortBy] = useRecoilState(recoilSortBy);
-  const [page, setPage] = useRecoilState(recoilPage);
+
   const [tempFilters, setTempFilters] = useState<string[]>([]);
   const [tempSortBy, setTempSortBy] = useState<string>("");
+
   const [ttsEnabled] = useRecoilState(recoilTTS);
+  const [page, setPage] = useRecoilState(recoilPage);
 
   // Initialize state from sessionStorage
   useEffect(() => {
@@ -116,7 +119,10 @@ export default function FilterAndSortingBox() {
       >
         <Box sx={modalBoxStyles}>
           <div className="filter_sorting_dropdowns">
-            <SortingBox setCurrentSorting={setTempSortBy} />
+            <SortingBox
+              setCurrentSorting={setTempSortBy}
+              currentSorting={tempSortBy}
+            />
             <FilterBox
               currentFilters={tempFilters}
               setCurrentFilter={setTempFilters}
