@@ -3,7 +3,7 @@ import { Box, Button, CircularProgress, TextareaAutosize } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import theme from "../../Theme";
 import { useQuery, useMutation } from "@apollo/client";
-import { getReviews, ADD_REVIEW } from "../../functions/GraphQLQueries";
+import { getReviews, AddReview } from "../../functions/GraphQLQueries";
 import { Review } from "../../interfaces/pokemon";
 import { useRecoilState } from "recoil";
 import { recoilTTS } from "../../recoil/atoms";
@@ -33,7 +33,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     setReview(event.target.value);
   };
 
-  const [addReview] = useMutation(ADD_REVIEW, {
+  const [addReview] = useMutation(AddReview, {
     refetchQueries: [{ query: getReviews, variables: { pokemonID: _id } }],
   });
 
@@ -123,6 +123,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
           {Array.from({ length: 5 }, (_, index) => (
             <StarIcon
               tabIndex={0}
+              data-testid={`star-rating-${index}`}
               key={index}
               onFocus={() => handleFocus("Rate " + (index + 1) + " out of 5")}
               onClick={() => handleRatingClick(index + 1)}
@@ -156,6 +157,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
           className="custom-button"
           onFocus={() => handleFocus("Submit your review")}
           disabled={alreadyReviewed(getUserID())}
+          data-testid="add-review-button"
           sx={{
             margin: "10px 0",
             padding: "10px 20px",

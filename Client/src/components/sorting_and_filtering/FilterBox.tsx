@@ -96,8 +96,8 @@ export default function FilterBox({
       >
         {filters.map((filter) => (
           <MenuItem
-            data-testid={filter[0]}
             key={filter[0]}
+            data-testid={filter[0]}
             onFocus={() => handleFocus(filter[0])}
             onMouseDown={handleMousedown}
             onKeyDown={(event) => {
