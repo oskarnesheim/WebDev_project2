@@ -18,8 +18,8 @@ export const ReviewMutationMock = [
             pokemonID: 1,
           },
           {
-            rating: 4,
-            description: "Denne pokemonen er grov",
+            rating: 3,
+            description: "This is a great Pokemon!",
             userID: "921124937025316501",
             pokemonID: 1,
           },
@@ -32,8 +32,8 @@ export const ReviewMutationMock = [
       query: AddReview,
       variables: {
         rating: 4,
-        description: "Denne pokemonen er legit grov",
-        userID: "921124937025316571",
+        description: "This is the most awesome pokemon ever!",
+        userID: "696969696969696969",
         pokemonID: 1,
       },
     },
@@ -42,8 +42,8 @@ export const ReviewMutationMock = [
         createReview: [
           {
             rating: 4,
-            description: "Denne pokemonen er legit grov",
-            userID: "921124937025316571",
+            description: "This is the most awesome pokemon ever!",
+            userID: "69696969696969",
             pokemonID: 1,
           },
         ],

@@ -60,7 +60,7 @@ export const getPokemons = gql`
 `;
 
 export const getReviews = gql`
-  query query($pokemonID: Int!) {
+  query reviewsForPokemon($pokemonID: Int!) {
     reviewsForPokemon(pokemonID: $pokemonID) {
       userID
       pokemonID

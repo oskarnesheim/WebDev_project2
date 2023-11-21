@@ -88,7 +88,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     // Reset the rating and review input
     setRating(0);
     setReview("");
-    setErrorMessage("");
+    setErrorMessage(`Thank you for your review!`);
   };
 
   if (loading) {

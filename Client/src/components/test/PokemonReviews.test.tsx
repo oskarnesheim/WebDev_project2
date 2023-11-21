@@ -6,28 +6,32 @@ import { RecoilRoot } from "recoil";
 import { ReviewMutationMock } from "../../utils/mocks/PokemonReviewMock";
 
 describe("PokemonRatingReview", () => {
-  test.skip("Renders the review form", async () => {
-    const { getAllByText } = render(
+  test("Renders the review form", async () => {
+    const { getAllByText, getByTestId } = render(
       <MockedProvider mocks={ReviewMutationMock} addTypename={false}>
-        <PokemonRatingReview _id={1} />
+        <RecoilRoot>
+          <PokemonRatingReview _id={1} />
+        </RecoilRoot>
       </MockedProvider>,
     );
     await waitFor(() => {
       //? Here we test that the component is rendered
-      expect(getAllByText("Rate and Review")).not.toBe(null);
+      expect(getByTestId("pokemon-reviews-header")).not.toBe(null);
       expect(getAllByText("Reviews")).not.toBe(null);
       expect(getAllByText("Rate")).not.toBe(null);
 
       //? Here we test that the data is rendered from the mock is rendered
       expect(getAllByText("dafa")).not.toBe(null);
-      expect(getAllByText("Denne pokemonen er grov")).not.toBe(null);
+      expect(getAllByText("This is a great Pokemon!")).not.toBe(null);
     });
     cleanup();
   });
-  test.skip("Submitting with no rating", async () => {
+  test("Submitting with no rating", async () => {
     const { getAllByText, getByPlaceholderText, getAllByTestId } = render(
       <MockedProvider mocks={ReviewMutationMock} addTypename={false}>
-        <PokemonRatingReview _id={1} />
+        <RecoilRoot>
+          <PokemonRatingReview _id={1} />
+        </RecoilRoot>
       </MockedProvider>,
     );
     await waitFor(() => {
@@ -47,14 +51,16 @@ describe("PokemonRatingReview", () => {
     });
     cleanup();
   });
-  test.skip("Submitting with no description", async () => {
+  test("Submitting with no description", async () => {
     const { getAllByText, getAllByTestId } = render(
       <MockedProvider mocks={ReviewMutationMock} addTypename={false}>
-        <PokemonRatingReview _id={1} />
+        <RecoilRoot>
+          <PokemonRatingReview _id={1} />
+        </RecoilRoot>
       </MockedProvider>,
     );
     await waitFor(() => {
-      const star4 = getAllByTestId("star-rating-4");
+      const star4 = getAllByTestId("star-rating-3");
       if (star4) {
         fireEvent.click(star4[0]);
       }
@@ -63,14 +69,15 @@ describe("PokemonRatingReview", () => {
       fireEvent.click(submitButton[0]);
 
       const ratingError = getAllByText("Please write a review.")[0];
-      expect(ratingError).not.toBe(null);
+      expect(ratingError).toBeTruthy();
     });
 
     cleanup();
   });
+  test("Submitting a valid review", async () => {
+    localStorage.setItem("userID", "696969696969696969");
 
-  test.skip("Submitting a valid review", async () => {
-    const { getAllByTestId, getAllByPlaceholderText } = render(
+    const { getByTestId, getAllByPlaceholderText, getByText } = render(
       <RecoilRoot>
         <MockedProvider mocks={ReviewMutationMock} addTypename={false}>
           <PokemonRatingReview _id={1} />
@@ -80,21 +87,37 @@ describe("PokemonRatingReview", () => {
     await waitFor(() => {
       const reviewInput = getAllByPlaceholderText("Write your review...")[0];
       fireEvent.change(reviewInput, {
-        target: { value: "This is a great Pokemon!" },
+        target: { value: "This is the most awesome pokemon ever!" },
       });
 
-      const star4 = getAllByTestId("star-rating-4");
+      const star4 = getByTestId("star-rating-3");
       if (star4) {
-        fireEvent.click(star4[0]);
+        fireEvent.click(star4);
       }
 
-      const submitButton = getAllByTestId("add-review-button");
-      fireEvent.click(submitButton[0]);
+      const submitButton = getByTestId("add-review-button");
+      fireEvent.click(submitButton);
+
+      //! The mock might not be working since it only works it the delay
+      setTimeout(() => {
+        expect(
+          getByText("This is the most awesome pokemon ever!"),
+        ).toBeTruthy();
+      }, 500);
+
+      expect(getByText("Thank you for your review!")).toBeTruthy();
+    });
+  });
+  test("Snapshot test", async () => {
+    const { container } = render(
+      <MockedProvider mocks={ReviewMutationMock} addTypename={false}>
+        <RecoilRoot>
+          <PokemonRatingReview _id={1} />
+        </RecoilRoot>
+      </MockedProvider>,
+    );
+    await waitFor(() => {
+      expect(container).toMatchSnapshot();
     });
   });
 });
-
-// ADD TEST ##########################################
-// Test that you have recieved a userID
-// const userID = localStorage.getItem("userID");
-// expect(userID).toBeTruthy();
