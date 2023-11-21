@@ -42,34 +42,38 @@ exports[`Navbar > Snapshot test of navbar and hamburger menu 1`] = `
           >
             About
           </h3>
-          <span
-            class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
+          <div
+            style="display: flex; align-items: center;"
           >
             <span
-              class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
             >
-              <input
-                aria-label="TTS switch"
-                class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
-                name="ttsSwitch"
-                type="checkbox"
-              />
               <span
-                class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
-              />
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+              >
+                <input
+                  aria-label="TTS switch"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                  name="ttsSwitch"
+                  type="checkbox"
+                />
+                <span
+                  class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
+                />
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </span>
               <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
               />
             </span>
-            <span
-              class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
-            />
-          </span>
-          <p
-            style="font-size: 0.8rem; margin: 0px 0px 0px -100px; padding: 0px;"
-          >
-            Text to speech
-          </p>
+            <p
+              style="font-size: 0.8rem; margin: 0px 0px 0px 0px; padding: 0px;"
+            >
+              Text to speech
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -111,34 +115,38 @@ exports[`Navbar > Snapshot test of navbar and hamburger menu 1`] = `
           >
             About
           </h3>
-          <span
-            class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
+          <div
+            style="display: flex; align-items: center;"
           >
             <span
-              class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
             >
-              <input
-                aria-label="TTS switch"
-                class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
-                name="ttsSwitch"
-                type="checkbox"
-              />
               <span
-                class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
-              />
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+              >
+                <input
+                  aria-label="TTS switch"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                  name="ttsSwitch"
+                  type="checkbox"
+                />
+                <span
+                  class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
+                />
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </span>
               <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
               />
             </span>
-            <span
-              class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
-            />
-          </span>
-          <p
-            style="font-size: 0.8rem; margin: 0px 0px 0px -100px; padding: 0px;"
-          >
-            Text to speech
-          </p>
+            <p
+              style="font-size: 0.8rem; margin: 0px 0px 0px 0px; padding: 0px;"
+            >
+              Text to speech
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -180,34 +188,38 @@ exports[`Navbar > Snapshot test of navbar and hamburger menu 1`] = `
           >
             About
           </h3>
-          <span
-            class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
+          <div
+            style="display: flex; align-items: center;"
           >
             <span
-              class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
             >
-              <input
-                aria-label="TTS switch"
-                class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
-                name="ttsSwitch"
-                type="checkbox"
-              />
               <span
-                class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
-              />
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+              >
+                <input
+                  aria-label="TTS switch"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                  name="ttsSwitch"
+                  type="checkbox"
+                />
+                <span
+                  class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
+                />
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </span>
               <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
               />
             </span>
-            <span
-              class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
-            />
-          </span>
-          <p
-            style="font-size: 0.8rem; margin: 0px 0px 0px -100px; padding: 0px;"
-          >
-            Text to speech
-          </p>
+            <p
+              style="font-size: 0.8rem; margin: 0px 0px 0px 0px; padding: 0px;"
+            >
+              Text to speech
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -250,34 +262,38 @@ exports[`Navbar > Snapshot test of navbar and hamburger menu 1`] = `
         >
           About
         </h3>
-        <span
-          class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
+        <div
+          style="display: flex; align-items: center;"
         >
           <span
-            class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+            class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
           >
-            <input
-              aria-label="TTS switch"
-              class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
-              name="ttsSwitch"
-              type="checkbox"
-            />
             <span
-              class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
-            />
+              class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+            >
+              <input
+                aria-label="TTS switch"
+                class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                name="ttsSwitch"
+                type="checkbox"
+              />
+              <span
+                class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
+              />
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </span>
             <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
             />
           </span>
-          <span
-            class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
-          />
-        </span>
-        <p
-          style="font-size: 0.8rem; margin: 0px 0px 0px -100px; padding: 0px;"
-        >
-          Text to speech
-        </p>
+          <p
+            style="font-size: 0.8rem; margin: 0px 0px 0px 0px; padding: 0px;"
+          >
+            Text to speech
+          </p>
+        </div>
       </div>
     </div>
   </div>,
@@ -377,34 +393,38 @@ exports[`Navbar > Snapshot test of navbar and hamburger menu 2`] = `
           >
             About
           </h3>
-          <span
-            class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
+          <div
+            style="display: flex; align-items: center;"
           >
             <span
-              class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
             >
-              <input
-                aria-label="TTS switch"
-                class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
-                name="ttsSwitch"
-                type="checkbox"
-              />
               <span
-                class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
-              />
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+              >
+                <input
+                  aria-label="TTS switch"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                  name="ttsSwitch"
+                  type="checkbox"
+                />
+                <span
+                  class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
+                />
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </span>
               <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
               />
             </span>
-            <span
-              class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
-            />
-          </span>
-          <p
-            style="font-size: 0.8rem; margin: 0px 0px 0px -100px; padding: 0px;"
-          >
-            Text to speech
-          </p>
+            <p
+              style="font-size: 0.8rem; margin: 0px 0px 0px 0px; padding: 0px;"
+            >
+              Text to speech
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -446,34 +466,38 @@ exports[`Navbar > Snapshot test of navbar and hamburger menu 2`] = `
           >
             About
           </h3>
-          <span
-            class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
+          <div
+            style="display: flex; align-items: center;"
           >
             <span
-              class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
             >
-              <input
-                aria-label="TTS switch"
-                class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
-                name="ttsSwitch"
-                type="checkbox"
-              />
               <span
-                class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
-              />
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+              >
+                <input
+                  aria-label="TTS switch"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                  name="ttsSwitch"
+                  type="checkbox"
+                />
+                <span
+                  class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
+                />
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </span>
               <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
               />
             </span>
-            <span
-              class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
-            />
-          </span>
-          <p
-            style="font-size: 0.8rem; margin: 0px 0px 0px -100px; padding: 0px;"
-          >
-            Text to speech
-          </p>
+            <p
+              style="font-size: 0.8rem; margin: 0px 0px 0px 0px; padding: 0px;"
+            >
+              Text to speech
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -515,34 +539,38 @@ exports[`Navbar > Snapshot test of navbar and hamburger menu 2`] = `
           >
             About
           </h3>
-          <span
-            class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
+          <div
+            style="display: flex; align-items: center;"
           >
             <span
-              class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
             >
-              <input
-                aria-label="TTS switch"
-                class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
-                name="ttsSwitch"
-                type="checkbox"
-              />
               <span
-                class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
-              />
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+              >
+                <input
+                  aria-label="TTS switch"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                  name="ttsSwitch"
+                  type="checkbox"
+                />
+                <span
+                  class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
+                />
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </span>
               <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
               />
             </span>
-            <span
-              class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
-            />
-          </span>
-          <p
-            style="font-size: 0.8rem; margin: 0px 0px 0px -100px; padding: 0px;"
-          >
-            Text to speech
-          </p>
+            <p
+              style="font-size: 0.8rem; margin: 0px 0px 0px 0px; padding: 0px;"
+            >
+              Text to speech
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -581,6 +609,38 @@ exports[`Navbar > Snapshot test of navbar and hamburger menu 2`] = `
         >
           Pokedex
         </h2>
+        <div
+          style="display: flex; align-items: center;"
+        >
+          <span
+            class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
+          >
+            <span
+              class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+            >
+              <input
+                aria-label="TTS switch"
+                class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                name="ttsSwitch"
+                type="checkbox"
+              />
+              <span
+                class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
+              />
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </span>
+            <span
+              class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
+            />
+          </span>
+          <p
+            style="font-size: 0.8rem; margin: 0px 0px 0px 10px; padding: 0px;"
+          >
+            Text to speech
+          </p>
+        </div>
       </div>
     </div>
   </body>,
@@ -619,6 +679,38 @@ exports[`Navbar > Snapshot test of navbar and hamburger menu 2`] = `
       >
         Pokedex
       </h2>
+      <div
+        style="display: flex; align-items: center;"
+      >
+        <span
+          class="MuiSwitch-root MuiSwitch-sizeMedium css-1fn2voh-MuiSwitch-root"
+        >
+          <span
+            class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase"
+          >
+            <input
+              aria-label="TTS switch"
+              class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+              name="ttsSwitch"
+              type="checkbox"
+            />
+            <span
+              class="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb"
+            />
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </span>
+          <span
+            class="MuiSwitch-track css-1yjjitx-MuiSwitch-track"
+          />
+        </span>
+        <p
+          style="font-size: 0.8rem; margin: 0px 0px 0px 10px; padding: 0px;"
+        >
+          Text to speech
+        </p>
+      </div>
     </div>
   </div>,
   "debug": [Function],

@@ -96,7 +96,7 @@ export default function Navbar() {
           >
             About
           </h3>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <Switch
               checked={ttsEnabled}
               onFocus={() => handleFocus("Text to speech")}

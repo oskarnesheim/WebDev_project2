@@ -125,7 +125,7 @@ export default function FadeMenu() {
       >
         Pokedex
       </h2>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ display: "flex", alignItems: "center" }}>
         <Switch
           checked={ttsEnabled}
           onFocus={() => handleFocus("Text to speech")}
