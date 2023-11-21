@@ -78,10 +78,13 @@ describe("FilterBox", () => {
     const setCurrentFilter = () => {};
 
     const page = render(
-      <FilterBox
-        currentFilters={currentFilters}
-        setCurrentFilter={setCurrentFilter}
-      />,
+      <RecoilRoot>
+        <FilterBox
+          currentFilters={currentFilters}
+          setCurrentFilter={setCurrentFilter}
+        />
+        ,
+      </RecoilRoot>,
     );
     expect(page).toMatchSnapshot();
   });

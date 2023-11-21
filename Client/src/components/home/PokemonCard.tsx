@@ -1,9 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, Typography } from "@mui/material";
 import { PokemonCardI } from "../../interfaces/pokemon";
-import { useRef } from "react";
-import { useRecoilState } from "recoil";
-import { recoilTTS } from "../../recoil/atoms";
+import { useEffect, useRef } from "react";
 
 type PokemonCardProps = {
   PokemonData: PokemonCardI;
@@ -30,7 +28,6 @@ const filters = [
 
 export default function PokemonCard({ PokemonData }: PokemonCardProps) {
   const navigate = useNavigate();
-  const [ttsEnabled] = useRecoilState(recoilTTS);
 
   function getBackgroundColor(): string[] {
     if (!PokemonData) return ["grey"];
@@ -81,13 +78,13 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
         card.removeEventListener("keydown", handleEnter);
       };
     }
-  };
+  });
 
   return (
     <Card
       ref={cardRef}
       tabIndex={0}
-      onFocus={() => handleFocus(PokemonData.name)}
+      // onFocus={() => handleFocus(PokemonData.name)}
       onClick={() => {
         navigate("/" + PokemonData._id.toString());
       }}

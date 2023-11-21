@@ -61,14 +61,12 @@ describe("SortingBox", () => {
   });
 
   test("Snapshot test of sorting box", () => {
-    const currentSorting = "";
     const setCurrentSorting = () => {};
 
     const page = render(
-      <SortingBox
-        currentSorting={currentSorting}
-        setCurrentSorting={setCurrentSorting}
-      />,
+      <RecoilRoot>
+        <SortingBox setCurrentSorting={setCurrentSorting} />
+      </RecoilRoot>,
     );
     expect(page).toMatchSnapshot();
   });
