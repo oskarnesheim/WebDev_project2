@@ -1,4 +1,4 @@
-import { test, describe, expect, afterEach, beforeEach } from "vitest";
+import { test, describe, expect, beforeEach } from "vitest";
 import { cleanup, render, waitFor } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { findSinglePokemon } from "../../functions/GraphQLQueries";

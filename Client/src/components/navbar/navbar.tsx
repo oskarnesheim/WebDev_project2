@@ -12,7 +12,6 @@ import {
   recoilSearch,
   updateStorageOnChange,
 } from "../../recoil/atoms";
-import { handleFocus } from "../../functions/GraphQLQueries";
 
 export default function Navbar() {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
