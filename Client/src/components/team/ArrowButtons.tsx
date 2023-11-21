@@ -6,7 +6,7 @@ import CircleTwoToneIcon from "@mui/icons-material/CircleTwoTone";
 import Tooltip from "@mui/material/Tooltip";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { recoilMyTeam } from "../../recoil/atoms";
+import { recoilMyTeam, recoilTTS } from "../../recoil/atoms";
 
 interface Props {
   selectedPokemon: number;
@@ -18,6 +18,7 @@ export default function Arrowbuttons({
   setSelectedPokemon,
 }: Props) {
   const [team] = useRecoilState<string[]>(recoilMyTeam);
+  const [ttsEnabled] = useRecoilState(recoilTTS);
   const history = useNavigate();
   const redirectToPokemon = () => {
     history("/" + team[selectedPokemon]);
@@ -34,11 +35,12 @@ export default function Arrowbuttons({
   }
 
   const handleFocus = (text: string) => {
-    const speechSynthesis = window.speechSynthesis;
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.volume = 0.5;
-    speechSynthesis.speak(utterance);
+    if (ttsEnabled && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.volume = 0.5;
+      window.speechSynthesis.speak(utterance);
+    }
   };
 
   return (

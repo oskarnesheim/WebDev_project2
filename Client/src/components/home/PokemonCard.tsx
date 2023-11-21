@@ -78,12 +78,13 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
         card.removeEventListener("keydown", handleEnter);
       };
     }
-  }, [PokemonData.name]);
+  });
 
   return (
     <Card
       ref={cardRef}
       tabIndex={0}
+      // onFocus={() => handleFocus(PokemonData.name)}
       onClick={() => {
         navigate("/" + PokemonData._id.toString());
       }}
@@ -124,7 +125,7 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
       />
       <img
         src={PokemonData.sprites.front_default}
-        alt="Cool picture of a Pokémon"
+        alt={"Picture of " + PokemonData.name}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

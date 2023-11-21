@@ -1,0 +1,158 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`About > Snapshot test of page 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MuiBox-root css-2ahs1"
+      >
+        <h2
+          class="MuiTypography-root MuiTypography-h2 css-1sra7t5-MuiTypography-root"
+        >
+          About
+        </h2>
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-1j8009j-MuiTypography-root"
+        >
+          Discover our Pokedex, a handy tool for Pokemon enthusiasts featuring information on 300 Pokemons from the first and second generations. Dive into a world of statistics, where you can delve into details like height, weight, type, and more for each Pokemon. Share your own unique insights and reviews about these creatures with fellow users. But that's not all - you can also curate your dream team of six Pokemons to keep them close, offering you a fun and engaging way to stay connected with your favorite companions.
+        </p>
+        <h4
+          class="MuiTypography-root MuiTypography-h4 css-114bf3r-MuiTypography-root"
+        >
+          Search
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-1j8009j-MuiTypography-root"
+          >
+            You can search for a pokemon by its name or you can filter pokemons based on different types (water, fire, grass etc.). Additionally you can sort pokemons by their name, height, weight, and base experience, in both ascending and descending order. The results will show you the first 20 pokemons that match your search criteria, with the option to go to the next page to see 20 more pokemons.
+          </p>
+        </h4>
+        <h4
+          class="MuiTypography-root MuiTypography-h4 css-114bf3r-MuiTypography-root"
+        >
+          My Team
+          <hr
+            class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+          />
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-1j8009j-MuiTypography-root"
+          >
+            You have the ability to put together your own team of Pokémon. You can add up to 6 Pokémon to your team before it's full. You also have the ability to remove Pokémon from your team if you suddenly change your mind. And no, you cannot have 6 Charizards.
+          </p>
+        </h4>
+        <h4
+          class="MuiTypography-root MuiTypography-h4 css-xq6mha-MuiTypography-root"
+        >
+          Gotta Catch 'Em All!
+        </h4>
+        <img
+          alt="pokeball"
+          id="pokeball"
+          src="/project2/assets/Pokeball.png"
+        />
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiBox-root css-2ahs1"
+    >
+      <h2
+        class="MuiTypography-root MuiTypography-h2 css-1sra7t5-MuiTypography-root"
+      >
+        About
+      </h2>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-1j8009j-MuiTypography-root"
+      >
+        Discover our Pokedex, a handy tool for Pokemon enthusiasts featuring information on 300 Pokemons from the first and second generations. Dive into a world of statistics, where you can delve into details like height, weight, type, and more for each Pokemon. Share your own unique insights and reviews about these creatures with fellow users. But that's not all - you can also curate your dream team of six Pokemons to keep them close, offering you a fun and engaging way to stay connected with your favorite companions.
+      </p>
+      <h4
+        class="MuiTypography-root MuiTypography-h4 css-114bf3r-MuiTypography-root"
+      >
+        Search
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-1j8009j-MuiTypography-root"
+        >
+          You can search for a pokemon by its name or you can filter pokemons based on different types (water, fire, grass etc.). Additionally you can sort pokemons by their name, height, weight, and base experience, in both ascending and descending order. The results will show you the first 20 pokemons that match your search criteria, with the option to go to the next page to see 20 more pokemons.
+        </p>
+      </h4>
+      <h4
+        class="MuiTypography-root MuiTypography-h4 css-114bf3r-MuiTypography-root"
+      >
+        My Team
+        <hr
+          class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+        />
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-1j8009j-MuiTypography-root"
+        >
+          You have the ability to put together your own team of Pokémon. You can add up to 6 Pokémon to your team before it's full. You also have the ability to remove Pokémon from your team if you suddenly change your mind. And no, you cannot have 6 Charizards.
+        </p>
+      </h4>
+      <h4
+        class="MuiTypography-root MuiTypography-h4 css-xq6mha-MuiTypography-root"
+      >
+        Gotta Catch 'Em All!
+      </h4>
+      <img
+        alt="pokeball"
+        id="pokeball"
+        src="/project2/assets/Pokeball.png"
+      />
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

@@ -1,6 +1,7 @@
 import { render, fireEvent } from "@testing-library/react";
 import { describe, test, expect } from "vitest";
 import FilterBox from "../sorting_and_filtering/FilterBox";
+import { RecoilRoot } from "recoil";
 
 describe("FilterBox", () => {
   test("Checks if all filter options are rendered correctly", () => {
@@ -8,10 +9,12 @@ describe("FilterBox", () => {
     const setCurrentFilter = () => {};
 
     const { getByRole, getByText } = render(
-      <FilterBox
-        currentFilters={currentFilters}
-        setCurrentFilter={setCurrentFilter}
-      />,
+      <RecoilRoot>
+        <FilterBox
+          currentFilters={currentFilters}
+          setCurrentFilter={setCurrentFilter}
+        />
+      </RecoilRoot>,
     );
 
     fireEvent.click(getByRole("button", { name: "Choose Filters" }));
@@ -52,10 +55,12 @@ describe("FilterBox", () => {
     };
 
     const { getByRole, getAllByText } = render(
-      <FilterBox
-        currentFilters={currentFilters}
-        setCurrentFilter={setCurrentFilter}
-      />,
+      <RecoilRoot>
+        <FilterBox
+          currentFilters={currentFilters}
+          setCurrentFilter={setCurrentFilter}
+        />
+      </RecoilRoot>,
     );
 
     fireEvent.click(getByRole("button", { name: "Choose Filters" }));
@@ -66,5 +71,21 @@ describe("FilterBox", () => {
     const option2 = getAllByText("water");
     fireEvent.click(option2[1]);
     expect(currentFilters).toContain("water");
+  });
+
+  test("Snapshot test of filter box", () => {
+    const currentFilters: string[] = [];
+    const setCurrentFilter = () => {};
+
+    const page = render(
+      <RecoilRoot>
+        <FilterBox
+          currentFilters={currentFilters}
+          setCurrentFilter={setCurrentFilter}
+        />
+        ,
+      </RecoilRoot>,
+    );
+    expect(page).toMatchSnapshot();
   });
 });

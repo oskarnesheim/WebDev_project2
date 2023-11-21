@@ -6,7 +6,7 @@ import { Box, Button, Divider, Tooltip, Typography } from "@mui/material";
 import PokemonRatingReview from "./PokemonReviews";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { checkTeam, addToTeam, removeFromTeam } from "../team/TeamFunctions";
-import { recoilMyTeam } from "../../recoil/atoms";
+import { recoilMyTeam, recoilTTS } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
 import { PokemonPageI } from "../../interfaces/pokemon";
 import { findSinglePokemon } from "../../functions/GraphQLQueries";
@@ -20,6 +20,7 @@ export default function Pokemon() {
 
   const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
   const { loading, error, data } = useQuery(findSinglePokemon, { variables });
+  const [ttsEnabled] = useRecoilState(recoilTTS);
 
   if (loading) {
     return <CircularProgress />;
@@ -67,11 +68,12 @@ export default function Pokemon() {
   }
 
   const handleFocus = (text: string) => {
-    const speechSynthesis = window.speechSynthesis;
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.volume = 0.5;
-    speechSynthesis.speak(utterance);
+    if (ttsEnabled && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.volume = 0.5;
+      window.speechSynthesis.speak(utterance);
+    }
   };
 
   return (

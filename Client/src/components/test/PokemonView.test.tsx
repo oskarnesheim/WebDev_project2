@@ -11,7 +11,6 @@ import { cleanup, render, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { describe, expect, test } from "vitest";
-import PokemonView from "../home/PokemonView";
 import Navbar from "../navbar/navbar";
 import { getPokemons } from "../../functions/GraphQLQueries";
 
