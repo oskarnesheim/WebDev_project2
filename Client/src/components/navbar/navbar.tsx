@@ -96,32 +96,34 @@ export default function Navbar() {
           >
             About
           </h3>
-          <Switch
-            checked={ttsEnabled}
-            onFocus={() => handleFocus("Text to speech")}
-            onChange={() => setTtsEnabled(!ttsEnabled)}
-            name="ttsSwitch"
-            inputProps={{ "aria-label": "TTS switch" }}
-            sx={{
-              "& .MuiSwitch-thumb": {
-                backgroundColor: ttsEnabled ? "primary" : "grey", // change 'blue' and 'grey' to the colors you want
-              },
-              "& .MuiSwitch-track": {
-                backgroundColor: ttsEnabled ? "lightblue" : "lightgrey", // change 'lightblue' and 'lightgrey' to the colors you want
-              },
-            }}
-          />
-          <p
-            style={{
-              fontSize: "0.8rem",
-              margin: "0",
-              marginTop: "0px",
-              marginLeft: "-100px",
-              padding: "0",
-            }}
-          >
-            Text to speech
-          </p>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Switch
+              checked={ttsEnabled}
+              onFocus={() => handleFocus("Text to speech")}
+              onChange={() => setTtsEnabled(!ttsEnabled)}
+              name="ttsSwitch"
+              inputProps={{ "aria-label": "TTS switch" }}
+              sx={{
+                "& .MuiSwitch-thumb": {
+                  backgroundColor: ttsEnabled ? "primary" : "grey",
+                },
+                "& .MuiSwitch-track": {
+                  backgroundColor: ttsEnabled ? "lightblue" : "lightgrey",
+                },
+              }}
+            />
+            <p
+              style={{
+                fontSize: "0.8rem",
+                margin: "0",
+                marginTop: "0px",
+                marginLeft: "0px",
+                padding: "0",
+              }}
+            >
+              Text to speech
+            </p>
+          </div>
         </div>
       )}
     </div>

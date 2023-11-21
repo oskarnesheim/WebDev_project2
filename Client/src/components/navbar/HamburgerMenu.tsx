@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
+import Switch from "@mui/material/Switch";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -20,6 +21,7 @@ export default function FadeMenu() {
   const [page, setPage] = useRecoilState(recoilPage);
   const [search, setSearch] = useRecoilState(recoilSearch);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [ttsEnabled, setTtsEnabled] = React.useState(false);
   // const location = window.location.pathname;
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
@@ -32,6 +34,14 @@ export default function FadeMenu() {
     }
     setAnchorEl(null);
     navigate(toWhatPage);
+  };
+  const handleFocus = (text: string) => {
+    if (ttsEnabled && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.volume = 0.5;
+      window.speechSynthesis.speak(utterance);
+    }
   };
 
   const pages = [
@@ -115,6 +125,34 @@ export default function FadeMenu() {
       >
         Pokedex
       </h2>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Switch
+          checked={ttsEnabled}
+          onFocus={() => handleFocus("Text to speech")}
+          onChange={() => setTtsEnabled(!ttsEnabled)}
+          name="ttsSwitch"
+          inputProps={{ "aria-label": "TTS switch" }}
+          sx={{
+            "& .MuiSwitch-thumb": {
+              backgroundColor: ttsEnabled ? "primary" : "grey",
+            },
+            "& .MuiSwitch-track": {
+              backgroundColor: ttsEnabled ? "lightblue" : "lightgrey",
+            },
+          }}
+        />
+        <p
+          style={{
+            fontSize: "0.8rem",
+            margin: "0",
+            marginTop: "0px",
+            marginLeft: "10px",
+            padding: "0",
+          }}
+        >
+          Text to speech
+        </p>
+      </div>
     </div>
   );
 }
