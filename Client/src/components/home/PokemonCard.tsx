@@ -126,12 +126,13 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
       <img
         src={PokemonData.sprites.front_default}
         alt={"Picture of " + PokemonData.name}
+        data-testid={PokemonData._id + "_picture"}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {PokemonData.name}
         </Typography>
-        <Typography variant="body2">
+        <Typography variant="body2" data-testid={PokemonData._id + "_types"}>
           {PokemonData.types
             .map((type: { type: { name: string } }) => type.type.name)
             .join(", ")}

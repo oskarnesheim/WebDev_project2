@@ -90,11 +90,3 @@ export const AddReview = gql`
     }
   }
 `;
-
-export const handleFocus = (text: string) => {
-  const speechSynthesis = window.speechSynthesis;
-  speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.volume = 0.5;
-  speechSynthesis.speak(utterance);
-};
