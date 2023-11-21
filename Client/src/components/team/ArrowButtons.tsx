@@ -6,7 +6,7 @@ import CircleTwoToneIcon from "@mui/icons-material/CircleTwoTone";
 import Tooltip from "@mui/material/Tooltip";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { recoilMyTeam, recoilTTS } from "../../recoil/atoms";
+import { recoilMyTeam } from "../../recoil/atoms";
 
 interface Props {
   selectedPokemon: number;
@@ -18,7 +18,6 @@ export default function Arrowbuttons({
   setSelectedPokemon,
 }: Props) {
   const [team] = useRecoilState<string[]>(recoilMyTeam);
-  const [ttsEnabled] = useRecoilState(recoilTTS);
   const history = useNavigate();
   const redirectToPokemon = () => {
     history("/" + team[selectedPokemon]);
@@ -34,21 +33,11 @@ export default function Arrowbuttons({
     setSelectedPokemon(num);
   }
 
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
-    }
-  };
-
   return (
     <div className="button-container">
       <Button
         variant="contained"
         color="primary"
-        onFocus={() => handleFocus("Previous Pokémon")}
         onClick={() => moveBy("left")}
       >
         <ArrowBackIcon />
@@ -57,7 +46,6 @@ export default function Arrowbuttons({
         <Button
           variant="contained"
           color="primary"
-          onFocus={() => handleFocus("Go to Pokémon")}
           onClick={() => redirectToPokemon()}
         >
           <CircleTwoToneIcon />
@@ -66,7 +54,6 @@ export default function Arrowbuttons({
       <Button
         variant="contained"
         color="primary"
-        onFocus={() => handleFocus("Next Pokémon")}
         onClick={() => moveBy("right")}
         data-testid="right_button_team"
       >

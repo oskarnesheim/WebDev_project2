@@ -1,11 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
-import { Switch } from "@mui/material";
 import { useState } from "react";
 import HamburgerMenu from "./HamburgerMenu";
 import { useRecoilState } from "recoil";
 import {
-  recoilTTS,
   recoilFilterBy,
   recoilSortBy,
   recoilPage,
@@ -19,7 +17,6 @@ export default function Navbar() {
   const [sortBy, setSortBy] = useRecoilState(recoilSortBy);
   const [page, setPage] = useRecoilState(recoilPage);
   const [search, setSearch] = useRecoilState(recoilSearch);
-  const [ttsEnabled, setTtsEnabled] = useRecoilState(recoilTTS);
 
   window.onresize = () => {
     setWindowSize(window.innerWidth);
@@ -45,15 +42,6 @@ export default function Navbar() {
     navigate("/");
   };
 
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
-    }
-  };
-
   return (
     <div>
       {windowSize < 700 ? (
@@ -65,7 +53,6 @@ export default function Navbar() {
             data-testid="pokedex_link_button"
             onClick={() => logoOnclick()}
             tabIndex={0}
-            onFocus={() => handleFocus("Pokedex")}
             onKeyDown={(event) => {
               if (event.key === "Enter") navigate("/");
             }}
@@ -80,7 +67,6 @@ export default function Navbar() {
             onKeyDown={(event) => {
               if (event.key === "Enter") navigate("/myteam");
             }}
-            onFocus={() => handleFocus("My Team")}
           >
             My Team <BusinessCenterOutlinedIcon />
           </h3>
@@ -91,39 +77,10 @@ export default function Navbar() {
             onKeyDown={(event) => {
               if (event.key === "Enter") navigate("/about");
             }}
-            onFocus={() => handleFocus("About")}
             data-testid="about_link_button"
           >
             About
           </h3>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Switch
-              checked={ttsEnabled}
-              onFocus={() => handleFocus("Text to speech")}
-              onChange={() => setTtsEnabled(!ttsEnabled)}
-              name="ttsSwitch"
-              inputProps={{ "aria-label": "TTS switch" }}
-              sx={{
-                "& .MuiSwitch-thumb": {
-                  backgroundColor: ttsEnabled ? "primary" : "grey",
-                },
-                "& .MuiSwitch-track": {
-                  backgroundColor: ttsEnabled ? "lightblue" : "lightgrey",
-                },
-              }}
-            />
-            <p
-              style={{
-                fontSize: "0.8rem",
-                margin: "0",
-                marginTop: "0px",
-                marginLeft: "0px",
-                padding: "0",
-              }}
-            >
-              Text to speech
-            </p>
-          </div>
         </div>
       )}
     </div>

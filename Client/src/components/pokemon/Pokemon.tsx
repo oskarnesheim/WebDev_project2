@@ -6,7 +6,7 @@ import { Box, Button, Divider, Tooltip, Typography } from "@mui/material";
 import PokemonRatingReview from "./PokemonReviews";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { checkTeam, addToTeam, removeFromTeam } from "../team/TeamFunctions";
-import { recoilMyTeam, recoilTTS } from "../../recoil/atoms";
+import { recoilMyTeam } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
 import { PokemonPageI } from "../../interfaces/pokemon";
 import { findSinglePokemon } from "../../functions/GraphQLQueries";
@@ -20,7 +20,6 @@ export default function Pokemon() {
 
   const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
   const { loading, error, data } = useQuery(findSinglePokemon, { variables });
-  const [ttsEnabled] = useRecoilState(recoilTTS);
 
   if (loading) {
     return <CircularProgress />;
@@ -67,15 +66,6 @@ export default function Pokemon() {
     }
   }
 
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
-    }
-  };
-
   return (
     <>
       <Typography
@@ -103,7 +93,6 @@ export default function Pokemon() {
                   cursor: "alias",
                 },
               }}
-              onFocus={() => handleFocus("Go back")}
               onClick={() => navigate(-1)}
             >
               <ArrowBackIosNewIcon />
@@ -116,7 +105,6 @@ export default function Pokemon() {
               sx={{
                 color: getButtonInfo(0),
               }}
-              onFocus={() => handleFocus(getButtonInfo(2) || "Default message")}
               onClick={() => handleOnClick()}
             >
               {getButtonInfo(1)}

@@ -5,8 +5,6 @@ import theme from "../../Theme";
 import { useQuery, useMutation } from "@apollo/client";
 import { getReviews, AddReview } from "../../functions/GraphQLQueries";
 import { Review } from "../../interfaces/pokemon";
-import { useRecoilState } from "recoil";
-import { recoilTTS } from "../../recoil/atoms";
 
 type PokemonReviewProps = {
   _id: number;
@@ -21,7 +19,6 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
   });
 
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [ttsEnabled] = useRecoilState(recoilTTS);
 
   const handleRatingClick = (newRating: number) => {
     setRating(newRating);
@@ -98,15 +95,6 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     return <Box>Error: {error.message}</Box>;
   }
 
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
-    }
-  };
-
   return (
     <div className="pokemon_reviews_container">
       <h2
@@ -125,7 +113,6 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
               tabIndex={0}
               data-testid={`star-rating-${index}`}
               key={index}
-              onFocus={() => handleFocus("Rate " + (index + 1) + " out of 5")}
               onClick={() => handleRatingClick(index + 1)}
               style={{
                 fontSize: "24px",
@@ -139,7 +126,6 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
         <div>
           <TextareaAutosize
             value={review}
-            onFocus={() => handleFocus("Write your review here")}
             onChange={handleReviewChange}
             minRows={4}
             style={{
@@ -155,7 +141,6 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
           type="submit"
           variant="contained"
           className="custom-button"
-          onFocus={() => handleFocus("Submit your review")}
           disabled={alreadyReviewed(getUserID())}
           data-testid="add-review-button"
           sx={{
