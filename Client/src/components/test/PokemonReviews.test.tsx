@@ -45,9 +45,9 @@ const ReviewMutationMock = [
       data: {
         createReview: [
           {
-            rating: 5,
-            description: "This is a great Pokemon!",
-            userID: "654799827194534100",
+            rating: 4,
+            description: "Denne pokemonen er legit grov",
+            userID: "921124937025316571",
             pokemonID: 1,
           },
         ],
@@ -120,7 +120,7 @@ describe("PokemonRatingReview", () => {
     cleanup();
   });
 
-  test.skip("Submitting a valid review", async () => {
+  test("Submitting a valid review", async () => {
     const { getAllByTestId, getAllByPlaceholderText } = render(
       <MockedProvider mocks={ReviewMutationMock} addTypename={false}>
         <PokemonRatingReview _id={1} />

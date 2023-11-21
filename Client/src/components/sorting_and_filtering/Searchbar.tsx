@@ -42,7 +42,7 @@ function Searchbar() {
 
   const handleFocus = (text: string) => {
     const speechSynthesis = window.speechSynthesis;
-    speechSynthesis.cancel();
+    speechSynthesis.cancel(); //! This causes an error when testing.
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.volume = 0.5;
     speechSynthesis.speak(utterance);
