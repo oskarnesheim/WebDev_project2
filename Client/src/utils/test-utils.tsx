@@ -11,7 +11,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export const renderWithRouterQueryClientAndDrinkId = (_id: string) =>
+export const renderWithRouterQueryClientAndPokemonId = (_id: string) =>
   render(
     <MockedProvider mocks={PokemonMock}>
       <ApolloProvider client={client}>

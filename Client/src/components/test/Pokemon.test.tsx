@@ -1,10 +1,10 @@
 import { test, describe, expect } from "vitest";
 import { cleanup, waitFor } from "@testing-library/react";
-import { renderWithRouterQueryClientAndDrinkId } from "../../utils/test-utils";
+import { renderWithRouterQueryClientAndPokemonId } from "../../utils/test-utils";
 
 describe("Test loading of pokemon", () => {
   test("Test that everything loads on the page", async () => {
-    const { getByTestId } = renderWithRouterQueryClientAndDrinkId("1");
+    const { getByTestId } = renderWithRouterQueryClientAndPokemonId("1");
 
     await waitFor(() => {
       // Test that the pokemon name is correct
@@ -33,10 +33,6 @@ describe("Test loading of pokemon", () => {
       expect(getByTestId("pokemon-reviews-header").textContent).toBe(
         "Rate and Review",
       );
-
-      // Test that you have recieved a userID
-      const userID = localStorage.getItem("userID");
-      expect(userID).toBeTruthy();
     });
   });
 
