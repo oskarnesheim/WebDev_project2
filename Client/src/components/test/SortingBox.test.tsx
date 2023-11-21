@@ -6,10 +6,14 @@ import { RecoilRoot } from "recoil";
 describe("SortingBox", () => {
   test("Checks that all the sorting options are rendered", async () => {
     const setCurrentSorting = () => {};
+    const currentSorting = "";
 
     const { getByRole, getByText } = render(
       <RecoilRoot>
-        <SortingBox setCurrentSorting={setCurrentSorting} />
+        <SortingBox
+          setCurrentSorting={setCurrentSorting}
+          currentSorting={currentSorting}
+        />
       </RecoilRoot>,
     );
 
@@ -42,7 +46,10 @@ describe("SortingBox", () => {
 
     const { getByRole, getAllByText } = render(
       <RecoilRoot>
-        <SortingBox setCurrentSorting={setCurrentSorting} />
+        <SortingBox
+          setCurrentSorting={setCurrentSorting}
+          currentSorting={currentSorting}
+        />
       </RecoilRoot>,
     );
 
@@ -62,10 +69,14 @@ describe("SortingBox", () => {
 
   test("Snapshot test of sorting box", () => {
     const setCurrentSorting = () => {};
+    const currentSorting = "";
 
     const page = render(
       <RecoilRoot>
-        <SortingBox setCurrentSorting={setCurrentSorting} />
+        <SortingBox
+          setCurrentSorting={setCurrentSorting}
+          currentSorting={currentSorting}
+        />
       </RecoilRoot>,
     );
     expect(page).toMatchSnapshot();
