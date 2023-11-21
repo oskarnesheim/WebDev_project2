@@ -6,6 +6,10 @@ When a user visits a given pokemon they have the opportunity to press a “ADD T
 
 The team is stored in localstorage and not in the database. We have chosen to do this because we don’t see it necessary to save the team to the database as there is no interaction with other peoples teams. We also don’t have a login/user function which makes a browser a user (as you get a userID). Therefore we find it suitable to save the team in localstorage. If we were to develop this application further we would store the team in the database in a similar way to reviews and all the pokemons. This would allow a user to perhaps search for pokemon teams of other users.
 
+### Session storage
+
+We have chosen to use session storage to store the state of the filters, sorting and pagenumber. This is because when we have tested the app we found it satisfying to have keep the state when refreshing the page. If the user wants to refresh the page, they can do so by pressing the “Pokedex” button in the navbar. This will reset the state of the filters, sorting and pagenumber. In earlier versions the search state was also stored in session storage, but we found that this was not necessary as it is more annoying to be forced to delete the search on refresh than to have to type it again.
+
 ### Delayed search
 
 When searching for a pokemon the application will wait for 600 milliseconds after the last keystroke before sending a query to the database. We considered two different approaches to searching. The first is sending a query after each keystroke immediately and the second one is implementing a “send” button that the user had to click in order to send the query.
@@ -45,6 +49,13 @@ We do not have separate backend-tests to test the queries, but instead test them
 ### Component testing
 
 We have made component tests for several of the components we have in out app. In some of the tests, the coverage rate is not that high. This is because some of the functionality is tested through the end-to-end tests.
+
+### Recoil
+
+We have used the recoil to store the state of filters, sorting, search, pages and team. We have chosen to use recoil because it is easy to use and it is easy to share the state between components. 
+
+Most of these states are used in multiple components, and therefore it is nice to have them in recoil. The team is also stored in local storage. The reason for this is that while also wanting to have them available in recoil state to have easy access to its state, and at the same time keep the user experience we want by saving it in localstorage. 
+We have modified atoms.tsx so that it is possible to store atoms without adding them to session storage. We see the search value as not necessary to have in session storage, so it is only stored as a recoil state. The majority of the atoms are still stored in session storage as well, but the implementation has been changed so that unnecessary calls to session storage are not made. Regardless of whether the states are stored in session storage or not, they are all used in various components, and here we see recoil state as necessary.
 
 # TODO: Vidar
 
