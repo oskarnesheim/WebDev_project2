@@ -114,6 +114,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
         style={{
           color: theme.palette.primary.main,
         }}
+        data-testid="pokemon-reviews-header"
       >
         Rate and Review
       </h2>

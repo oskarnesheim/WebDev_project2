@@ -93,3 +93,8 @@ describe("PokemonRatingReview", () => {
     });
   });
 });
+
+// ADD TEST ##########################################
+// Test that you have recieved a userID
+// const userID = localStorage.getItem("userID");
+// expect(userID).toBeTruthy();

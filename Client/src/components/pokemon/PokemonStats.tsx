@@ -131,6 +131,7 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
                       <TableCell
                         align={screenSmallerThan550px ? "right" : "left"}
                         sx={{ border: 0, color: "white" }}
+                        data-testid={row.stat}
                       >
                         {row.value}
                       </TableCell>
