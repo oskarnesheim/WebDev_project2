@@ -12,7 +12,7 @@ describe("Searchbar", () => {
       </RecoilRoot>,
     );
     const inputElement = queryByPlaceholderText(
-      "pokemon name...",
+      "type in pokemon name to search",
     ) as HTMLInputElement;
     expect(inputElement).not.toBe(null);
 

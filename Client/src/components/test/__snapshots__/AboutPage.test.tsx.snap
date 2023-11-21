@@ -15,6 +15,7 @@ exports[`About > Snapshot test of page 1`] = `
         </h2>
         <p
           class="MuiTypography-root MuiTypography-body1 css-1j8009j-MuiTypography-root"
+          tabindex="0"
         >
           Discover our Pokedex, a handy tool for Pokemon enthusiasts featuring information on 300 Pokemons from the first and second generations. Dive into a world of statistics, where you can delve into details like height, weight, type, and more for each Pokemon. Share your own unique insights and reviews about these creatures with fellow users. But that's not all - you can also curate your dream team of six Pokemons to keep them close, offering you a fun and engaging way to stay connected with your favorite companions.
         </p>
@@ -24,6 +25,7 @@ exports[`About > Snapshot test of page 1`] = `
           Search
           <p
             class="MuiTypography-root MuiTypography-body1 css-1j8009j-MuiTypography-root"
+            tabindex="0"
           >
             You can search for a pokemon by its name or you can filter pokemons based on different types (water, fire, grass etc.). Additionally you can sort pokemons by their name, height, weight, and base experience, in both ascending and descending order. The results will show you the first 20 pokemons that match your search criteria, with the option to go to the next page to see 20 more pokemons.
           </p>
@@ -37,12 +39,14 @@ exports[`About > Snapshot test of page 1`] = `
           />
           <p
             class="MuiTypography-root MuiTypography-body1 css-1j8009j-MuiTypography-root"
+            tabindex="0"
           >
             You have the ability to put together your own team of Pokémon. You can add up to 6 Pokémon to your team before it's full. You also have the ability to remove Pokémon from your team if you suddenly change your mind. And no, you cannot have 6 Charizards.
           </p>
         </h4>
         <h4
           class="MuiTypography-root MuiTypography-h4 css-xq6mha-MuiTypography-root"
+          tabindex="0"
         >
           Gotta Catch 'Em All!
         </h4>
@@ -65,6 +69,7 @@ exports[`About > Snapshot test of page 1`] = `
       </h2>
       <p
         class="MuiTypography-root MuiTypography-body1 css-1j8009j-MuiTypography-root"
+        tabindex="0"
       >
         Discover our Pokedex, a handy tool for Pokemon enthusiasts featuring information on 300 Pokemons from the first and second generations. Dive into a world of statistics, where you can delve into details like height, weight, type, and more for each Pokemon. Share your own unique insights and reviews about these creatures with fellow users. But that's not all - you can also curate your dream team of six Pokemons to keep them close, offering you a fun and engaging way to stay connected with your favorite companions.
       </p>
@@ -74,6 +79,7 @@ exports[`About > Snapshot test of page 1`] = `
         Search
         <p
           class="MuiTypography-root MuiTypography-body1 css-1j8009j-MuiTypography-root"
+          tabindex="0"
         >
           You can search for a pokemon by its name or you can filter pokemons based on different types (water, fire, grass etc.). Additionally you can sort pokemons by their name, height, weight, and base experience, in both ascending and descending order. The results will show you the first 20 pokemons that match your search criteria, with the option to go to the next page to see 20 more pokemons.
         </p>
@@ -87,12 +93,14 @@ exports[`About > Snapshot test of page 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 css-1j8009j-MuiTypography-root"
+          tabindex="0"
         >
           You have the ability to put together your own team of Pokémon. You can add up to 6 Pokémon to your team before it's full. You also have the ability to remove Pokémon from your team if you suddenly change your mind. And no, you cannot have 6 Charizards.
         </p>
       </h4>
       <h4
         class="MuiTypography-root MuiTypography-h4 css-xq6mha-MuiTypography-root"
+        tabindex="0"
       >
         Gotta Catch 'Em All!
       </h4>

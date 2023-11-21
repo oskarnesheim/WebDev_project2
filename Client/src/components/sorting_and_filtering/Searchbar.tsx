@@ -5,13 +5,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { recoilSearch, recoilPage, recoilTTS } from "../../recoil/atoms";
+import { recoilSearch, recoilPage } from "../../recoil/atoms";
 
 function Searchbar() {
   const [stateSearch, setStateSearch] = useRecoilState<string>(recoilSearch);
   const [search, setSearch] = useState<string>(stateSearch);
   const setPage = useSetRecoilState<number>(recoilPage);
-  const [ttsEnabled] = useRecoilState(recoilTTS);
 
   useEffect(() => {
     setSearch(stateSearch);
@@ -41,32 +40,22 @@ function Searchbar() {
     setPage(1);
   }
 
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
-    }
-  };
-
   return (
     <TextField
       type="text"
       className="search-bar"
       value={search}
       onChange={(event: ChangeEvent<HTMLInputElement>) => type(event)}
-      placeholder="pokemon name..."
+      placeholder="type in pokemon name to search"
       fullWidth
       data-testid="search-bar"
       id="outlined"
-      onFocus={() => handleFocus("Search")}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
             <IconButton
+              aria-label="clear input"
               color="primary"
-              onFocus={() => handleFocus("Clear Search")}
               onClick={() => eraseInput()}
             >
               <ClearIcon />

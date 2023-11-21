@@ -4,7 +4,6 @@ import { SetStateAction, useState, useEffect } from "react";
 import FilterBox from "./FilterBox";
 import SortingBox from "./SortingBox";
 import {
-  recoilTTS,
   recoilFilterBy,
   recoilSortBy,
   recoilPage,
@@ -35,8 +34,7 @@ export default function FilterAndSortingBox() {
 
   const [tempFilters, setTempFilters] = useState<string[]>([]);
   const [tempSortBy, setTempSortBy] = useState<string>("");
-
-  const [ttsEnabled] = useRecoilState(recoilTTS);
+  
   const [page, setPage] = useRecoilState(recoilPage);
 
   // Initialize state from sessionStorage
@@ -90,15 +88,6 @@ export default function FilterAndSortingBox() {
     handleClose(); // Close the modal
   };
 
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
-    }
-  };
-
   return (
     <div className="filter_container">
       <Button
@@ -106,7 +95,7 @@ export default function FilterAndSortingBox() {
         variant="outlined"
         data-testid="filter_button"
         onClick={handleOpen}
-        onFocus={() => handleFocus("Filters and Sorting")}
+        aria-label="filters and sorting"
       >
         Filters/Sorting
       </Button>
@@ -173,7 +162,6 @@ export default function FilterAndSortingBox() {
                 "&:hover": { backgroundColor: "lightgreen", boxShadow: 10 },
               }}
               onClick={handleApplyFilter}
-              onFocus={() => handleFocus("Apply")}
               data-testid="apply-filter-button"
             >
               Apply
@@ -185,7 +173,6 @@ export default function FilterAndSortingBox() {
                 "&:hover": { backgroundColor: "pink", boxShadow: 10 },
               }}
               onClick={handleResetFilter}
-              onFocus={() => handleFocus("Reset")}
             >
               Reset
             </Button>

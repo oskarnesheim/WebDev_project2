@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { findSinglePokemon } from "../../functions/GraphQLQueries";
-import { recoilMyTeam, recoilTTS } from "../../recoil/atoms";
+import { recoilMyTeam } from "../../recoil/atoms";
 import { Box, Button, CircularProgress, Tooltip } from "@mui/material";
 import ArrowButtons from "./ArrowButtons";
 import PokemonCard from "../home/PokemonCard";
@@ -30,8 +30,6 @@ export default function DisplayPokemon({
   };
   const { loading, error, data } = useQuery(findSinglePokemon, { variables });
 
-  const [ttsEnabled] = useRecoilState(recoilTTS);
-
   if (loading) {
     return <CircularProgress />;
   }
@@ -43,15 +41,6 @@ export default function DisplayPokemon({
   const PokemonData: PokemonCardI = data.pokemon;
   const redirectToPokemon = () => {
     history("/" + team[selectedPokemon]);
-  };
-
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
-    }
   };
 
   /**
@@ -84,7 +73,6 @@ export default function DisplayPokemon({
           <Tooltip title={"Remove pokemon from your team. "} arrow>
             <Button
               className="box"
-              onFocus={() => handleFocus("Remove pokemon from your team.")}
               onClick={() => deleteTeamMember(team[selectedPokemon])}
               color="error"
               variant="outlined"
