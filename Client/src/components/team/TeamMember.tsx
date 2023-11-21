@@ -61,7 +61,7 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
 
   return (
     <Card
-      tabIndex={0}
+      aria-label={data.pokemon.name}
       variant="outlined"
       sx={{
         width: "300px",

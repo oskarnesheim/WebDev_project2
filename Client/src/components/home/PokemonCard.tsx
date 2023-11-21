@@ -50,6 +50,7 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
     <Card
       ref={cardRef}
       tabIndex={0}
+      aria-label={PokemonData.name}
       onClick={() => {
         navigate("/" + PokemonData._id.toString());
       }}
@@ -78,11 +79,13 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
     >
       <CardContent
         style={{
-          background: `${getBackgroundColor().length > 1
-            ? `linear-gradient(90deg, ${getBackgroundColor()[0]} 40%, ${getBackgroundColor()[1]
-            } 60%)`
-            : getBackgroundColor()[0]
-            }`,
+          background: `${
+            getBackgroundColor().length > 1
+              ? `linear-gradient(90deg, ${getBackgroundColor()[0]} 40%, ${
+                  getBackgroundColor()[1]
+                } 60%)`
+              : getBackgroundColor()[0]
+          }`,
           width: "100%",
         }}
       />

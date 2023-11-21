@@ -92,6 +92,7 @@ export default function FilterAndSortingBox() {
         variant="outlined"
         data-testid="filter_button"
         onClick={handleOpen}
+        aria-label="filters and sorting"
       >
         Filters/Sorting
       </Button>

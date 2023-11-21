@@ -46,7 +46,7 @@ function Searchbar() {
       className="search-bar"
       value={search}
       onChange={(event: ChangeEvent<HTMLInputElement>) => type(event)}
-      placeholder="pokemon name..."
+      placeholder="type in pokemon name to search"
       fullWidth
       data-testid="search-bar"
       id="outlined"
@@ -54,6 +54,7 @@ function Searchbar() {
         endAdornment: (
           <InputAdornment position="end">
             <IconButton
+              aria-label="clear input"
               color="primary"
               onClick={() => eraseInput()}
             >

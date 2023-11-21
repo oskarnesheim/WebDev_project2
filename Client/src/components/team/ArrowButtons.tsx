@@ -39,6 +39,7 @@ export default function Arrowbuttons({
         variant="contained"
         color="primary"
         onClick={() => moveBy("left")}
+        aria-label="previous Pokémon"
       >
         <ArrowBackIcon />
       </Button>
@@ -55,6 +56,7 @@ export default function Arrowbuttons({
         variant="contained"
         color="primary"
         onClick={() => moveBy("right")}
+        aria-label="next Pokémon"
         data-testid="right_button_team"
       >
         <ArrowForwardIcon />

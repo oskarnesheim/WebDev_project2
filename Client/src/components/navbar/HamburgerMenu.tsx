@@ -68,6 +68,7 @@ export default function FadeMenu() {
         aria-controls={open ? "fade-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
+        aria-label="hamburger menu"
         onClick={handleClick}
         style={{
           marginRight: "20px",
