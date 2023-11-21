@@ -3,8 +3,8 @@ import { cleanup, render, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { describe, expect, test } from "vitest";
-import Navbar from "../navbar/navbar";
 import { First_20_pokemon_mock } from "../../utils/mocks/PokemonViewMock";
+import PokemonView from "../home/PokemonView";
 
 describe("Test loading of first 20 pokemon", () => {
   test("Load", async () => {
@@ -12,15 +12,15 @@ describe("Test loading of first 20 pokemon", () => {
       <MockedProvider mocks={First_20_pokemon_mock} addTypename={false}>
         <RecoilRoot>
           <BrowserRouter>
-            {/* <Home /> */}
-            <Navbar />
-            {/* <PokemonView /> */}
+            <PokemonView />
           </BrowserRouter>
         </RecoilRoot>
+        ,
       </MockedProvider>,
     );
 
     await waitFor(() => {
+      // setTimeout(() => {}, 1000);
       expect(getAllByText("Pokedex")).toBeTruthy();
     });
     cleanup();

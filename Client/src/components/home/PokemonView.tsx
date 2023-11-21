@@ -25,11 +25,13 @@ export default function PokemonView() {
     search: search,
   };
 
+  console.log(variables);
+
   const { loading, error, data } = useQuery(getPokemons, { variables });
 
   function getSorting() {
     if (!sorting) {
-      return [["name", "1"]];
+      return [["_id", "1"]];
     }
     return [sorting.split(",")];
   }

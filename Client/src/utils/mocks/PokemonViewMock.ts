@@ -7,8 +7,8 @@ export const First_20_pokemon_mock = [
       variables: {
         sorting: [["_id", "1"]],
         filters: [],
-        search: "",
         range: [0, 20],
+        search: "",
       },
     },
     result: {
