@@ -2,21 +2,20 @@ import { useNavigate } from "react-router-dom";
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import { useState } from "react";
 import HamburgerMenu from "./HamburgerMenu";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import {
   recoilFilterBy,
   recoilSortBy,
   recoilPage,
   recoilSearch,
-  updateStorageOnChange,
 } from "../../recoil/atoms";
 
 export default function Navbar() {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
-  const [filterBy, setFilterBy] = useRecoilState(recoilFilterBy);
-  const [sortBy, setSortBy] = useRecoilState(recoilSortBy);
-  const [page, setPage] = useRecoilState(recoilPage);
-  const [search, setSearch] = useRecoilState(recoilSearch);
+  const setFilterBy = useSetRecoilState(recoilFilterBy);
+  const setSortBy = useSetRecoilState(recoilSortBy);
+  const setPage = useSetRecoilState(recoilPage);
+  const setSearch = useSetRecoilState(recoilSearch);
 
   window.onresize = () => {
     setWindowSize(window.innerWidth);
@@ -24,21 +23,10 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const logoOnclick = () => {
-    if (filterBy.length !== 0) {
-      setFilterBy([]);
-      updateStorageOnChange("filterBy", [], sessionStorage);
-    }
-    if (sortBy !== "_id,1") {
-      setSortBy("_id,1");
-      updateStorageOnChange("sortBy", "_id,1", sessionStorage);
-    }
-    if (page !== 1) {
-      setPage(1);
-      updateStorageOnChange("page", 1, sessionStorage);
-    }
-    if (search !== "") {
-      setSearch("");
-    }
+    setFilterBy([]);
+    setSortBy("_id,1");
+    setPage(1);
+    setSearch("");
     navigate("/");
   };
 

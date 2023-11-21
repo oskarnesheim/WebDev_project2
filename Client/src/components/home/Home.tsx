@@ -5,6 +5,7 @@ import BasicPagination from "./BasicPagination.tsx";
 import PreviewFiltersAndSorting from "../sorting_and_filtering/PreviewFiltersAndSorting.tsx";
 
 export default function Home() {
+  
   return (
     <div className="home">
       <div className="search_container">

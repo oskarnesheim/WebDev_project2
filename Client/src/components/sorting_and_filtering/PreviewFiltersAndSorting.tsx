@@ -1,4 +1,4 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   recoilFilterBy,
   recoilSortBy,
@@ -10,7 +10,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 export default function PreviewFiltersAndSorting() {
   const [filterBy, setFilterBy] = useRecoilState<string[]>(recoilFilterBy);
-  const [sortBy] = useRecoilState<string>(recoilSortBy);
+  const sortBy = useRecoilValue<string>(recoilSortBy);
 
   const getFilters = () => {
     if (!filterBy || filterBy.length === 0) {

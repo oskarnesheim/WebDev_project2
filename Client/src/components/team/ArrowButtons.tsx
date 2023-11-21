@@ -5,7 +5,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CircleTwoToneIcon from "@mui/icons-material/CircleTwoTone";
 import Tooltip from "@mui/material/Tooltip";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { recoilMyTeam } from "../../recoil/atoms";
 
 interface Props {
@@ -17,7 +17,7 @@ export default function Arrowbuttons({
   selectedPokemon,
   setSelectedPokemon,
 }: Props) {
-  const [team] = useRecoilState<string[]>(recoilMyTeam);
+  const team = useRecoilValue<string[]>(recoilMyTeam);
   const history = useNavigate();
   const redirectToPokemon = () => {
     history("/" + team[selectedPokemon]);

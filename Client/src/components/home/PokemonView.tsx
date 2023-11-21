@@ -7,18 +7,18 @@ import {
   recoilSearch,
   recoilMaxPage,
 } from "../../recoil/atoms.ts";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, CircularProgress } from "@mui/material";
 import { PokemonCardI } from "../../interfaces/pokemon.ts";
 import { getPokemons } from "../../functions/GraphQLQueries.ts";
 import { useEffect } from "react";
 
 export default function PokemonView() {
-  const [sorting] = useRecoilState<string>(recoilSortBy);
-  const [filters] = useRecoilState<string[]>(recoilFilterBy);
-  const [page] = useRecoilState<number>(recoilPage);
-  const [search] = useRecoilState<string>(recoilSearch);
-  const [, setMaxPage] = useRecoilState<number>(recoilMaxPage);
+  const sorting = useRecoilValue<string>(recoilSortBy);
+  const filters = useRecoilValue<string[]>(recoilFilterBy);
+  const page = useRecoilValue<number>(recoilPage);
+  const search = useRecoilValue<string>(recoilSearch);
+  const setMaxPage = useSetRecoilState<number>(recoilMaxPage);
   const variables = {
     sorting: getSorting(),
     filters: filters,

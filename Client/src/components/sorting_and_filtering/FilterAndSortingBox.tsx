@@ -1,5 +1,5 @@
 import { Box, Button, List, Modal, Typography } from "@mui/material";
-import { SetStateAction, useState, useEffect } from "react";
+import { SetStateAction, useState } from "react";
 
 import FilterBox from "./FilterBox";
 import SortingBox from "./SortingBox";
@@ -7,10 +7,8 @@ import {
   recoilFilterBy,
   recoilSortBy,
   recoilPage,
-  initializeStateFromStorage,
-  updateStorageOnChange,
 } from "../../recoil/atoms";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import sortings from "../../assets/Sortings";
 
 const modalBoxStyles = {
@@ -31,30 +29,11 @@ export default function FilterAndSortingBox() {
 
   const [currentFilter, setCurrentFilter] = useRecoilState(recoilFilterBy);
   const [sortBy, setSortBy] = useRecoilState(recoilSortBy);
-
   const [tempFilters, setTempFilters] = useState<string[]>([]);
   const [tempSortBy, setTempSortBy] = useState<string>("");
 
-  const [page, setPage] = useRecoilState(recoilPage);
+  const setPage = useSetRecoilState<number>(recoilPage);
 
-  // Initialize state from sessionStorage
-  useEffect(() => {
-    initializeStateFromStorage(
-      setCurrentFilter,
-      sessionStorage,
-      "filterBy",
-      [],
-    );
-    initializeStateFromStorage(setSortBy, sessionStorage, "sortBy", "_id,1");
-    initializeStateFromStorage(setPage, sessionStorage, "page", 1);
-  }, [setCurrentFilter, setSortBy, setPage]);
-
-  // Update sessionStorage whenever state changes
-  useEffect(() => {
-    updateStorageOnChange("filterBy", currentFilter, sessionStorage);
-    updateStorageOnChange("sortBy", sortBy, sessionStorage);
-    updateStorageOnChange("page", page, sessionStorage);
-  }, [currentFilter, sortBy, page]);
 
   const handleOpen = () => {
     setTempFilters(currentFilter);
@@ -77,7 +56,6 @@ export default function FilterAndSortingBox() {
     setTempFilters(defaultFilters);
     setTempSortBy(defaultSort);
     setPage(1); // Reset the page to 1
-
     handleClose(); // Close the modal
   };
 
