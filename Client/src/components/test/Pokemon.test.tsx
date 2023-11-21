@@ -1,14 +1,10 @@
 import { test, describe, expect } from "vitest";
 import { cleanup, waitFor } from "@testing-library/react";
 import { renderWithRouterQueryClientAndPokemonId } from "../../utils/test-utils";
-import { PokemonMock } from "../../utils/mocks/PokemonMock";
 
 describe("Test loading of pokemon", () => {
   test("Test that everything loads on the page", async () => {
-    const { getByTestId } = renderWithRouterQueryClientAndPokemonId(
-      "1",
-      PokemonMock,
-    );
+    const { getByTestId } = renderWithRouterQueryClientAndPokemonId("1");
 
     await waitFor(() => {
       // Test that the pokemon name is correct
