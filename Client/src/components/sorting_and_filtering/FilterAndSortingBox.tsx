@@ -167,6 +167,7 @@ export default function FilterAndSortingBox() {
                 "&:hover": { backgroundColor: "lightgreen", boxShadow: 10 },
               }}
               onClick={handleApplyFilter}
+              data-testid="apply-filter-button"
               onFocus={() => handleFocus("Apply")}
             >
               Apply

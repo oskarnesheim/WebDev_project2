@@ -80,9 +80,6 @@ test("Checks that sorting and filtering works correctly", async ({ page }) => {
   await page.getByTestId("sort-list-button").click();
   await page.getByTestId("kg increasing").click();
 
-  // Clicks the esc button to close the modal
-  await page.keyboard.press("Escape");
-
   // Applys the filters
   await page.getByTestId("apply-filter-button").click();
 

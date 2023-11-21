@@ -75,6 +75,7 @@ export default function Navbar() {
           <h3
             tabIndex={0}
             className="myteam-link"
+            data-testid="myteam_link_button"
             onClick={() => navigate("/myteam")}
             onKeyDown={(event) => {
               if (event.key === "Enter") navigate("/myteam");
@@ -86,6 +87,7 @@ export default function Navbar() {
           <h3
             tabIndex={0}
             className="about-link"
+            data-testid="about_link_button"
             onClick={() => navigate("/about")}
             onKeyDown={(event) => {
               if (event.key === "Enter") navigate("/about");
