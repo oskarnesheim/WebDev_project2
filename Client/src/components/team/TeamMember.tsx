@@ -81,23 +81,29 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
           overflow: "hidden",
         }}
       >
-        <div className="team_member_contaienr">
-          <Box sx={{ marginRight: "10px", alignItems: "center" }}>
-            <img
-              style={{
-                transform: `translateY(${position}px)`,
-                transition: "transform 0.2s ease-in-out",
-              }}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              src={data.pokemon.sprites.front_default}
-              alt={data.pokemon.name}
-            />
-          </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginRight: "10px",
+            alignItems: "center",
+          }}
+        >
+          <img
+            style={{
+              transform: `translateY(${position}px)`,
+              transition: "transform 0.2s ease-in-out",
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            src={data.pokemon.sprites.front_default}
+            alt={data.pokemon.name}
+          />
           <Typography variant="body1" sx={{ color: "primary.light" }}>
             {data.pokemon.name}
           </Typography>
-        </div>
+        </Box>
       </CardContent>
     </Card>
   );

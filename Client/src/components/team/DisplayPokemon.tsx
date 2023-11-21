@@ -61,7 +61,7 @@ export default function DisplayPokemon({
    */
   function selectedInfo() {
     return (
-      <div className="selected-Info">
+      <>
         <div className="container" onClick={redirectToPokemon}>
           <PokemonCard key={team[selectedPokemon]} PokemonData={PokemonData} />
         </div>
@@ -82,7 +82,7 @@ export default function DisplayPokemon({
             </Button>
           </Tooltip>
         </div>
-      </div>
+      </>
     );
   }
 

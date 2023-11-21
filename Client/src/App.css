@@ -42,12 +42,6 @@
   cursor: pointer;
 }
 
-.team_member_contaienr{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 
 .about-link:hover {
   color: green;

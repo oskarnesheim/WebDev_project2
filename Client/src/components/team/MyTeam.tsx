@@ -46,7 +46,7 @@ export default function MyTeam() {
    */
   function teamlist() {
     if (team.length === 0)
-      return <p data-testid="Empty_team_message">Team is currently empty </p>;
+      return <p data-testid="Empty_team_message">Team is empty </p>;
     return team.map((_id: string, count: number) => (
       <div
         tabIndex={0}
@@ -56,7 +56,6 @@ export default function MyTeam() {
             setSelectedPokemonFunc(count);
           }
         }}
-        className="team-grid-child"
         key={count}
       >
         <TeamMember selected={checkselected(_id)} _id={Number(_id)} />
@@ -80,10 +79,12 @@ export default function MyTeam() {
           </Typography>
         </div>
       ) : (
-        <DisplayPokemon
-          selectedPokemon={selectedPokemon}
-          setSelectedPokemon={setSelectedPokemon}
-        />
+        <div className="selected-Info">
+          <DisplayPokemon
+            selectedPokemon={selectedPokemon}
+            setSelectedPokemon={setSelectedPokemon}
+          />
+        </div>
       )}
     </div>
   );
