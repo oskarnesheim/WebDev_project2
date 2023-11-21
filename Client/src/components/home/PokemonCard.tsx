@@ -49,12 +49,37 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
 
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
+  useEffect(() => {
+    const card = cardRef.current;
+
+    if (card) {
+      const handleFocus = () => {
+        const speechSynthesis = window.speechSynthesis;
+        speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(`${PokemonData.name}`);
+        utterance.volume = 0.5;
+        speechSynthesis.speak(utterance);
+      };
+
+      const handleEnter = (event: KeyboardEvent) => {
+        if (event.key === "Enter") {
+          const speechSynthesis = window.speechSynthesis;
+          speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(
+            `${PokemonData.name} selected`,
+          );
+          utterance.volume = 0.5;
+          speechSynthesis.speak(utterance);
+        }
+      };
+
+      card.addEventListener("focus", handleFocus);
+      card.addEventListener("keydown", handleEnter);
+
+      return () => {
+        card.removeEventListener("focus", handleFocus);
+        card.removeEventListener("keydown", handleEnter);
+      };
     }
   };
 
@@ -103,7 +128,7 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
       />
       <img
         src={PokemonData.sprites.front_default}
-        alt="Cool picture of a Pokémon"
+        alt={"Picture of " + PokemonData.name}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
