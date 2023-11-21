@@ -34,7 +34,7 @@ export default function FilterAndSortingBox() {
 
   const [tempFilters, setTempFilters] = useState<string[]>([]);
   const [tempSortBy, setTempSortBy] = useState<string>("");
-  
+
   const [page, setPage] = useRecoilState(recoilPage);
 
   // Initialize state from sessionStorage
