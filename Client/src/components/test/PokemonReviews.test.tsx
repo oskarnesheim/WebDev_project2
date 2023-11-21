@@ -2,60 +2,8 @@ import { test, describe, expect } from "vitest";
 import { render, fireEvent, waitFor, cleanup } from "@testing-library/react";
 import PokemonRatingReview from "../pokemon/PokemonReviews";
 import { MockedProvider } from "@apollo/client/testing";
-import { AddReview, getReviews } from "../../functions/GraphQLQueries";
 import { RecoilRoot } from "recoil";
-
-const ReviewMutationMock = [
-  {
-    request: {
-      query: getReviews,
-      variables: {
-        pokemonID: 1,
-      },
-    },
-    result: {
-      data: {
-        reviewsForPokemon: [
-          {
-            rating: 4,
-            description: "dafa",
-            userID: "921124937025316500",
-            pokemonID: 1,
-          },
-          {
-            rating: 4,
-            description: "Denne pokemonen er grov",
-            userID: "921124937025316501",
-            pokemonID: 1,
-          },
-        ],
-      },
-    },
-  },
-  {
-    request: {
-      query: AddReview,
-      variables: {
-        rating: 4,
-        description: "Denne pokemonen er legit grov",
-        userID: "921124937025316571",
-        pokemonID: 1,
-      },
-    },
-    result: {
-      data: {
-        createReview: [
-          {
-            rating: 4,
-            description: "Denne pokemonen er legit grov",
-            userID: "921124937025316571",
-            pokemonID: 1,
-          },
-        ],
-      },
-    },
-  },
-];
+import { ReviewMutationMock } from "../../utils/mocks/PokemonReviewMock";
 
 describe("PokemonRatingReview", () => {
   test.skip("Renders the review form", async () => {

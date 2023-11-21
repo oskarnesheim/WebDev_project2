@@ -82,6 +82,7 @@ export default function Pokemon() {
         sx={{ marginTop: "5vh", marginBottom: "3vh" }}
         variant="h3"
         textAlign={"center"}
+        data-testid="pokemon-name"
       >
         {PokemonData.name} - #{PokemonData._id}
       </Typography>
