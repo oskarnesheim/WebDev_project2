@@ -25,7 +25,7 @@ export default function FadeMenu() {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const changePage = (nav: string) => { 
+  const changePage = (nav: string) => {
     if (nav === "/") {
       logoOnclick(true);
     }

@@ -5,7 +5,6 @@ import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { Box, Button, Divider, Tooltip, Typography } from "@mui/material";
 import PokemonRatingReview from "./PokemonReviews";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { checkTeam, addToTeam, removeFromTeam } from "../team/TeamFunctions";
 import { recoilMyTeam } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
 import { PokemonPageI } from "../../interfaces/pokemon";
@@ -31,13 +30,20 @@ export default function Pokemon() {
 
   const PokemonData: PokemonPageI = data.pokemon;
 
+  const checkTeam = (): number => {
+    const id = PokemonData._id.toString();
+    if (team.includes(id)) return 1;
+    if (team.length == 6) return 2;
+    return 0;
+  };
+
   function handleOnClick() {
-    switch (checkTeam(team, PokemonData._id.toString())) {
+    switch (checkTeam()) {
       case 0:
-        addToTeam(team, PokemonData._id.toString(), setTeam);
+        setTeam([...team, PokemonData._id.toString()]);
         break;
       case 1:
-        removeFromTeam(team, PokemonData._id.toString(), setTeam);
+        setTeam(team.filter((teamId) => teamId !== PokemonData._id.toString()));
         break;
       case 2:
         console.log("Your team is full");
@@ -48,7 +54,7 @@ export default function Pokemon() {
   }
 
   function getButtonInfo(mode: number) {
-    switch (checkTeam(team, PokemonData._id.toString())) {
+    switch (checkTeam()) {
       case 0:
         if (mode == 0) return "green";
         if (mode == 2) return "Add " + PokemonData.name + " to your team";

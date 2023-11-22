@@ -3,11 +3,7 @@ import { SetStateAction, useState } from "react";
 
 import FilterBox from "./FilterBox";
 import SortingBox from "./SortingBox";
-import {
-  recoilFilterBy,
-  recoilSortBy,
-  recoilPage,
-} from "../../recoil/atoms";
+import { recoilFilterBy, recoilSortBy, recoilPage } from "../../recoil/atoms";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import sortings from "../../assets/Sortings";
 
@@ -33,7 +29,6 @@ export default function FilterAndSortingBox() {
   const [tempSortBy, setTempSortBy] = useState<string>("");
 
   const setPage = useSetRecoilState<number>(recoilPage);
-
 
   const handleOpen = () => {
     setTempFilters(currentFilter);

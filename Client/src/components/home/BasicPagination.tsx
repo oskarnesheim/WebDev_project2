@@ -9,7 +9,7 @@ export default function BasicPagination() {
   const [page, setRecPage] = useRecoilState<number>(recoilPage);
   const [maxPage] = useRecoilState<number>(recoilMaxPage);
   const [width, setWidth] = useState<number>(window.innerWidth);
-  const [focusedItem, setFocusedItem] = useState<number | null>(null);
+  // const [focusedItem, setFocusedItem] = useState<number | null>(null);
 
   useEffect(() => {
     function handleResize() {
@@ -42,18 +42,7 @@ export default function BasicPagination() {
         variant="outlined"
         size={getSize()}
         shape="rounded"
-        renderItem={(item) => (
-          <PaginationItem
-            {...item}
-            style={
-              item.page === focusedItem ? { backgroundColor: "lightgray" } : {}
-            }
-            onFocus={() => {
-              setFocusedItem(item.page);
-            }}
-            onBlur={() => setFocusedItem(null)}
-          />
-        )}
+        renderItem={(item) => <PaginationItem {...item} />}
         data-testid="pagination"
       />
       <p>{}</p>

@@ -10,6 +10,7 @@ import {
   recoilFilterBy,
   recoilSortBy,
   recoilPage,
+  recoilMyTeam,
   initializeStateFromStorage,
   updateStorageOnChange,
 } from "./recoil/atoms";
@@ -19,6 +20,7 @@ function App() {
     useRecoilState<string[]>(recoilFilterBy);
   const [sortBy, setSortBy] = useRecoilState<string>(recoilSortBy);
   const [page, setRecPage] = useRecoilState<number>(recoilPage);
+  const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
 
   useEffect(() => {
     initializeStateFromStorage(
@@ -29,14 +31,16 @@ function App() {
     );
     initializeStateFromStorage(setSortBy, sessionStorage, "sortBy", "_id,1");
     initializeStateFromStorage<number>(setRecPage, sessionStorage, "page", 1);
-  }, [setCurrentFilter, setSortBy, setRecPage]);
+    initializeStateFromStorage(setTeam, localStorage, "team", []);
+  }, [setCurrentFilter, setSortBy, setRecPage, setTeam]);
 
-  // Update sessionStorage whenever state changes
   useEffect(() => {
     updateStorageOnChange("filterBy", currentFilter, sessionStorage);
     updateStorageOnChange("sortBy", sortBy, sessionStorage);
     updateStorageOnChange<number>("page", page, sessionStorage);
-  }, [currentFilter, sortBy, page]);
+    updateStorageOnChange("team", team, localStorage);
+  }, [currentFilter, sortBy, page, team]);
+
   /**
    * Scrolls to top when route changes
    * @returns null
