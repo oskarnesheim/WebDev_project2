@@ -7,17 +7,24 @@ import {
   recoilSearch,
   recoilMaxPage,
 } from "../../recoil/atoms.ts";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, CircularProgress } from "@mui/material";
 import { PokemonCardI } from "../../interfaces/pokemon.ts";
 import { getPokemons } from "../../functions/GraphQLQueries.ts";
+import { useEffect } from "react";
 
-export default function PokemonView() {
-  const [sorting] = useRecoilState<string>(recoilSortBy);
-  const [filters] = useRecoilState<string[]>(recoilFilterBy);
-  const [page] = useRecoilState<number>(recoilPage);
-  const [search] = useRecoilState<string>(recoilSearch);
-  const [, setMaxPage] = useRecoilState<number>(recoilMaxPage);
+/**
+ * Function that returns the PokemonView component, which contains the PokemonCards displayed in Home.
+ * Contains:
+ * - PokemonCard (max 20)
+ * @returns PokemonView component
+ */
+export default function PokemonView(): JSX.Element {
+  const sorting = useRecoilValue<string>(recoilSortBy);
+  const filters = useRecoilValue<string[]>(recoilFilterBy);
+  const page = useRecoilValue<number>(recoilPage);
+  const search = useRecoilValue<string>(recoilSearch);
+  const setMaxPage = useSetRecoilState<number>(recoilMaxPage);
   const variables = {
     sorting: getSorting(),
     filters: filters,
@@ -25,11 +32,24 @@ export default function PokemonView() {
     search: search,
   };
 
-  const { loading, error, data } = useQuery(getPokemons(), { variables });
+  const { loading, error, data } = useQuery(getPokemons, { variables });
 
-  function getSorting() {
+  // Set max page based on the number of pokemons that matches the search. Runs when data is updated.
+  useEffect(() => {
+    if (data) {
+      const numberOfPokemonsThatMatchesSearch =
+        data.numberOfPokemonsThatMatchesSearch;
+      setMaxPage(Math.ceil(numberOfPokemonsThatMatchesSearch / 20));
+    }
+  }, [data, setMaxPage]);
+
+  /**
+   * Function that returns the sorting used to sort the pokemons. Returns default sorting if no sorting is selected.
+   * @returns Array of sorting
+   */
+  function getSorting(): string[][] {
     if (!sorting) {
-      return [["name", "1"]];
+      return [["_id", "1"]];
     }
     return [sorting.split(",")];
   }
@@ -42,16 +62,15 @@ export default function PokemonView() {
     return <div>Error! {error.message}</div>;
   }
 
-  const numberOfPokemonsThatMatchesSearch =
-    data.numberOfPokemonsThatMatchesSearch;
   const pokemonList: PokemonCardI[] = data.pokemonsSortedAndFiltered;
-  //? Denne gjør så vi får en feilmelding i console.
-  //? Dette skjer siden den ikke skjer med en gang komponenten blir rendret.
-  setMaxPage(Math.ceil(numberOfPokemonsThatMatchesSearch / 20));
 
   // If no pokemons are found
   if (data.pokemonsSortedAndFiltered.length === 0) {
-    return <Box sx={{ marginTop: "5vh" }}>No pokemons found</Box>;
+    return (
+      <Box sx={{ marginTop: "5vh" }} data-testid="Error_message_no_pokemons">
+        No pokemons found
+      </Box>
+    );
   }
 
   return (

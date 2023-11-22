@@ -4,7 +4,17 @@ import PokemonView from "./PokemonView.tsx";
 import BasicPagination from "./BasicPagination.tsx";
 import PreviewFiltersAndSorting from "../sorting_and_filtering/PreviewFiltersAndSorting.tsx";
 
-export default function Home() {
+/**
+ * Function that returns the Home component.
+ * Contains:
+ * - Searchbar
+ * - Filter and sorting box
+ * - Preview of filters and sorting
+ * - Pokemon view
+ * - Pagination
+ * @returns Home component
+ */
+export default function Home(): JSX.Element {
   return (
     <div className="home">
       <div className="search_container">

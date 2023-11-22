@@ -1,31 +1,24 @@
-import { useRecoilState } from "recoil";
-import {
-  recoilFilterBy,
-  recoilSortBy,
-  removeFromFilter,
-} from "../../recoil/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { recoilFilterBy, recoilSortBy } from "../../recoil/atoms";
 import sortings from "../../assets/Sortings";
 import { Box, IconButton, Typography } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
-export default function PreviewFiltersAndSorting() {
+/**
+ * Component for displaying the current filters and sorting.
+ * @returns JSX.Element
+ */
+export default function PreviewFiltersAndSorting(): JSX.Element {
   const [filterBy, setFilterBy] = useRecoilState<string[]>(recoilFilterBy);
-  const [sortBy] = useRecoilState<string>(recoilSortBy);
+  const sortBy = useRecoilValue<string>(recoilSortBy);
 
-  const getFilters = () => {
+  // Get the filters
+  const getFilters = (): undefined | JSX.Element => {
     if (!filterBy || filterBy.length === 0) {
       return;
     }
-    function removeFilter(filter: string) {
-      removeFromFilter(filter);
-      setFilterBy(filterBy.filter((f) => f !== filter));
-    }
-
     return (
       <Box sx={{ display: "flex", flexWrap: "wrap" }} border={"ActiveBorder"}>
-        {/* <Typography sx={{ marginRight: "1vw"}}>
-          {"Filters: "}
-        </Typography> */}
         <h5 id="filter_header">Filters: </h5>
         <Box
           sx={{
@@ -49,7 +42,12 @@ export default function PreviewFiltersAndSorting() {
               key={filter}
             >
               {filter}{" "}
-              <IconButton color="primary" onClick={() => removeFilter(filter)}>
+              <IconButton
+                color="primary"
+                onClick={() =>
+                  setFilterBy(filterBy.filter((f) => f !== filter))
+                }
+              >
                 <ClearIcon />
               </IconButton>
             </Box>

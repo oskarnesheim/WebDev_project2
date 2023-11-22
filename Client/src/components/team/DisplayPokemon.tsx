@@ -6,12 +6,11 @@ import { recoilMyTeam } from "../../recoil/atoms";
 import { Box, Button, CircularProgress, Tooltip } from "@mui/material";
 import ArrowButtons from "./ArrowButtons";
 import PokemonCard from "../home/PokemonCard";
-import { removeFromTeam } from "./TeamFunctions";
 import { PokemonCardI } from "../../interfaces/pokemon";
 
 type Props = {
-  selectedPokemon: [string, number];
-  setSelectedPokemon: React.Dispatch<React.SetStateAction<[string, number]>>;
+  selectedPokemon: number;
+  setSelectedPokemon: React.Dispatch<React.SetStateAction<number>>;
 };
 
 /**
@@ -22,13 +21,13 @@ type Props = {
 export default function DisplayPokemon({
   selectedPokemon,
   setSelectedPokemon,
-}: Props) {
+}: Props): JSX.Element {
+  const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
   const history = useNavigate();
   const variables = {
-    _id: parseInt(selectedPokemon[0]),
+    _id: parseInt(team[selectedPokemon]),
   };
-  const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
-  const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
+  const { loading, error, data } = useQuery(findSinglePokemon, { variables });
 
   if (loading) {
     return <CircularProgress />;
@@ -40,7 +39,7 @@ export default function DisplayPokemon({
 
   const PokemonData: PokemonCardI = data.pokemon;
   const redirectToPokemon = () => {
-    history("/" + selectedPokemon[0]);
+    history("/" + team[selectedPokemon]);
   };
 
   /**
@@ -48,42 +47,40 @@ export default function DisplayPokemon({
    * @param id - Pokemon ID
    */
   function deleteTeamMember(id: string) {
-    removeFromTeam(team, id, setTeam);
-    setSelectedPokemon(["0", 0]);
+    setTeam(team.filter((teamId) => teamId !== id));
+    setSelectedPokemon(0);
   }
 
   /**
-   * Function that returns a display of the selected Pokemon, including PokemonCard that redirects to the Pokemon's page, ArrowButtons to navigate between team members, and a button to remove the Pokemon from the team
+   * Function that returns a display of the selected Pokemon,
+   * including PokemonCard that redirects to the Pokemon's page,
+   * ArrowButtons to navigate between team members,
+   * and a button to remove the Pokemon from the team. First pokemon in team is automaticly selected if no pokemon is selected.
    * @returns div with the selected Pokemon's info
    */
   function selectedInfo() {
-    const pokeName = selectedPokemon[0];
-    if (pokeName === "0") {
-      return <div className="selected-Info"></div>;
-    }
     return (
-      <div className="selected-Info">
+      <>
         <div className="container" onClick={redirectToPokemon}>
-          <PokemonCard key={selectedPokemon[0]} PokemonData={PokemonData} />
+          <PokemonCard key={team[selectedPokemon]} PokemonData={PokemonData} />
         </div>
         <ArrowButtons
-          team={team}
           selectedPokemon={selectedPokemon}
           setSelectedPokemon={setSelectedPokemon}
         />
         <div className="container">
           <Tooltip title={"Remove pokemon from your team. "} arrow>
             <Button
-              className="box"
-              onClick={() => deleteTeamMember(selectedPokemon[0])}
+              onClick={() => deleteTeamMember(team[selectedPokemon])}
               color="error"
               variant="outlined"
+              data-testid="remove_from_team_button"
             >
               REMOVE
             </Button>
           </Tooltip>
         </div>
-      </div>
+      </>
     );
   }
 

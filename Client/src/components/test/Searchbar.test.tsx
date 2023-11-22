@@ -1,30 +1,32 @@
 import { describe, test, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { RecoilRoot } from "recoil";
-import userEvent from "@testing-library/user-event";
 import Searchbar from "../sorting_and_filtering/Searchbar";
+import userEvent from "@testing-library/user-event";
 
 describe("Searchbar", () => {
   test("Searchbar works as intended", () => {
-    const { queryByPlaceholderText } = render(
+    const { getByTestId } = render(
       <RecoilRoot>
         <Searchbar />
       </RecoilRoot>,
     );
-    const inputElement = queryByPlaceholderText(
-      "pokemon name...",
-    ) as HTMLInputElement;
-    expect(inputElement).not.toBe(null);
 
-    // Type 'pikachu' into the input
-    userEvent.type(inputElement, "pikachu");
+    const searchBar = getByTestId("search-bar");
 
-    // Expect the value to be empty immediately
-    expect(inputElement.value).toBe("");
+    expect(searchBar).not.toBe(null);
+
+    searchBar.click();
+
+    // Type pikachu in the searchbar
+    userEvent.type(searchBar, "pikachu");
+
+    // Expect the value not to be pikachu immediately
+    expect(searchBar.textContent).not.toBe("pikachu");
 
     // Wait for the delay (600ms) to trigger the update
     setTimeout(() => {
-      expect(inputElement.value).toBe("pikachu");
+      expect(searchBar.textContent).toBe("pikachu");
     }, 600);
   });
 });

@@ -49,7 +49,7 @@ const RootQuery = new GraphQLObjectType({
 
         if (args.filters.length === 0) {
           return PokemonModel.find({
-            name: { $regex: args.search, $options: "i" },
+            name: { $regex: "^" + args.search, $options: "i" },
           })
             .sort(sortingMap)
             .skip(args.range[0])
@@ -62,7 +62,7 @@ const RootQuery = new GraphQLObjectType({
               "type.name": { $in: args.filters }, // ? $in for multiple filters. We check if the pokemon is in the filters array.
             },
           },
-          name: { $regex: args.search, $options: "i" },
+          name: { $regex: "^" + args.search, $options: "i" },
         })
           .sort(sortingMap)
           .skip(args.range[0])
@@ -84,7 +84,7 @@ const RootQuery = new GraphQLObjectType({
 
         if (args.filters.length === 0) {
           return PokemonModel.countDocuments({
-            name: { $regex: args.search, $options: "i" },
+            name: { $regex: "^" + args.search, $options: "i" },
           });
         }
         return PokemonModel.countDocuments({
@@ -94,7 +94,7 @@ const RootQuery = new GraphQLObjectType({
               "type.name": { $in: args.filters }, // ? $in for multiple filters. We check if the pokemon is in the filters array.
             },
           },
-          name: { $regex: args.search, $options: "i" },
+          name: { $regex: "^" + args.search, $options: "i" },
         });
       },
     },

@@ -4,10 +4,11 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Box } from "@mui/material";
 import { useQuery, gql } from "@apollo/client";
-
 interface PokemonCardProps {
   _id: number;
   selected: boolean;
+  count: number;
+  setSelectedPokemon: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function findSinglePokemon() {
@@ -31,17 +32,20 @@ function findSinglePokemon() {
  * @param selected - boolean to check if the Pokemon is selected
  * @returns Mui Card with Pokemon's name and image
  */
-export default function TeamMember({ _id, selected }: PokemonCardProps) {
+export default function TeamMember({
+  _id,
+  selected,
+  count,
+  setSelectedPokemon,
+}: PokemonCardProps): JSX.Element {
+  const [position, setPosition] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const variables = {
     _id: _id,
   };
-
   const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
 
-  const [position, setPosition] = useState(0);
-
-  const [isHovered, setIsHovered] = useState(false);
-
+  // Set interval to move the Pokemon's image up and down when hovered
   useEffect(() => {
     let intervalId: number;
     if (isHovered) {
@@ -52,11 +56,6 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
     return () => clearInterval(intervalId);
   }, [isHovered]);
 
-  const imageStyle = {
-    transform: `translateY(${position}px)`,
-    transition: "transform 0.2s ease-in-out",
-  };
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -65,8 +64,31 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
     return <div>Error: {error.message}</div>;
   }
 
+  /**
+   *  Function that sets the selectedPokemon state to the index of the Pokemon in the team
+   * @param index - index of the Pokemon in the team
+   */
+  function setSelectedPokemonFunc(index: number) {
+    setSelectedPokemon(index);
+    if (window.innerWidth < 1200) {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }
+
   return (
     <Card
+      tabIndex={0}
+      onClick={() => setSelectedPokemonFunc(count)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") {
+          setSelectedPokemonFunc(count);
+        }
+      }}
+      key={count}
+      aria-label={data.pokemon.name}
       variant="outlined"
       sx={{
         width: "300px",
@@ -86,26 +108,29 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
           overflow: "hidden",
         }}
       >
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
-            alignItems: "center",
+            flexDirection: "row",
             justifyContent: "space-between",
+            marginRight: "10px",
+            alignItems: "center",
           }}
         >
-          <Box sx={{ marginRight: "10px", alignItems: "center" }}>
-            <img
-              style={imageStyle}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              src={data.pokemon.sprites.front_default}
-              alt={data.pokemon.name}
-            />
-          </Box>
+          <img
+            style={{
+              transform: `translateY(${position}px)`,
+              transition: "transform 0.2s ease-in-out",
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            src={data.pokemon.sprites.front_default}
+            alt={data.pokemon.name}
+          />
           <Typography variant="body1" sx={{ color: "primary.light" }}>
             {data.pokemon.name}
           </Typography>
-        </div>
+        </Box>
       </CardContent>
     </Card>
   );

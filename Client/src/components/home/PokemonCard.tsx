@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Divider, Typography } from "@mui/material";
 import { PokemonCardI } from "../../interfaces/pokemon";
+import { useRef } from "react";
 
 type PokemonCardProps = {
   PokemonData: PokemonCardI;
@@ -25,9 +26,29 @@ const filters = [
   ["Fairy", "pink"],
 ];
 
-export default function PokemonCard({ PokemonData }: PokemonCardProps) {
+/**
+ * Function that returns the PokemonCard component.
+ * Contains:
+ * - Pokemon sprite (picture)
+ * - Pokemon name
+ * - Pokemon types
+ * - Pokemon weight
+ * - Pokemon base experience
+ * @param PokemonData PokemonCardI
+ * @returns PokemonCard component
+ */
+export default function PokemonCard({
+  PokemonData,
+}: PokemonCardProps): JSX.Element {
   const navigate = useNavigate();
 
+  /**
+   * Function that returns the colors used to indicate the pokemon types
+   * Used in:
+   * - CardContent
+   * - Card (shadow on hover)
+   * @returns Array of colors based on the pokemon types
+   */
   function getBackgroundColor(): string[] {
     if (!PokemonData) return ["grey"];
     const colors: string[] = [];
@@ -43,16 +64,26 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
     return colors;
   }
 
+  /**
+   * Reference to the card element
+   */
+  const cardRef = useRef<HTMLDivElement>(null);
+
   return (
     <Card
-      onClick={() => navigate("/" + PokemonData._id.toString())}
-      className="pokemon-card"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
+      ref={cardRef}
+      tabIndex={0}
+      aria-label={PokemonData.name}
+      onClick={() => {
+        navigate("/" + PokemonData._id.toString());
       }}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") {
+          navigate("/" + PokemonData._id.toString());
+        }
+      }}
+      className="pokemon-card"
+      data-testid={PokemonData._id}
       key={PokemonData._id}
       sx={{
         width: "100%",
@@ -64,7 +95,7 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
       }}
     >
       <CardContent
-        style={{
+        sx={{
           background: `${
             getBackgroundColor().length > 1
               ? `linear-gradient(90deg, ${getBackgroundColor()[0]} 40%, ${
@@ -76,20 +107,26 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
         }}
       />
       <img
-        style={{ height: "1%" }}
         src={PokemonData.sprites.front_default}
-        alt="Cool picture of a Pokémon"
+        alt={"Picture of " + PokemonData.name}
+        data-testid={PokemonData._id + "_picture"}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {PokemonData.name}
         </Typography>
-        <Typography variant="body2">
+        <Typography variant="body2" data-testid={PokemonData._id + "_types"}>
           {PokemonData.types
             .map((type: { type: { name: string } }) => type.type.name)
             .join(", ")}
         </Typography>
-        <hr />
+        <Divider
+          sx={{
+            backgroundColor: "black",
+            marginTop: "10px",
+            marginBottom: "10px",
+          }}
+        />
         <Typography variant="body2">
           {PokemonData.weight} kg &nbsp; {PokemonData.base_experience}XP
         </Typography>

@@ -3,18 +3,20 @@ import { recoilMaxPage, recoilPage } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 import { useState } from "react";
+import { PaginationItem } from "@mui/material";
 
-export default function BasicPagination() {
+/**
+ * Function that returns the BasicPagination component with the pagination for the pokemon list
+ * - Uses recoil state for page and maxPage
+ * - Uses window width to determine pagination size
+ * @returns BasicPagination component
+ */
+export default function BasicPagination(): JSX.Element {
   const [page, setRecPage] = useRecoilState<number>(recoilPage);
   const [maxPage] = useRecoilState<number>(recoilMaxPage);
   const [width, setWidth] = useState<number>(window.innerWidth);
 
-  function setPage(page: number) {
-    console.log("page: ", page);
-    sessionStorage.setItem("page", JSON.stringify(page));
-    setRecPage(page);
-  }
-
+  // Update width on resize
   useEffect(() => {
     function handleResize() {
       setWidth(window.innerWidth);
@@ -24,7 +26,11 @@ export default function BasicPagination() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  function getSize() {
+  /**
+   * Function that returns the size of the pagination based on the window width
+   * @returns "small" | "medium" | "large"
+   */
+  function getSize(): "small" | "medium" | "large" {
     switch (true) {
       case width < 465 && width > 370:
         return "medium";
@@ -36,17 +42,23 @@ export default function BasicPagination() {
   }
 
   return (
-    <div className="pagination">
-      <Pagination
-        page={page}
-        onChange={(_e: React.ChangeEvent<unknown>, value: number) =>
-          setPage(value)
-        }
-        count={maxPage}
-        variant="outlined"
-        size={getSize()}
-        shape="rounded"
-      />
-    </div>
+    <Pagination
+      sx={{ marginTop: "5vh", marginBottom: "10vh" }}
+      page={page}
+      onChange={(_e: React.ChangeEvent<unknown>, value: number) =>
+        setRecPage(value)
+      }
+      count={maxPage}
+      variant="outlined"
+      size={getSize()}
+      shape="rounded"
+      renderItem={(item) => (
+        <PaginationItem
+          {...item}
+          data-testid={`pagination-item-${item.page}`}
+        />
+      )}
+      data-testid="pagination"
+    />
   );
 }

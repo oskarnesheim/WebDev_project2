@@ -1,21 +1,25 @@
 import { fireEvent, render } from "@testing-library/react";
 import { test, expect, describe } from "vitest";
 import SortingBox from "../sorting_and_filtering/SortingBox";
+import { RecoilRoot } from "recoil";
 
 describe("SortingBox", () => {
   test("Checks that all the sorting options are rendered", async () => {
-    const currentSorting = "";
     const setCurrentSorting = () => {};
+    const currentSorting = "";
 
     const { getByRole, getByText } = render(
-      <SortingBox
-        currentSorting={currentSorting}
-        setCurrentSorting={setCurrentSorting}
-      />,
+      <RecoilRoot>
+        <SortingBox
+          setCurrentSorting={setCurrentSorting}
+          currentSorting={currentSorting}
+        />
+      </RecoilRoot>,
     );
 
     const sortings = [
-      "None",
+      "ID increasing (default)",
+      "ID decreasing",
       "A-Z",
       "Z-A",
       "XP increasing",
@@ -23,7 +27,7 @@ describe("SortingBox", () => {
       "kg increasing",
       "kg decreasing",
     ];
-    fireEvent.click(getByRole("button", { name: "Sorting" }));
+    fireEvent.click(getByRole("button", { name: "Choose Sorting" }));
     sortings.forEach((sorting) => {
       const option = getByText(sorting);
       expect(option).toBeTruthy();
@@ -41,13 +45,15 @@ describe("SortingBox", () => {
     };
 
     const { getByRole, getAllByText } = render(
-      <SortingBox
-        currentSorting={currentSorting}
-        setCurrentSorting={setCurrentSorting}
-      />,
+      <RecoilRoot>
+        <SortingBox
+          setCurrentSorting={setCurrentSorting}
+          currentSorting={currentSorting}
+        />
+      </RecoilRoot>,
     );
 
-    fireEvent.click(getByRole("button", { name: "Sorting" }));
+    fireEvent.click(getByRole("button", { name: "Choose Sorting" }));
     const option = getAllByText("XP increasing");
     fireEvent.click(option[1]);
     expect(currentSorting).toBe("base_experience,1");
@@ -56,8 +62,23 @@ describe("SortingBox", () => {
     fireEvent.click(option2[1]);
     expect(currentSorting).toBe("name,-1");
 
-    const option3 = getAllByText("None");
+    const option3 = getAllByText("ID increasing (default)");
     fireEvent.click(option3[1]);
     expect(currentSorting).toBe("_id,1");
+  });
+
+  test("Snapshot test of sorting box", () => {
+    const setCurrentSorting = () => {};
+    const currentSorting = "";
+
+    const page = render(
+      <RecoilRoot>
+        <SortingBox
+          setCurrentSorting={setCurrentSorting}
+          currentSorting={currentSorting}
+        />
+      </RecoilRoot>,
+    );
+    expect(page).toMatchSnapshot();
   });
 });
