@@ -35,7 +35,7 @@ describe("PokemonRatingReview", () => {
       </MockedProvider>,
     );
     await waitFor(() => {
-      const reviewInput = getByPlaceholderText("Write your review...");
+      const reviewInput = getByPlaceholderText("Write your review here");
       fireEvent.change(reviewInput, {
         target: { value: "This is a great Pokemon!" },
       });
@@ -85,7 +85,7 @@ describe("PokemonRatingReview", () => {
       </RecoilRoot>,
     );
     await waitFor(() => {
-      const reviewInput = getAllByPlaceholderText("Write your review...")[0];
+      const reviewInput = getAllByPlaceholderText("Write your review here")[0];
       fireEvent.change(reviewInput, {
         target: { value: "This is the most awesome pokemon ever!" },
       });
@@ -98,12 +98,12 @@ describe("PokemonRatingReview", () => {
       const submitButton = getByTestId("add-review-button");
       fireEvent.click(submitButton);
 
-      //! The mock might not be working since it only works it the delay
+      //! The mock might not be working since it only works with the delay
       setTimeout(() => {
         expect(
           getByText("This is the most awesome pokemon ever!"),
         ).toBeTruthy();
-      }, 1000);
+      }, 2000);
 
       expect(getByText("Thank you for your review!")).toBeTruthy();
     });
