@@ -1,39 +1,12 @@
 import { atom } from "recoil";
 
 /**
- * Global function that removes a filter from the filterBy array in session storage
- * @param filter
- * @returns filterBy array after removing the given filter
+ * Global state: MyTeam (Team IDs )
  */
-export function removeFromFilter(filter: string) {
-  const filterBy: string[] = JSON.parse(sessionStorage.getItem("filterBy")!);
-  const index = filterBy.indexOf(filter);
-  if (index > -1) {
-    filterBy.splice(index, 1);
-  }
-  sessionStorage.setItem("filterBy", JSON.stringify(filterBy));
-  return filterBy;
-}
-
-/**
- * Global state: MyTeam loaded from local storage
- */
-export const recoilMyTeam = atom({
+export const recoilMyTeam = atom<string[]>({
   key: "myTeamAtom",
-  default: getTeam() as string[],
+  default: [],
 });
-
-/**
- * Global state: MyTeam loaded from local storage
- */
-function getTeam() {
-  const team: string[] = JSON.parse(localStorage.getItem("team")!);
-  if (!team) {
-    localStorage.setItem("team", JSON.stringify([]));
-    return [];
-  }
-  return team;
-}
 
 /**
  * Global state: Filter by
@@ -76,14 +49,6 @@ export const recoilMaxPage = atom<number>({
 });
 
 /**
- * Global state: TTS enabled/disabled
- */
-export const recoilTTS = atom({
-  key: "ttsAtom",
-  default: false, // TTS is disabled by default
-});
-
-/**
  * Function to safely parse JSON from storage
  * @param value  The value to be parsed
  * @param defaultValue  The default value to use if the value is not found
@@ -102,7 +67,7 @@ function safeParse<T>(value: string | null, defaultValue: T): T {
 /**
  * Function to initialize state from storage
  * @param setStateFunction  The function to set the state
- * @param storage  socalstorage/sessionstorage
+ * @param storage  localstorage/sessionstorage
  * @param key   The key to use to retrieve the value from storage ex "filterBy"
  * @param defaultValue  The default value to use if the value is not found
  */
@@ -121,7 +86,7 @@ export function initializeStateFromStorage<T>(
  *  Function to update storage on change
  * @param key  The key to use to retrieve the value from storage ex "filterBy"
  * @param value  The value to be stored
- * @param storage  socalstorage/sessionstorage
+ * @param storage  localstorage/sessionstorage
  */
 export function updateStorageOnChange<T>(
   key: string,

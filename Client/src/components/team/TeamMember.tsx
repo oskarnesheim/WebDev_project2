@@ -4,12 +4,11 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Box } from "@mui/material";
 import { useQuery, gql } from "@apollo/client";
-import { useRecoilState } from "recoil";
-import { recoilTTS } from "../../recoil/atoms";
-
 interface PokemonCardProps {
   _id: number;
   selected: boolean;
+  count: number;
+  setSelectedPokemon: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function findSinglePokemon() {
@@ -33,7 +32,12 @@ function findSinglePokemon() {
  * @param selected - boolean to check if the Pokemon is selected
  * @returns Mui Card with Pokemon's name and image
  */
-export default function TeamMember({ _id, selected }: PokemonCardProps) {
+export default function TeamMember({
+  _id,
+  selected,
+  count,
+  setSelectedPokemon,
+}: PokemonCardProps) {
   const variables = {
     _id: _id,
   };
@@ -43,8 +47,6 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
   const [position, setPosition] = useState(0);
 
   const [isHovered, setIsHovered] = useState(false);
-
-  const [ttsEnabled] = useRecoilState(recoilTTS);
 
   useEffect(() => {
     let intervalId: number;
@@ -64,19 +66,31 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
     return <div>Error: {error.message}</div>;
   }
 
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
+  /**
+   *  Function that sets the selectedPokemon state to the index of the Pokemon in the team
+   * @param index - index of the Pokemon in the team
+   */
+  function setSelectedPokemonFunc(index: number) {
+    setSelectedPokemon(index);
+    if (window.innerWidth < 1200) {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
     }
-  };
+  }
 
   return (
     <Card
       tabIndex={0}
-      onFocus={() => handleFocus(data.pokemon.name)}
+      onClick={() => setSelectedPokemonFunc(count)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") {
+          setSelectedPokemonFunc(count);
+        }
+      }}
+      key={count}
+      aria-label={data.pokemon.name}
       variant="outlined"
       sx={{
         width: "300px",
@@ -96,23 +110,29 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
           overflow: "hidden",
         }}
       >
-        <div className="team_member_contaienr">
-          <Box sx={{ marginRight: "10px", alignItems: "center" }}>
-            <img
-              style={{
-                transform: `translateY(${position}px)`,
-                transition: "transform 0.2s ease-in-out",
-              }}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              src={data.pokemon.sprites.front_default}
-              alt={data.pokemon.name}
-            />
-          </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginRight: "10px",
+            alignItems: "center",
+          }}
+        >
+          <img
+            style={{
+              transform: `translateY(${position}px)`,
+              transition: "transform 0.2s ease-in-out",
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            src={data.pokemon.sprites.front_default}
+            alt={data.pokemon.name}
+          />
           <Typography variant="body1" sx={{ color: "primary.light" }}>
             {data.pokemon.name}
           </Typography>
-        </div>
+        </Box>
       </CardContent>
     </Card>
   );

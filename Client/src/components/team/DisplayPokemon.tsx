@@ -2,11 +2,10 @@ import { useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { findSinglePokemon } from "../../functions/GraphQLQueries";
-import { recoilMyTeam, recoilTTS } from "../../recoil/atoms";
+import { recoilMyTeam } from "../../recoil/atoms";
 import { Box, Button, CircularProgress, Tooltip } from "@mui/material";
 import ArrowButtons from "./ArrowButtons";
 import PokemonCard from "../home/PokemonCard";
-import { removeFromTeam } from "./TeamFunctions";
 import { PokemonCardI } from "../../interfaces/pokemon";
 
 type Props = {
@@ -30,8 +29,6 @@ export default function DisplayPokemon({
   };
   const { loading, error, data } = useQuery(findSinglePokemon, { variables });
 
-  const [ttsEnabled] = useRecoilState(recoilTTS);
-
   if (loading) {
     return <CircularProgress />;
   }
@@ -45,21 +42,12 @@ export default function DisplayPokemon({
     history("/" + team[selectedPokemon]);
   };
 
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
-    }
-  };
-
   /**
    * Function that calls removeFromTeam() to remove a Pokemon from the team, and sets the restets selectedPokemon to [0,0]
    * @param id - Pokemon ID
    */
   function deleteTeamMember(id: string) {
-    removeFromTeam(team, id, setTeam);
+    setTeam(team.filter((teamId) => teamId !== id));
     setSelectedPokemon(0);
   }
 
@@ -72,7 +60,7 @@ export default function DisplayPokemon({
    */
   function selectedInfo() {
     return (
-      <div className="selected-Info">
+      <>
         <div className="container" onClick={redirectToPokemon}>
           <PokemonCard key={team[selectedPokemon]} PokemonData={PokemonData} />
         </div>
@@ -84,7 +72,6 @@ export default function DisplayPokemon({
           <Tooltip title={"Remove pokemon from your team. "} arrow>
             <Button
               className="box"
-              onFocus={() => handleFocus("Remove pokemon from your team.")}
               onClick={() => deleteTeamMember(team[selectedPokemon])}
               color="error"
               variant="outlined"
@@ -94,7 +81,7 @@ export default function DisplayPokemon({
             </Button>
           </Tooltip>
         </div>
-      </div>
+      </>
     );
   }
 

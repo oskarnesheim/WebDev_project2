@@ -1,25 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
-import { Switch } from "@mui/material";
 import { useState } from "react";
 import HamburgerMenu from "./HamburgerMenu";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import {
-  recoilTTS,
   recoilFilterBy,
   recoilSortBy,
   recoilPage,
   recoilSearch,
-  updateStorageOnChange,
 } from "../../recoil/atoms";
 
 export default function Navbar() {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
-  const [filterBy, setFilterBy] = useRecoilState(recoilFilterBy);
-  const [sortBy, setSortBy] = useRecoilState(recoilSortBy);
-  const [page, setPage] = useRecoilState(recoilPage);
-  const [search, setSearch] = useRecoilState(recoilSearch);
-  const [ttsEnabled, setTtsEnabled] = useRecoilState(recoilTTS);
+  const setFilterBy = useSetRecoilState(recoilFilterBy);
+  const setSortBy = useSetRecoilState(recoilSortBy);
+  const setPage = useSetRecoilState(recoilPage);
+  const setSearch = useSetRecoilState(recoilSearch);
 
   window.onresize = () => {
     setWindowSize(window.innerWidth);
@@ -27,31 +23,11 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const logoOnclick = () => {
-    if (filterBy.length !== 0) {
-      setFilterBy([]);
-      updateStorageOnChange("filterBy", [], sessionStorage);
-    }
-    if (sortBy !== "_id,1") {
-      setSortBy("_id,1");
-      updateStorageOnChange("sortBy", "_id,1", sessionStorage);
-    }
-    if (page !== 1) {
-      setPage(1);
-      updateStorageOnChange("page", 1, sessionStorage);
-    }
-    if (search !== "") {
-      setSearch("");
-    }
+    setFilterBy([]);
+    setSortBy("_id,1");
+    setPage(1);
+    setSearch("");
     navigate("/");
-  };
-
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
-    }
   };
 
   return (
@@ -65,7 +41,6 @@ export default function Navbar() {
             data-testid="pokedex_link_button"
             onClick={() => logoOnclick()}
             tabIndex={0}
-            onFocus={() => handleFocus("Pokedex")}
             onKeyDown={(event) => {
               if (event.key === "Enter") navigate("/");
             }}
@@ -80,7 +55,6 @@ export default function Navbar() {
             onKeyDown={(event) => {
               if (event.key === "Enter") navigate("/myteam");
             }}
-            onFocus={() => handleFocus("My Team")}
           >
             My Team <BusinessCenterOutlinedIcon />
           </h3>
@@ -91,37 +65,10 @@ export default function Navbar() {
             onKeyDown={(event) => {
               if (event.key === "Enter") navigate("/about");
             }}
-            onFocus={() => handleFocus("About")}
             data-testid="about_link_button"
           >
             About
           </h3>
-          <Switch
-            checked={ttsEnabled}
-            onFocus={() => handleFocus("Text to speech")}
-            onChange={() => setTtsEnabled(!ttsEnabled)}
-            name="ttsSwitch"
-            inputProps={{ "aria-label": "TTS switch" }}
-            sx={{
-              "& .MuiSwitch-thumb": {
-                backgroundColor: ttsEnabled ? "primary" : "grey", // change 'blue' and 'grey' to the colors you want
-              },
-              "& .MuiSwitch-track": {
-                backgroundColor: ttsEnabled ? "lightblue" : "lightgrey", // change 'lightblue' and 'lightgrey' to the colors you want
-              },
-            }}
-          />
-          <p
-            style={{
-              fontSize: "0.8rem",
-              margin: "0",
-              marginTop: "0px",
-              marginLeft: "-100px",
-              padding: "0",
-            }}
-          >
-            Text to speech
-          </p>
         </div>
       )}
     </div>

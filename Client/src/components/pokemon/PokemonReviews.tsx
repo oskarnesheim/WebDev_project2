@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { Box, Button, CircularProgress, TextareaAutosize } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  TextareaAutosize,
+  Tooltip,
+} from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import theme from "../../Theme";
 import { useQuery, useMutation } from "@apollo/client";
 import { getReviews, AddReview } from "../../functions/GraphQLQueries";
 import { Review } from "../../interfaces/pokemon";
-import { useRecoilState } from "recoil";
-import { recoilTTS } from "../../recoil/atoms";
 
 type PokemonReviewProps = {
   _id: number;
@@ -21,7 +25,6 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
   });
 
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [ttsEnabled] = useRecoilState(recoilTTS);
 
   const handleRatingClick = (newRating: number) => {
     setRating(newRating);
@@ -98,18 +101,10 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     return <Box>Error: {error.message}</Box>;
   }
 
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
-    }
-  };
-
   return (
     <div className="pokemon_reviews_container">
       <h2
+        tabIndex={0}
         className="pokemon_reviews_header"
         style={{
           color: theme.palette.primary.main,
@@ -120,27 +115,37 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
       </h2>
       <form onSubmit={(e) => handleAddReview(e)}>
         <div className="star_rating_container">
-          <label className="star_rating_label">Rate</label>
+          <label className="star_rating_label" tabIndex={0}>
+            {" "}
+            Rate
+          </label>
           {Array.from({ length: 5 }, (_, index) => (
-            <StarIcon
-              tabIndex={0}
-              data-testid={`star-rating-${index}`}
-              key={index}
-              onFocus={() => handleFocus("Rate " + (index + 1) + " out of 5")}
-              onClick={() => handleRatingClick(index + 1)}
-              style={{
-                fontSize: "24px",
-                cursor: "pointer",
-                color: index < rating ? theme.palette.primary.main : "#ccc",
-                marginTop: "10px",
-              }}
-            />
+            <Tooltip title={`Rate ${index + 1} out of 5`} key={index}>
+              <button
+                onClick={() => handleRatingClick(index + 1)}
+                aria-label={`Rate ${index + 1} out of 5`}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                <StarIcon
+                  data-testid={`star-rating-${index}`}
+                  style={{
+                    fontSize: "24px",
+                    color: index < rating ? theme.palette.primary.main : "#ccc",
+                    marginTop: "10px",
+                  }}
+                />
+              </button>
+            </Tooltip>
           ))}
         </div>
         <div>
           <TextareaAutosize
+            aria-label="Write your review here"
             value={review}
-            onFocus={() => handleFocus("Write your review here")}
             onChange={handleReviewChange}
             minRows={4}
             style={{
@@ -156,7 +161,6 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
           type="submit"
           variant="contained"
           className="custom-button"
-          onFocus={() => handleFocus("Submit your review")}
           disabled={alreadyReviewed(getUserID())}
           data-testid="add-review-button"
           sx={{
@@ -179,7 +183,9 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
       </form>
       {errorMessage && <p className="review_error_message">{errorMessage}</p>}
       <div>
-        <h3 className="pokemon_review_sub_header">Reviews</h3>
+        <h3 className="pokemon_review_sub_header" tabIndex={0}>
+          Reviews
+        </h3>
         {data.reviewsForPokemon.length == 0 ? (
           <p>No reviews yet.</p>
         ) : (
@@ -188,6 +194,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
               <li
                 key={review.userID}
                 className="review_list_item"
+                tabIndex={0}
                 style={{
                   border: "3px solid " + theme.palette.primary.main,
                 }}

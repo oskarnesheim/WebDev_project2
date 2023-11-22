@@ -5,8 +5,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { FormControlLabel, Checkbox, Box } from "@mui/material";
 import ArrowDropDownCircleOutlinedIcon from "@mui/icons-material/ArrowDropDownCircleOutlined";
-import { useRecoilState } from "recoil";
-import { recoilTTS } from "../../recoil/atoms";
 
 const filters = [
   ["fire", "red"],
@@ -39,21 +37,11 @@ export default function FilterBox({
 }: FilterBoxProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const [ttsEnabled] = useRecoilState(recoilTTS);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
-    }
   };
 
   const handleMousedown = (event: React.MouseEvent<HTMLElement>) => {
@@ -67,7 +55,6 @@ export default function FilterBox({
         aria-controls={open ? "fade-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
-        onFocus={() => handleFocus("Choose Filters")}
         onClick={handleClick}
         data-testid="filter-list-button"
         sx={{
@@ -98,7 +85,6 @@ export default function FilterBox({
           <MenuItem
             key={filter[0]}
             data-testid={filter[0]}
-            onFocus={() => handleFocus(filter[0])}
             onMouseDown={handleMousedown}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
@@ -107,10 +93,8 @@ export default function FilterBox({
                   setCurrentFilter(
                     currentFilters.filter((f) => f !== filter[0]),
                   );
-                  handleFocus(`${filter[0]} unselected`);
                 } else {
                   setCurrentFilter([...currentFilters, filter[0]]);
-                  handleFocus(`${filter[0]} selected`);
                 }
               }
             }}

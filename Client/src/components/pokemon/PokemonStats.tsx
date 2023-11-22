@@ -92,6 +92,7 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
             }}
           >
             <Typography
+              tabIndex={0}
               variant="h5"
               textAlign={screenSmallerThan550px ? "center" : "left"}
               padding={"0.5em 0em 0em 1em"}
@@ -106,12 +107,15 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
                 <TableHead>
                   <TableRow>
                     <TableCell
+                      tabIndex={0}
+                      aria-label="Stat"
                       align="left"
                       sx={{ border: 0, color: "white", paddingTop: "1.5em" }}
                     >
                       Stat
                     </TableCell>
                     <TableCell
+                      tabIndex={0}
                       align={screenSmallerThan550px ? "right" : "left"}
                       sx={{ border: 0, color: "white", paddingTop: "1.5em" }}
                     >
@@ -123,12 +127,14 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
                   {rows.map((row) => (
                     <TableRow key={row.stat} sx={{ background: row.color }}>
                       <TableCell
+                        tabIndex={0}
                         align="left"
                         sx={{ border: 0, color: "white" }}
                       >
                         {row.stat}
                       </TableCell>
                       <TableCell
+                        tabIndex={0}
                         align={screenSmallerThan550px ? "right" : "left"}
                         sx={{ border: 0, color: "white" }}
                         data-testid={row.stat}

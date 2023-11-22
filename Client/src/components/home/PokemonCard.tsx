@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, Typography } from "@mui/material";
 import { PokemonCardI } from "../../interfaces/pokemon";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 type PokemonCardProps = {
   PokemonData: PokemonCardI;
@@ -46,45 +46,11 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
 
   const cardRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const card = cardRef.current;
-
-    if (card) {
-      const handleFocus = () => {
-        const speechSynthesis = window.speechSynthesis;
-        speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(`${PokemonData.name}`);
-        utterance.volume = 0.5;
-        speechSynthesis.speak(utterance);
-      };
-
-      const handleEnter = (event: KeyboardEvent) => {
-        if (event.key === "Enter") {
-          const speechSynthesis = window.speechSynthesis;
-          speechSynthesis.cancel();
-          const utterance = new SpeechSynthesisUtterance(
-            `${PokemonData.name} selected`,
-          );
-          utterance.volume = 0.5;
-          speechSynthesis.speak(utterance);
-        }
-      };
-
-      card.addEventListener("focus", handleFocus);
-      card.addEventListener("keydown", handleEnter);
-
-      return () => {
-        card.removeEventListener("focus", handleFocus);
-        card.removeEventListener("keydown", handleEnter);
-      };
-    }
-  });
-
   return (
     <Card
       ref={cardRef}
       tabIndex={0}
-      // onFocus={() => handleFocus(PokemonData.name)}
+      aria-label={PokemonData.name}
       onClick={() => {
         navigate("/" + PokemonData._id.toString());
       }}

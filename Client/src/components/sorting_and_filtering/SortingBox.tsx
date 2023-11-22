@@ -4,42 +4,28 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { Box } from "@mui/material";
-import styled from "@mui/material/styles/styled";
+// import styled from "@mui/material/styles/styled";
 import sortings from "../../assets/Sortings";
 import ArrowDropDownCircleOutlinedIcon from "@mui/icons-material/ArrowDropDownCircleOutlined";
-import { useRecoilState } from "recoil";
-import { recoilTTS } from "../../recoil/atoms";
 
 type SortingBoxType = {
   setCurrentSorting: React.Dispatch<React.SetStateAction<string>>;
+  currentSorting: string;
 };
 
-export default function SortingBox({ setCurrentSorting }: SortingBoxType) {
+export default function SortingBox({
+  setCurrentSorting,
+  currentSorting,
+}: SortingBoxType) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
-
-  const [ttsEnabled] = useRecoilState(recoilTTS);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-  const StyledMenuItem = styled(MenuItem)(() => ({
-    "&.Mui-focusVisible": {
-      backgroundColor: "lightblue",
-    },
-  }));
-
-  const handleFocus = (text: string) => {
-    if (ttsEnabled && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.volume = 0.5;
-      window.speechSynthesis.speak(utterance);
-    }
   };
 
   return (
@@ -49,7 +35,6 @@ export default function SortingBox({ setCurrentSorting }: SortingBoxType) {
         aria-controls={open ? "fade-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
-        onFocus={() => handleFocus("Choose Sorting")}
         onClick={handleClick}
         data-testid="sort-list-button"
         sx={{
@@ -77,8 +62,7 @@ export default function SortingBox({ setCurrentSorting }: SortingBoxType) {
         TransitionComponent={Fade}
       >
         {sortings.map((sorting) => (
-          <StyledMenuItem
-            onFocus={() => handleFocus(sorting[0])}
+          <MenuItem
             key={sorting[1]}
             value={sorting[1]}
             onKeyDown={(event) => {
@@ -93,11 +77,12 @@ export default function SortingBox({ setCurrentSorting }: SortingBoxType) {
               setCurrentSorting(sorting[1]);
             }}
             style={{
-              backgroundColor: sorting[1] === "default" ? "lightblue" : "white",
+              color: sorting[1] === currentSorting ? "red" : "black",
             }}
           >
             {sorting[0]}
-          </StyledMenuItem>
+            {currentSorting === sorting[1] ? " ✓" : ""}
+          </MenuItem>
         ))}
       </Menu>
     </Box>
