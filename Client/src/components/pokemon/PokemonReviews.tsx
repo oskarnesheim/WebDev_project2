@@ -5,6 +5,7 @@ import {
   CircularProgress,
   TextareaAutosize,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import theme from "../../Theme";
@@ -70,6 +71,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
       setErrorMessage("Already reviewed this pokemon.");
       return;
     }
+
     if (rating === 0) {
       setErrorMessage("Please select a rating.");
       return;
@@ -94,6 +96,14 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     setErrorMessage(`Thank you for your review!`);
   };
 
+  function getErrorMessage() {
+    const color =
+      errorMessage === "Thank you for your review!" ? "green" : "red";
+
+    const currMessage = errorMessage;
+    return <Typography sx={{ color: { color } }}>{currMessage}</Typography>;
+  }
+
   if (loading) {
     return <CircularProgress />;
   }
@@ -113,38 +123,54 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
       >
         Rate and Review
       </h2>
-      <form onSubmit={(e) => handleAddReview(e)}>
-        <div className="star_rating_container">
-          <label className="star_rating_label" tabIndex={0}>
-            {" "}
-            Rate
-          </label>
-          {Array.from({ length: 5 }, (_, index) => (
-            <Tooltip title={`Rate ${index + 1} out of 5`} key={index}>
-              <button
-                onClick={() => handleRatingClick(index + 1)}
-                aria-label={`Rate ${index + 1} out of 5`}
+      <div className="star_rating_container">
+        <label className="star_rating_label" tabIndex={0}>
+          {" "}
+          Rate
+        </label>
+
+        {Array.from({ length: 5 }, (_, index) => (
+          <Tooltip
+            title={
+              alreadyReviewed(getUserID()) ? "" : `Rate (${index + 1}) out of 5`
+            }
+            key={index}
+          >
+            <button
+              onClick={() => handleRatingClick(index + 1)}
+              aria-label={
+                alreadyReviewed(getUserID())
+                  ? ""
+                  : `Rate (${index + 1}) out of 5`
+              }
+              disabled={alreadyReviewed(getUserID())}
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              <StarIcon
+                data-testid={`star-rating-${index}`}
                 style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
+                  fontSize: "24px",
+                  color: index < rating ? theme.palette.primary.main : "#ccc",
+                  marginTop: "10px",
                 }}
-              >
-                <StarIcon
-                  data-testid={`star-rating-${index}`}
-                  style={{
-                    fontSize: "24px",
-                    color: index < rating ? theme.palette.primary.main : "#ccc",
-                    marginTop: "10px",
-                  }}
-                />
-              </button>
-            </Tooltip>
-          ))}
-        </div>
+              />
+            </button>
+          </Tooltip>
+        ))}
+      </div>
+      <form onSubmit={(e) => handleAddReview(e)}>
         <div>
           <TextareaAutosize
-            aria-label="Write your review here"
+            disabled={alreadyReviewed(getUserID())}
+            aria-label={
+              alreadyReviewed(getUserID())
+                ? "Already reviewed"
+                : `Write your review here`
+            }
             value={review}
             onChange={handleReviewChange}
             minRows={4}
@@ -154,7 +180,11 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
               marginTop: "10px",
               fontFamily: "pokemonfont",
             }}
-            placeholder="Write your review..."
+            placeholder={
+              alreadyReviewed(getUserID())
+                ? "Already reviewed"
+                : `Write your review here`
+            }
           />
         </div>
         <Button
@@ -181,7 +211,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
           {alreadyReviewed(getUserID()) ? "Already reviewed" : "Add review"}
         </Button>
       </form>
-      {errorMessage && <p className="review_error_message">{errorMessage}</p>}
+      {errorMessage && getErrorMessage()}
       <div>
         <h3 className="pokemon_review_sub_header" tabIndex={0}>
           Reviews

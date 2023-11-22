@@ -46,7 +46,6 @@ export default function Pokemon() {
         setTeam(team.filter((teamId) => teamId !== PokemonData._id.toString()));
         break;
       case 2:
-        console.log("Your team is full");
         break;
       default:
         break;

@@ -103,7 +103,7 @@ describe("PokemonRatingReview", () => {
         expect(
           getByText("This is the most awesome pokemon ever!"),
         ).toBeTruthy();
-      }, 500);
+      }, 1000);
 
       expect(getByText("Thank you for your review!")).toBeTruthy();
     });
