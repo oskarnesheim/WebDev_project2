@@ -1,25 +1,31 @@
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PokemonStats from "./PokemonStats";
 import { useQuery } from "@apollo/client";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { Box, Button, Divider, Tooltip, Typography } from "@mui/material";
 import PokemonRatingReview from "./PokemonReviews";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { checkTeam, addToTeam, removeFromTeam } from "../team/TeamFunctions";
 import { recoilMyTeam } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
 import { PokemonPageI } from "../../interfaces/pokemon";
 import { findSinglePokemon } from "../../functions/GraphQLQueries";
 
-export default function Pokemon() {
+/**
+ * Function that returns the Pokemon component, which contains the Pokemon information.
+ * Contains:
+ * - Pokemon name
+ * - Pokemon stats (HP, Attack, Defense, Special Attack, Special Defense, Speed)
+ * - Pokemon rating and reviews
+ * @returns Pokemon component
+ */
+export default function Pokemon(): JSX.Element {
   const { _id } = useParams();
   const navigate = useNavigate();
   const variables = {
     _id: parseInt(_id!),
   };
-
   const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
-  const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
+  const { loading, error, data } = useQuery(findSinglePokemon, { variables });
 
   if (loading) {
     return <CircularProgress />;
@@ -29,26 +35,49 @@ export default function Pokemon() {
     return <Box>Error: {error.message}</Box>;
   }
 
+  // Get pokemon data from GraphQL after loading and error check
   const PokemonData: PokemonPageI = data.pokemon;
 
-  function handleOnClick() {
-    switch (checkTeam(team, PokemonData._id.toString())) {
+  /**
+   * Function that checks if the pokemon is in the team.
+   * @returns 0 if not in team, 1 if in team, 2 if team is full
+   */
+  const checkTeam = (): number => {
+    const id = PokemonData._id.toString();
+    if (team.includes(id)) return 1;
+    if (team.length == 6) return 2;
+    return 0;
+  };
+
+  /**
+   * Function that handles the onClick event for the add to team button.
+   * - If pokemon is not in team, add it to the team
+   * - If pokemon is in team, remove it from the team
+   * - If team is full, do nothing
+   * @returns void
+   */
+  function handleOnClick(): void {
+    switch (checkTeam()) {
       case 0:
-        addToTeam(team, PokemonData._id.toString(), setTeam);
+        setTeam([...team, PokemonData._id.toString()]);
         break;
       case 1:
-        removeFromTeam(team, PokemonData._id.toString(), setTeam);
+        setTeam(team.filter((teamId) => teamId !== PokemonData._id.toString()));
         break;
       case 2:
-        console.log("Your team is full");
         break;
       default:
         break;
     }
   }
 
+  /**
+   * Function that returns the color and text for the add to team button.
+   * @param mode : 0 to get color, 1 to get text, 2 to get tooltip text
+   * @returns color or text based on mode
+   */
   function getButtonInfo(mode: number) {
-    switch (checkTeam(team, PokemonData._id.toString())) {
+    switch (checkTeam()) {
       case 0:
         if (mode == 0) return "green";
         if (mode == 2) return "Add " + PokemonData.name + " to your team";
@@ -69,9 +98,10 @@ export default function Pokemon() {
   return (
     <>
       <Typography
-        sx={{ marginTop: "5vh", marginBottom: "3vh" }}
-        variant="h3"
+        sx={{ marginTop: "15px", marginBottom: "15px" }}
+        variant="h4"
         textAlign={"center"}
+        data-testid="pokemon-name"
       >
         {PokemonData.name} - #{PokemonData._id}
       </Typography>
@@ -114,7 +144,6 @@ export default function Pokemon() {
         <PokemonStats pokemon={PokemonData} />
       </Box>
       <PokemonRatingReview _id={PokemonData._id} />
-      <Outlet />
     </>
   );
 }

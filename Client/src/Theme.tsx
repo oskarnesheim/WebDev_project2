@@ -13,6 +13,11 @@ const theme = createTheme({
       light: "#ffffff", // white
       dark: "#FFCB05", // yellow
     },
+    error: {
+      main: "#ff0000", // red
+      dark: "#141c24", // dark grey (background)
+      light: "#ff0000", // red
+    },
   },
   typography: {
     fontFamily: ["pokemonfont;"].join(","),
@@ -40,15 +45,15 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           color: "white",
-          backgroundColor: "#1a1a1a",
+          backgroundColor: "#1a1a1a", // dark grey
           "&.Mui-selected": {
-            backgroundColor: "#0c72bb",
+            backgroundColor: "#0c72bb", // blue
           },
           "&.Mui-selected:hover": {
-            backgroundColor: "#FFCB05",
+            backgroundColor: "#FFCB05", // yellow
           },
           "&:hover": {
-            backgroundColor: "#6cb9f0",
+            backgroundColor: "#6cb9f0", // light blue
           },
         },
       },

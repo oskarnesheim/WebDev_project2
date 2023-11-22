@@ -4,7 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { Box } from "@mui/material";
-import styled from "@mui/material/styles/styled";
+// import styled from "@mui/material/styles/styled";
 import sortings from "../../assets/Sortings";
 import ArrowDropDownCircleOutlinedIcon from "@mui/icons-material/ArrowDropDownCircleOutlined";
 
@@ -13,25 +13,29 @@ type SortingBoxType = {
   currentSorting: string;
 };
 
+/**
+ * SortingBox component for choosing sorting.
+ * @param setCurrentSorting
+ * @param currentSorting
+ * @returns JSX.Element
+ */
 export default function SortingBox({
   setCurrentSorting,
   currentSorting,
-}: SortingBoxType) {
+}: SortingBoxType): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
 
+  // Open the menu
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  // Close the menu
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const StyledMenuItem = styled(MenuItem)(() => ({
-    "&.Mui-focusVisible": {
-      backgroundColor: "lightblue",
-    },
-  }));
 
   return (
     <Box>
@@ -67,27 +71,27 @@ export default function SortingBox({
         TransitionComponent={Fade}
       >
         {sortings.map((sorting) => (
-          <StyledMenuItem
+          <MenuItem
             key={sorting[1]}
             value={sorting[1]}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
-                event.preventDefault();
+                handleClose();
                 setCurrentSorting(sorting[1]);
               }
             }}
             data-testid={sorting[0]}
             onClick={() => {
-              handleClose;
+              handleClose();
               setCurrentSorting(sorting[1]);
             }}
             style={{
-              backgroundColor:
-                sorting[1] === currentSorting ? "lightblue" : "white",
+              color: sorting[1] === currentSorting ? "red" : "black",
             }}
           >
             {sorting[0]}
-          </StyledMenuItem>
+            {currentSorting === sorting[1] ? " ✓" : ""}
+          </MenuItem>
         ))}
       </Menu>
     </Box>

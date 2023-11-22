@@ -1,6 +1,7 @@
 import { fireEvent, render } from "@testing-library/react";
 import { test, expect, describe } from "vitest";
 import SortingBox from "../sorting_and_filtering/SortingBox";
+import { RecoilRoot } from "recoil";
 
 describe("SortingBox", () => {
   test("Checks that all the sorting options are rendered", async () => {
@@ -8,10 +9,12 @@ describe("SortingBox", () => {
     const currentSorting = "";
 
     const { getByRole, getByText } = render(
-      <SortingBox
-        currentSorting={currentSorting}
-        setCurrentSorting={setCurrentSorting}
-      />,
+      <RecoilRoot>
+        <SortingBox
+          setCurrentSorting={setCurrentSorting}
+          currentSorting={currentSorting}
+        />
+      </RecoilRoot>,
     );
 
     const sortings = [
@@ -42,10 +45,12 @@ describe("SortingBox", () => {
     };
 
     const { getByRole, getAllByText } = render(
-      <SortingBox
-        currentSorting={currentSorting}
-        setCurrentSorting={setCurrentSorting}
-      />,
+      <RecoilRoot>
+        <SortingBox
+          setCurrentSorting={setCurrentSorting}
+          currentSorting={currentSorting}
+        />
+      </RecoilRoot>,
     );
 
     fireEvent.click(getByRole("button", { name: "Choose Sorting" }));
@@ -60,5 +65,20 @@ describe("SortingBox", () => {
     const option3 = getAllByText("ID increasing (default)");
     fireEvent.click(option3[1]);
     expect(currentSorting).toBe("_id,1");
+  });
+
+  test("Snapshot test of sorting box", () => {
+    const setCurrentSorting = () => {};
+    const currentSorting = "";
+
+    const page = render(
+      <RecoilRoot>
+        <SortingBox
+          setCurrentSorting={setCurrentSorting}
+          currentSorting={currentSorting}
+        />
+      </RecoilRoot>,
+    );
+    expect(page).toMatchSnapshot();
   });
 });

@@ -25,10 +25,7 @@
   align-items: center;
 }
 
-.pokedex-link:hover {
-  color: red;
-  cursor: pointer;
-}
+/* Team */
 
 .myteam-link {
   width: fit-content;
@@ -46,7 +43,7 @@
 }
 
 .content_container {
-  top: 10vh;
+  top: 80px;
   position: relative;
   height: calc(100vh - 80px);
 }
@@ -55,7 +52,6 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 9vh 3%;
-  /* margin-top: 5vh; */
   align-items: center;
   width: 90vw;
 }
@@ -63,31 +59,21 @@
 @media screen and (max-width: 1300px) {
   .pokemons_container {
     grid-template-columns: repeat(3, 1fr);
-    /* margin-top: 5vh; */
   }
 }
 @media screen and (max-width: 950px) {
   .pokemons_container {
     grid-template-columns: repeat(2, 1fr);
-    /* margin-top: 10vh; */
     grid-gap: 3vh 3%;
   }
 }
 @media screen and (max-width: 700px) {
   .pokemons_container {
     grid-template-columns: repeat(1, 1fr);
-    /* margin-top: 5vh; */
     grid-gap: 3vh;
   }
 }
 
-/* .filter_sort_container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 20%;
-} */
 .search_container {
   width: 90vw;
   display: flex;
@@ -136,14 +122,6 @@
   justify-content: space-around;
 }
 
-@media screen and (max-width: 900px) {
-  .filter_sorting_dropdowns {
-    flex-direction: column;
-    align-items: center;
-    gap: 3vh;
-  }
-}
-
 .current_active_filters {
   display: flex;
   flex-direction: row;
@@ -151,19 +129,21 @@
   justify-content: space-around;
   width: 100%;
   margin-top: 2vh;
+  text-align: center;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1130px) {
+  .filter_sorting_dropdowns {
+    flex-direction: column;
+    align-items: center;
+    gap: 3vh;
+  }
+
   .current_active_filters {
     flex-direction: column;
     align-items: center;
     gap: 3vh;
   }
-}
-
-.pagination {
-  margin-top: 5vh;
-  margin-bottom: 10vh;
 }
 
 .apply_reset_filter {
@@ -181,13 +161,14 @@
     padding-left: 0%;
     width: 100%;
   }
-}
-@media screen and (max-width: 700px) {
+
   .filter_sorting_inner {
     flex-direction: column;
     align-items: center;
   }
 }
+
+/* Reviews */
 
 .filter_preview {
   margin: 20px 0px;
@@ -221,19 +202,25 @@
   }
 }
 
-/*! Hamburgermenu */
+/*? Errorpage */
 
-.hamburger_menu_container {
-  z-index: 1;
+.error_page_container {
   display: flex;
-  flex-direction: row;
-  background-color: #000000;
-  color: #ffffff;
-  font-size: 20px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 80px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#error_404_icon {
+  width: 500px;
+}
+
+/*? Aboutpage */
+
+#pokeball {
+  object-fit: cover;
+  margin-top: 5vh;
+  width: 60vw;
+  height: 15vw;
 }

@@ -80,9 +80,6 @@ test("Checks that sorting and filtering works correctly", async ({ page }) => {
   await page.getByTestId("sort-list-button").click();
   await page.getByTestId("kg increasing").click();
 
-  // Clicks the esc button to close the modal
-  await page.keyboard.press("Escape");
-
   // Applys the filters
   await page.getByTestId("apply-filter-button").click();
 
@@ -109,7 +106,7 @@ test("Checks that you can search for pikachu and show stats about it", async ({
   page,
 }) => {
   // Write "pikachu" in the search bar
-  await page.getByPlaceholder("pokemon name...").fill("pikachu");
+  await page.getByPlaceholder("pokémon name ...").fill("pikachu");
 
   // Checks that pikachu is visible (id: 25)
   await expect(page.getByTestId("25")).toBeVisible();
@@ -152,7 +149,7 @@ test("Checks that you get response when searching for a pokemon that doesn't exi
 
   // Write "No pokemon with this name" in the search bar
   await page
-    .getByPlaceholder("pokemon name...")
+    .getByPlaceholder("pokémon name ...")
     .fill("No pokemon with this name");
 
   // Checks that the text "No pokemons found" is visible
@@ -207,4 +204,136 @@ test("Checks that the team-functionality works correctly", async ({ page }) => {
 
   // Checks that the team is empty
   await expect(page.getByTestId("Empty_team_message")).toBeVisible();
+});
+
+test("Check if different home page elements are focusable when tabbing", async ({
+  page,
+}) => {
+  // Define the selectors for the elements you want to test
+  const selectors = [
+    "pokedex_link_button",
+    "myteam_link_button",
+    "about_link_button",
+    "search-bar-input",
+    "clear-button",
+    "filter_button",
+  ];
+
+  for (const selector of selectors) {
+    // Press the Tab key
+    await page.keyboard.press("Tab");
+
+    // Get the currently focused element
+    const focusedElement = await page.evaluate(() => {
+      const activeElement = document.activeElement;
+      return activeElement ? activeElement.getAttribute("data-testid") : null;
+    });
+    // Check if the focused element is the expected element
+    expect(focusedElement).toBe(selector);
+  }
+
+  // Check if all pokeomon cards are focusable
+  for (let i = 1; i < 21; i++) {
+    await page.keyboard.press("Tab");
+
+    const focusedElement = await page.evaluate(() => {
+      const activeElement = document.activeElement;
+      return activeElement ? activeElement.getAttribute("data-testid") : null;
+    });
+
+    expect(focusedElement).toBe(i.toString());
+  }
+
+  // Check if the first 5 presented pagination items are focusable
+  for (let i = 1; i < 6; i++) {
+    await page.keyboard.press("Tab");
+
+    const focusedElement = await page.evaluate(() => {
+      const activeElement = document.activeElement;
+      return activeElement ? activeElement.getAttribute("data-testid") : null;
+    });
+
+    expect(focusedElement).toBe(`pagination-item-${i}`);
+  }
+
+  // Check if the last pagination item is focusable (15)
+  await page.keyboard.press("Tab");
+
+  const focusedElement = await page.evaluate(() => {
+    const activeElement = document.activeElement;
+    return activeElement ? activeElement.getAttribute("data-testid") : null;
+  });
+  expect(focusedElement).toBe(`pagination-item-15`);
+});
+
+test("Check if sorting and filter elements are focusable when using the arrowkeys", async ({
+  page,
+}) => {
+  // Access the sorting menu
+  for (let i = 0; i < 6; i++) {
+    await page.keyboard.press("Tab");
+  }
+  await page.keyboard.press("Enter");
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Enter");
+
+  // Define the expected sorting options
+  const sortingOptions = [
+    "ID decreasing",
+    "A-Z",
+    "Z-A",
+    "XP increasing",
+    "XP decreasing",
+    "kg increasing",
+    "kg decreasing",
+  ];
+
+  // Check if the sorting elements are focusable
+  for (let i = 0; i < sortingOptions.length; i++) {
+    await page.keyboard.press("ArrowDown");
+
+    const focusedElement = await page.evaluate(() => {
+      const activeElement = document.activeElement;
+      return activeElement ? activeElement.getAttribute("data-testid") : null;
+    });
+
+    expect(focusedElement).toBe(sortingOptions[i]);
+  }
+
+  // Accesse the filter menu.
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Enter");
+
+  // Define the expected filter options
+  const filterOptions = [
+    "water",
+    "grass",
+    "electric",
+    "normal",
+    "fighting",
+    "poison",
+    "ground",
+    "flying",
+    "psychic",
+    "bug",
+    "rock",
+    "ghost",
+    "dark",
+    "dragon",
+    "steel",
+    "fairy",
+  ];
+
+  // Check if the sorting elements are focusable
+  for (let i = 0; i < filterOptions.length; i++) {
+    await page.keyboard.press("ArrowDown");
+
+    const focusedElement = await page.evaluate(() => {
+      const activeElement = document.activeElement;
+      return activeElement ? activeElement.getAttribute("data-testid") : null;
+    });
+
+    expect(focusedElement).toBe(filterOptions[i]);
+  }
 });
