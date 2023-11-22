@@ -26,8 +26,6 @@ export default function PokemonView() {
     search: search,
   };
 
-  console.log(variables);
-
   const { loading, error, data } = useQuery(getPokemons, { variables });
 
   useEffect(() => {
