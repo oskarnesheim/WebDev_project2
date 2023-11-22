@@ -27,20 +27,6 @@ export default function MyTeam() {
   }
 
   /**
-   *  Function that sets the selectedPokemon state to the index of the Pokemon in the team
-   * @param index - index of the Pokemon in the team
-   */
-  function setSelectedPokemonFunc(index: number) {
-    setSelectedPokemon(index);
-    if (window.innerWidth < 1200) {
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth",
-      });
-    }
-  }
-
-  /**
    * Function that returns a list of TeamMember components (max 6)
    * @returns a list of TeamMember components
    */
@@ -48,18 +34,12 @@ export default function MyTeam() {
     if (team.length === 0)
       return <p data-testid="Empty_team_message">Team is empty </p>;
     return team.map((_id: string, count: number) => (
-      <div
-        tabIndex={0}
-        onClick={() => setSelectedPokemonFunc(count)}
-        onKeyDown={(event) => {
-          if (event.key === "Enter") {
-            setSelectedPokemonFunc(count);
-          }
-        }}
-        key={count}
-      >
-        <TeamMember selected={checkselected(_id)} _id={Number(_id)} />
-      </div>
+      <TeamMember
+        count={count}
+        selected={checkselected(_id)}
+        _id={Number(_id)}
+        setSelectedPokemon={setSelectedPokemon}
+      />
     ));
   }
 

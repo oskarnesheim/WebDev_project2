@@ -7,6 +7,8 @@ import { useQuery, gql } from "@apollo/client";
 interface PokemonCardProps {
   _id: number;
   selected: boolean;
+  count: number;
+  setSelectedPokemon: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function findSinglePokemon() {
@@ -30,7 +32,12 @@ function findSinglePokemon() {
  * @param selected - boolean to check if the Pokemon is selected
  * @returns Mui Card with Pokemon's name and image
  */
-export default function TeamMember({ _id, selected }: PokemonCardProps) {
+export default function TeamMember({
+  _id,
+  selected,
+  count,
+  setSelectedPokemon,
+}: PokemonCardProps) {
   const variables = {
     _id: _id,
   };
@@ -59,8 +66,30 @@ export default function TeamMember({ _id, selected }: PokemonCardProps) {
     return <div>Error: {error.message}</div>;
   }
 
+  /**
+   *  Function that sets the selectedPokemon state to the index of the Pokemon in the team
+   * @param index - index of the Pokemon in the team
+   */
+  function setSelectedPokemonFunc(index: number) {
+    setSelectedPokemon(index);
+    if (window.innerWidth < 1200) {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }
+
   return (
     <Card
+      tabIndex={0}
+      onClick={() => setSelectedPokemonFunc(count)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") {
+          setSelectedPokemonFunc(count);
+        }
+      }}
+      key={count}
       aria-label={data.pokemon.name}
       variant="outlined"
       sx={{
