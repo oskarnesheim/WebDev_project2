@@ -31,19 +31,30 @@ type FilterBoxProps = {
   setCurrentFilter: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
+/**
+ * FilterBox component for choosing filters with checkboxes.
+ * @param currentFilters
+ * @param setCurrentFilter
+ * @returns
+ */
 export default function FilterBox({
   currentFilters,
   setCurrentFilter,
-}: FilterBoxProps) {
+}: FilterBoxProps): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  // Open the menu
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  // Close the menu
   const handleClose = () => {
     setAnchorEl(null);
   };
 
+  // Prevent the menu from closing when clicking on a checkbox
   const handleMousedown = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
   };

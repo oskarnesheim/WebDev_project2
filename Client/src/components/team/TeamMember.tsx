@@ -37,17 +37,15 @@ export default function TeamMember({
   selected,
   count,
   setSelectedPokemon,
-}: PokemonCardProps) {
+}: PokemonCardProps): JSX.Element {
+  const [position, setPosition] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const variables = {
     _id: _id,
   };
-
   const { loading, error, data } = useQuery(findSinglePokemon(), { variables });
 
-  const [position, setPosition] = useState(0);
-
-  const [isHovered, setIsHovered] = useState(false);
-
+  // Set interval to move the Pokemon's image up and down when hovered
   useEffect(() => {
     let intervalId: number;
     if (isHovered) {
