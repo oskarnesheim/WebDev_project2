@@ -69,7 +69,7 @@ function Searchbar() {
           color: "white",
         },
         inputProps: {
-          'data-testid': 'search-bar-input',
+          "data-testid": "search-bar-input",
         },
       }}
       InputLabelProps={{

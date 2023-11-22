@@ -59,6 +59,7 @@ export default function BasicPagination() {
         renderItem={(item) => (
           <PaginationItem
             {...item}
+            data-testid={`pagination-item-${item.page}`}
             style={
               item.page === focusedItem ? { backgroundColor: "lightgray" } : {}
             }
