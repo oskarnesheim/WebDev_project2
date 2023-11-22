@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Divider, Typography } from "@mui/material";
 import { PokemonCardI } from "../../interfaces/pokemon";
 import { useRef } from "react";
 
@@ -26,9 +26,29 @@ const filters = [
   ["Fairy", "pink"],
 ];
 
-export default function PokemonCard({ PokemonData }: PokemonCardProps) {
+/**
+ * Function that returns the PokemonCard component.
+ * Contains:
+ * - Pokemon sprite (picture)
+ * - Pokemon name
+ * - Pokemon types
+ * - Pokemon weight
+ * - Pokemon base experience
+ * @param PokemonData PokemonCardI
+ * @returns PokemonCard component
+ */
+export default function PokemonCard({
+  PokemonData,
+}: PokemonCardProps): JSX.Element {
   const navigate = useNavigate();
 
+  /**
+   * Function that returns the colors used to indicate the pokemon types
+   * Used in:
+   * - CardContent
+   * - Card (shadow on hover)
+   * @returns Array of colors based on the pokemon types
+   */
   function getBackgroundColor(): string[] {
     if (!PokemonData) return ["grey"];
     const colors: string[] = [];
@@ -44,6 +64,9 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
     return colors;
   }
 
+  /**
+   * Reference to the card element
+   */
   const cardRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -61,12 +84,6 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
       }}
       className="pokemon-card"
       data-testid={PokemonData._id}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
       key={PokemonData._id}
       sx={{
         width: "100%",
@@ -78,7 +95,7 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
       }}
     >
       <CardContent
-        style={{
+        sx={{
           background: `${
             getBackgroundColor().length > 1
               ? `linear-gradient(90deg, ${getBackgroundColor()[0]} 40%, ${
@@ -103,7 +120,13 @@ export default function PokemonCard({ PokemonData }: PokemonCardProps) {
             .map((type: { type: { name: string } }) => type.type.name)
             .join(", ")}
         </Typography>
-        <hr />
+        <Divider
+          sx={{
+            backgroundColor: "black",
+            marginTop: "10px",
+            marginBottom: "10px",
+          }}
+        />
         <Typography variant="body2">
           {PokemonData.weight} kg &nbsp; {PokemonData.base_experience}XP
         </Typography>

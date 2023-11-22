@@ -12,14 +12,22 @@ import {
   recoilPage,
 } from "../../recoil/atoms";
 import { useSetRecoilState } from "recoil";
+import { Box, Typography } from "@mui/material";
 
+/**
+ * Function that returns the HamburgerMenu component, which contains the menu displayed in the navbar.
+ * Contains:
+ * - Pokedex link
+ * - My Team link
+ * - About link
+ * @returns HamburgerMenu component
+ */
 export default function FadeMenu() {
   const setFilterBy = useSetRecoilState(recoilFilterBy);
   const setSortBy = useSetRecoilState(recoilSortBy);
   const setPage = useSetRecoilState(recoilPage);
   const setSearch = useSetRecoilState(recoilSearch);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  // const location = window.location.pathname;
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -50,7 +58,22 @@ export default function FadeMenu() {
   };
 
   return (
-    <div className="hamburger_menu_container">
+    <Box
+      sx={{
+        zIndex: 1,
+        display: "flex",
+        flexDirection: "row",
+        backgroundColor: "#000000",
+        color: "#ffffff",
+        fontSize: "20px",
+        position: "fixed",
+        width: "100%",
+        top: 0,
+        left: 0,
+        right: 0,
+        height: "80px",
+      }}
+    >
       <Button
         id="fade-button"
         aria-controls={open ? "fade-menu" : undefined}
@@ -80,7 +103,6 @@ export default function FadeMenu() {
             <MenuItem
               style={{
                 color: "black",
-                // color: location === page[1] ? page[2] : "black",
               }}
               key={page[0]}
               onClick={() => changePage(page[1])}
@@ -93,8 +115,16 @@ export default function FadeMenu() {
           );
         })}
       </Menu>
-      <h2
-        className="pokedex-link"
+      <Typography
+        variant="h5"
+        sx={{
+          color: "white",
+          marginTop: "30px",
+          "&:hover": {
+            cursor: "pointer",
+            color: "red",
+          },
+        }}
         data-testid="pokedex_link_button"
         onClick={() => logoOnclick(false)}
         tabIndex={0}
@@ -102,8 +132,8 @@ export default function FadeMenu() {
           if (event.key === "Enter") navigate("/");
         }}
       >
-        Pokedex
-      </h2>
-    </div>
+        PokeDex
+      </Typography>
+    </Box>
   );
 }

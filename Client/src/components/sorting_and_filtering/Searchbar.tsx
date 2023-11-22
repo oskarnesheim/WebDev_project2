@@ -7,22 +7,29 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { recoilSearch, recoilPage } from "../../recoil/atoms";
 
-function Searchbar() {
+/**
+ * Searchbar component for searching for pokemon by name.
+ * @returns Searchbar component
+ */
+function Searchbar(): JSX.Element {
   const [stateSearch, setStateSearch] = useRecoilState<string>(recoilSearch);
   const [search, setSearch] = useState<string>(stateSearch);
   const setPage = useSetRecoilState<number>(recoilPage);
 
+  // Update the search state when the stateSearch changes
   useEffect(() => {
     setSearch(stateSearch);
   }, [stateSearch]);
 
+  // Update the recoilsearch when the search changes
   const updateSearch = useCallback(
-    (searchValue: string) => {
+    (searchValue: string): void => {
       setStateSearch(searchValue);
     },
     [setStateSearch],
   );
 
+  // Calls the updateSearch function after 600ms
   useEffect(() => {
     const timer = setTimeout(() => {
       updateSearch(search);
@@ -30,12 +37,19 @@ function Searchbar() {
     return () => clearTimeout(timer);
   }, [search, updateSearch]);
 
-  function type(e: ChangeEvent<HTMLInputElement>) {
+  /**
+   * Updates the search state when the user types in the searchbar.
+   * @param e : event
+   */
+  function type(e: ChangeEvent<HTMLInputElement>): void {
     setSearch(e.target.value);
     setPage(1);
   }
 
-  function eraseInput() {
+  /**
+   * Erases the input in the searchbar.
+   */
+  function eraseInput(): void {
     setSearch("");
     setPage(1);
   }
@@ -43,10 +57,9 @@ function Searchbar() {
   return (
     <TextField
       type="text"
-      className="search-bar"
       value={search}
       onChange={(event: ChangeEvent<HTMLInputElement>) => type(event)}
-      placeholder="type in pokemon name to search"
+      placeholder="pokémon name ..."
       fullWidth
       data-testid="search-bar"
       id="outlined"
@@ -63,7 +76,7 @@ function Searchbar() {
             </IconButton>
           </InputAdornment>
         ),
-        style: {
+        sx: {
           minHeight: "100px",
           padding: "10px",
           color: "white",
@@ -73,7 +86,7 @@ function Searchbar() {
         },
       }}
       InputLabelProps={{
-        style: {
+        sx: {
           color: "white",
         },
       }}

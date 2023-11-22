@@ -1,3 +1,6 @@
+/**
+ * Enum for sorting options eg. SortBy.NONE = "_id,1"
+ */
 enum SortBy {
   NONE = "_id,1",
   ID_DECREASING = "_id,-1",

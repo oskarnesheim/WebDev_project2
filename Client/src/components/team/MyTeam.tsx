@@ -10,7 +10,7 @@ import { Box, Typography } from "@mui/material";
  * Function that returns a page that displays the user's team
  * @returns div with a list of TeamMember components and a display of the selected Pokemon
  */
-export default function MyTeam() {
+export default function MyTeam(): JSX.Element {
   const [team] = useRecoilState<string[]>(recoilMyTeam);
   const [selectedPokemon, setSelectedPokemon] = useState<number>(0);
 
@@ -30,9 +30,13 @@ export default function MyTeam() {
    * Function that returns a list of TeamMember components (max 6)
    * @returns a list of TeamMember components
    */
-  function teamlist() {
+  function teamlist(): JSX.Element[] | JSX.Element {
     if (team.length === 0)
-      return <p data-testid="Empty_team_message">Team is empty </p>;
+      return (
+        <Typography variant="body1" data-testid="Empty_team_message">
+          Team is empty{" "}
+        </Typography>
+      );
     return team.map((_id: string, count: number) => (
       <TeamMember
         count={count}
@@ -45,28 +49,67 @@ export default function MyTeam() {
   }
 
   return (
-    <div className="my-team">
+    <Box
+      sx={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        marginBottom: "100px",
+        "@media (max-width: 1200px)": {
+          flexDirection: "column",
+        },
+      }}
+    >
       <Box
         sx={{ display: "flex", flexDirection: "column", textAlign: "center" }}
       >
-        <h1>My Pokémon Team: </h1>
+        <Typography
+          variant="h4"
+          sx={{
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
+        >
+          My Pokémon Team:{" "}
+        </Typography>
         <div className="team-grid">{teamlist()}</div>
-        <h2>{team.length}/6</h2>
+        <Typography
+          variant="h5"
+          sx={{
+            marginTop: "10px",
+            marginBottom: "10px",
+          }}
+        >
+          {team.length}/6
+        </Typography>
       </Box>
-      {team.length === 0 ? (
-        <div className="selected-Info">
+      <Box
+        sx={{
+          backgroundColor: "black",
+          borderRadius: "10px",
+          display: "flex",
+          justifyContent: "space-evenly",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+          padding: "20px",
+          width: "320px",
+          height: "380px",
+        }}
+      >
+        {team.length === 0 ? (
           <Typography variant="body1">
             Pokemons will be displayed here once you add them to your team.
           </Typography>
-        </div>
-      ) : (
-        <div className="selected-Info">
+        ) : (
           <DisplayPokemon
             selectedPokemon={selectedPokemon}
             setSelectedPokemon={setSelectedPokemon}
           />
-        </div>
-      )}
-    </div>
+        )}
+      </Box>
+    </Box>
   );
 }

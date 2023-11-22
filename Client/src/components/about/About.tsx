@@ -3,7 +3,12 @@ import { Box } from "@mui/material";
 import { Divider } from "@mui/material";
 import pokeBall from "../../assets/Pokeball.png";
 
-export default function About() {
+/**
+ * Function that returns the About component with information about the project
+ * (static information about the project)
+ * @returns About component
+ */
+export default function About(): JSX.Element {
   const styles = {
     about: {
       display: "flex",

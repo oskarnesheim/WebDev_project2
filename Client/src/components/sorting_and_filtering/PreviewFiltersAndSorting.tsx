@@ -4,11 +4,16 @@ import sortings from "../../assets/Sortings";
 import { Box, IconButton, Typography } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
-export default function PreviewFiltersAndSorting() {
+/**
+ * Component for displaying the current filters and sorting.
+ * @returns JSX.Element
+ */
+export default function PreviewFiltersAndSorting(): JSX.Element {
   const [filterBy, setFilterBy] = useRecoilState<string[]>(recoilFilterBy);
   const sortBy = useRecoilValue<string>(recoilSortBy);
 
-  const getFilters = () => {
+  // Get the filters
+  const getFilters = (): undefined | JSX.Element => {
     if (!filterBy || filterBy.length === 0) {
       return;
     }

@@ -106,7 +106,7 @@ test("Checks that you can search for pikachu and show stats about it", async ({
   page,
 }) => {
   // Write "pikachu" in the search bar
-  await page.getByPlaceholder("type in pokemon name to search").fill("pikachu");
+  await page.getByPlaceholder("pokémon name ...").fill("pikachu");
 
   // Checks that pikachu is visible (id: 25)
   await expect(page.getByTestId("25")).toBeVisible();
@@ -149,7 +149,7 @@ test("Checks that you get response when searching for a pokemon that doesn't exi
 
   // Write "No pokemon with this name" in the search bar
   await page
-    .getByPlaceholder("type in pokemon name to search")
+    .getByPlaceholder("pokémon name ...")
     .fill("No pokemon with this name");
 
   // Checks that the text "No pokemons found" is visible

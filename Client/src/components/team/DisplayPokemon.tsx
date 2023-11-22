@@ -21,7 +21,7 @@ type Props = {
 export default function DisplayPokemon({
   selectedPokemon,
   setSelectedPokemon,
-}: Props) {
+}: Props): JSX.Element {
   const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
   const history = useNavigate();
   const variables = {
@@ -71,7 +71,6 @@ export default function DisplayPokemon({
         <div className="container">
           <Tooltip title={"Remove pokemon from your team. "} arrow>
             <Button
-              className="box"
               onClick={() => deleteTeamMember(team[selectedPokemon])}
               color="error"
               variant="outlined"
