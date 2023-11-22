@@ -70,6 +70,7 @@ function Searchbar(): JSX.Element {
               aria-label="clear input"
               color="primary"
               onClick={() => eraseInput()}
+              data-testid="clear-button"
             >
               <ClearIcon />
             </IconButton>
@@ -79,6 +80,9 @@ function Searchbar(): JSX.Element {
           minHeight: "100px",
           padding: "10px",
           color: "white",
+        },
+        inputProps: {
+          "data-testid": "search-bar-input",
         },
       }}
       InputLabelProps={{

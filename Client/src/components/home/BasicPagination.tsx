@@ -52,7 +52,12 @@ export default function BasicPagination(): JSX.Element {
       variant="outlined"
       size={getSize()}
       shape="rounded"
-      renderItem={(item) => <PaginationItem {...item} />}
+      renderItem={(item) => (
+        <PaginationItem
+          {...item}
+          data-testid={`pagination-item-${item.page}`}
+        />
+      )}
       data-testid="pagination"
     />
   );
