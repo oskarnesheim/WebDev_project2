@@ -29,15 +29,25 @@ const bulbasaur: PokemonCardI = {
 
 describe("Testing PokemonCard", () => {
   test("Test loading of a single pokemoncard", async () => {
-    const { getAllByText } = render(
+    const { getByTestId } = render(
       <BrowserRouter>
         <PokemonCard PokemonData={bulbasaur} />
       </BrowserRouter>,
     );
-
     await waitFor(() => {
-      expect(getAllByText("bulbasaur")).toBeTruthy();
-      expect(getAllByText("grass, poison")).toBeTruthy();
+      // Test that the pokemoncard is loaded
+      expect(getByTestId("1")).toBeTruthy();
+
+      // Test that the picture is loaded correctly
+      expect(getByTestId("1_picture").getAttribute("src")).toBe(
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+      );
+      expect(getByTestId("1_picture").getAttribute("alt")).toBe(
+        "Picture of bulbasaur",
+      );
+
+      // Test that the types are correct
+      expect(getByTestId("1_types").textContent).toContain("grass, poison");
     });
   });
 });

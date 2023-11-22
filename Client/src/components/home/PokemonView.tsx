@@ -26,6 +26,8 @@ export default function PokemonView() {
     search: search,
   };
 
+  console.log(variables);
+
   const { loading, error, data } = useQuery(getPokemons, { variables });
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export default function PokemonView() {
 
   function getSorting() {
     if (!sorting) {
-      return [["name", "1"]];
+      return [["_id", "1"]];
     }
     return [sorting.split(",")];
   }

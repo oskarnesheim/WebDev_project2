@@ -91,7 +91,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     // Reset the rating and review input
     setRating(0);
     setReview("");
-    setErrorMessage("");
+    setErrorMessage(`Thank you for your review!`);
   };
 
   if (loading) {
@@ -109,6 +109,7 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
         style={{
           color: theme.palette.primary.main,
         }}
+        data-testid="pokemon-reviews-header"
       >
         Rate and Review
       </h2>
