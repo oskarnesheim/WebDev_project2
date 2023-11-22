@@ -57,6 +57,7 @@ function Searchbar() {
               aria-label="clear input"
               color="primary"
               onClick={() => eraseInput()}
+              data-testid="clear-button"
             >
               <ClearIcon />
             </IconButton>
@@ -66,6 +67,9 @@ function Searchbar() {
           minHeight: "100px",
           padding: "10px",
           color: "white",
+        },
+        inputProps: {
+          'data-testid': 'search-bar-input',
         },
       }}
       InputLabelProps={{

@@ -205,3 +205,37 @@ test("Checks that the team-functionality works correctly", async ({ page }) => {
   // Checks that the team is empty
   await expect(page.getByTestId("Empty_team_message")).toBeVisible();
 });
+
+test('Check if different page elements are focusable on the home page', async ({ page }) => {
+  // Define the selectors for the elements you want to test
+  const selectors = ['pokedex_link_button', 'myteam_link_button', 'about_link_button', 'search-bar-input', 'clear-button', 'filter_button'];
+
+  for (const selector of selectors) {
+    // Press the Tab key
+    await page.keyboard.press('Tab');
+
+    // Get the currently focused element
+    const focusedElement = await page.evaluate(() => {
+      const activeElement = document.activeElement;
+      return activeElement ? activeElement.getAttribute('data-testid') : null;
+    });
+    // Check if the focused element is the expected element
+    expect(focusedElement).toBe(selector);
+  }
+
+  // Check if all pokeomon cards are focusable
+  for (let i = 1; i < 21; i++) {
+
+    await page.keyboard.press('Tab');
+
+    const focusedElement = await page.evaluate(() => {
+      const activeElement = document.activeElement;
+      return activeElement ? activeElement.getAttribute('data-testid') : null;
+    });
+
+    expect(focusedElement).toBe(i.toString());
+  }
+
+  // Check if the pagination is focusable
+
+});
