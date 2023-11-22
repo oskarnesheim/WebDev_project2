@@ -59,7 +59,7 @@ function Searchbar(): JSX.Element {
       type="text"
       value={search}
       onChange={(event: ChangeEvent<HTMLInputElement>) => type(event)}
-      placeholder="type in pokemon name to search"
+      placeholder="pokémon name ..."
       fullWidth
       data-testid="search-bar"
       id="outlined"
