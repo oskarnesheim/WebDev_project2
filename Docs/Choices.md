@@ -57,8 +57,11 @@ We have used the recoil to store the state of filters, sorting, search, pages an
 Most of these states are used in multiple components, and therefore it is nice to have them in recoil. The team is also stored in local storage. The reason for this is that while also wanting to have them available in recoil state to have easy access to its state, and at the same time keep the user experience we want by saving it in localstorage. 
 We have modified atoms.tsx so that it is possible to store atoms without adding them to session storage. We see the search value as not necessary to have in session storage, so it is only stored as a recoil state. The majority of the atoms are still stored in session storage as well, but the implementation has been changed so that unnecessary calls to session storage are not made. Regardless of whether the states are stored in session storage or not, they are all used in various components, and here we see recoil state as necessary.
 
-# TODO: Vidar
-
 ### Accessibility
 
+We've integrated keyboard navigation and text-to-speech features into our application to prioritize inclusivity and user-friendly design. Keyboard navigation allows individuals with motor impairments or those who navigate without a traditional mouse to interact seamlessly with our application. Meanwhile, text-to-speech functionality caters to users with visual impairments, offering an alternative way to consume content. This can be experienced using a browserextension such as
+https://chromewebstore.google.com/detail/screen-reader/kgejglhpjiefppelpmljglcjbhoiplfn (if you're using Chrome.)
+
 ### Sustainability
+
+In regards to sustainability we've taken some consideration in terms of page loading, color/font cost, and the use of images. We've minimized navigable pages, consolidating elements like the review form with corresponding Pokémon on the same page. While dynamic pagination may not be the most optimal for sustainability, it aligns with functional requirements. We have also gotten a few comments on the poor image quality of each Pokémon, but switching to the use of higher quality images would ultimately result in a higher energy usage. Our application's background theme is dark by default, hence why we've decided not to prioritize the implementation of darkmode. Although we acknowledge that our choice of fontstyle and design of Pokémon cards might not be optimal in terms of sustainability, they are still deliberate choices we find worth the cost.
