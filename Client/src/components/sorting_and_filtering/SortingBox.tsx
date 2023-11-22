@@ -13,17 +13,26 @@ type SortingBoxType = {
   currentSorting: string;
 };
 
+/**
+ * SortingBox component for choosing sorting.
+ * @param setCurrentSorting
+ * @param currentSorting
+ * @returns JSX.Element
+ */
 export default function SortingBox({
   setCurrentSorting,
   currentSorting,
-}: SortingBoxType) {
+}: SortingBoxType): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
 
+  // Open the menu
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  // Close the menu
   const handleClose = () => {
     setAnchorEl(null);
   };

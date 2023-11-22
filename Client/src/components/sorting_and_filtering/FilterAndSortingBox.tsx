@@ -20,29 +20,39 @@ const modalBoxStyles = {
   text: "white",
 };
 
-export default function FilterAndSortingBox() {
+/**
+ * FilterAndSortingBox component; a modal that contains the FilterBox and SortingBox components.
+ * Contains:
+ * - FilterBox component
+ * - SortingBox component
+ * - Apply and Reset buttons
+ * @returns FilterAndSortingBox component
+ */
+export default function FilterAndSortingBox(): JSX.Element {
   const [open, setOpen] = useState(false);
 
   const [currentFilter, setCurrentFilter] = useRecoilState(recoilFilterBy);
   const [sortBy, setSortBy] = useRecoilState(recoilSortBy);
   const [tempFilters, setTempFilters] = useState<string[]>([]);
   const [tempSortBy, setTempSortBy] = useState<string>("");
-
   const setPage = useSetRecoilState<number>(recoilPage);
 
-  const handleOpen = () => {
+  // Open the modal
+  const handleOpen = (): void => {
     setTempFilters(currentFilter);
     setTempSortBy(sortBy);
     setOpen(true);
   };
 
-  const handleClose = () => {
+  // Close the modal
+  const handleClose = (): void => {
     setOpen(false);
     setTempFilters(currentFilter); // Reset temporary states to currentFilter
     setTempSortBy(sortBy); // Reset temporary states to sortBy
   };
 
-  const handleResetFilter = () => {
+  // Reset the filter and sorting to default
+  const handleResetFilter = (): void => {
     const defaultFilters: SetStateAction<string[]> = [];
     const defaultSort = "_id,1";
 
@@ -54,7 +64,8 @@ export default function FilterAndSortingBox() {
     handleClose(); // Close the modal
   };
 
-  const handleApplyFilter = () => {
+  // Apply the filter and sorting
+  const handleApplyFilter = (): void => {
     setCurrentFilter(tempFilters);
     setSortBy(tempSortBy);
     setPage(1); // Reset the page to 1

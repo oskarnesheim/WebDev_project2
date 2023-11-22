@@ -3,8 +3,10 @@ import {
   Box,
   Button,
   CircularProgress,
+  FormLabel,
   TextareaAutosize,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import theme from "../../Theme";
@@ -16,14 +18,24 @@ type PokemonReviewProps = {
   _id: number;
 };
 
-export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
+/**
+ * Function that returns the PokemonRatingReview component, which contains the rating and reviews for the pokemon.
+ * Contains:
+ * - Form to add a review (rating and review input)
+ * - Reviews
+ * @param _id Pokemon ID
+ * @returns PokemonRatingReview component
+ */
+export default function PokemonRatingReview({
+  _id,
+}: PokemonReviewProps): JSX.Element {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
+  const [charsLeft, setCharsLeft] = useState("300");
   const { loading, error, data } = useQuery(getReviews, {
     variables: { pokemonID: _id },
     fetchPolicy: "network-only",
   });
-
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleRatingClick = (newRating: number) => {
@@ -34,17 +46,24 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     setReview(event.target.value);
+    if (event.target.value.length > 300) {
+      setCharsLeft("0/300");
+
+      return;
+    }
+    setCharsLeft((300 - event.target.value.length).toString() + "/300");
   };
 
   const [addReview] = useMutation(AddReview, {
     refetchQueries: [{ query: getReviews, variables: { pokemonID: _id } }],
   });
 
-  function getUserID() {
-    // Get userID from localstorage
-
+  /**
+   *  Function that returns the user ID, stored in localstorage. If the user ID does not exist, create a new user ID and store it in localStorage.
+   * @returns User ID
+   */
+  function getUserID(): string {
     let userID = localStorage.getItem("userID");
-    // If no userID exists, create a new one
     if (!userID || userID == "undefined") {
       userID = (Math.random() * 1000000000000000000).toString();
       localStorage.setItem("userID", userID);
@@ -52,8 +71,12 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     return userID;
   }
 
-  function alreadyReviewed(userID: string) {
-    // Check if user has already reviewed this pokemon
+  /**
+   * Function that checks if the user has already reviewed this pokemon.
+   * @param userID User ID
+   * @returns true if user has already reviewed this pokemon, false otherwise
+   */
+  function alreadyReviewed(userID: string): boolean {
     const reviews = data.reviewsForPokemon;
     for (let i = 0; i < reviews.length; i++) {
       if (reviews[i].userID == userID) {
@@ -63,19 +86,26 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     return false;
   }
 
-  const handleAddReview = (event: React.FormEvent<HTMLFormElement>) => {
+  // Checks if the user has already reviewed this pokemon, or if the user has not selected a rating or written a review. If so, set the error message. Otherwise, add the review to the database. Resets the rating and review input after adding the review.
+  const handleAddReview = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const userID = getUserID();
     if (alreadyReviewed(userID)) {
       setErrorMessage("Already reviewed this pokemon.");
       return;
     }
+
     if (rating === 0) {
       setErrorMessage("Please select a rating.");
       return;
     }
     if (review.trim() === "") {
       setErrorMessage("Please write a review.");
+      return;
+    }
+
+    if (review.length > 300) {
+      setErrorMessage("Review must be less than 300 characters.");
       return;
     }
 
@@ -94,6 +124,17 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
     setErrorMessage(`Thank you for your review!`);
   };
 
+  /**
+   * Function that returns the error message.
+   * @returns error message
+   */
+  function getErrorMessage(): JSX.Element {
+    const color =
+      errorMessage === "Thank you for your review!" ? "green" : "red";
+    const currMessage = errorMessage;
+    return <Typography sx={{ color: { color } }}>{currMessage}</Typography>;
+  }
+
   if (loading) {
     return <CircularProgress />;
   }
@@ -102,28 +143,69 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
   }
 
   return (
-    <div className="pokemon_reviews_container">
-      <h2
+    <Box
+      sx={{
+        color: "white",
+        maxWidth: "500px",
+        margin: "20px auto",
+        padding: "20px",
+        backgroundColor: "error.dark",
+      }}
+    >
+      <Typography
+        variant="h5"
         tabIndex={0}
-        className="pokemon_reviews_header"
-        style={{
-          color: theme.palette.primary.main,
+        sx={{
+          color: "primary.main",
+          marginBottom: "10px",
         }}
         data-testid="pokemon-reviews-header"
       >
         Rate and Review
-      </h2>
-      <form onSubmit={(e) => handleAddReview(e)}>
-        <div className="star_rating_container">
-          <label className="star_rating_label" tabIndex={0}>
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "space-between",
+          margin: "10px",
+          width: "100%",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "10px",
+          }}
+        >
+          <FormLabel
+            sx={{
+              marginRight: "10px",
+              marginTop: "10px",
+              color: "white",
+            }}
+            tabIndex={0}
+          >
             {" "}
             Rate
-          </label>
+          </FormLabel>
           {Array.from({ length: 5 }, (_, index) => (
-            <Tooltip title={`Rate ${index + 1} out of 5`} key={index}>
+            <Tooltip
+              title={
+                alreadyReviewed(getUserID())
+                  ? ""
+                  : `Rate (${index + 1}) out of 5`
+              }
+              key={index}
+            >
               <button
                 onClick={() => handleRatingClick(index + 1)}
-                aria-label={`Rate ${index + 1} out of 5`}
+                aria-label={
+                  alreadyReviewed(getUserID())
+                    ? ""
+                    : `Rate (${index + 1}) out of 5`
+                }
+                disabled={alreadyReviewed(getUserID())}
                 style={{
                   background: "none",
                   border: "none",
@@ -141,26 +223,45 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
               </button>
             </Tooltip>
           ))}
-        </div>
-        <div>
-          <TextareaAutosize
-            aria-label="Write your review here"
-            value={review}
-            onChange={handleReviewChange}
-            minRows={4}
-            style={{
-              width: "100%",
-              padding: "8px",
-              marginTop: "10px",
-              fontFamily: "pokemonfont",
+        </Box>
+        <Box sx={{ width: "100%", verticalAlign: "bottom" }}>
+          <Typography
+            sx={{
+              textAlign: "right",
+              marginTop: "2em",
             }}
-            placeholder="Write your review..."
-          />
-        </div>
+          >
+            {charsLeft}
+          </Typography>
+        </Box>
+      </Box>
+      <form onSubmit={(e) => handleAddReview(e)}>
+        <TextareaAutosize
+          disabled={alreadyReviewed(getUserID())}
+          maxLength={300}
+          aria-label={
+            alreadyReviewed(getUserID())
+              ? "Already reviewed"
+              : `Write your review here`
+          }
+          value={review}
+          onChange={handleReviewChange}
+          minRows={4}
+          style={{
+            width: "100%",
+            padding: "8px",
+            marginTop: "10px",
+            fontFamily: "pokemonfont",
+          }}
+          placeholder={
+            alreadyReviewed(getUserID())
+              ? "Already reviewed"
+              : `Write your review here`
+          }
+        />
         <Button
           type="submit"
           variant="contained"
-          className="custom-button"
           disabled={alreadyReviewed(getUserID())}
           data-testid="add-review-button"
           sx={{
@@ -181,41 +282,65 @@ export default function PokemonRatingReview({ _id }: PokemonReviewProps) {
           {alreadyReviewed(getUserID()) ? "Already reviewed" : "Add review"}
         </Button>
       </form>
-      {errorMessage && <p className="review_error_message">{errorMessage}</p>}
-      <div>
-        <h3 className="pokemon_review_sub_header" tabIndex={0}>
-          Reviews
-        </h3>
-        {data.reviewsForPokemon.length == 0 ? (
-          <p>No reviews yet.</p>
-        ) : (
-          <ul className="review_list_container">
-            {data.reviewsForPokemon.map((review: Review) => (
-              <li
-                key={review.userID}
-                className="review_list_item"
-                tabIndex={0}
-                style={{
-                  border: "3px solid " + theme.palette.primary.main,
+      {errorMessage && getErrorMessage()}
+      <Typography
+        variant="h5"
+        sx={{
+          marginTop: "20px",
+        }}
+        tabIndex={0}
+      >
+        Reviews
+      </Typography>
+      {data.reviewsForPokemon.length == 0 ? (
+        <Typography variant="body1">No reviews yet.</Typography>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {data.reviewsForPokemon.map((review: Review) => (
+            <Box
+              key={review.userID}
+              tabIndex={0}
+              sx={{
+                padding: "10px",
+                margin: "20px 0",
+                border: "3px solid " + theme.palette.primary.main,
+                width: "100%",
+                wordWrap: "break-word",
+              }}
+            >
+              <Box
+                sx={{
+                  marginBottom: "10px",
                 }}
               >
-                <div className="review_list_item_star_container">
-                  {Array.from({ length: review.rating }, (_, i) => (
-                    <StarIcon
-                      key={i}
-                      style={{
-                        fontSize: "18px",
-                        color: theme.palette.primary.main,
-                      }}
-                    />
-                  ))}
-                </div>
-                <div>{review.description}</div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
+                {Array.from({ length: review.rating }, (_, i) => (
+                  <StarIcon
+                    key={i}
+                    sx={{
+                      fontSize: "18px",
+                      color: "primary.main",
+                    }}
+                  />
+                ))}
+              </Box>
+              <Box
+                sx={{
+                  padding: "10px",
+                  overflow: "hidden",
+                }}
+              >
+                {review.description}
+              </Box>
+            </Box>
+          ))}
+        </Box>
+      )}
+    </Box>
   );
 }

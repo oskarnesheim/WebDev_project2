@@ -7,23 +7,37 @@ import Tooltip from "@mui/material/Tooltip";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { recoilMyTeam } from "../../recoil/atoms";
+import { Box } from "@mui/material";
 
 interface Props {
   selectedPokemon: number;
   setSelectedPokemon: React.Dispatch<React.SetStateAction<number>>;
 }
 
+/**
+ * Component for displaying the arrow buttons in MyTeam.
+ * @param selectedPokemon
+ * @param setSelectedPokemon
+ * @returns JSX.Element
+ */
 export default function Arrowbuttons({
   selectedPokemon,
   setSelectedPokemon,
-}: Props) {
+}: Props): JSX.Element {
   const team = useRecoilValue<string[]>(recoilMyTeam);
   const history = useNavigate();
   const redirectToPokemon = () => {
     history("/" + team[selectedPokemon]);
   };
 
-  function moveBy(direction: string) {
+  /**
+   * Moves the selected pokemon in the team by one.
+   * - If the team only has one pokemon, do nothing.
+   * - if user moves to the left of the first pokemon, move to the last pokemon.
+   * - if user moves to the right of the last pokemon, move to the first pokemon.
+   * @param direction
+   */
+  function moveBy(direction: string): void {
     if (team.length === 1) return;
     let num = selectedPokemon;
     if (direction === "right") num += 1;
@@ -34,7 +48,17 @@ export default function Arrowbuttons({
   }
 
   return (
-    <div className="button-container">
+    <Box
+      sx={{
+        marginTop: "10px",
+        marginBottom: "10px",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "100%",
+        gap: "2vw",
+      }}
+    >
       <Button
         variant="contained"
         color="primary"
@@ -61,6 +85,6 @@ export default function Arrowbuttons({
       >
         <ArrowForwardIcon />
       </Button>
-    </div>
+    </Box>
   );
 }

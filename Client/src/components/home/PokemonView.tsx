@@ -13,7 +13,13 @@ import { PokemonCardI } from "../../interfaces/pokemon.ts";
 import { getPokemons } from "../../functions/GraphQLQueries.ts";
 import { useEffect } from "react";
 
-export default function PokemonView() {
+/**
+ * Function that returns the PokemonView component, which contains the PokemonCards displayed in Home.
+ * Contains:
+ * - PokemonCard (max 20)
+ * @returns PokemonView component
+ */
+export default function PokemonView(): JSX.Element {
   const sorting = useRecoilValue<string>(recoilSortBy);
   const filters = useRecoilValue<string[]>(recoilFilterBy);
   const page = useRecoilValue<number>(recoilPage);
@@ -28,6 +34,7 @@ export default function PokemonView() {
 
   const { loading, error, data } = useQuery(getPokemons, { variables });
 
+  // Set max page based on the number of pokemons that matches the search. Runs when data is updated.
   useEffect(() => {
     if (data) {
       const numberOfPokemonsThatMatchesSearch =
@@ -36,7 +43,11 @@ export default function PokemonView() {
     }
   }, [data, setMaxPage]);
 
-  function getSorting() {
+  /**
+   * Function that returns the sorting used to sort the pokemons. Returns default sorting if no sorting is selected.
+   * @returns Array of sorting
+   */
+  function getSorting(): string[][] {
     if (!sorting) {
       return [["_id", "1"]];
     }
