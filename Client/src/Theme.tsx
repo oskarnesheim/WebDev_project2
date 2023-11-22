@@ -40,15 +40,15 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           color: "white",
-          backgroundColor: "#1a1a1a",
+          backgroundColor: "#1a1a1a", // dark grey
           "&.Mui-selected": {
-            backgroundColor: "#0c72bb",
+            backgroundColor: "#0c72bb", // blue
           },
           "&.Mui-selected:hover": {
-            backgroundColor: "#FFCB05",
+            backgroundColor: "#FFCB05", // yellow
           },
           "&:hover": {
-            backgroundColor: "#6cb9f0",
+            backgroundColor: "#6cb9f0", // light blue
           },
         },
       },

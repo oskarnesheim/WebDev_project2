@@ -5,8 +5,42 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./Theme";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import {
+  recoilFilterBy,
+  recoilSortBy,
+  recoilPage,
+  recoilMyTeam,
+  initializeStateFromStorage,
+  updateStorageOnChange,
+} from "./recoil/atoms";
 
 function App() {
+  const [currentFilter, setCurrentFilter] =
+    useRecoilState<string[]>(recoilFilterBy);
+  const [sortBy, setSortBy] = useRecoilState<string>(recoilSortBy);
+  const [page, setRecPage] = useRecoilState<number>(recoilPage);
+  const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
+
+  useEffect(() => {
+    initializeStateFromStorage(
+      setCurrentFilter,
+      sessionStorage,
+      "filterBy",
+      [],
+    );
+    initializeStateFromStorage(setSortBy, sessionStorage, "sortBy", "_id,1");
+    initializeStateFromStorage<number>(setRecPage, sessionStorage, "page", 1);
+    initializeStateFromStorage(setTeam, localStorage, "team", []);
+  }, [setCurrentFilter, setSortBy, setRecPage, setTeam]);
+
+  useEffect(() => {
+    updateStorageOnChange("filterBy", currentFilter, sessionStorage);
+    updateStorageOnChange("sortBy", sortBy, sessionStorage);
+    updateStorageOnChange<number>("page", page, sessionStorage);
+    updateStorageOnChange("team", team, localStorage);
+  }, [currentFilter, sortBy, page, team]);
+
   /**
    * Scrolls to top when route changes
    * @returns null

@@ -6,7 +6,6 @@ import { recoilMyTeam } from "../../recoil/atoms";
 import { Box, Button, CircularProgress, Tooltip } from "@mui/material";
 import ArrowButtons from "./ArrowButtons";
 import PokemonCard from "../home/PokemonCard";
-import { removeFromTeam } from "./TeamFunctions";
 import { PokemonCardI } from "../../interfaces/pokemon";
 
 type Props = {
@@ -48,7 +47,7 @@ export default function DisplayPokemon({
    * @param id - Pokemon ID
    */
   function deleteTeamMember(id: string) {
-    removeFromTeam(team, id, setTeam);
+    setTeam(team.filter((teamId) => teamId !== id));
     setSelectedPokemon(0);
   }
 
@@ -61,7 +60,7 @@ export default function DisplayPokemon({
    */
   function selectedInfo() {
     return (
-      <div className="selected-Info">
+      <>
         <div className="container" onClick={redirectToPokemon}>
           <PokemonCard key={team[selectedPokemon]} PokemonData={PokemonData} />
         </div>
@@ -82,7 +81,7 @@ export default function DisplayPokemon({
             </Button>
           </Tooltip>
         </div>
-      </div>
+      </>
     );
   }
 

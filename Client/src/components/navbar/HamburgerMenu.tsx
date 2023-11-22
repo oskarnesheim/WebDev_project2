@@ -6,19 +6,18 @@ import Fade from "@mui/material/Fade";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
-  updateStorageOnChange,
   recoilSearch,
   recoilFilterBy,
   recoilSortBy,
   recoilPage,
 } from "../../recoil/atoms";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 export default function FadeMenu() {
-  const [filterBy, setFilterBy] = useRecoilState(recoilFilterBy);
-  const [sortBy, setSortBy] = useRecoilState(recoilSortBy);
-  const [page, setPage] = useRecoilState(recoilPage);
-  const [search, setSearch] = useRecoilState(recoilSearch);
+  const setFilterBy = useSetRecoilState(recoilFilterBy);
+  const setSortBy = useSetRecoilState(recoilSortBy);
+  const setPage = useSetRecoilState(recoilPage);
+  const setSearch = useSetRecoilState(recoilSearch);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   // const location = window.location.pathname;
   const navigate = useNavigate();
@@ -26,12 +25,12 @@ export default function FadeMenu() {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const changePage = (toWhatPage: string) => {
-    if (toWhatPage === "/") {
+  const changePage = (nav: string) => {
+    if (nav === "/") {
       logoOnclick(true);
     }
     setAnchorEl(null);
-    navigate(toWhatPage);
+    navigate(nav);
   };
 
   const pages = [
@@ -41,21 +40,10 @@ export default function FadeMenu() {
   ];
 
   const logoOnclick = (isMenu: boolean) => {
-    if (filterBy.length !== 0) {
-      setFilterBy([]);
-      updateStorageOnChange("filterBy", [], sessionStorage);
-    }
-    if (sortBy !== "_id,1") {
-      setSortBy("_id,1");
-      updateStorageOnChange("sortBy", "_id,1", sessionStorage);
-    }
-    if (page !== 1) {
-      setPage(1);
-      updateStorageOnChange("page", 1, sessionStorage);
-    }
-    if (search !== "") {
-      setSearch("");
-    }
+    setFilterBy([]);
+    setSortBy("_id,1");
+    setPage(1);
+    setSearch("");
     if (!isMenu) {
       navigate("/");
     }

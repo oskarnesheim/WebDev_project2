@@ -7,17 +7,18 @@ import {
   recoilSearch,
   recoilMaxPage,
 } from "../../recoil/atoms.ts";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, CircularProgress } from "@mui/material";
 import { PokemonCardI } from "../../interfaces/pokemon.ts";
 import { getPokemons } from "../../functions/GraphQLQueries.ts";
+import { useEffect } from "react";
 
 export default function PokemonView() {
-  const [sorting] = useRecoilState<string>(recoilSortBy);
-  const [filters] = useRecoilState<string[]>(recoilFilterBy);
-  const [page] = useRecoilState<number>(recoilPage);
-  const [search] = useRecoilState<string>(recoilSearch);
-  const [, setMaxPage] = useRecoilState<number>(recoilMaxPage);
+  const sorting = useRecoilValue<string>(recoilSortBy);
+  const filters = useRecoilValue<string[]>(recoilFilterBy);
+  const page = useRecoilValue<number>(recoilPage);
+  const search = useRecoilValue<string>(recoilSearch);
+  const setMaxPage = useSetRecoilState<number>(recoilMaxPage);
   const variables = {
     sorting: getSorting(),
     filters: filters,
@@ -26,6 +27,14 @@ export default function PokemonView() {
   };
 
   const { loading, error, data } = useQuery(getPokemons, { variables });
+
+  useEffect(() => {
+    if (data) {
+      const numberOfPokemonsThatMatchesSearch =
+        data.numberOfPokemonsThatMatchesSearch;
+      setMaxPage(Math.ceil(numberOfPokemonsThatMatchesSearch / 20));
+    }
+  }, [data, setMaxPage]);
 
   function getSorting() {
     if (!sorting) {
@@ -42,12 +51,7 @@ export default function PokemonView() {
     return <div>Error! {error.message}</div>;
   }
 
-  const numberOfPokemonsThatMatchesSearch =
-    data.numberOfPokemonsThatMatchesSearch;
   const pokemonList: PokemonCardI[] = data.pokemonsSortedAndFiltered;
-  //? Denne gjør så vi får en feilmelding i console.
-  //? Dette skjer siden den ikke skjer med en gang komponenten blir rendret.
-  setMaxPage(Math.ceil(numberOfPokemonsThatMatchesSearch / 20));
 
   // If no pokemons are found
   if (data.pokemonsSortedAndFiltered.length === 0) {

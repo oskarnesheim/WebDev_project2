@@ -1,10 +1,5 @@
 import Pagination from "@mui/material/Pagination";
-import {
-  recoilMaxPage,
-  recoilPage,
-  initializeStateFromStorage,
-  updateStorageOnChange,
-} from "../../recoil/atoms";
+import { recoilMaxPage, recoilPage } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -14,16 +9,7 @@ export default function BasicPagination() {
   const [page, setRecPage] = useRecoilState<number>(recoilPage);
   const [maxPage] = useRecoilState<number>(recoilMaxPage);
   const [width, setWidth] = useState<number>(window.innerWidth);
-  const [focusedItem, setFocusedItem] = useState<number | null>(null);
-
-  useEffect(() => {
-    initializeStateFromStorage<number>(setRecPage, sessionStorage, "page", 1);
-  }, [setRecPage]);
-
-  // Update localStorage whenever myTeam changes
-  useEffect(() => {
-    updateStorageOnChange<number>("page", page, sessionStorage);
-  }, [page]);
+  // const [focusedItem, setFocusedItem] = useState<number | null>(null);
 
   useEffect(() => {
     function handleResize() {
@@ -56,20 +42,10 @@ export default function BasicPagination() {
         variant="outlined"
         size={getSize()}
         shape="rounded"
-        renderItem={(item) => (
-          <PaginationItem
-            {...item}
-            style={
-              item.page === focusedItem ? { backgroundColor: "lightgray" } : {}
-            }
-            onFocus={() => {
-              setFocusedItem(item.page);
-            }}
-            onBlur={() => setFocusedItem(null)}
-          />
-        )}
+        renderItem={(item) => <PaginationItem {...item} />}
         data-testid="pagination"
       />
+      <p>{}</p>
     </div>
   );
 }

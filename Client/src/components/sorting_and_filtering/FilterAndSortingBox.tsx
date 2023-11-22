@@ -1,16 +1,10 @@
-import { Box, Button, List, Modal, Typography } from "@mui/material";
-import { SetStateAction, useState, useEffect } from "react";
+import { Box, Button, Divider, List, Modal, Typography } from "@mui/material";
+import { SetStateAction, useState } from "react";
 
 import FilterBox from "./FilterBox";
 import SortingBox from "./SortingBox";
-import {
-  recoilFilterBy,
-  recoilSortBy,
-  recoilPage,
-  initializeStateFromStorage,
-  updateStorageOnChange,
-} from "../../recoil/atoms";
-import { useRecoilState } from "recoil";
+import { recoilFilterBy, recoilSortBy, recoilPage } from "../../recoil/atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import sortings from "../../assets/Sortings";
 
 const modalBoxStyles = {
@@ -31,30 +25,10 @@ export default function FilterAndSortingBox() {
 
   const [currentFilter, setCurrentFilter] = useRecoilState(recoilFilterBy);
   const [sortBy, setSortBy] = useRecoilState(recoilSortBy);
-
   const [tempFilters, setTempFilters] = useState<string[]>([]);
   const [tempSortBy, setTempSortBy] = useState<string>("");
-  
-  const [page, setPage] = useRecoilState(recoilPage);
 
-  // Initialize state from sessionStorage
-  useEffect(() => {
-    initializeStateFromStorage(
-      setCurrentFilter,
-      sessionStorage,
-      "filterBy",
-      [],
-    );
-    initializeStateFromStorage(setSortBy, sessionStorage, "sortBy", "_id,1");
-    initializeStateFromStorage(setPage, sessionStorage, "page", 1);
-  }, [setCurrentFilter, setSortBy, setPage]);
-
-  // Update sessionStorage whenever state changes
-  useEffect(() => {
-    updateStorageOnChange("filterBy", currentFilter, sessionStorage);
-    updateStorageOnChange("sortBy", sortBy, sessionStorage);
-    updateStorageOnChange("page", page, sessionStorage);
-  }, [currentFilter, sortBy, page]);
+  const setPage = useSetRecoilState<number>(recoilPage);
 
   const handleOpen = () => {
     setTempFilters(currentFilter);
@@ -77,7 +51,6 @@ export default function FilterAndSortingBox() {
     setTempFilters(defaultFilters);
     setTempSortBy(defaultSort);
     setPage(1); // Reset the page to 1
-
     handleClose(); // Close the modal
   };
 
@@ -124,9 +97,15 @@ export default function FilterAndSortingBox() {
                 flexDirection: "column",
               }}
             >
-              <Typography variant="body1">
-                Active Sorting: <hr />
+              <Typography color={"primary.light"} variant="body1">
+                Active Sorting:
               </Typography>
+              <Divider
+                sx={{
+                  backgroundColor: "primary.light",
+                  marginBottom: "10px",
+                }}
+              />
               <Typography variant="body1">
                 {sortings.map((sort) => {
                   if (sort[1] === tempSortBy) {
@@ -141,19 +120,32 @@ export default function FilterAndSortingBox() {
                 flexDirection: "column",
               }}
             >
-              <Typography variant="body1">
+              <Typography color={"primary.light"} variant="body1">
                 Active Filters:
-                <hr />
               </Typography>
-
-              <List>
-                {tempFilters.map((filter) => (
-                  <Typography variant="body1">{filter}</Typography>
-                ))}
-              </List>
+              <Divider
+                sx={{ backgroundColor: "primary.light", marginBottom: "10px" }}
+              />
+              {tempFilters.length === 0 ? (
+                <Typography variant="body1">None</Typography>
+              ) : (
+                <List>
+                  {tempFilters.map((filter, index) => (
+                    <Typography key={index} variant="body1">
+                      {filter}
+                    </Typography>
+                  ))}
+                </List>
+              )}
             </Box>
           </div>
-          <hr />
+          <Divider
+            sx={{
+              backgroundColor: "white",
+              marginBottom: "10px",
+              marginTop: "20px",
+            }}
+          />
           <div className="apply_reset_filter">
             <Button
               sx={{
