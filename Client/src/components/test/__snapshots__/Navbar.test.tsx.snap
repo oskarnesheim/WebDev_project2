@@ -379,13 +379,13 @@ exports[`Navbar > Snapshot test of navbar and hamburger menu 2`] = `
             class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </button>
-        <h2
-          class="pokedex-link"
+        <h5
+          class="MuiTypography-root MuiTypography-h5 css-1ic0tk6-MuiTypography-root"
           data-testid="pokedex_link_button"
           tabindex="0"
         >
-          Pokedex
-        </h2>
+          PokeDex
+        </h5>
       </div>
     </div>
   </body>,
@@ -418,13 +418,13 @@ exports[`Navbar > Snapshot test of navbar and hamburger menu 2`] = `
           class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
         />
       </button>
-      <h2
-        class="pokedex-link"
+      <h5
+        class="MuiTypography-root MuiTypography-h5 css-1ic0tk6-MuiTypography-root"
         data-testid="pokedex_link_button"
         tabindex="0"
       >
-        Pokedex
-      </h2>
+        PokeDex
+      </h5>
     </div>
   </div>,
   "debug": [Function],

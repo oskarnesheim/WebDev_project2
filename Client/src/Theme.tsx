@@ -13,6 +13,11 @@ const theme = createTheme({
       light: "#ffffff", // white
       dark: "#FFCB05", // yellow
     },
+    error: {
+      main: "#ff0000", // red
+      dark: "#141c24", // dark grey (background)
+      light: "#ff0000", // red
+    },
   },
   typography: {
     fontFamily: ["pokemonfont;"].join(","),

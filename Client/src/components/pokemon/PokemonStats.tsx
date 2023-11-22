@@ -39,16 +39,39 @@ const BLUEGRADIENTCIRCLE =
   theme.palette.primary.main +
   " 69%)";
 
-export default function PokemonStats({ pokemon }: PokemonStatsProps) {
+/**
+ * Component that displays the stats of a pokemon
+ * @param pokemon
+ * @returns PokemonStats component
+ */
+export default function PokemonStats({
+  pokemon,
+}: PokemonStatsProps): JSX.Element {
   const navigate = useNavigate();
   useEffect(() => {
     if (!pokemon) navigate("..");
   });
 
-  function createData(stat: string, value: number, color: string) {
+  /**
+   * Function that creates a row for the stats table
+   * @param stat Stat name
+   * @param value Stat value
+   * @param color Background color of the row
+   * @returns Row for the stats table
+   */
+  function createData(
+    stat: string,
+    value: number,
+    color: string,
+  ): {
+    stat: string;
+    value: number;
+    color: string;
+  } {
     return { stat, value, color };
   }
 
+  // Stats table
   const rows = [
     createData("Height", pokemon.height, LIGHTBLUEGRADIENT),
     createData("Weight", pokemon.weight, BLUE),
@@ -80,6 +103,7 @@ export default function PokemonStats({ pokemon }: PokemonStatsProps) {
       >
         <TableContainer
           sx={{
+            borderRadius: "10px",
             maxWidth: 800,
             background: BLUE,
             paddingTop: "1em",

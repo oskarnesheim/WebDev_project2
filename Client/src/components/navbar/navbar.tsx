@@ -10,19 +10,29 @@ import {
   recoilSearch,
 } from "../../recoil/atoms";
 
-export default function Navbar() {
+/**
+ * Function that returns the Navbar component, which is displayed on the top of the page.
+ * Contains:
+ * - Pokedex link
+ * - My Team link
+ * - About link
+ * @returns Navbar component
+ */
+export default function Navbar(): JSX.Element {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
   const setFilterBy = useSetRecoilState(recoilFilterBy);
   const setSortBy = useSetRecoilState(recoilSortBy);
   const setPage = useSetRecoilState(recoilPage);
   const setSearch = useSetRecoilState(recoilSearch);
-
-  window.onresize = () => {
-    setWindowSize(window.innerWidth);
-  };
   const navigate = useNavigate();
 
-  const logoOnclick = () => {
+  // Set windowSize when window is resized
+  window.onresize = (): void => {
+    setWindowSize(window.innerWidth);
+  };
+
+  // sets the filter, sort, page and search to default values when the logo is clicked
+  const logoOnclick = (): void => {
     setFilterBy([]);
     setSortBy("_id,1");
     setPage(1);

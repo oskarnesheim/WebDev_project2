@@ -62,7 +62,7 @@ function App(): JSX.Element {
 
     return null;
   };
-  
+
   return (
     <>
       <ThemeProvider theme={theme}>

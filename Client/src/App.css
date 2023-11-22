@@ -25,11 +25,6 @@
   align-items: center;
 }
 
-.pokedex-link:hover {
-  color: red;
-  cursor: pointer;
-}
-
 /* Team */
 
 .myteam-link {
@@ -216,67 +211,6 @@
     margin-right: 0;
     width: 100%;
   }
-}
-
-.pokemon_reviews_container {
-  color: white;
-  max-width: 500px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #141c24;
-}
-
-.star_rating_container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.star_rating_label {
-  margin-right: 10px;
-  margin-top: 10px;
-}
-
-.pokemon_reviews_header {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.pokemon_review_sub_header {
-  font-size: 20px;
-  margin-top: 20px;
-}
-
-.review_list_container {
-  list-style: none;
-  padding: 0;
-}
-
-.review_list_item {
-  padding: 10px;
-  margin: 20px 0;
-  background-color: #141c24;
-}
-
-.review_list_item_star_container {
-  margin-bottom: 10px;
-}
-
-/*! Hamburgermenu */
-
-.hamburger_menu_container {
-  z-index: 1;
-  display: flex;
-  flex-direction: row;
-  background-color: #000000;
-  color: #ffffff;
-  font-size: 20px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 80px;
 }
 
 /*? Errorpage */
