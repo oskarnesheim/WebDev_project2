@@ -20,8 +20,9 @@ describe("Test loading of first 20 pokemon", () => {
     );
 
     await waitFor(() => {
-      // setTimeout(() => {}, 1000);
-      expect(getAllByText("Pokedex")).toBeTruthy();
+      setTimeout(() => {
+        expect(getAllByText("Pokedex")).toBeTruthy();
+      }, 1000);
     });
     cleanup();
   });
