@@ -39,6 +39,7 @@ export default function MyTeam() {
         selected={checkselected(_id)}
         _id={Number(_id)}
         setSelectedPokemon={setSelectedPokemon}
+        key={count}
       />
     ));
   }
