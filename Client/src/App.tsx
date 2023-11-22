@@ -15,13 +15,21 @@ import {
   updateStorageOnChange,
 } from "./recoil/atoms";
 
-function App() {
+/**
+ * Function that returns the App component with MUI Themeprovider, containing the navbar and the content provided by router
+ * - Initializes state from storage
+ * - Updates storage on change
+ * - Scrolls to top when route changes
+ * @returns  App component
+ */
+function App(): JSX.Element {
   const [currentFilter, setCurrentFilter] =
     useRecoilState<string[]>(recoilFilterBy);
   const [sortBy, setSortBy] = useRecoilState<string>(recoilSortBy);
   const [page, setRecPage] = useRecoilState<number>(recoilPage);
   const [team, setTeam] = useRecoilState<string[]>(recoilMyTeam);
 
+  // Initialize recoil states from storage (filterBy, sortBy, page, team)
   useEffect(() => {
     initializeStateFromStorage(
       setCurrentFilter,
@@ -34,6 +42,7 @@ function App() {
     initializeStateFromStorage(setTeam, localStorage, "team", []);
   }, [setCurrentFilter, setSortBy, setRecPage, setTeam]);
 
+  // Update storage on change of recoil states (filterBy, sortBy, page, team)
   useEffect(() => {
     updateStorageOnChange("filterBy", currentFilter, sessionStorage);
     updateStorageOnChange("sortBy", sortBy, sessionStorage);
@@ -53,6 +62,7 @@ function App() {
 
     return null;
   };
+  
   return (
     <>
       <ThemeProvider theme={theme}>

@@ -162,11 +162,6 @@
   }
 }
 
-.pagination {
-  margin-top: 5vh;
-  margin-bottom: 10vh;
-}
-
 .apply_reset_filter {
   margin-top: 3vh;
   display: flex;
@@ -245,10 +240,6 @@
 .pokemon_reviews_header {
   font-size: 24px;
   margin-bottom: 10px;
-}
-
-.review_error_message {
-  color: red;
 }
 
 .pokemon_review_sub_header {
