@@ -352,7 +352,7 @@ exports[`Navbar > Snapshot test of navbar and hamburger menu 2`] = `
     </div>
     <div>
       <div
-        class="hamburger_menu_container"
+        class="MuiBox-root css-cdez27"
       >
         <button
           aria-haspopup="true"
@@ -391,7 +391,7 @@ exports[`Navbar > Snapshot test of navbar and hamburger menu 2`] = `
   </body>,
   "container": <div>
     <div
-      class="hamburger_menu_container"
+      class="MuiBox-root css-cdez27"
     >
       <button
         aria-haspopup="true"
