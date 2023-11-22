@@ -27,6 +27,16 @@
 
 /* Team */
 
+.pokedex-link {
+  width: fit-content;
+  color: #ffffff;
+}
+
+.pokedex-link:hover {
+  color: red;
+  cursor: pointer;
+}
+
 .myteam-link {
   width: fit-content;
   color: #ffffff;
