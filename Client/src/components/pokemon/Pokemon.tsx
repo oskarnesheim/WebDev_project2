@@ -99,7 +99,7 @@ export default function Pokemon(): JSX.Element {
     <>
       <Typography
         sx={{ marginTop: "15px", marginBottom: "15px" }}
-        variant="h3"
+        variant="h4"
         textAlign={"center"}
         data-testid="pokemon-name"
       >

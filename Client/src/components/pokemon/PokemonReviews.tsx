@@ -31,6 +31,7 @@ export default function PokemonRatingReview({
 }: PokemonReviewProps): JSX.Element {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
+  const [charsLeft, setCharsLeft] = useState("300");
   const { loading, error, data } = useQuery(getReviews, {
     variables: { pokemonID: _id },
     fetchPolicy: "network-only",
@@ -45,6 +46,12 @@ export default function PokemonRatingReview({
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     setReview(event.target.value);
+    if (event.target.value.length > 300) {
+      setCharsLeft("0/300");
+
+      return;
+    }
+    setCharsLeft((300 - event.target.value.length).toString() + "/300");
   };
 
   const [addReview] = useMutation(AddReview, {
@@ -94,6 +101,11 @@ export default function PokemonRatingReview({
     }
     if (review.trim() === "") {
       setErrorMessage("Please write a review.");
+      return;
+    }
+
+    if (review.length > 300) {
+      setErrorMessage("Review must be less than 300 characters.");
       return;
     }
 
@@ -154,58 +166,79 @@ export default function PokemonRatingReview({
       <Box
         sx={{
           display: "flex",
-          alignItems: "center",
-          marginBottom: "10px",
+          alignItems: "space-between",
+          margin: "10px",
+          width: "100%",
         }}
       >
-        <FormLabel
+        <Box
           sx={{
-            marginRight: "10px",
-            marginTop: "10px",
-            color: "white",
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "10px",
           }}
-          tabIndex={0}
         >
-          {" "}
-          Rate
-        </FormLabel>
-
-        {Array.from({ length: 5 }, (_, index) => (
-          <Tooltip
-            title={
-              alreadyReviewed(getUserID()) ? "" : `Rate (${index + 1}) out of 5`
-            }
-            key={index}
+          <FormLabel
+            sx={{
+              marginRight: "10px",
+              marginTop: "10px",
+              color: "white",
+            }}
+            tabIndex={0}
           >
-            <button
-              onClick={() => handleRatingClick(index + 1)}
-              aria-label={
+            {" "}
+            Rate
+          </FormLabel>
+          {Array.from({ length: 5 }, (_, index) => (
+            <Tooltip
+              title={
                 alreadyReviewed(getUserID())
                   ? ""
                   : `Rate (${index + 1}) out of 5`
               }
-              disabled={alreadyReviewed(getUserID())}
-              style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-              }}
+              key={index}
             >
-              <StarIcon
-                data-testid={`star-rating-${index}`}
+              <button
+                onClick={() => handleRatingClick(index + 1)}
+                aria-label={
+                  alreadyReviewed(getUserID())
+                    ? ""
+                    : `Rate (${index + 1}) out of 5`
+                }
+                disabled={alreadyReviewed(getUserID())}
                 style={{
-                  fontSize: "24px",
-                  color: index < rating ? theme.palette.primary.main : "#ccc",
-                  marginTop: "10px",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
                 }}
-              />
-            </button>
-          </Tooltip>
-        ))}
+              >
+                <StarIcon
+                  data-testid={`star-rating-${index}`}
+                  style={{
+                    fontSize: "24px",
+                    color: index < rating ? theme.palette.primary.main : "#ccc",
+                    marginTop: "10px",
+                  }}
+                />
+              </button>
+            </Tooltip>
+          ))}
+        </Box>
+        <Box sx={{ width: "100%", verticalAlign: "bottom" }}>
+          <Typography
+            sx={{
+              textAlign: "right",
+              marginTop: "2em",
+            }}
+          >
+            {charsLeft}
+          </Typography>
+        </Box>
       </Box>
       <form onSubmit={(e) => handleAddReview(e)}>
         <TextareaAutosize
           disabled={alreadyReviewed(getUserID())}
+          maxLength={300}
           aria-label={
             alreadyReviewed(getUserID())
               ? "Already reviewed"
