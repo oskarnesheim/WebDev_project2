@@ -47,9 +47,11 @@ const RootQuery = new GraphQLObjectType({
           sortingMap.set(sort[0], sort[1]);
         });
 
+        const strippedSearch = args.search.replace(/[^a-zA-Z]/gi, "");
+
         if (args.filters.length === 0) {
           return PokemonModel.find({
-            name: { $regex: "^" + args.search, $options: "i" },
+            name: { $regex: "^" + strippedSearch, $options: "i" },
           })
             .sort(sortingMap)
             .skip(args.range[0])
@@ -62,7 +64,7 @@ const RootQuery = new GraphQLObjectType({
               "type.name": { $in: args.filters }, // ? $in for multiple filters. We check if the pokemon is in the filters array.
             },
           },
-          name: { $regex: "^" + args.search, $options: "i" },
+          name: { $regex: "^" + strippedSearch, $options: "i" },
         })
           .sort(sortingMap)
           .skip(args.range[0])
@@ -82,9 +84,11 @@ const RootQuery = new GraphQLObjectType({
           sortingMap.set(sort[0], sort[1]);
         });
 
+        const strippedSearch = args.search.replace(/[^a-zA-Z]/gi, "");
+
         if (args.filters.length === 0) {
           return PokemonModel.countDocuments({
-            name: { $regex: "^" + args.search, $options: "i" },
+            name: { $regex: "^" + strippedSearch, $options: "i" },
           });
         }
         return PokemonModel.countDocuments({
@@ -94,7 +98,7 @@ const RootQuery = new GraphQLObjectType({
               "type.name": { $in: args.filters }, // ? $in for multiple filters. We check if the pokemon is in the filters array.
             },
           },
-          name: { $regex: "^" + args.search, $options: "i" },
+          name: { $regex: "^" + strippedSearch, $options: "i" },
         });
       },
     },
