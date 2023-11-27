@@ -9,6 +9,7 @@ describe("Test loading of pokemon", () => {
     await waitFor(() => {
       // Test that the pokemon name is correct
       expect(getByTestId("pokemon-name").textContent).toBe("bulbasaur - #1");
+      expect(getByTestId("pokemon-types").textContent).toBe("grass - poison");
 
       // Test that the pokemon image is correct
       expect(getByTestId("pokemon-stats-image").getAttribute("src")).toBe(

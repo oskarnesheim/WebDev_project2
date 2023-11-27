@@ -27,6 +27,11 @@ export interface PokemonPageI {
   sprites: {
     front_default: string;
   };
+  types: {
+    type: {
+      name: string;
+    };
+  }[];
 }
 
 export interface Review {

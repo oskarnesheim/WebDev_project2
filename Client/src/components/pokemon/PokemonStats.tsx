@@ -124,6 +124,13 @@ export default function PokemonStats({
             >
               Stats for {pokemon.name}
             </Typography>
+            <Typography
+              padding={"0.5em 0em 0em 1.5em"}
+              tabIndex={0}
+              data-testid={`pokemon-types`}
+            >
+              {pokemon.types.map((type) => type.type.name).join(" - ")}
+            </Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Box sx={{ minWidth: 250 }}>
