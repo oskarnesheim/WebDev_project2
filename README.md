@@ -134,7 +134,7 @@ We created end-to-end tests for several scenarios. Our tests cover mostly functi
 
 ### Running the tests
 
-Make sure you are in the /Client folder and run the following commands:<br>
+Make sure you are connected to NTNU network/VPN. Then go in the /Client folder and run the following commands:<br>
 **Component tests:**
 
 ```
