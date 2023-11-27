@@ -127,9 +127,7 @@ export default function PokemonStats({
             <Typography
               padding={"0.5em 0em 0em 1.5em"}
               tabIndex={0}
-              data-testid={`pokemon-types:${pokemon.types
-                .map((type) => type.type.name)
-                .join("-")}`}
+              data-testid={`pokemon-types`}
             >
               {pokemon.types.map((type) => type.type.name).join(" - ")}
             </Typography>

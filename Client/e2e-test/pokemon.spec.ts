@@ -24,7 +24,7 @@ test("Checks that the navigation works correctly", async ({ page }) => {
   }
 });
 
-test("Checks that the page render correctly with 20 pokemons", async ({
+test("Checks that the homepage render correctly with 20 pokemons", async ({
   page,
 }) => {
   // Checks that the page title is "Pokedex"
@@ -121,6 +121,10 @@ test("Checks that you can search for pikachu and show stats about it", async ({
   // Checks that the page contains stats for pikachu
   expect(await page.getByTestId("pokemon-stats-title").textContent()).toBe(
     "Stats for pikachu",
+  );
+
+  expect(await page.getByTestId("pokemon-types").textContent()).toBe(
+    "electric",
   );
 
   // Select the image by its test ID

@@ -27,7 +27,7 @@ export interface PokemonPageI {
   sprites: {
     front_default: string;
   };
-  types:{
+  types: {
     type: {
       name: string;
     };
