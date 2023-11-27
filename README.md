@@ -147,6 +147,32 @@ npm run test
 npm run e2e
 ```
 
+### Linting
+
+We have used ESLint to lint our code. Linting makes the code more consistent and readable. It also helps us to avoid errors.
+
+You can run the linter by typing the following command in the Client directory:
+
+```
+npm run lint
+```
+
+### Prettier
+For formatting we have used Prettier. This is to make sure that the entire codebase is formatted the same way. This also makes it easier for other developers to look at our code, since the code looks clean and they most likely use the same. 
+
+You can run Prettier by running the following command in the Client directory:
+
+Checking if the code is formatted correctly:
+
+```
+npm run prettier-check
+```
+Formatting the code:
+
+```
+npm run prettier-write
+```
+
 ## Responsive Design
 
 We have taken several steps to make the app responsive. We have used Material UI's Grid system to make the frontpage responsive. This means that when you shrink the window, the content will automatically change from 4 cards on a row to 1 card. We have also made the navbar responsive, so that it will collapse into a hamburger menu when the window is too small. The same goes for the Pokémon details page, where the Pokémon picture will shrink at first before it is placed below the stats. The same goes for the team page, where the Pokémons will be placed below each other when the window is too small.
