@@ -66,6 +66,7 @@ function Searchbar(): JSX.Element {
       placeholder="pokémon name ..."
       fullWidth
       data-testid="search-bar"
+      sx={{ backgroundColor: "#0c141b" }}
       id="outlined"
       InputProps={{
         endAdornment: (

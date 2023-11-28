@@ -75,7 +75,12 @@ export default function FilterAndSortingBox(): JSX.Element {
   return (
     <div className="filter_container">
       <Button
-        sx={{ height: "100px", padding: "20px", width: "100%" }}
+        sx={{
+          height: "100px",
+          padding: "20px",
+          width: "100%",
+          backgroundColor: "#0c141b",
+        }}
         variant="outlined"
         data-testid="filter_button"
         onClick={handleOpen}
