@@ -248,6 +248,9 @@ test("Check if different home page elements are focusable when tabbing", async (
 
   // Check if all pokeomon cards are focusable
   for (let i = 1; i < 21; i++) {
+
+    // Check if the pokemon card has been loaded before tabbing to it
+    await expect(page.getByTestId(i.toString())).toBeVisible();
     await page.keyboard.press("Tab");
 
     const focusedElement = await page.evaluate(() => {
