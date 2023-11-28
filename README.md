@@ -22,7 +22,7 @@ The app is hosted on NTNU's servers. This means that in order to visit the web p
 
 ### Environment variables
 
-To be able to run the app, you need to create a `.env` file in the server folder. This file should contain the following variables:
+To be able to run the app, you need to create a `.env` file in the root, client and server folder. This file should contain the following variables:
 
 ```
 NODE_ENV = development
