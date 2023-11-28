@@ -145,9 +145,7 @@ test("Checks that you can search for pikachu and show stats about it", async ({
   expect(page.url()).toBe(baseURL);
 });
 
-test("Checks that you get response when searching for a pokemon that doesn't exist", async ({
-  page,
-}) => {
+test("Checks correct response on search.", async ({ page }) => {
   // Checks that the text "No pokemons found" is not visible by default
   await expect(page.getByTestId("Error_message_no_pokemons")).not.toBeVisible();
 
@@ -157,6 +155,18 @@ test("Checks that you get response when searching for a pokemon that doesn't exi
     .fill("No pokemon with this name");
 
   // Checks that the text "No pokemons found" is visible
+  await expect(page.getByTestId("Error_message_no_pokemons")).toBeVisible();
+
+  await page.getByPlaceholder("pokémon name ...").fill("Pikachu");
+
+  await expect(page.getByTestId("25")).toBeVisible();
+
+  await page.getByPlaceholder("pokémon name ...").fill("P+=´ik-_ac@*hu");
+
+  await expect(page.getByTestId("25")).toBeVisible();
+
+  await page.getByPlaceholder("pokémon name ...").fill("chu");
+
   await expect(page.getByTestId("Error_message_no_pokemons")).toBeVisible();
 });
 

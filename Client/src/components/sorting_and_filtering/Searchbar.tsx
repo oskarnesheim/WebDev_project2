@@ -32,7 +32,7 @@ function Searchbar(): JSX.Element {
   // Calls the updateSearch function after 600ms
   useEffect(() => {
     const timer = setTimeout(() => {
-      updateSearch(search);
+      updateSearch(stripInput(search));
     }, 600);
     return () => clearTimeout(timer);
   }, [search, updateSearch]);
@@ -45,6 +45,10 @@ function Searchbar(): JSX.Element {
     setSearch(e.target.value);
     setPage(1);
   }
+
+  const stripInput = (input: string): string => {
+    return input.replace(/[^A-Za-z]/gi, "");
+  };
 
   /**
    * Erases the input in the searchbar.
