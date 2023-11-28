@@ -234,6 +234,8 @@ test("Check if different home page elements are focusable when tabbing", async (
   ];
 
   for (const selector of selectors) {
+    // Check if the element is visible before tabbing to it
+    await expect(page.getByTestId(selector)).toBeVisible();
     // Press the Tab key
     await page.keyboard.press("Tab");
 
@@ -248,7 +250,6 @@ test("Check if different home page elements are focusable when tabbing", async (
 
   // Check if all pokeomon cards are focusable
   for (let i = 1; i < 21; i++) {
-
     // Check if the pokemon card has been loaded before tabbing to it
     await expect(page.getByTestId(i.toString())).toBeVisible();
     await page.keyboard.press("Tab");
@@ -307,6 +308,8 @@ test("Check if sorting and filter elements are focusable when using the arrowkey
 
   // Check if the sorting elements are focusable
   for (let i = 0; i < sortingOptions.length; i++) {
+    // Check if the sorting element has been loaded before tabbing to it
+    await expect(page.getByText(sortingOptions[i])).toBeVisible();
     await page.keyboard.press("ArrowDown");
 
     const focusedElement = await page.evaluate(() => {
@@ -344,6 +347,8 @@ test("Check if sorting and filter elements are focusable when using the arrowkey
 
   // Check if the sorting elements are focusable
   for (let i = 0; i < filterOptions.length; i++) {
+    // Check if the sorting element has been loaded before tabbing to it
+    await expect(page.getByTestId(filterOptions[i])).toBeVisible();
     await page.keyboard.press("ArrowDown");
 
     const focusedElement = await page.evaluate(() => {
