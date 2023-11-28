@@ -6,7 +6,7 @@ import Pokemon from "./components/pokemon/Pokemon.tsx";
 import Home from "./components/home/Home.tsx";
 import MyTeam from "./components/team/MyTeam.tsx";
 import About from "./components/about/About.tsx";
-import "./main.css";
+import "./css/main.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import ErrorElement from "./components/ErrorElement.tsx";
 

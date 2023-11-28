@@ -27,6 +27,45 @@
 
 /* Team */
 
+.team-grid {
+  background: radial-gradient(
+    circle,
+    rgba(17, 48, 88, 1) 8%,
+    rgba(17, 48, 88, 1) 55%,
+    rgba(14, 152, 248, 1) 100%
+  );
+  display: grid;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  place-items: center;
+  border: 10px solid black;
+  border-radius: 4%;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2vh 2vw;
+  min-height: 520px;
+  min-width: 633px;
+  padding: 2vh 2vw 2vh 2vw;
+}
+
+@media screen and (max-width: 700px) {
+  .team-grid {
+    grid-template-columns: repeat(1, 1fr);
+    min-width: 50vw;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+/* Navbar */
+
 .pokedex-link {
   width: fit-content;
   color: #ffffff;

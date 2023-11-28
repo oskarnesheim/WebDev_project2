@@ -27,7 +27,7 @@ To be able to run the app, you need to create a `.env` file in the folder you ch
 ```
 NODE_ENV = development
 PORT = 6969
-MONGO_URI = mongodb://admin:dreamteam08@it2810-08.idi.ntnu.no:27017/Pokémon_db
+MONGO_URI = mongodb://admin:dreamteam08@it2810-08.idi.ntnu.no:27017/pokemon_db
 ```
 
 ### Install dependencies
