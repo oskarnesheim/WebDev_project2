@@ -1,4 +1,4 @@
-import "./App.css";
+import "./css/Styles.css";
 import Navbar from "./components/navbar/navbar";
 import { Outlet } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";

@@ -224,16 +224,6 @@ export default function PokemonRatingReview({
             </Tooltip>
           ))}
         </Box>
-        <Box sx={{ width: "100%", verticalAlign: "bottom" }}>
-          <Typography
-            sx={{
-              textAlign: "right",
-              marginTop: "2em",
-            }}
-          >
-            {charsLeft}
-          </Typography>
-        </Box>
       </Box>
       <form onSubmit={(e) => handleAddReview(e)}>
         <TextareaAutosize
@@ -259,6 +249,14 @@ export default function PokemonRatingReview({
               : `Write your review here`
           }
         />
+        <Typography
+          sx={{
+            textAlign: "right",
+            marginTop: "2px",
+          }}
+        >
+          {alreadyReviewed(getUserID()) ? "" : charsLeft}
+        </Typography>
         <Button
           type="submit"
           variant="contained"

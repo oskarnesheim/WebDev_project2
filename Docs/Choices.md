@@ -24,10 +24,6 @@ The reason we have chosen our approach, is because waiting 600 milliseconds make
 
 We have chosen to go for dark colors on the website as this suits the theme very well. A further development of the application should involve a light-theme, but this is not something we have prioritized in this version.
 
-### Colorful Pokémon cards
-
-The Pokémon cards have a lot of different colors. This is because our target users are kids and young adults who for the most part have good vision. The bright and vibrant colors also go very well with the dark background of the page.
-
 ### Font
 
 ![Font](./img/Font.png)

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./MyTeam.css";
+import "../../css/Styles.css";
 import TeamMember from "./TeamMember";
 import DisplayPokemon from "./DisplayPokemon";
 import { useRecoilState } from "recoil";

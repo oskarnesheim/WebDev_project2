@@ -118,7 +118,6 @@ _In this delivery we also got feedback from 7 groups. Most of the feedback were 
 **Solution:**
 The reason we stored states in both Recoil and session storage is because we wanted to save filtering, etc., in session storage to improve user experience, while also wanting to have them available in Recoil state. We have modified atoms.tsx so that it is possible to store atoms without adding them to session storage. We see the search value as not necessary to have in session storage, so it is only stored as a Recoil state. The rest of the atoms are still stored in session storage as well, but the implementation has been changed so that unnecessary calls to session storage are not made. Regardless of whether the states are stored in session storage or not, they are all used in various components, and here we see Recoil state as necessary. <br>
 
-
 **Feedback:** When clicking on a pokemon and then clicking on the "Pokedex" button, you get back to the previous page. Should be brought to the home page.<br>
 **Solution:** We changed the Pokedex (AKA home) - navigation button to bring the user back to the homepage and at the same time reset all filters, sorting, pagination and search. <br>
 
@@ -145,5 +144,31 @@ _In this version we had implemented the following (Changes from delivery 2 are m
 - Backend with GraphQL and MongoDB
   - Database with 300 pokemons
 - Tests
+
   - Component tests
   - **End-to-end tests**
+
+  ### Feedback
+
+_In our third and final delivery received feedback from 4 groups. There wasn't a lot of feedback in which we decided to act upon this time (reasons provided below.) But we've made a few changes for delivery 3:_
+
+**Feedback:** We got a few comments on end-to-end tests not passing.<br>
+**Solution:** We suspected that this was caused by the tests tabbing pokemon cards before they've loaded. To solve this we added a delay to the test for checking wether the cards have indeed loaded before tabbing.
+
+**Feedback:** Someone suggested that the searchbar should have a different color to prevent it from blending into the background.<br>
+**Solution:** We ended up setting a darker color for both the searchbar and the filter/sorting button (for matching purposes.)
+
+**Feedback:** Someone mentioned that Pokémon types should be included on the stat page.<br>
+**Solution:** we've now included type for each Pokémon on their given page.
+
+**Feedback:** Someone also wanted the possibility of sorting Pokémons after generation.<br>
+**Solution:** We decided not to implement this because of too few sorting options, considering we only have Pokémons from two generations in our API. We also feel we have a sufficient amount of sorting options.
+
+**Feedback:** We received a comment on potential improvement of filestructure as well as better commentation of code.<br>
+**Solution:** We decided not to prioritize this feedback considering we've also gotten positive feedback on this previously. We feel satisfied in this regard for now.
+
+**Feedbak:** Someone also said that we should consider dropping the colors of the Pokémon cards for sustainability purposes.<br>
+**Solution:** We decided not to remove the coloring because we feel this change excessively affects our design in a negative way.
+
+**Feedback:** Lastly we got a comment saying we lacked documentation on the use of Linting and Prettier.<br>
+**Solution:** We've now finalized our documentation in the README file to fit these requirements.

@@ -1,4 +1,4 @@
-import "../../App.css";
+import "../../css/Styles.css";
 import { useEffect, useState, useCallback, ChangeEvent } from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -66,6 +66,7 @@ function Searchbar(): JSX.Element {
       placeholder="pokémon name ..."
       fullWidth
       data-testid="search-bar"
+      sx={{ backgroundColor: "#0c141b" }}
       id="outlined"
       InputProps={{
         endAdornment: (

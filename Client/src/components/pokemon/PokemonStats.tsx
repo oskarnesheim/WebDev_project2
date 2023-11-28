@@ -129,7 +129,7 @@ export default function PokemonStats({
               tabIndex={0}
               data-testid={`pokemon-types`}
             >
-              {pokemon.types.map((type) => type.type.name).join(" - ")}
+              Type: {pokemon.types.map((type) => type.type.name).join(", ")}
             </Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
