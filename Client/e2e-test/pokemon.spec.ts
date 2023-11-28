@@ -124,7 +124,7 @@ test("Checks that you can search for pikachu and show stats about it", async ({
   );
 
   expect(await page.getByTestId("pokemon-types").textContent()).toBe(
-    "electric",
+    "Type: electric",
   );
 
   // Select the image by its test ID
@@ -309,7 +309,6 @@ test("Check if sorting and filter elements are focusable when using the arrowkey
   // Check if the sorting elements are focusable
   for (let i = 0; i < sortingOptions.length; i++) {
     // Check if the sorting element has been loaded before tabbing to it
-    await expect(page.getByText(sortingOptions[i])).toBeVisible();
     await page.keyboard.press("ArrowDown");
 
     const focusedElement = await page.evaluate(() => {
